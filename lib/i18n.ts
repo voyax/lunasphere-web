@@ -74,8 +74,8 @@ export const translations: TranslationKeys = {
     en: 'How Head Shape Develops',
   },
   'development.subtitle': {
-    zh: '了解婴儿头骨发育的科学过程',
-    en: 'Understanding the scientific process of infant skull development',
+    zh: '宝宝的头型会随着发育自然变化，0–18 个月是关键观察期',
+    en: 'Head shape changes naturally in the first 18 months.',
   },
   'development.structure': {
     zh: '头骨结构',

@@ -193,7 +193,7 @@ export async function DevelopmentSection() {
                     alt={t('development.title')}
                     className='object-contain p-2'
                     sizes='(max-width: 768px) 100vw, 40vw'
-                    src='/images/head-development.svg'
+                    src='/images/head-development.gif'
                   />
 
                   {/* Interactive dots */}
@@ -244,50 +244,6 @@ export async function DevelopmentSection() {
             </div>
           </SectionAnimations>
         </div>
-
-        {/* Enhanced Timeline with Data Points */}
-        <SectionAnimations className='mt-8' delay={0.6}>
-          <div className='max-w-3xl mx-auto'>
-            <div className='relative'>
-              <div className='absolute left-0 right-0 top-1/2 transform -translate-y-1/2 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded-full shadow-lg' />
-              <div className='flex justify-between items-center relative z-10'>
-                <div className='flex flex-col items-center group'>
-                  <div className='w-4 h-4 bg-blue-500 rounded-full border-2 border-white shadow-lg group-hover:scale-125 transition-transform duration-300 animate-pulse' />
-                  <span className='text-xs text-default-500 mt-1 group-hover:text-blue-600 transition-colors'>
-                    {t('development.timeline.birth')}
-                  </span>
-                  <span className='text-xs text-default-400 mt-1 hidden group-hover:block'>
-                    {t('development.timeline.birth.detail')}
-                  </span>
-                </div>
-                <div className='flex flex-col items-center group'>
-                  <div
-                    className='w-4 h-4 bg-purple-500 rounded-full border-2 border-white shadow-lg group-hover:scale-125 transition-transform duration-300 animate-pulse'
-                    style={{ animationDelay: '0.3s' }}
-                  />
-                  <span className='text-xs text-default-500 mt-1 group-hover:text-purple-600 transition-colors'>
-                    {t('development.timeline.3_6months')}
-                  </span>
-                  <span className='text-xs text-default-400 mt-1 hidden group-hover:block'>
-                    {t('development.timeline.3_6months.detail')}
-                  </span>
-                </div>
-                <div className='flex flex-col items-center group'>
-                  <div
-                    className='w-4 h-4 bg-pink-500 rounded-full border-2 border-white shadow-lg group-hover:scale-125 transition-transform duration-300 animate-pulse'
-                    style={{ animationDelay: '0.6s' }}
-                  />
-                  <span className='text-xs text-default-500 mt-1 group-hover:text-pink-600 transition-colors'>
-                    {t('development.timeline.12_18months')}
-                  </span>
-                  <span className='text-xs text-default-400 mt-1 hidden group-hover:block'>
-                    {t('development.timeline.12_18months.detail')}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SectionAnimations>
       </div>
     </section>
   )
