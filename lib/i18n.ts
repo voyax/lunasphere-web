@@ -213,44 +213,152 @@ export const translations: TranslationKeys = {
 
   // Classification section
   'classification.title': {
-    zh: '常见头型分类',
-    en: 'Common Head Shape Classifications',
+    zh: '常见头型变化',
+    en: 'Common Head Shape Variations',
   },
   'classification.subtitle': {
-    zh: '了解不同头型的特征和成因',
-    en: 'Understanding the characteristics and causes of different head shapes',
+    zh: '大多数头型变化都是正常发育现象，了解特征有助于科学护理',
+    en: 'Most head shape variations are normal developmental phenomena. Understanding characteristics helps with scientific care',
   },
-  'classification.normal': {
-    zh: '正常头型',
-    en: 'Normal Head Shape',
+  
+  // Section labels
+  'classification.description_label': {
+    zh: '特征描述',
+    en: 'Description',
   },
-  'classification.normal.desc': {
-    zh: '头部两侧对称，额头和后脑勺呈自然弧形',
-    en: 'Symmetrical sides with natural curves on forehead and back of head',
+  'classification.causes_label': {
+    zh: '主要成因',
+    en: 'Main Causes',
   },
+  'classification.correction_label': {
+    zh: '纠正手段',
+    en: 'Correction Methods',
+  },
+  
+  // Severity levels
+  'classification.severity.common': {
+    zh: '常见',
+    en: 'Common',
+  },
+  'classification.severity.moderate': {
+    zh: '中等',
+    en: 'Moderate',
+  },
+  'classification.severity.rare': {
+    zh: '少见',
+    en: 'Rare',
+  },
+  
+  // Category labels
+  'classification.category.positional': {
+    zh: '体位性',
+    en: 'Positional',
+  },
+  'classification.category.pathological': {
+    zh: '病理性',
+    en: 'Pathological',
+  },
+  
+  // Flat head syndrome (体位性扁头)
   'classification.flat': {
-    zh: '扁头综合征',
-    en: 'Flat Head Syndrome',
+    zh: '扁头',
+    en: 'Brachycephaly',
   },
-  'classification.flat.desc': {
-    zh: '后脑勺较平，通常由长时间仰卧造成',
-    en: 'Flattened back of head, usually caused by prolonged lying on back',
+  'classification.flat.image_placeholder': {
+    zh: '扁头示例图片',
+    en: 'Brachycephaly Example',
   },
+  'classification.flat.description': {
+    zh: '后脑勺出现扁平，这是婴儿期最常见的头型变化，通常在7-12周龄达到高峰。',
+    en: 'Flattening of the back of the head, the most common head shape variation in infancy, typically peaking at 7-12 weeks of age.',
+  },
+  'classification.flat.causes': {
+    zh: '主要由仰卧睡眠姿势引起。美国儿科学会推荐仰卧睡眠以降低婴儿猝死风险，但可能影响头型。',
+    en: 'Primarily caused by supine sleeping position. The AAP recommends back sleeping to reduce SIDS risk, but it may affect head shape.',
+  },
+  'classification.flat.correction': {
+    zh: '80%以上的宝宝在2岁前会自然改善。建议：清醒时多趴卧、交替睡姿、减少平躺时间。',
+    en: 'Over 80% of babies naturally improve by age 2. Recommendations: more tummy time when awake, alternate sleep positions, reduce lying flat time.',
+  },
+  
+  // Oblique head deformity (偏头畸形)
   'classification.oblique': {
-    zh: '斜头畸形',
-    en: 'Oblique Head Deformity',
+    zh: '偏头畸形',
+    en: 'Positional Plagiocephaly',
   },
-  'classification.oblique.desc': {
-    zh: '头部一侧较平，呈不对称形状',
-    en: 'One side of head is flatter, creating asymmetrical shape',
+  'classification.oblique.image_placeholder': {
+    zh: '偏头畸形示例图片',
+    en: 'Positional Plagiocephaly Example',
   },
-  'classification.boat': {
+  'classification.oblique.description': {
+    zh: '头部一侧相对扁平，呈不对称外观。这种情况在4个月时通常达到高峰，之后开始改善。',
+    en: 'One side of the head is relatively flat, showing asymmetrical appearance. This condition typically peaks at 4 months and then begins to improve.',
+  },
+  'classification.oblique.causes': {
+    zh: '常见于偏向一侧睡眠、宫内体位限制。70%-95%的偏头宝宝伴有轻微斜颈，这是正常现象。',
+    en: 'Common with preferential side sleeping and intrauterine position restrictions. 70%-95% of babies with asymmetrical heads have mild torticollis, which is normal.',
+  },
+  'classification.oblique.correction': {
+    zh: '多数情况会自然改善。建议：鼓励向另一侧转头、增加趴卧时间、轻柔的颈部运动。',
+    en: 'Most cases improve naturally. Recommendations: encourage turning to the other side, increase tummy time, gentle neck exercises.',
+  },
+  
+  // Positional long head (姿势性长头)
+  'classification.positional_long': {
+    zh: '姿势性长头',
+    en: 'Positional Dolichocephaly',
+  },
+  'classification.positional_long.image_placeholder': {
+    zh: '姿势性长头示例图片',
+    en: 'Positional Dolichocephaly Example',
+  },
+  'classification.positional_long.description': {
+    zh: '头部前后较长、两侧相对较窄，但颅缝正常开放。多见于早产儿或长期侧卧的婴儿。',
+    en: 'Head is longer front-to-back and relatively narrower on the sides, but with normal open sutures. Common in premature infants or babies who lie on their sides for extended periods.',
+  },
+  'classification.positional_long.causes': {
+    zh: '主要由长期侧卧体位引起，常见于NICU早产儿。与病理性舟状头不同，颅缝发育正常。',
+    en: 'Primarily caused by prolonged side-lying position, common in NICU premature infants. Unlike pathological scaphocephaly, suture development is normal.',
+  },
+  'classification.positional_long.correction': {
+    zh: '多数情况可通过体位调整自然改善。建议：减少侧卧时间、增加仰卧和俯卧时间、头部按摩。',
+    en: 'Most cases can improve naturally with position adjustments. Recommendations: reduce side-lying time, increase supine and prone time, head massage.',
+  },
+  
+  // Pathological scaphocephaly (病理性舟状头)
+  'classification.scaphocephaly': {
     zh: '舟状头',
-    en: 'Boat-shaped Head',
+    en: 'Scaphocephaly',
   },
-  'classification.boat.desc': {
-    zh: '头部前后较长，两侧较窄',
-    en: 'Head is longer front-to-back and narrower on sides',
+  'classification.scaphocephaly.image_placeholder': {
+    zh: '病理性舟状头示例图片',
+    en: 'Pathological Scaphocephaly Example',
+  },
+  'classification.scaphocephaly.description': {
+    zh: '矢状缝早闭导致的船形头颅，是最常见的颅缝早闭类型，占所有颅缝早闭的50%。',
+    en: 'Boat-shaped skull caused by premature sagittal suture closure, the most common type of craniosynostosis, accounting for 50% of all craniosynostosis cases.',
+  },
+  'classification.scaphocephaly.causes': {
+    zh: '矢状缝过早融合，阻止头颅横向生长而前后生长继续，形成狭长头型。男性发病率是女性的3倍。',
+    en: 'Premature fusion of sagittal suture prevents lateral skull growth while anteroposterior growth continues, forming an elongated narrow head. Male incidence is 3 times higher than female.',
+  },
+  'classification.scaphocephaly.correction': {
+    zh: '需要神经外科手术治疗。通常需要切除融合的矢状缝并重塑头颅形状，早期手术效果更佳。',
+    en: 'Requires neurosurgical treatment. Usually involves removal of fused sagittal suture and skull reshaping, with better outcomes from early surgery.',
+  },
+  
+  // Reminder section
+  'classification.reminder_title': {
+    zh: '温馨提醒：',
+    en: 'Gentle Reminder: ',
+  },
+  'classification.reminder_content': {
+    zh: '根据医学研究，大多数头型变化都会在宝宝成长过程中自然改善，无需过度担心。',
+    en: 'According to medical research, most head shape variations naturally improve as babies grow, without need for excessive worry.',
+  },
+  'classification.reminder_note': {
+    zh: '如有疑虑，建议在常规儿保检查时咨询儿科医生。早期的简单护理调整通常就很有效。',
+    en: 'If concerned, consult your pediatrician during routine check-ups. Early simple care adjustments are usually very effective.',
   },
 
   // Stages section
