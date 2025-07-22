@@ -75,8 +75,8 @@ export function ScrollNavigation() {
       ),
     },
     {
-      id: 'stages',
-      labelKey: 'stages.title',
+      id: 'head-shapes',
+      labelKey: 'examples.title',
       icon: (
         <svg
           className='w-5 h-5'

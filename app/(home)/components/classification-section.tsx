@@ -17,7 +17,7 @@ export async function ClassificationSection() {
 
   const headShapeVariations = [
     {
-      type: 'flat',
+      type: 'brachycephaly',
       color: 'from-orange-500 to-red-500',
       bgColor:
         'from-orange-50 to-red-50 dark:from-orange-950/20 dark:to-red-950/20',
@@ -25,7 +25,7 @@ export async function ClassificationSection() {
       category: 'positional',
     },
     {
-      type: 'oblique',
+      type: 'plagiocephaly',
       color: 'from-blue-500 to-purple-500',
       bgColor:
         'from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20',
@@ -33,7 +33,7 @@ export async function ClassificationSection() {
       category: 'positional',
     },
     {
-      type: 'positional_long',
+      type: 'dolichocephaly',
       color: 'from-green-500 to-teal-500',
       bgColor:
         'from-green-50 to-teal-50 dark:from-green-950/20 dark:to-teal-950/20',
