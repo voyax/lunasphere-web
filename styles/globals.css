@@ -2,14 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Smooth scrolling */
+/* Smooth scrolling and prevent horizontal overflow */
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
   
   body {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+  
+  * {
+    box-sizing: border-box;
   }
 }
 

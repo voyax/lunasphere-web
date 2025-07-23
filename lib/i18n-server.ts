@@ -7,7 +7,7 @@ import { LOCALE_COOKIE_CONFIG, isValidLocale } from './i18n-core'
 // Server-side translation function (optimized)
 export async function getServerTranslation(locale?: Locale) {
   const currentLocale = locale || (await getServerLocale())
-  
+
   // Use optimized translation function with caching
   return createOptimizedTranslationFunction(currentLocale)
 }
@@ -36,4 +36,3 @@ export async function setServerLocale(locale: Locale) {
     sameSite: LOCALE_COOKIE_CONFIG.sameSite,
   })
 }
- 

@@ -42,4 +42,3 @@ export async function updateLocalecookie(locale: Locale) {
 
   // No redirect - just update cookie
 }
- 

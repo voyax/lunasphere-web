@@ -17,13 +17,16 @@ interface LanguageSwitcherProps {
   languageLabel: string
 }
 
-export function LanguageSwitcher({ currentLocale, languageLabel }: LanguageSwitcherProps) {
+export function LanguageSwitcher({
+  currentLocale,
+  languageLabel,
+}: LanguageSwitcherProps) {
   const [isPending, startTransition] = useTransition()
   const { setLocale } = useLocale()
 
   const handleLanguageChange = (key: string) => {
     const newLocale = key as Locale
-    
+
     startTransition(async () => {
       // Update client-side state immediately and sync with server
       await setLocale(newLocale)
@@ -33,20 +36,20 @@ export function LanguageSwitcher({ currentLocale, languageLabel }: LanguageSwitc
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Button 
-          variant='ghost' 
-          size='sm' 
+        <Button
           className='text-sm font-medium'
           isLoading={isPending}
+          size='sm'
+          variant='ghost'
         >
           {localeNames[currentLocale]}
         </Button>
       </DropdownTrigger>
       <DropdownMenu
         aria-label={languageLabel}
-        onAction={(key) => handleLanguageChange(key as string)}
+        onAction={key => handleLanguageChange(key as string)}
       >
-        {locales.map((lang) => (
+        {locales.map(lang => (
           <DropdownItem
             key={lang}
             className={currentLocale === lang ? 'bg-primary/10' : ''}

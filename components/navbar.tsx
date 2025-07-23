@@ -17,9 +17,9 @@ export async function Navbar() {
 
   return (
     <HeroUINavbar
+      className='bg-background/70 backdrop-blur-md'
       maxWidth='xl'
       position='sticky'
-      className='bg-background/70 backdrop-blur-md'
     >
       <NavbarContent className='basis-1/5 sm:basis-full' justify='start'>
         <NavbarBrand as='li' className='gap-3 max-w-fit'>
@@ -34,7 +34,7 @@ export async function Navbar() {
 
       <NavbarContent className='flex basis-1/5 sm:basis-full' justify='end'>
         <NavbarItem className='flex gap-2'>
-          <LanguageSwitcher 
+          <LanguageSwitcher
             currentLocale={locale}
             languageLabel={t('nav.language')}
           />

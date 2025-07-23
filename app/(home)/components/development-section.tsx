@@ -41,11 +41,17 @@ export async function DevelopmentSection() {
       description: (
         <>
           {t('development.fontanelles.posterior')}
-          <ReferenceText reference={references['aap-fontanelles']} locale={currentLocale}>
+          <ReferenceText
+            locale={currentLocale}
+            reference={references['aap-fontanelles']}
+          >
             {t('development.fontanelles.around')}
           </ReferenceText>
           {t('development.fontanelles.anterior')}
-          <ReferenceText reference={references['who-fontanelles']} locale={currentLocale}>
+          <ReferenceText
+            locale={currentLocale}
+            reference={references['who-fontanelles']}
+          >
             {t('development.fontanelles.period')}
           </ReferenceText>
           {t('punctuation.period')}
@@ -72,7 +78,10 @@ export async function DevelopmentSection() {
       title: t('development.growth'),
       description: (
         <>
-          <ReferenceText reference={references['pediatrics-growth']} locale={currentLocale}>
+          <ReferenceText
+            locale={currentLocale}
+            reference={references['pediatrics-growth']}
+          >
             {t('development.growth.period')}
           </ReferenceText>
           {t('development.growth.result')}
@@ -99,7 +108,10 @@ export async function DevelopmentSection() {
       title: t('development.plasticity'),
       description: (
         <>
-          <ReferenceText reference={references['medical-plasticity']} locale={currentLocale}>
+          <ReferenceText
+            locale={currentLocale}
+            reference={references['medical-plasticity']}
+          >
             {t('development.plasticity.reason')}
           </ReferenceText>
           {t('punctuation.period')}
@@ -126,7 +138,10 @@ export async function DevelopmentSection() {
       title: t('development.birth'),
       description: (
         <>
-          <ReferenceText reference={references['birth-recovery']} locale={currentLocale}>
+          <ReferenceText
+            locale={currentLocale}
+            reference={references['birth-recovery']}
+          >
             {t('development.birth.condition')}
           </ReferenceText>
           {t('development.birth.recovery')}
@@ -158,9 +173,9 @@ export async function DevelopmentSection() {
       id='development'
     >
       {/* Background decorative elements */}
-      <div className='absolute top-20 left-10 w-32 h-32 bg-blue-200/20 rounded-full blur-2xl animate-pulse' />
+      <div className='absolute top-20 left-4 w-32 h-32 bg-blue-200/20 rounded-full blur-2xl animate-pulse' />
       <div
-        className='absolute bottom-20 right-10 w-40 h-40 bg-purple-200/20 rounded-full blur-2xl animate-pulse'
+        className='absolute bottom-20 right-4 w-40 h-40 bg-purple-200/20 rounded-full blur-2xl animate-pulse'
         style={{ animationDelay: '1s' }}
       />
       <div
@@ -206,11 +221,11 @@ export async function DevelopmentSection() {
               </div>
 
               {/* Floating badges */}
-              <div className='absolute -top-2 -right-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-xs px-2 py-1 rounded-full shadow-lg animate-bounce'>
+              <div className='absolute top-2 right-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-xs px-2 py-1 rounded-full shadow-lg animate-bounce'>
                 {t('development.badge.scientific')}
               </div>
               <div
-                className='absolute -bottom-2 -left-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs px-2 py-1 rounded-full shadow-lg animate-bounce'
+                className='absolute bottom-2 left-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs px-2 py-1 rounded-full shadow-lg animate-bounce'
                 style={{ animationDelay: '0.3s' }}
               >
                 {t('development.badge.authoritative')}

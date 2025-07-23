@@ -387,46 +387,127 @@ export const translations: TranslationKeys = {
     en: 'If concerned, consult your pediatrician during routine check-ups. Early simple care adjustments are usually very effective.',
   },
 
+  // Medical intervention warning
+  'classification.medical_warning_title': {
+    zh: '重要提醒：病理性头型需要医学干预',
+    en: 'Important Notice: Pathological Head Shapes Require Medical Intervention',
+  },
+  'classification.medical_warning_content': {
+    zh: '病理性舟状头是由颅缝早闭引起的医学疾病，需要神经外科专业评估和治疗。如发现头型异常伴有颅缝隆起、头围异常增长或发育迟缓，请及时就医。',
+    en: 'Pathological scaphocephaly is a medical condition caused by craniosynostosis that requires professional neurosurgical evaluation and treatment. If you notice abnormal head shape with cranial suture ridging, abnormal head circumference growth, or developmental delays, please seek medical attention promptly.',
+  },
+
+  // Sleep tips section
   // Sleep tips section
   'sleep.title': {
-    zh: '帮助婴儿睡出好头型',
-    en: 'Helping Baby Sleep for Good Head Shape',
+    zh: '帮助宝宝睡出好头型',
+    en: 'Helping Your Baby Develop a Beautiful Head Shape',
   },
   'sleep.subtitle': {
-    zh: '科学的睡姿和护理方法',
-    en: 'Scientific sleeping positions and care methods',
+    zh: '看完我们整理的内容，多观察，循序渐进，宝宝就能轻松睡出漂亮圆头',
+    en: 'With careful observation and gradual progress, your baby can naturally develop a beautifully rounded head',
   },
-  'sleep.tip1': {
-    zh: '交替睡姿',
-    en: 'Alternate Positions',
+
+  // 核心原则
+  'sleep.principle1': {
+    zh: '安全第一，科学护理',
+    en: 'Safety First, Scientific Care',
   },
-  'sleep.tip1.desc': {
-    zh: '定期改变宝宝的睡觉和休息姿势',
-    en: "Regularly change baby's sleeping and resting positions",
+  'sleep.principle1.desc': {
+    zh: '始终遵循安全睡眠原则，仰睡可以降低婴儿猝死综合征（SIDS）的风险，避免俯睡，无论何时，都应该把安全放置在第一位',
+    en: 'Always prioritize safe sleep practices. Back sleeping reduces the risk of SIDS, while stomach sleeping should be avoided. Safety must always come first.',
   },
-  'sleep.tip2': {
-    zh: '趴卧练习',
-    en: 'Tummy Time',
+  'sleep.principle2': {
+    zh: '勤换睡姿，均匀受力',
+    en: 'Frequent Position Changes, Even Pressure Distribution',
   },
-  'sleep.tip2.desc': {
-    zh: '在清醒时进行监督下的趴卧练习',
-    en: 'Supervised tummy time practice when awake',
+  'sleep.principle2.desc': {
+    zh: '新生儿颅骨柔软可塑，长时间固定睡姿易致头型偏平。两个方向的侧睡、仰睡轮流进行，让头部各个部位均匀受力，促进头型自然圆润发育',
+    en: 'Newborn skulls are soft and moldable, making them susceptible to flattening from prolonged fixed positions. Rotate between left side, right side, and back sleeping to distribute pressure evenly and encourage natural head rounding.',
   },
-  'sleep.tip3': {
-    zh: '减少躺卧时间',
-    en: 'Reduce Lying Time',
+  'sleep.principle3': {
+    zh: '床垫适度，稳固支撑',
+    en: 'Appropriate Mattress, Stable Support',
   },
-  'sleep.tip3.desc': {
-    zh: '避免长时间使用婴儿座椅和摇篮',
-    en: 'Avoid prolonged use of baby seats and cradles',
+  'sleep.principle3.desc': {
+    zh: '选用硬度适中的床垫，既能提供充分支撑，又不会过度下陷。过软的床垫会使宝宝的头部受力不均，某一侧长时间陷入，反而容易导致扁头或偏头等问题，且不利于婴儿脊椎发育',
+    en: 'Select a firm mattress that provides proper support without excessive sinking. Soft mattresses can create uneven pressure on your baby\'s head, causing one side to sink in and potentially leading to flat spots or asymmetry, while also hindering healthy spinal development.',
   },
-  'sleep.tip4': {
-    zh: '定期检查',
-    en: 'Regular Check-ups',
+  'sleep.principle4': {
+    zh: '细心观察，及时调整',
+    en: 'Careful Observation, Timely Adjustment',
   },
-  'sleep.tip4.desc': {
-    zh: '观察头型变化，必要时咨询儿科医生',
-    en: 'Observe head shape changes, consult pediatrician when necessary',
+  'sleep.principle4.desc': {
+    zh: '前6个月是头型塑造的黄金期，家长应密切关注宝宝头型变化。发现偏平或不对称时，及时调整护理方式。6个月后随着宝宝活动增加，头型会逐渐趋于圆润',
+    en: 'The first 6 months are crucial for head shape development. Monitor your baby\'s head shape closely and adjust care practices immediately if you notice flattening or asymmetry. After 6 months, increased mobility naturally helps round out the head shape.',
+  },
+
+  // 分龄指导
+  'sleep.newborn_title': {
+    zh: '新生儿期护理',
+    en: 'Newborn Care',
+  },
+  'sleep.newborn_desc': {
+    zh: '重点关注睡姿变换，避免长时间仰卧，每2小时调整一次头部位置',
+    en: 'Focus on sleep position changes, avoid prolonged supine position, adjust head position every 2 hours',
+  },
+  'sleep.infant_title': {
+    zh: '婴儿期护理',
+    en: 'Infant Care',
+  },
+  'sleep.infant_desc': {
+    zh: '增加趴卧时间，开始进行颈部运动，注意观察头型对称性',
+    en: 'Increase tummy time, start neck exercises, pay attention to head shape symmetry',
+  },
+  'sleep.toddler_title': {
+    zh: '幼儿期护理',
+    en: 'Toddler Care',
+  },
+  'sleep.toddler_desc': {
+    zh: '鼓励多种睡姿，减少长时间固定姿势，关注头型最终定型',
+    en: 'Encourage various sleep positions, reduce prolonged fixed postures, focus on final head shape formation',
+  },
+  'sleep.mobile_title': {
+    zh: '活动期注意事项',
+    en: 'Mobile Period Considerations',
+  },
+  'sleep.mobile_desc': {
+    zh: '宝宝开始翻身和坐立，头型基本定型，重点转向维护和预防不良习惯',
+    en: 'Babies begin to roll over and sit up, head shape is basically set, focus shifts to maintenance and prevention of bad habits',
+  },
+
+  // 实用技巧
+  'sleep.technique1': {
+    zh: '趴卧时间练习',
+    en: 'Tummy Time Practice',
+  },
+  'sleep.technique1.desc': {
+    zh: '在宝宝清醒且有人看护时，从新生儿期开始每天进行3-5次趴卧练习，每次2-5分钟。趴卧能有效减轻后脑勺压力，促进颈背部肌肉发育，预防扁头综合征。注意选择硬实平整的表面，确保宝宝呼吸道畅通',
+    en: 'Start supervised tummy time from the newborn period: 3-5 sessions daily, 2-5 minutes each. This effectively relieves pressure on the back of the head, strengthens neck and back muscles, and prevents flat head syndrome. Always use a firm, flat surface and ensure clear airways.',
+  },
+  'sleep.technique2': {
+    zh: '多样化喂养姿势',
+    en: 'Diversified Feeding Positions',
+  },
+  'sleep.technique2.desc': {
+    zh: '采用多种喂养姿势，包括摇篮式、橄榄球式、侧卧式等，每次喂养交替使用左右手臂。避免长时间固定同一姿势，这样不仅能减少头部单侧受压，还能促进宝宝视觉和空间感知能力的全面发展',
+    en: 'Vary your feeding positions—try cradle hold, football hold, and side-lying positions while alternating arms with each feeding. This prevents prolonged pressure on one side of the head and enhances your baby\'s visual and spatial development.',
+  },
+  'sleep.technique3': {
+    zh: '环境引导转头',
+    en: 'Environmental Head Turning Guidance',
+  },
+  'sleep.technique3.desc': {
+    zh: '合理布置婴儿床周围环境，定期更换玩具、音乐盒或彩色图案的位置，利用宝宝的好奇心引导其主动转头。每隔几天调换宝宝睡觉的方向（头脚位置对调），这样光线和环境刺激就会从不同方向吸引宝宝转头，简单有效地避免头部总是偏向同一侧',
+    en: 'Strategically arrange your baby\'s environment by regularly moving toys, music boxes, or colorful patterns around the crib to encourage natural head turning. Every few days, alternate which end of the crib your baby\'s head faces, so light and visual stimuli naturally draw their attention in different directions.',
+  },
+  'sleep.technique4': {
+    zh: '侧睡小妙招',
+    en: 'Side Sleeping Tips',
+  },
+  'sleep.technique4.desc': {
+    zh: '让宝宝侧睡时要做到侧头侧身睡，避免只侧头不侧身的错误姿势。只侧头不侧身会让颈部承受过大压力，可能导致颈部不适或加重头型偏斜。可以在宝宝背后垫一个卷起来的小毛巾或小枕头，帮助其保持稳定的侧卧姿势，左右两侧要轮流进行',
+    en: 'When positioning your baby on their side, ensure both head and body face the same direction—never just turn the head while keeping the body straight. This misalignment strains the neck and can worsen head asymmetry. Use a rolled towel or small pillow behind your baby\'s back for support, and remember to alternate between left and right sides.',
   },
 
   // Head shape examples section
@@ -505,14 +586,40 @@ export const translations: TranslationKeys = {
     en: 'Image Placeholder',
   },
 
+  // Sleep tips section titles and descriptions
+  'sleep.principles_title': {
+    zh: '四个核心原则',
+    en: 'Four Core Principles',
+  },
+  'sleep.principles_subtitle': {
+    zh: '掌握这些基本原则，为宝宝创造最佳的头型发育环境',
+    en: 'Master these essential principles to create the ideal environment for healthy head shape development',
+  },
+  'sleep.techniques_title': {
+    zh: '实用护理技巧',
+    en: 'Practical Care Techniques',
+  },
+  'sleep.techniques_subtitle': {
+    zh: '日常生活中简单易行的头型护理方法',
+    en: 'Simple, effective techniques you can easily incorporate into daily care',
+  },
+  'sleep.cta_title': {
+    zh: '如果您仍有疑惑',
+    en: 'If You Still Have Questions',
+  },
+  'sleep.cta_description': {
+    zh: '欢迎尝试我们的在线头型测试，或者发送邮件给我们。我们会尽力为每一位家长提供帮助和解答，这些服务都是免费的。',
+    en: 'Try our online head shape assessment or reach out via email. We\'re here to support every parent with personalized guidance—completely free of charge.',
+  },
+
   // Buttons and interactions
   'button.learn-more': {
     zh: '了解更多',
     en: 'Learn More',
   },
   'button.contact': {
-    zh: '联系我们',
-    en: 'Contact Us',
+    zh: '发送邮件',
+    en: 'Send Email',
   },
   'button.test-now': {
     zh: '立即测试',

@@ -1,5 +1,4 @@
 import { Locale, translations } from './i18n'
-import { TranslationKey } from './i18n-types'
 
 /**
  * 翻译缓存管理器
@@ -12,18 +11,21 @@ class TranslationCache {
   get(locale: Locale, key: string): string | undefined {
     const cacheKey = `${locale}:${key}`
     const cached = this.cache.get(cacheKey)
-    
+
     if (cached) {
       this.hitCount++
+
       return cached
     }
-    
+
     this.missCount++
+
     return undefined
   }
 
   set(locale: Locale, key: string, value: string): void {
     const cacheKey = `${locale}:${key}`
+
     this.cache.set(cacheKey, value)
   }
 
@@ -38,7 +40,7 @@ class TranslationCache {
       size: this.cache.size,
       hitCount: this.hitCount,
       missCount: this.missCount,
-      hitRate: this.hitCount / (this.hitCount + this.missCount) || 0
+      hitRate: this.hitCount / (this.hitCount + this.missCount) || 0,
     }
   }
 }
@@ -53,21 +55,25 @@ class TranslationManager {
   translate(locale: Locale, key: string): string {
     // 尝试从缓存获取
     const cached = this.cache.get(locale, key)
+
     if (cached) {
       return cached
     }
 
     // 从翻译对象获取
     const translation = translations[key]
+
     if (translation && translation[locale]) {
       const result = translation[locale]
+
       this.cache.set(locale, key, result)
+
       return result
     }
 
     // 记录缺失的键
     this.missingKeys.add(key)
-    
+
     // 开发环境警告
     if (process.env.NODE_ENV === 'development') {
       console.warn(`Missing translation for key: ${key} (${locale})`)
@@ -75,6 +81,7 @@ class TranslationManager {
 
     // 缓存回退值
     this.cache.set(locale, key, key)
+
     return key
   }
 
@@ -89,7 +96,7 @@ class TranslationManager {
   getStats() {
     return {
       cache: this.cache.getStats(),
-      missingKeys: this.missingKeys.size
+      missingKeys: this.missingKeys.size,
     }
   }
 
@@ -130,4 +137,4 @@ export function clearTranslationCache() {
  */
 export function getMissingTranslationKeys(): string[] {
   return translationManager.getMissingKeys()
-} 
+}

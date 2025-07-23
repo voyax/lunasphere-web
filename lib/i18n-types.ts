@@ -15,7 +15,9 @@ export interface TypeSafeTranslationFunction {
 /**
  * 翻译键验证函数
  */
-export function isValidTranslationKey(key: string): key is string & TranslationKey {
+export function isValidTranslationKey(
+  key: string
+): key is string & TranslationKey {
   return key in translations
 }
 
@@ -29,13 +31,17 @@ export function getAllTranslationKeys(): TranslationKey[] {
 /**
  * 按命名空间分组翻译键
  */
-export function getTranslationKeysByNamespace(): Record<string, TranslationKey[]> {
+export function getTranslationKeysByNamespace(): Record<
+  string,
+  TranslationKey[]
+> {
   const keys = getAllTranslationKeys()
   const namespaces: Record<string, TranslationKey[]> = {}
 
   keys.forEach(key => {
     const keyStr = String(key)
     const namespace = keyStr.split('.')[0]
+
     if (!namespaces[namespace]) {
       namespaces[namespace] = []
     }
@@ -43,4 +49,4 @@ export function getTranslationKeysByNamespace(): Record<string, TranslationKey[]
   })
 
   return namespaces
-} 
+}

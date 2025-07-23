@@ -8,11 +8,7 @@ import {
   ReactNode,
 } from 'react'
 
-import {
-  Locale,
-  defaultLocale,
-  LocaleContextType,
-} from '@/lib/i18n'
+import { Locale, defaultLocale, LocaleContextType } from '@/lib/i18n'
 import { createOptimizedTranslationFunction } from '@/lib/i18n-manager'
 import { LOCALE_COOKIE_CONFIG, isValidLocale } from '@/lib/i18n-core'
 import { updateLocalecookie } from '@/lib/actions'
@@ -45,7 +41,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   const handleSetLocale = async (newLocale: Locale) => {
     setLocale(newLocale)
     localStorage.setItem(LOCALE_COOKIE_CONFIG.name, newLocale)
-    
+
     // Update server-side cookie using server action
     try {
       await updateLocalecookie(newLocale)
@@ -76,5 +72,3 @@ export function useLocale() {
 
   return context
 }
-
- 

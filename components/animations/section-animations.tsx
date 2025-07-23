@@ -46,10 +46,10 @@ export function SectionAnimations({
 
   return (
     <motion.div
-      initial={getInitialPosition()}
-      whileInView={getFinalPosition()}
-      transition={{ duration: 0.8, delay }}
       className={className}
+      initial={getInitialPosition()}
+      transition={{ duration: 0.8, delay }}
+      whileInView={getFinalPosition()}
     >
       {children}
     </motion.div>
@@ -68,10 +68,10 @@ export function TimelineAnimations({
   return (
     <motion.div
       initial={{ opacity: 0, scaleX: 0 }}
-      whileInView={{ opacity: 1, scaleX: 1 }}
       transition={{ duration: 1.2, delay }}
+      whileInView={{ opacity: 1, scaleX: 1 }}
     >
       {children}
     </motion.div>
   )
-} 
+}

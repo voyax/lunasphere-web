@@ -219,10 +219,10 @@ export async function ClassificationSection() {
                 </div>
                 <div className='text-left space-y-2'>
                   <h3 className='text-lg font-semibold text-amber-800 dark:text-amber-300'>
-                    重要提醒：病理性头型需要医学干预
+                    {t('classification.medical_warning_title')}
                   </h3>
                   <p className='text-sm md:text-base text-amber-700 dark:text-amber-400'>
-                    <span className='font-semibold'>病理性舟状头</span>是由颅缝早闭引起的医学疾病，需要神经外科专业评估和治疗。如发现头型异常伴有颅缝隆起、头围异常增长或发育迟缓，请及时就医。
+                    {t('classification.medical_warning_content')}
                   </p>
                 </div>
               </div>

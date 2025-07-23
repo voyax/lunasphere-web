@@ -37,6 +37,7 @@ export function getTranslationCoverage(): Record<Locale, number> {
 
   keys.forEach(key => {
     const translation = translations[key]
+
     if (translation.zh) coverage.zh++
     if (translation.en) coverage.en++
   })
@@ -57,4 +58,4 @@ export const LOCALE_COOKIE_CONFIG = {
   httpOnly: false,
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'lax' as const,
-} 
+}

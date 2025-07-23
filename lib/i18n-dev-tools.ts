@@ -1,5 +1,8 @@
 import { Locale, translations } from './i18n'
-import { getAllTranslationKeys, getTranslationKeysByNamespace } from './i18n-types'
+import {
+  getAllTranslationKeys,
+  getTranslationKeysByNamespace,
+} from './i18n-types'
 import { getTranslationStats, getMissingTranslationKeys } from './i18n-manager'
 
 /**
@@ -12,6 +15,7 @@ export class I18nDevTools {
     if (!I18nDevTools.instance) {
       I18nDevTools.instance = new I18nDevTools()
     }
+
     return I18nDevTools.instance
   }
 
@@ -47,12 +51,15 @@ export class I18nDevTools {
       }
 
       // 检查重复值
-      (['zh', 'en'] as Locale[]).forEach(locale => {
+      ;(['zh', 'en'] as Locale[]).forEach(locale => {
         const value = translation[locale]
+
         if (value && value.trim() !== '') {
           const mapKey = `${locale}:${value}`
+
           if (valueMap.has(mapKey)) {
             const original = valueMap.get(mapKey)!
+
             duplicateValues.push({ key, locale, value })
           } else {
             valueMap.set(mapKey, { key, locale })
@@ -64,7 +71,7 @@ export class I18nDevTools {
     return {
       incompleteKeys,
       emptyTranslations,
-      duplicateValues
+      duplicateValues,
     }
   }
 
@@ -75,39 +82,44 @@ export class I18nDevTools {
     totalKeys: number
     coverage: Record<Locale, number>
     namespaces: Record<string, number>
-         integrity: ReturnType<I18nDevTools['checkTranslationIntegrity']>
+    integrity: ReturnType<I18nDevTools['checkTranslationIntegrity']>
     performance: ReturnType<typeof getTranslationStats>
     missingKeys: string[]
   } {
     const keys = getAllTranslationKeys()
     const namespaces = getTranslationKeysByNamespace()
-    const namespaceCounts = Object.keys(namespaces).reduce((acc, ns) => {
-      acc[ns] = namespaces[ns].length
-      return acc
-    }, {} as Record<string, number>)
+    const namespaceCounts = Object.keys(namespaces).reduce(
+      (acc, ns) => {
+        acc[ns] = namespaces[ns].length
+
+        return acc
+      },
+      {} as Record<string, number>
+    )
 
     const coverage = {
       zh: 0,
-      en: 0
+      en: 0,
     }
 
-              keys.forEach(key => {
-       const keyStr = String(key)
-       const translation = translations[keyStr]
-       if (translation.zh && translation.zh.trim() !== '') coverage.zh++
-       if (translation.en && translation.en.trim() !== '') coverage.en++
-     })
+    keys.forEach(key => {
+      const keyStr = String(key)
+      const translation = translations[keyStr]
+
+      if (translation.zh && translation.zh.trim() !== '') coverage.zh++
+      if (translation.en && translation.en.trim() !== '') coverage.en++
+    })
 
     return {
       totalKeys: keys.length,
       coverage: {
         zh: coverage.zh / keys.length,
-        en: coverage.en / keys.length
+        en: coverage.en / keys.length,
       },
       namespaces: namespaceCounts,
       integrity: this.checkTranslationIntegrity(),
       performance: getTranslationStats(),
-      missingKeys: getMissingTranslationKeys()
+      missingKeys: getMissingTranslationKeys(),
     }
   }
 
@@ -123,9 +135,13 @@ export class I18nDevTools {
 
     console.group('🌍 I18n Translation Report')
     console.log(`📊 Total Keys: ${report.totalKeys}`)
-    console.log(`🇨🇳 Chinese Coverage: ${(report.coverage.zh * 100).toFixed(1)}%`)
-    console.log(`🇺🇸 English Coverage: ${(report.coverage.en * 100).toFixed(1)}%`)
-    
+    console.log(
+      `🇨🇳 Chinese Coverage: ${(report.coverage.zh * 100).toFixed(1)}%`
+    )
+    console.log(
+      `🇺🇸 English Coverage: ${(report.coverage.en * 100).toFixed(1)}%`
+    )
+
     console.group('📁 Namespaces')
     Object.entries(report.namespaces).forEach(([ns, count]) => {
       console.log(`  ${ns}: ${count} keys`)
@@ -150,7 +166,9 @@ export class I18nDevTools {
 
     console.group('🚀 Performance')
     console.log(`Cache Size: ${report.performance.cache.size}`)
-    console.log(`Cache Hit Rate: ${(report.performance.cache.hitRate * 100).toFixed(1)}%`)
+    console.log(
+      `Cache Hit Rate: ${(report.performance.cache.hitRate * 100).toFixed(1)}%`
+    )
     console.groupEnd()
 
     console.groupEnd()
@@ -162,7 +180,7 @@ export class I18nDevTools {
  */
 if (process.env.NODE_ENV === 'development') {
   const devTools = I18nDevTools.getInstance()
-  
+
   // 延迟执行以避免阻塞初始化
   setTimeout(() => {
     devTools.printReport()
@@ -172,4 +190,4 @@ if (process.env.NODE_ENV === 'development') {
 /**
  * 导出全局开发工具实例
  */
-export const i18nDevTools = I18nDevTools.getInstance() 
+export const i18nDevTools = I18nDevTools.getInstance()

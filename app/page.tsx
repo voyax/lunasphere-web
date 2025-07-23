@@ -7,7 +7,7 @@ import { ScrollNavigation } from '@/components/scroll-navigation'
 
 export default async function Home() {
   return (
-    <main className='min-h-screen'>
+    <main className='min-h-screen w-full max-w-full overflow-x-hidden'>
       <HeroSection />
       <DevelopmentSection />
       <ClassificationSection />
