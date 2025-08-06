@@ -90,8 +90,10 @@ export class HeadShapeModel {
 
   /**
    * Preprocess image for model input (based on web example)
+   * @param imageElement - The image element to preprocess
+   * @param rotation - Rotation angle in degrees (optional)
    */
-  preprocessImage(imageElement: HTMLImageElement): { tensor: ImageTensor; originalImageData: ImageData } {
+  preprocessImage(imageElement: HTMLImageElement, rotation: number = 0): { tensor: ImageTensor; originalImageData: ImageData } {
     const startTime = performance.now()
     
     const canvas = document.createElement('canvas')
@@ -112,9 +114,34 @@ export class HeadShapeModel {
     const x = (targetWidth - scaledWidth) / 2
     const y = (targetHeight - scaledHeight) / 2
     
-    // Clear canvas and draw image
+    // Clear canvas and apply rotation if needed
     ctx.clearRect(0, 0, targetWidth, targetHeight)
-    ctx.drawImage(imageElement, x, y, scaledWidth, scaledHeight)
+    
+    if (rotation !== 0) {
+      // Save the current context state
+      ctx.save()
+      
+      // Move to center of canvas for rotation
+      ctx.translate(targetWidth / 2, targetHeight / 2)
+      
+      // Apply rotation (convert degrees to radians)
+      ctx.rotate((rotation * Math.PI) / 180)
+      
+      // Draw image centered at origin
+      ctx.drawImage(
+        imageElement,
+        -scaledWidth / 2,
+        -scaledHeight / 2,
+        scaledWidth,
+        scaledHeight
+      )
+      
+      // Restore the context state
+      ctx.restore()
+    } else {
+      // Draw image without rotation
+      ctx.drawImage(imageElement, x, y, scaledWidth, scaledHeight)
+    }
     
     // Get image data
     const imageData = ctx.getImageData(0, 0, targetWidth, targetHeight)
@@ -198,8 +225,10 @@ export class HeadShapeModel {
 
   /**
    * Run inference on preprocessed image
+   * @param imageElement - The image element to analyze
+   * @param rotation - Rotation angle in degrees (optional)
    */
-  async predict(imageElement: HTMLImageElement): Promise<ModelPrediction> {
+  async predict(imageElement: HTMLImageElement, rotation: number = 0): Promise<ModelPrediction> {
     if (!this.session) {
       throw new Error('Model not loaded. Call loadModel() first.')
     }
@@ -207,8 +236,8 @@ export class HeadShapeModel {
     try {
       const totalStartTime = performance.now()
       
-      // Preprocess image
-      const { tensor, originalImageData } = this.preprocessImage(imageElement)
+      // Preprocess image with rotation
+      const { tensor, originalImageData } = this.preprocessImage(imageElement, rotation)
       
       // Create input tensor
       const inputTensor = new ort.Tensor('float32', tensor.data, tensor.dims)
@@ -259,14 +288,16 @@ export class HeadShapeModel {
 
   /**
    * Analyze image from URL or File
+   * @param imageSource - Image source (URL string or File object)
+   * @param rotation - Rotation angle in degrees (optional)
    */
-  async analyzeImage(imageSource: string | File): Promise<ModelPrediction> {
+  async analyzeImage(imageSource: string | File, rotation: number = 0): Promise<ModelPrediction> {
     return new Promise((resolve, reject) => {
       const img = new Image()
       
       img.onload = async () => {
         try {
-          const prediction = await this.predict(img)
+          const prediction = await this.predict(img, rotation)
           resolve(prediction)
         } catch (error) {
           reject(error)

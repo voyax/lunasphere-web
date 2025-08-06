@@ -234,8 +234,8 @@ export default function DetectionPage() {
       // Get model instance
       const model = getModelInstance()
 
-      // Analyze the uploaded image
-      const prediction: ModelPrediction = await model.analyzeImage(images.top.file)
+      // Analyze the uploaded image with rotation
+      const prediction: ModelPrediction = await model.analyzeImage(images.top.file, images.top.rotation)
       
       // Convert prediction to analysis result
       const result: AnalysisResult = {
