@@ -6,6 +6,7 @@ import { Button } from '@heroui/button'
 import { Card, CardBody, CardHeader } from '@heroui/card'
 import { Tabs, Tab } from '@heroui/tabs'
 import { Upload, RotateCcw, Sparkles, Brain, Target, RotateCw } from 'lucide-react'
+import { getModelInstance, type ModelPrediction } from '@/lib/model-inference'
 
 type ImageType = 'top' | 'left' | 'right'
 
@@ -115,7 +116,7 @@ const RotationControl: React.FC<RotationControlProps> = ({ rotation, onChange, c
   )
 }
 
-interface ImageData {
+interface ImageUploadData {
   file: File
   url: string
   rotation: number
@@ -127,10 +128,12 @@ interface AnalysisResult {
   cvai: number
   headShape: string
   confidence: number
+  mask?: ImageData
+  originalImage?: ImageData
 }
 
 export default function DetectionPage() {
-  const [images, setImages] = useState<Record<ImageType, ImageData | null>>({
+  const [images, setImages] = useState<Record<ImageType, ImageUploadData | null>>({
     top: null,
     left: null,
     right: null,
@@ -144,6 +147,31 @@ export default function DetectionPage() {
   const [activeTab, setActiveTab] = useState<ImageType>('left')
   const [showTopGuide, setShowTopGuide] = useState(false)
   const [showSideGuide, setShowSideGuide] = useState(false)
+  const [modelPath, setModelPath] = useState('/models/model_weights_best.onnx')
+  const [isModelLoaded, setIsModelLoaded] = useState(false)
+  const [isLoadingModel, setIsLoadingModel] = useState(false)
+
+  // Auto-load default model on component mount
+  useEffect(() => {
+    const autoLoadModel = async () => {
+      if (modelPath && !isModelLoaded && !isLoadingModel) {
+        setIsLoadingModel(true)
+        try {
+          const model = getModelInstance()
+          await model.loadModel(modelPath)
+          setIsModelLoaded(true)
+          console.log('Default model loaded successfully')
+        } catch (error) {
+          console.error('Failed to auto-load default model:', error)
+          setIsModelLoaded(false)
+        } finally {
+          setIsLoadingModel(false)
+        }
+      }
+    }
+
+    autoLoadModel()
+  }, []) // Empty dependency array means this runs once on mount
 
   const handleFileUpload = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -170,14 +198,61 @@ export default function DetectionPage() {
     }
   }
 
+  const loadModel = async () => {
+    if (!modelPath.trim()) {
+      alert('请输入模型路径')
+      return
+    }
+
+    setIsLoadingModel(true)
+    try {
+      const model = getModelInstance()
+      await model.loadModel(modelPath.trim())
+      setIsModelLoaded(true)
+      alert('模型加载成功！')
+    } catch (error) {
+      console.error('Model loading failed:', error)
+      alert(`模型加载失败: ${error instanceof Error ? error.message : '未知错误'}`)
+      setIsModelLoaded(false)
+    } finally {
+      setIsLoadingModel(false)
+    }
+  }
+
   const analyzeTopView = async () => {
     if (!images.top) return
 
     setIsProcessing(true)
     setCurrentStep(2)
 
-    // Simulate AI analysis
-    setTimeout(() => {
+    try {
+      // Check if model is loaded
+      if (!isModelLoaded) {
+        throw new Error('请先加载AI模型')
+      }
+      
+      // Get model instance
+      const model = getModelInstance()
+
+      // Analyze the uploaded image
+      const prediction: ModelPrediction = await model.analyzeImage(images.top.file)
+      
+      // Convert prediction to analysis result
+      const result: AnalysisResult = {
+        ci: prediction.ci,
+        cvai: prediction.cvai,
+        headShape: prediction.headShape,
+        confidence: prediction.confidence,
+        mask: prediction.mask,
+        originalImage: prediction.originalImage,
+      }
+
+      setAnalysisResult(result)
+      setCurrentStep(3)
+    } catch (error) {
+      console.error('Analysis failed:', error)
+      
+      // Fallback to mock data if model fails
       const mockResult: AnalysisResult = {
         ci: 0.75 + Math.random() * 0.2,
         cvai: 0.85 + Math.random() * 0.1,
@@ -187,8 +262,12 @@ export default function DetectionPage() {
 
       setAnalysisResult(mockResult)
       setCurrentStep(3)
+      
+      // Show error message to user (you can add a toast notification here)
+      alert(`分析过程中出现错误: ${error instanceof Error ? error.message : '未知错误'}，已使用模拟数据`)
+    } finally {
       setIsProcessing(false)
-    }, 3000)
+    }
   }
 
   const rotateImage = (imageType: ImageType, angle?: number) => {
@@ -254,6 +333,53 @@ export default function DetectionPage() {
               基于深度学习算法的专业头型评估系统
             </p>
           </div>
+
+          {/* Model Management Section */}
+          <Card className='mb-12 bg-gradient-to-r from-purple-50/80 via-pink-50/40 to-red-50/30 dark:from-purple-950/50 dark:via-pink-950/30 dark:to-red-950/20 border border-purple-200/40 dark:border-purple-700/40 shadow-lg backdrop-blur-sm max-w-4xl mx-auto'>
+            <CardHeader className='pb-3'>
+              <div className='flex items-center gap-3'>
+                <div className='inline-flex items-center gap-2 bg-purple-500/10 text-purple-600 dark:text-purple-400 px-3 py-1 rounded-full text-sm font-medium'>
+                  <Brain className='w-4 h-4' />
+                  AI模型管理
+                </div>
+                <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${
+                  isModelLoaded 
+                    ? 'bg-green-500/10 text-green-600 dark:text-green-400'
+                    : 'bg-gray-500/10 text-gray-600 dark:text-gray-400'
+                }`}>
+                  <div className={`w-2 h-2 rounded-full ${
+                    isModelLoaded ? 'bg-green-500' : 'bg-gray-400'
+                  }`} />
+                  {isModelLoaded ? '模型已加载' : '模型未加载'}
+                </div>
+              </div>
+            </CardHeader>
+            <CardBody className='pt-0'>
+              <div className='flex flex-col sm:flex-row gap-3'>
+                <div className='flex-1'>
+                  <input
+                   type='text'
+                   placeholder='ONNX模型文件路径'
+                   value={modelPath}
+                   onChange={(e) => setModelPath(e.target.value)}
+                   className='w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all'
+                   disabled={isLoadingModel}
+                 />
+                </div>
+                <Button
+                  onClick={loadModel}
+                  isLoading={isLoadingModel}
+                  disabled={isLoadingModel || !modelPath.trim()}
+                  className='bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium transition-colors min-w-[120px]'
+                >
+                  {isLoadingModel ? '加载中...' : '加载模型'}
+                </Button>
+              </div>
+              <p className='text-sm text-gray-600 dark:text-gray-400 mt-2'>
+                 💡 提示：默认模型 model_weights_best.onnx 会自动加载，您也可以指定其他模型路径
+               </p>
+            </CardBody>
+          </Card>
 
           {/* Main Content */}
           <div className='w-full space-y-24'>
@@ -803,21 +929,80 @@ export default function DetectionPage() {
                     analysisResult && (
                       <div className='space-y-8'>
                         {/* Visualization */}
-                        <div className='aspect-square bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl border border-primary/20 dark:border-primary/30 flex items-center justify-center'>
-                          <div className='text-center space-y-4'>
-                            <div className='w-16 h-16 mx-auto bg-primary rounded-2xl flex items-center justify-center shadow-lg'>
-                              <Brain className='w-8 h-8 text-white' />
+                        <div className='aspect-square bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl border border-primary/20 dark:border-primary/30 overflow-hidden relative'>
+                          {analysisResult?.mask ? (
+                            <>
+                              <canvas
+                                ref={(canvas) => {
+                                  if (canvas && analysisResult.mask) {
+                                    const ctx = canvas.getContext('2d')!
+                                    canvas.width = analysisResult.mask.width
+                                    canvas.height = analysisResult.mask.height
+                                    ctx.putImageData(analysisResult.mask, 0, 0)
+                                  }
+                                }}
+                                className='w-full h-full object-contain'
+                              />
+                              {/* Download button overlay */}
+                              <button
+                                className='absolute top-3 right-3 px-3 py-1 text-xs bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 rounded-full hover:bg-white dark:hover:bg-gray-800 transition-colors shadow-md backdrop-blur-sm'
+                                onClick={() => {
+                                  if (analysisResult?.mask) {
+                                    const canvas = document.createElement('canvas')
+                                    const ctx = canvas.getContext('2d')!
+                                    canvas.width = analysisResult.mask.width
+                                    canvas.height = analysisResult.mask.height
+                                    ctx.putImageData(analysisResult.mask, 0, 0)
+                                    
+                                    const link = document.createElement('a')
+                                    link.download = 'head-analysis-result.png'
+                                    link.href = canvas.toDataURL()
+                                    link.click()
+                                  }
+                                }}
+                              >
+                                下载结果
+                              </button>
+                            </>
+                          ) : (
+                            <div className='flex items-center justify-center h-full'>
+                              <div className='text-center space-y-4'>
+                                <div className='w-16 h-16 mx-auto bg-primary rounded-2xl flex items-center justify-center shadow-lg'>
+                                  <Brain className='w-8 h-8 text-white' />
+                                </div>
+                                <div>
+                                  <p className='text-lg font-semibold text-gray-900 dark:text-white'>
+                                    AI分析完成
+                                  </p>
+                                  <p className='text-sm text-gray-600 dark:text-gray-400'>
+                                    基于深度学习的头型识别
+                                  </p>
+                                </div>
+                              </div>
                             </div>
-                            <div>
-                              <p className='text-lg font-semibold text-gray-900 dark:text-white'>
-                                AI分析完成
-                              </p>
-                              <p className='text-sm text-gray-600 dark:text-gray-400'>
-                                基于深度学习的头型识别
-                              </p>
+                          )}
+                        </div>
+                        
+                        {/* Legend - only show when mask is available */}
+                        {analysisResult?.mask && (
+                          <div className='bg-gray-50 dark:bg-gray-800 rounded-lg p-4'>
+                            <h6 className='text-sm font-medium text-gray-700 dark:text-gray-300 mb-3'>颜色说明</h6>
+                            <div className='flex flex-wrap gap-4 text-xs'>
+                              <div className='flex items-center gap-2'>
+                                <div className='w-3 h-3 bg-red-500 rounded'></div>
+                                <span className='text-gray-600 dark:text-gray-400'>高置信度区域 (&gt;70%)</span>
+                              </div>
+                              <div className='flex items-center gap-2'>
+                                <div className='w-3 h-3 bg-orange-500 rounded'></div>
+                                <span className='text-gray-600 dark:text-gray-400'>中等置信度区域 (30-70%)</span>
+                              </div>
+                              <div className='flex items-center gap-2'>
+                                <div className='w-3 h-3 bg-gray-300 rounded'></div>
+                                <span className='text-gray-600 dark:text-gray-400'>低置信度区域 (&lt;30%)</span>
+                              </div>
                             </div>
                           </div>
-                        </div>
+                        )}
 
                         {/* Metrics */}
                         <div className='space-y-6'>
