@@ -50,6 +50,39 @@
     background: rgb(156 163 175);
   }
   
+  /* Custom cursor styles for image manipulation */
+  .cursor-grab {
+    cursor: grab;
+  }
+  
+  .cursor-grabbing {
+    cursor: grabbing;
+  }
+  
+  .cursor-nw-resize {
+    cursor: nw-resize;
+  }
+  
+  .cursor-ne-resize {
+    cursor: ne-resize;
+  }
+  
+  .cursor-sw-resize {
+    cursor: sw-resize;
+  }
+  
+  .cursor-se-resize {
+    cursor: se-resize;
+  }
+  
+  .cursor-move {
+    cursor: move;
+  }
+  
+  .cursor-default {
+    cursor: default;
+  }
+  
   .dark .scrollbar-thin::-webkit-scrollbar-track {
     background: rgb(31 41 55);
   }

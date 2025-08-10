@@ -23,15 +23,19 @@
     "@heroui/theme": "2.4.17",
     "@react-aria/ssr": "3.9.9",
     "@react-aria/visually-hidden": "3.8.24",
+    "canvas": "^3.0.0-rc3",
     "clsx": "2.1.1",
     "framer-motion": "11.13.1",
     "intl-messageformat": "10.7.16",
+    "konva": "^9.3.22",
     "lucide-react": "^0.525.0",
     "next": "15.3.1",
     "next-themes": "0.4.6",
     "onnxruntime-web": "^1.22.0",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "react-konva": "^19.0.7",
+    "use-image": "^1.1.4"
   },
   "devDependencies": {
     "@eslint/compat": "1.2.8",

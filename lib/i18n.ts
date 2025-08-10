@@ -28,8 +28,8 @@ export interface TranslationKeys {
 export const translations: TranslationKeys = {
   // Site basic information
   'site.title': {
-    zh: '婴儿头型发育指南',
-    en: 'Infant Head Shape Development Guide',
+    zh: '小月颅',
+    en: 'XiaoYueLu',
   },
   'site.description': {
     zh: '科学认知婴儿头型发育，理性护理减少焦虑',
@@ -40,6 +40,10 @@ export const translations: TranslationKeys = {
   'nav.home': {
     zh: '首页',
     en: 'Home',
+  },
+  'nav.detection': {
+    zh: '头型检测',
+    en: 'Head Shape Detection',
   },
   'nav.language': {
     zh: '语言',
@@ -624,6 +628,32 @@ export const translations: TranslationKeys = {
   'button.test-now': {
     zh: '立即测试',
     en: 'Test Now',
+  },
+
+  // Detection page
+  'detection.hero.title': {
+    zh: 'AI头型智能分析',
+    en: 'AI Head Shape Analysis',
+  },
+  'detection.hero.subtitle': {
+    zh: '深度学习 · 隐私安全 · 本地处理',
+    en: 'Deep Learning · Privacy Secure · Local Processing',
+  },
+  'detection.hero.description': {
+    zh: '基于先进深度学习算法的专业头型评估系统，所有数据处理均在您的设备本地完成，无需上传任何照片，确保您和宝宝的隐私安全。',
+    en: 'Professional head shape assessment system based on advanced deep learning algorithms. All data processing is completed locally on your device without uploading any photos, ensuring your and your baby\'s privacy and security.',
+  },
+  'detection.hero.features.ai': {
+    zh: '🧠 深度学习算法',
+    en: '🧠 Deep Learning Algorithm',
+  },
+  'detection.hero.features.privacy': {
+    zh: '🔒 本地处理，隐私安全',
+    en: '🔒 Local Processing, Privacy Secure',
+  },
+  'detection.hero.features.professional': {
+    zh: '⚕️ 专业医学标准',
+    en: '⚕️ Professional Medical Standards',
   },
 }
 
