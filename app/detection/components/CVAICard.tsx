@@ -9,6 +9,7 @@ import {
   classifyCVAI,
   CVAI_CLASSIFICATION_CONFIG,
 } from './config/headShapeClassification'
+import { useLocale } from '@/contexts/LocaleContext'
 
 interface CVAICardProps {
   value: number // CVAI value (0-1 range)
@@ -87,13 +88,14 @@ function calculateCVAIPosition(cvaiPercentage: number): number {
 }
 
 export default function CVAICard({ value, measurements }: CVAICardProps) {
+  const { t } = useLocale()
   const cvaiPercentage = value * 100
   const result = classifyCVAI(value)
   const colors = getSeverityColors(result.severity)
   const position = calculateCVAIPosition(cvaiPercentage)
-  // Use labels directly from config
+  // Use translated labels from config
   const categoryLabels = CVAI_CLASSIFICATION_CONFIG.ranges.map(
-    range => range.label
+    range => t(range.labelKey)
   )
 
   return (
@@ -101,14 +103,14 @@ export default function CVAICard({ value, measurements }: CVAICardProps) {
       <div className='flex items-center gap-2 mb-3'>
         <div className='w-2 h-2 bg-primary rounded-full' />
         <div className='text-sm font-medium text-gray-700 dark:text-gray-300'>
-          颅穹不对称指数 (CVAI)
+          {t('detection.analysis.cvai.title')}
         </div>
       </div>
 
       {/* Classification result and value */}
       <div className='flex items-center justify-between mb-2'>
         <div className={`text-xl font-bold ${colors.text}`}>
-          {result.classification}
+          {t(result.classification)}
         </div>
         <div
           className={`px-3 py-1 rounded-full text-sm font-medium ${colors.bg} ${colors.text}`}
@@ -120,9 +122,10 @@ export default function CVAICard({ value, measurements }: CVAICardProps) {
       {/* Formula display */}
       {measurements && (
         <div className='text-sm text-gray-600 dark:text-gray-400 mb-3'>
-          = |对角线1({measurements.diagonal1.toFixed(1)}) - 对角线2(
-          {measurements.diagonal2.toFixed(1)})| / 对角线1(
-          {measurements.diagonal1.toFixed(1)}) × 100
+          = |{t('detection.analysis.cvai.diagonal1')}({measurements.diagonal1.toFixed(1)}) - {t('detection.analysis.cvai.diagonal2')}(
+          {measurements.diagonal2.toFixed(1)})| / {t('detection.analysis.cvai.diagonal1')}(
+          {measurements.diagonal1.toFixed(1)}
+) × 100
         </div>
       )}
 

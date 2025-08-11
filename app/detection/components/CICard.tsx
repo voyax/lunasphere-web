@@ -9,6 +9,7 @@ import {
   classifyCI,
   CI_CLASSIFICATION_CONFIG,
 } from './config/headShapeClassification'
+import { useLocale } from '@/contexts/LocaleContext'
 
 interface CICardProps {
   value: number // CI value (0-1 range)
@@ -87,13 +88,14 @@ function calculateCIPosition(ciPercentage: number): number {
 }
 
 export default function CICard({ value, measurements }: CICardProps) {
+  const { t } = useLocale()
   const ciPercentage = value * 100
   const result = classifyCI(value)
   const colors = getSeverityColors(result.severity)
   const position = calculateCIPosition(ciPercentage)
-  // Use labels directly from config
+  // Use translated labels from config
   const categoryLabels = CI_CLASSIFICATION_CONFIG.ranges.map(
-    range => range.label
+    range => t(range.labelKey)
   )
 
   return (
@@ -101,14 +103,14 @@ export default function CICard({ value, measurements }: CICardProps) {
       <div className='flex items-center gap-2 mb-3'>
         <div className='w-2 h-2 bg-primary rounded-full' />
         <div className='text-sm font-medium text-gray-700 dark:text-gray-300'>
-          头颅宽长比 (CI)
+          {t('detection.analysis.ci.title')}
         </div>
       </div>
 
       {/* Classification result and value */}
       <div className='flex items-center justify-between mb-2'>
         <div className={`text-xl font-bold ${colors.text}`}>
-          {result.classification}
+          {t(result.classification)}
         </div>
         <div
           className={`px-3 py-1 rounded-full text-sm font-medium ${colors.bg} ${colors.text}`}
@@ -182,7 +184,7 @@ export default function CICard({ value, measurements }: CICardProps) {
             <div className='absolute right-0 top-3 w-2/5 h-px bg-gray-400' />
             {/* Text in the middle */}
             <div className='absolute left-1/2 top-3 transform -translate-x-1/2 -translate-y-1/2 text-xs text-gray-600 font-medium whitespace-nowrap bg-white dark:bg-gray-800 px-1'>
-              长头
+              {t('detection.analysis.ci.longHead')}
             </div>
           </div>
         </div>
@@ -200,7 +202,7 @@ export default function CICard({ value, measurements }: CICardProps) {
             <div className='absolute right-0 top-3 w-2/5 h-px bg-gray-400' />
             {/* Text in the middle */}
             <div className='absolute left-1/2 top-3 transform -translate-x-1/2 -translate-y-1/2 text-xs text-gray-600 font-medium whitespace-nowrap bg-white dark:bg-gray-800 px-1'>
-              扁头
+              {t('detection.analysis.ci.flatHead')}
             </div>
           </div>
         </div>

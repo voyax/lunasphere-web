@@ -61,10 +61,10 @@ export default function DetectionPage() {
                 <div className='w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
                 <div>
                   <p className='text-sm font-medium text-blue-900 dark:text-blue-100'>
-                    AI模型加载中，请稍候...
+                    {t('detection.model.loading')}
                   </p>
                   <p className='text-xs text-blue-700 dark:text-blue-300'>
-                    首次加载可能需要较长时间，请耐心等待
+                    {t('detection.model.loadingHint')}
                   </p>
                 </div>
               </div>
@@ -79,10 +79,10 @@ export default function DetectionPage() {
                 </div>
                 <div>
                   <p className='text-sm font-medium text-amber-900 dark:text-amber-100'>
-                    AI模型未加载
+                    {t('detection.model.notLoaded')}
                   </p>
                   <p className='text-xs text-amber-700 dark:text-amber-300'>
-                    请等待模型自动加载完成后再进行检测
+                    {t('detection.model.notLoadedHint')}
                   </p>
                 </div>
               </div>
@@ -98,10 +98,10 @@ export default function DetectionPage() {
                   </div>
                   <div>
                     <p className='text-sm font-medium text-green-900 dark:text-green-100'>
-                      AI模型已就绪
+                      {t('detection.model.ready')}
                     </p>
                     <p className='text-xs text-green-700 dark:text-green-300'>
-                      现在可以上传图片进行头型检测分析
+                      {t('detection.model.readyHint')}
                     </p>
                   </div>
                 </div>

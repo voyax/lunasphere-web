@@ -6,6 +6,7 @@ import { Card, CardBody, CardHeader } from '@heroui/card'
 import { Brain, Settings } from 'lucide-react'
 
 import { getModelInstance } from '@/lib/model-inference'
+import { useLocale } from '@/contexts/LocaleContext'
 
 interface ModelManagerProps {
   modelPath: string
@@ -28,6 +29,7 @@ export default function ModelManager({
   confidenceThreshold,
   setConfidenceThreshold,
 }: ModelManagerProps) {
+  const { t } = useLocale()
   const [isDebugOpen, setIsDebugOpen] = useState(false)
   const [loadError, setLoadError] = useState<string | null>(null)
 
@@ -70,7 +72,7 @@ export default function ModelManager({
 
   const loadModel = async () => {
     if (!modelPath.trim()) {
-      setLoadError('请输入模型路径')
+      setLoadError(t('detection.modelManager.errors.enterModelPath'))
 
       return
     }
@@ -86,7 +88,7 @@ export default function ModelManager({
     } catch (error) {
       console.error('Model loading failed:', error)
       setIsModelLoaded(false)
-      setLoadError(error instanceof Error ? error.message : '未知错误')
+      setLoadError(error instanceof Error ? error.message : t('detection.modelManager.errors.unknownError'))
     } finally {
       setIsLoadingModel(false)
     }
@@ -98,10 +100,10 @@ export default function ModelManager({
       <div className='fixed bottom-4 right-4 z-50'>
         <Button
           isIconOnly
-          aria-label='打开调试模式'
+          aria-label={t('detection.modelManager.openDebugMode')}
           className='bg-gray-800/80 hover:bg-gray-700/90 text-white backdrop-blur-sm shadow-lg border border-gray-600/50'
           size='sm'
-          title='调试模式 (快捷键: Ctrl+Shift+D)'
+          title={t('detection.modelManager.debugModeTitle')}
           variant='flat'
           onClick={() => setIsDebugOpen(!isDebugOpen)}
         >
@@ -114,7 +116,7 @@ export default function ModelManager({
         <div className='fixed inset-0 z-40 flex items-center justify-center p-4'>
           {/* Backdrop */}
           <div
-            aria-label='关闭调试模式'
+            aria-label={t('detection.modelManager.closeDebugMode')}
             className='absolute inset-0 bg-black/20 backdrop-blur-sm'
             role='button'
             tabIndex={0}
@@ -144,7 +146,7 @@ export default function ModelManager({
                 <div className='flex items-center gap-3 pr-8'>
                   <div className='inline-flex items-center gap-2 bg-purple-500/10 text-purple-600 dark:text-purple-400 px-3 py-1 rounded-full text-sm font-medium'>
                     <Brain className='w-4 h-4' />
-                    模型管理 (调试模式)
+                    {t('detection.modelManager.title')}
                   </div>
                   <div
                     className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${
@@ -169,16 +171,16 @@ export default function ModelManager({
                       }`}
                     />
                     {isLoadingModel
-                      ? '加载中...'
+                      ? t('detection.modelManager.status.loading')
                       : loadError
-                        ? '加载失败'
+                        ? t('detection.modelManager.status.loadFailed')
                         : isModelLoaded
-                          ? '模型已加载'
-                          : '模型未加载'}
+                          ? t('detection.modelManager.status.loaded')
+                          : t('detection.modelManager.status.notLoaded')}
                   </div>
                   {loadError && (
                     <div className='text-xs text-red-500 dark:text-red-400 mt-1 px-3 py-1 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800'>
-                      错误: {loadError}
+                      {t('detection.modelManager.error')}: {loadError}
                     </div>
                   )}
                 </div>
@@ -190,7 +192,7 @@ export default function ModelManager({
                       <input
                         className='w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all'
                         disabled={isLoadingModel}
-                        placeholder='ONNX模型文件路径'
+                        placeholder={t('detection.modelManager.modelPathPlaceholder')}
                         type='text'
                         value={modelPath}
                         onChange={e => setModelPath(e.target.value)}
@@ -202,7 +204,7 @@ export default function ModelManager({
                       isLoading={isLoadingModel}
                       onClick={loadModel}
                     >
-                      {isLoadingModel ? '加载中...' : '加载模型'}
+                      {isLoadingModel ? t('detection.modelManager.status.loading') : t('detection.modelManager.loadModel')}
                     </Button>
                   </div>
 
@@ -211,7 +213,7 @@ export default function ModelManager({
                       className='text-sm font-medium text-gray-700 dark:text-gray-300 min-w-[120px]'
                       htmlFor='confidence-threshold'
                     >
-                      置信度阈值：
+                      {t('detection.modelManager.confidenceThreshold')}：
                     </label>
                     <div className='flex-1 flex items-center gap-3'>
                       <input
@@ -236,11 +238,10 @@ export default function ModelManager({
 
                 <div className='space-y-2 mt-3'>
                   <p className='text-sm text-gray-600 dark:text-gray-400'>
-                    💡 提示：默认模型 model_weights_best.onnx
-                    会自动加载，您也可以指定其他模型路径
+                    {t('detection.modelManager.tips.defaultModel')}
                   </p>
                   <p className='text-sm text-gray-600 dark:text-gray-400'>
-                    🎯 置信度阈值：只保留高于此阈值的检测结果，建议值 0.7-0.8
+                    {t('detection.modelManager.tips.confidenceThreshold')}
                   </p>
                 </div>
               </CardBody>

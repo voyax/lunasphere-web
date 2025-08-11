@@ -19,8 +19,8 @@ export interface ModelPrediction {
   mask?: ImageData // Add mask output
   originalImage?: ImageData
   measurements?: {
-    bpd: number // Biparietal Diameter (双顶径)
-    ofd: number // Occipitofrontal Diameter (枕额径)
+    bpd: number // Biparietal Diameter
+    ofd: number // Occipitofrontal Diameter
     bpdLine: { start: { x: number; y: number }; end: { x: number; y: number } }
     ofdLine: { start: { x: number; y: number }; end: { x: number; y: number } }
     diagonal1: {
@@ -682,7 +682,7 @@ export class HeadShapeModel {
 
       // Check if head was detected
       if (!measurements) {
-        throw new Error('未检测到头型，请确保图像中包含清晰的头部轮廓')
+        throw new Error('detection.errors.noHeadDetected')
       }
 
       // Calculate CI (Cephalic Index) = BPD / OFD * 100
@@ -726,14 +726,14 @@ export class HeadShapeModel {
       )
 
       // Determine head shape based on CI value (medical standards)
-      let headShape = '正常'
+      let headShape = 'detection.classification.normal'
 
       if (ci < 0.75) {
-        headShape = '短头型 (Brachycephaly)'
+        headShape = 'detection.classification.brachycephaly'
       } else if (ci > 0.85) {
-        headShape = '长头型 (Dolichocephaly)'
+        headShape = 'detection.classification.dolichocephaly'
       } else if (cvai > 0.1) {
-        headShape = '偏头型 (Plagiocephaly)'
+        headShape = 'detection.classification.plagiocephaly'
       }
 
       return {

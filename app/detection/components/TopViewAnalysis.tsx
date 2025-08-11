@@ -16,6 +16,7 @@ import CICard from './CICard'
 import CVAICard from './CVAICard'
 
 import { getModelInstance, type ModelPrediction } from '@/lib/model-inference'
+import { useLocale } from '@/contexts/LocaleContext'
 
 interface TopViewAnalysisProps {
   images: Record<ImageType, ImageUploadData | null>
@@ -48,6 +49,7 @@ export default function TopViewAnalysis({
   isModelLoaded,
   isLoadingModel,
 }: TopViewAnalysisProps) {
+  const { t } = useLocale()
   const handleFileUpload = (
     event: React.ChangeEvent<HTMLInputElement>,
     imageType: ImageType
@@ -89,7 +91,7 @@ export default function TopViewAnalysis({
 
     try {
       if (!isModelLoaded) {
-        throw new Error('模型未加载，请先加载模型')
+        throw new Error(t('detection.errors.modelNotLoaded'))
       }
 
       const model = getModelInstance(modelPath, { confidenceThreshold })
@@ -117,14 +119,14 @@ export default function TopViewAnalysis({
         } catch (error) {
           console.error('Analysis failed:', error)
           setAnalysisResult({
-            error: `分析失败: ${error instanceof Error ? error.message : '未知错误'}`,
+            error: `${t('detection.errors.analysisFailed')}: ${error instanceof Error ? error.message : t('detection.errors.unknownError')}`,
           })
           setCurrentStep(3)
         }
       }
 
       img.onerror = () => {
-        setAnalysisResult({ error: '图片加载失败，请重新上传' })
+        setAnalysisResult({ error: t('detection.errors.imageLoadFailed') })
         setCurrentStep(3)
       }
 
@@ -132,7 +134,7 @@ export default function TopViewAnalysis({
     } catch (error) {
       console.error('Analysis setup failed:', error)
       setAnalysisResult({
-        error: `分析失败: ${error instanceof Error ? error.message : '未知错误'}`,
+        error: `${t('detection.errors.analysisFailed')}: ${error instanceof Error ? error.message : t('detection.errors.unknownError')}`,
       })
       setCurrentStep(3)
     } finally {
@@ -147,28 +149,28 @@ export default function TopViewAnalysis({
         {/* Main Title */}
         <h1 className='text-4xl md:text-5xl lg:text-6xl font-light mb-6 tracking-tight leading-tight'>
           <span className='font-extralight text-gray-900 dark:text-white drop-shadow-sm'>
-            婴儿头型测量
+            {t('detection.topView.title')}
           </span>
         </h1>
 
         {/* Subtitle */}
         <p className='text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed font-light mb-8'>
-          基于深度学习的头型检测，所有计算均在浏览器本地完成，照片不会上传到任何服务器，确保您和宝宝的隐私安全
+          {t('detection.topView.description')}
         </p>
 
         {/* Feature highlights */}
         <div className='flex flex-wrap justify-center gap-4 max-w-2xl mx-auto mb-8'>
           <div className='inline-flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-950/20 rounded-full text-blue-600 dark:text-blue-400 text-sm font-medium border border-blue-200 dark:border-blue-800'>
             <span className='text-base'>🧠</span>
-            深度学习算法
+            {t('detection.topView.features.deepLearning')}
           </div>
           <div className='inline-flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-950/20 rounded-full text-green-600 dark:text-green-400 text-sm font-medium border border-green-200 dark:border-green-800'>
             <span className='text-base'>🔒</span>
-            本地处理，隐私安全
+            {t('detection.topView.features.privacy')}
           </div>
           <div className='inline-flex items-center gap-2 px-4 py-2 bg-purple-50 dark:bg-purple-950/20 rounded-full text-purple-600 dark:text-purple-400 text-sm font-medium border border-purple-200 dark:border-purple-800'>
             <span className='text-base'>⚕️</span>
-            专业医学标准
+            {t('detection.topView.features.medical')}
           </div>
         </div>
       </div>
@@ -180,22 +182,21 @@ export default function TopViewAnalysis({
           <div className='text-center xl:text-left'>
             <div className='flex items-center gap-2 justify-center xl:justify-start mb-2'>
               <h3 className='text-2xl font-bold text-gray-900 dark:text-white'>
-                俯视图上传
+                {t('detection.topView.title')}
               </h3>
               <Tooltip
                 showArrow
                 content={
                   <div className='max-w-sm p-2'>
-                    <h4 className='font-semibold text-sm mb-3'>📋 拍摄要点</h4>
                     <div className='space-y-2'>
                       <div className='flex items-start gap-2'>
                         <span className='text-blue-500 font-bold text-xs mt-0.5'>
                           1
                         </span>
                         <div>
-                          <p className='font-medium text-xs'>👃 微微透出鼻尖</p>
+                          <p className='font-medium text-xs'>{t('detection.topView.shootingTips.tip1')}</p>
                           <p className='text-xs text-gray-600 dark:text-gray-400'>
-                            拍摄角度应能看到宝宝的鼻尖，确保俯视角度正确
+                            {t('detection.topView.shootingTips.tip1Detail')}
                           </p>
                         </div>
                       </div>
@@ -205,10 +206,10 @@ export default function TopViewAnalysis({
                         </span>
                         <div>
                           <p className='font-medium text-xs'>
-                            💡 光线充足，避免阴影
+                            {t('detection.topView.shootingTips.tip2')}
                           </p>
                           <p className='text-xs text-gray-600 dark:text-gray-400'>
-                            确保头型轮廓清晰可见，建议自然光拍摄
+                            {t('detection.topView.shootingTips.tip2Detail')}
                           </p>
                         </div>
                       </div>
@@ -218,10 +219,10 @@ export default function TopViewAnalysis({
                         </span>
                         <div>
                           <p className='font-medium text-xs'>
-                            📱 手机与头部平行
+                            {t('detection.topView.shootingTips.tip3')}
                           </p>
                           <p className='text-xs text-gray-600 dark:text-gray-400'>
-                            减少拍摄偏差，保持手机水平
+                            {t('detection.topView.shootingTips.tip3Detail')}
                           </p>
                         </div>
                       </div>
@@ -230,14 +231,14 @@ export default function TopViewAnalysis({
                           4
                         </span>
                         <div>
-                          <p className='font-medium text-xs'>💧 避免头发遮挡</p>
+                          <p className='font-medium text-xs'>{t('detection.topView.shootingTips.tip4')}</p>
                           <p className='text-xs text-gray-600 dark:text-gray-400'>
-                            如头发较多，可用水润湿贴在头上，或洗澡后拍摄
+                            {t('detection.topView.shootingTips.tip4Detail')}
                           </p>
                         </div>
                       </div>
                       <p className='text-xs text-red-600 dark:text-red-400 font-medium mt-3'>
-                        ⚠️ 所有拍摄请确保宝宝安全、健康！
+                        {t('detection.topView.shootingTips.safety')}
                       </p>
                     </div>
                   </div>
@@ -245,12 +246,12 @@ export default function TopViewAnalysis({
                 placement='bottom'
               >
                 <span className='inline-flex items-center gap-1 px-2 py-1 bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 rounded-full text-xs font-medium cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors duration-200 border border-blue-200/50 dark:border-blue-700/50'>
-                  📋 拍摄要点
+                  {t('detection.topView.shootingTips.title')}
                 </span>
               </Tooltip>
             </div>
             <p className='text-gray-600 dark:text-gray-400'>
-              按照指南拍摄并上传头部俯视图
+              {t('detection.topView.description')}
             </p>
           </div>
 
@@ -270,7 +271,7 @@ export default function TopViewAnalysis({
               {/* Background placeholder image with annotations */}
               <div className='absolute inset-0'>
                 <img
-                  alt='俯视图拍摄示例'
+                  alt={t('detection.topView.exampleImageAlt')}
                   className='w-full h-full object-contain opacity-70 dark:opacity-60'
                   src='/images/detection/head_normal_top.jpg'
                 />
@@ -281,24 +282,24 @@ export default function TopViewAnalysis({
                   {/* Vertical dashed line connecting frontal and occipital */}
                   <div className='absolute left-1/2 top-8 bottom-8 w-0.5 border-l-2 border-dashed border-rose-500/70 transform -translate-x-1/2' />
 
-                  {/* 前额 (Frontal) label - top center */}
+                  {/* Frontal label - top center */}
                   <div className='absolute top-0 left-1/2 transform -translate-x-1/2 bg-rose-500/90 text-white text-xs px-2.5 py-1 rounded font-medium shadow-md backdrop-blur-sm'>
-                    前额
+                    {t('detection.topView.annotations.forehead')}
                   </div>
 
-                  {/* 鼻子 (Nose) indicator - below frontal area */}
+                  {/* Nose indicator - below frontal area */}
                   <div className='absolute top-8 left-1/2 flex items-center'>
                     {/* Horizontal dashed line pointing right */}
                     <div className='w-32 h-0.5 border-t-2 border-dashed border-rose-500/70' />
                     {/* Label */}
                     <div className='ml-2 bg-orange-100/90 text-orange-800 text-xs px-2.5 py-1 rounded font-medium shadow-md backdrop-blur-sm whitespace-nowrap'>
-                      刚刚漏出鼻子
+                      {t('detection.topView.annotations.noseVisible')}
                     </div>
                   </div>
 
-                  {/* 后枕 (Occipital) label - bottom center */}
+                  {/* Occipital label - bottom center */}
                   <div className='absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-rose-500/90 text-white text-xs px-2.5 py-1 rounded font-medium shadow-md backdrop-blur-sm'>
-                    后枕
+                    {t('detection.topView.annotations.occiput')}
                   </div>
                 </div>
               </div>
@@ -313,7 +314,7 @@ export default function TopViewAnalysis({
                     </div>
                     <div className='text-center'>
                       <p className='text-lg font-semibold text-gray-900 dark:text-white drop-shadow-sm'>
-                        点击或拖拽图片到此处
+                        {t('detection.topView.upload.clickOrDrag')}
                       </p>
                     </div>
                   </div>
@@ -321,7 +322,7 @@ export default function TopViewAnalysis({
                   <div className='inline-flex items-center gap-2 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-lg px-4 py-2.5 border border-white/80 dark:border-gray-600/80 shadow-lg'>
                     <div className='w-2 h-2 bg-primary/60 rounded-full' />
                     <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
-                      支持 JPG、PNG 格式，最大 10MB
+                      {t('detection.topView.upload.supportFormat')}
                     </span>
                   </div>
                 </div>
@@ -331,7 +332,7 @@ export default function TopViewAnalysis({
             <div className='space-y-6'>
               <div className='relative aspect-square bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700'>
                 <img
-                  alt='俯视图原图'
+                  alt={t('detection.topView.originalImageAlt')}
                   className='w-full h-full object-contain'
                   src={images.top.url}
                   style={{
@@ -344,14 +345,14 @@ export default function TopViewAnalysis({
                   {/* Vertical dashed line connecting forehead and occipital */}
                   <div className='absolute left-1/2 top-0 bottom-0 w-0.5 border-l-2 border-dashed border-rose-500/70 transform -translate-x-1/2' />
 
-                  {/* 前额 (Forehead) label - top center */}
+                  {/* Forehead label - top center */}
                   <div className='absolute top-0 left-1/2 transform -translate-x-1/2 bg-rose-500/90 text-white text-xs px-2.5 py-1 rounded font-medium shadow-md backdrop-blur-sm'>
-                    前额
+                    {t('detection.topView.annotations.forehead')}
                   </div>
 
-                  {/* 后枕 (Occipital) label - bottom center */}
+                  {/* Occipital label - bottom center */}
                   <div className='absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-rose-500/90 text-white text-xs px-2.5 py-1 rounded font-medium shadow-md backdrop-blur-sm'>
-                    后枕
+                    {t('detection.topView.annotations.occiput')}
                   </div>
                 </div>
               </div>
@@ -360,10 +361,10 @@ export default function TopViewAnalysis({
                 <div className='flex items-center justify-between'>
                   <div className='flex items-center gap-2'>
                     <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
-                      旋转调整
+                      {t('detection.topView.upload.rotation')}
                     </span>
                     <span className='text-xs text-gray-500 dark:text-gray-400'>
-                      💡 调整图片角度，确保前额朝上
+                      {t('detection.topView.upload.rotationTip')}
                     </span>
                   </div>
                   <RotationControl
@@ -389,12 +390,12 @@ export default function TopViewAnalysis({
                     }
                     onClick={analyzeTopView}
                   >
-                    {isLoadingModel
-                      ? '模型加载中...'
-                      : isProcessing
-                        ? '分析中...'
-                        : '开始分析'}
-                  </Button>
+                      {isLoadingModel
+                        ? t('detection.model.loadingButton')
+                        : isProcessing
+                          ? t('detection.topView.buttons.analyzing')
+                          : t('detection.topView.buttons.startAnalysis')}
+                    </Button>
                   <Button
                     className='h-10 px-3'
                     size='md'
@@ -404,7 +405,7 @@ export default function TopViewAnalysis({
                       document.getElementById('top-upload')?.click()
                     }
                   >
-                    重新上传
+                    {t('detection.topView.buttons.reupload')}
                   </Button>
                 </div>
               </div>
@@ -423,10 +424,10 @@ export default function TopViewAnalysis({
         <div className='space-y-6'>
           <div className='text-center xl:text-left'>
             <h3 className='text-2xl font-bold text-gray-900 dark:text-white mb-2'>
-              分析结果
+              {t('detection.topView.analysisResult')}
             </h3>
             <p className='text-gray-600 dark:text-gray-400'>
-              根据识别的头型轮廓，计算 CI、CVAI
+              {t('detection.topView.analysisDescription')}
             </p>
           </div>
 
@@ -440,10 +441,10 @@ export default function TopViewAnalysis({
                     </div>
                     <div>
                       <p className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
-                        等待图片上传
+                        {t('detection.topView.analysis.waitingUpload')}
                       </p>
                       <p className='text-gray-500 dark:text-gray-400'>
-                        上传图片后开始AI智能分析
+                        {t('detection.topView.analysis.waitingUploadDesc')}
                       </p>
                     </div>
                   </>
@@ -454,10 +455,10 @@ export default function TopViewAnalysis({
                     </div>
                     <div>
                       <p className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
-                        AI正在分析中
+                        {t('detection.topView.analysis.analyzing')}
                       </p>
                       <p className='text-gray-500 dark:text-gray-400'>
-                        深度学习算法正在处理您的图片...
+                        {t('detection.topView.analysis.analyzingDesc')}
                       </p>
                     </div>
                   </>
@@ -523,8 +524,8 @@ export default function TopViewAnalysis({
                           }
                         }}
                       >
-                        下载结果
-                      </button>
+                          {t('detection.topView.buttons.downloadResult')}
+                        </button>
                     </>
                   ) : (
                     <div className='flex items-center justify-center h-full'>
@@ -534,10 +535,10 @@ export default function TopViewAnalysis({
                         </div>
                         <div>
                           <p className='text-lg font-semibold text-gray-900 dark:text-white'>
-                            AI分析完成
+                            {t('detection.topView.analysis.completed')}
                           </p>
                           <p className='text-sm text-gray-600 dark:text-gray-400'>
-                            基于深度学习的头型识别
+                            {t('detection.topView.analysis.completedDesc')}
                           </p>
                         </div>
                       </div>
@@ -549,7 +550,7 @@ export default function TopViewAnalysis({
                 {analysisResult?.measurements && (
                   <div className='bg-gray-50 dark:bg-gray-800 rounded-lg p-6'>
                     <h6 className='text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4'>
-                      测量标注
+                      {t('detection.topView.analysis.measurementAnnotations')}
                     </h6>
                     <div className='flex flex-wrap gap-6 text-sm'>
                       <div className='flex items-center gap-3'>
@@ -558,7 +559,7 @@ export default function TopViewAnalysis({
                           style={{ backgroundColor: '#FFDC00' }}
                         />
                         <span className='text-gray-700 dark:text-gray-300 font-medium'>
-                          BPD (双顶径)
+                          {t('detection.topView.analysis.bpd')}
                         </span>
                       </div>
                       <div className='flex items-center gap-3'>
@@ -567,7 +568,7 @@ export default function TopViewAnalysis({
                           style={{ backgroundColor: '#F24C62' }}
                         />
                         <span className='text-gray-700 dark:text-gray-300 font-medium'>
-                          OFD (枕额径)
+                          {t('detection.topView.analysis.ofd')}
                         </span>
                       </div>
                       <div className='flex items-center gap-3'>
@@ -579,7 +580,7 @@ export default function TopViewAnalysis({
                           }}
                         />
                         <span className='text-gray-700 dark:text-gray-300 font-medium'>
-                          对角线
+                          {t('detection.topView.analysis.diagonal')}
                         </span>
                       </div>
                     </div>
@@ -611,7 +612,7 @@ export default function TopViewAnalysis({
                   </svg>
                 </div>
                 <div className='text-lg font-semibold text-red-700 dark:text-red-400'>
-                  检测失败
+                  {t('detection.topView.analysis.detectionFailed')}
                 </div>
               </div>
               <div className='text-red-600 dark:text-red-400'>

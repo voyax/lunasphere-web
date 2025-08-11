@@ -61,7 +61,7 @@ export const translations: TranslationKeys = {
   },
   'hero.description': {
     zh: '大多数头型问题属于正常发育现象，通过科学的护理方法可以自然改善。我们帮助新手父母建立正确认知，减少不必要的焦虑。',
-    en: 'Most head shape issues are normal developmental phenomena that can be naturally improved through scientific care methods. We help new parents build correct understanding and reduce unnecessary anxiety.',
+    en: 'Most head shape concerns are part of normal development and improve naturally with proper care. We help new parents understand what\'s normal and reduce unnecessary worry.',
   },
   'hero.cta': {
     zh: '头型自测',
@@ -69,7 +69,7 @@ export const translations: TranslationKeys = {
   },
   'hero.consultation': {
     zh: '如有疑虑，可尝试我们的AI头型分析，仅需提供三张照片即可获得专业建议',
-    en: 'If you have concerns, try our AI head shape analysis. Just provide three photos to get professional advice',
+    en: 'If you have concerns, try our AI head shape analysis. Simply upload three photos for professional insights',
   },
 
   // Development section
@@ -79,7 +79,7 @@ export const translations: TranslationKeys = {
   },
   'development.subtitle': {
     zh: '宝宝的头型会随着发育自然变化，0–18 个月是关键观察期',
-    en: 'Head shape changes naturally in the first 18 months.',
+    en: 'Baby\'s head shape changes naturally during development, with 0-18 months being the key observation period',
   },
   'development.structure': {
     zh: '头骨结构',
@@ -222,7 +222,7 @@ export const translations: TranslationKeys = {
   },
   'classification.subtitle': {
     zh: '大多数头型变化都是正常发育现象，了解特征有助于科学护理',
-    en: 'Most head shape variations are normal developmental phenomena. Understanding characteristics helps with scientific care',
+    en: 'Most head shape variations are normal developmental changes. Understanding their characteristics helps with proper care',
   },
 
   // Section labels
@@ -237,6 +237,26 @@ export const translations: TranslationKeys = {
   'classification.correction_label': {
     zh: '纠正手段',
     en: 'Correction Methods',
+  },
+  'classification.reminder_title': {
+    zh: '体位性头型变化是正常现象',
+    en: 'Positional Head Shape Changes Are Normal',
+  },
+  'classification.reminder_content': {
+    zh: '大多数头型变化属于体位性，通过调整睡姿、增加俯卧时间等方法可以自然改善，无需过度担心',
+    en: 'Most head shape changes are positional and improve naturally by adjusting sleep positions, increasing tummy time, and other simple methods - no need to worry excessively',
+  },
+  'classification.reminder_note': {
+    zh: '💡 建议：定期变换宝宝睡觉和玩耍的姿势，促进头型自然发育',
+    en: '💡 Tip: Regularly vary baby\'s sleeping and play positions to encourage natural head shape development',
+  },
+  'classification.medical_warning_title': {
+    zh: '病理性头型需要医疗关注',
+    en: 'Pathological Head Shapes Require Medical Attention',
+  },
+  'classification.medical_warning_content': {
+    zh: '如果发现头型异常严重或伴有其他症状，建议及时咨询儿科医生或头颅外科专家',
+    en: 'If you notice severe head shape abnormalities or other concerning symptoms, please consult a pediatrician or cranial specialist promptly',
   },
 
   // Severity levels
@@ -377,31 +397,6 @@ export const translations: TranslationKeys = {
     en: 'Requires neurosurgical treatment. Usually involves removal of fused sagittal suture and skull reshaping, with better outcomes from early surgery.',
   },
 
-  // Reminder section
-  'classification.reminder_title': {
-    zh: '温馨提醒：',
-    en: 'Gentle Reminder: ',
-  },
-  'classification.reminder_content': {
-    zh: '根据医学研究，大多数头型变化都会在宝宝成长过程中自然改善，无需过度担心。',
-    en: 'According to medical research, most head shape variations naturally improve as babies grow, without need for excessive worry.',
-  },
-  'classification.reminder_note': {
-    zh: '如有疑虑，建议在常规儿保检查时咨询儿科医生。早期的简单护理调整通常就很有效。',
-    en: 'If concerned, consult your pediatrician during routine check-ups. Early simple care adjustments are usually very effective.',
-  },
-
-  // Medical intervention warning
-  'classification.medical_warning_title': {
-    zh: '重要提醒：病理性头型需要医学干预',
-    en: 'Important Notice: Pathological Head Shapes Require Medical Intervention',
-  },
-  'classification.medical_warning_content': {
-    zh: '病理性舟状头是由颅缝早闭引起的医学疾病，需要神经外科专业评估和治疗。如发现头型异常伴有颅缝隆起、头围异常增长或发育迟缓，请及时就医。',
-    en: 'Pathological scaphocephaly is a medical condition caused by craniosynostosis that requires professional neurosurgical evaluation and treatment. If you notice abnormal head shape with cranial suture ridging, abnormal head circumference growth, or developmental delays, please seek medical attention promptly.',
-  },
-
-  // Sleep tips section
   // Sleep tips section
   'sleep.title': {
     zh: '帮助宝宝睡出好头型',
@@ -409,7 +404,7 @@ export const translations: TranslationKeys = {
   },
   'sleep.subtitle': {
     zh: '看完我们整理的内容，多观察，循序渐进，宝宝就能轻松睡出漂亮圆头',
-    en: 'With careful observation and gradual progress, your baby can naturally develop a beautifully rounded head',
+    en: 'With careful observation and gradual implementation of these guidelines, your baby can naturally develop a beautifully rounded head shape',
   },
 
   // 核心原则
@@ -419,7 +414,7 @@ export const translations: TranslationKeys = {
   },
   'sleep.principle1.desc': {
     zh: '始终遵循安全睡眠原则，仰睡可以降低婴儿猝死综合征（SIDS）的风险，避免俯睡，无论何时，都应该把安全放置在第一位',
-    en: 'Always prioritize safe sleep practices. Back sleeping reduces the risk of SIDS, while stomach sleeping should be avoided. Safety must always come first.',
+    en: 'Always follow safe sleep guidelines. Back sleeping significantly reduces SIDS risk. Never place babies on their stomach to sleep - safety must always come first.',
   },
   'sleep.principle2': {
     zh: '勤换睡姿，均匀受力',
@@ -487,19 +482,19 @@ export const translations: TranslationKeys = {
   },
   'sleep.technique1.desc': {
     zh: '在宝宝清醒且有人看护时，从新生儿期开始每天进行3-5次趴卧练习，每次2-5分钟。趴卧能有效减轻后脑勺压力，促进颈背部肌肉发育，预防扁头综合征。注意选择硬实平整的表面，确保宝宝呼吸道畅通',
-    en: 'Start supervised tummy time from the newborn period: 3-5 sessions daily, 2-5 minutes each. This effectively relieves pressure on the back of the head, strengthens neck and back muscles, and prevents flat head syndrome. Always use a firm, flat surface and ensure clear airways.',
+    en: 'Start from the newborn period with 3-5 supervised tummy time sessions daily, 2-5 minutes each. This relieves pressure on the back of the head, strengthens neck muscles, and prevents flat head syndrome. Always use a firm, flat surface and ensure clear breathing',
   },
   'sleep.technique2': {
     zh: '多样化喂养姿势',
-    en: 'Diversified Feeding Positions',
+    en: 'Varied Feeding Positions',
   },
   'sleep.technique2.desc': {
     zh: '采用多种喂养姿势，包括摇篮式、橄榄球式、侧卧式等，每次喂养交替使用左右手臂。避免长时间固定同一姿势，这样不仅能减少头部单侧受压，还能促进宝宝视觉和空间感知能力的全面发展',
-    en: 'Vary your feeding positions—try cradle hold, football hold, and side-lying positions while alternating arms with each feeding. This prevents prolonged pressure on one side of the head and enhances your baby\'s visual and spatial development.',
+    en: 'Alternate between cradle hold, football hold, and side-lying positions. Switch arms with each feeding to prevent prolonged pressure on one side of the head while promoting visual and spatial development',
   },
   'sleep.technique3': {
     zh: '环境引导转头',
-    en: 'Environmental Head Turning Guidance',
+    en: 'Environmental Encouragement',
   },
   'sleep.technique3.desc': {
     zh: '合理布置婴儿床周围环境，定期更换玩具、音乐盒或彩色图案的位置，利用宝宝的好奇心引导其主动转头。每隔几天调换宝宝睡觉的方向（头脚位置对调），这样光线和环境刺激就会从不同方向吸引宝宝转头，简单有效地避免头部总是偏向同一侧',
@@ -521,7 +516,7 @@ export const translations: TranslationKeys = {
   },
   'examples.subtitle': {
     zh: '通过真实图片了解不同头型的特征',
-    en: 'Understanding different head shape characteristics through real images',
+    en: 'Learn to recognize different head shape characteristics through real examples',
   },
 
   // Image captions
@@ -609,11 +604,11 @@ export const translations: TranslationKeys = {
   },
   'sleep.cta_title': {
     zh: '如果您仍有疑惑',
-    en: 'If You Still Have Questions',
+    en: 'Still Have Questions?',
   },
   'sleep.cta_description': {
     zh: '欢迎尝试我们的在线头型测试，或者发送邮件给我们。我们会尽力为每一位家长提供帮助和解答，这些服务都是免费的。',
-    en: 'Try our online head shape assessment or reach out via email. We\'re here to support every parent with personalized guidance—completely free of charge.',
+    en: 'Try our free online head shape assessment or reach out via email. We\'re here to support every parent with personalized guidance and answers.',
   },
 
   // Buttons and interactions
@@ -623,11 +618,11 @@ export const translations: TranslationKeys = {
   },
   'button.contact': {
     zh: '发送邮件',
-    en: 'Send Email',
+    en: 'Contact Us',
   },
   'button.test-now': {
     zh: '立即测试',
-    en: 'Test Now',
+    en: 'Get Started',
   },
 
   // Detection page
@@ -644,16 +639,556 @@ export const translations: TranslationKeys = {
     en: 'Professional head shape assessment system based on advanced deep learning algorithms. All data processing is completed locally on your device without uploading any photos, ensuring your and your baby\'s privacy and security.',
   },
   'detection.hero.features.ai': {
-    zh: '🧠 深度学习算法',
-    en: '🧠 Deep Learning Algorithm',
+    zh: '深度学习算法',
+    en: 'Deep Learning Algorithm',
   },
   'detection.hero.features.privacy': {
-    zh: '🔒 本地处理，隐私安全',
-    en: '🔒 Local Processing, Privacy Secure',
+    zh: '本地处理，隐私安全',
+    en: 'Local Processing, Privacy Secure',
   },
-  'detection.hero.features.professional': {
-    zh: '⚕️ 专业医学标准',
-    en: '⚕️ Professional Medical Standards',
+  'detection.topView.features.medical': {
+    zh: '专业医学标准',
+    en: 'Clinical-Grade Standards',
+  },
+
+  // Detection model
+  'detection.model.loading': {
+    zh: 'AI模型加载中，请稍候...',
+    en: 'AI model loading, please wait...',
+  },
+  'detection.model.notLoaded': {
+    zh: 'AI模型未加载',
+    en: 'AI model not loaded',
+  },
+  'detection.model.ready': {
+    zh: 'AI模型已就绪',
+    en: 'AI model ready',
+  },
+  'detection.model.loadingButton': {
+    zh: '模型加载中...',
+    en: 'Model loading...',
+  },
+  'detection.model.notLoadedMessage': {
+    zh: '模型未加载，请先加载模型',
+    en: 'Model not loaded, please load the model first',
+  },
+  'detection.model.imageLoadFailed': {
+     zh: '图片加载失败，请重新上传',
+     en: 'Image loading failed, please re-upload',
+   },
+   'detection.model.loadingHint': {
+     zh: '首次加载可能需要较长时间，请耐心等待',
+     en: 'First-time loading may take longer, please be patient',
+   },
+   'detection.model.notLoadedHint': {
+     zh: '请等待模型自动加载完成后再进行检测',
+     en: 'Please wait for the model to load automatically before detection',
+   },
+   'detection.model.readyHint': {
+     zh: '现在可以上传图片进行头型检测分析',
+     en: 'You can now upload images for head shape detection analysis',
+   },
+
+  // Detection top view
+  'detection.topView.title': {
+    zh: '婴儿头型测量',
+    en: 'Baby Head Shape Measurement',
+  },
+  'detection.topView.subtitle': {
+    zh: '俯视图上传',
+    en: 'Top View Upload',
+  },
+  'detection.topView.description': {
+    zh: '上传宝宝头部俯视图，获得专业AI分析',
+    en: 'Upload a top-down photo of your baby\'s head for professional AI analysis',
+  },
+  'detection.topView.features.deepLearning': {
+    zh: '深度学习算法',
+    en: 'Advanced AI Technology',
+  },
+  'detection.topView.features.deepLearningDesc': {
+    zh: '先进AI技术，精准识别头型轮廓',
+    en: 'Advanced AI technology for precise head shape recognition',
+  },
+  'detection.topView.features.privacy': {
+    zh: '本地处理，隐私安全',
+    en: 'Complete Privacy Protection',
+  },
+  'detection.topView.features.privacyDesc': {
+    zh: '所有分析均在本地进行，数据不会离开您的设备',
+    en: 'All analysis performed locally, your data never leaves your device',
+  },
+
+  'detection.topView.features.medicalDesc': {
+    zh: '基于临床测量标准，提供可靠的分析结果',
+    en: 'Based on clinical measurement standards, providing reliable results',
+  },
+  'detection.topView.shootingTips.title': {
+    zh: '拍摄要点',
+    en: 'Photo guidelines',
+  },
+  'detection.topView.shootingTips.tip1': {
+    zh: '微微透出鼻尖',
+    en: 'Nose tip should be barely visible',
+  },
+  'detection.topView.shootingTips.tip2': {
+    zh: '光线充足，避免阴影',
+    en: 'Good lighting, avoid shadows',
+  },
+  'detection.topView.shootingTips.tip3': {
+    zh: '手机与头部平行',
+    en: 'Keep phone level with head',
+  },
+  'detection.topView.shootingTips.tip4': {
+    zh: '避免头发遮挡',
+    en: 'Avoid hair covering',
+  },
+  'detection.topView.shootingTips.tip1Detail': {
+    zh: '确保能看到一点鼻尖，但不要露出太多面部',
+    en: 'Ensure nose tip is barely visible, but don\'t show too much face',
+  },
+  'detection.topView.shootingTips.tip2Detail': {
+    zh: '保持手机与宝宝头部在同一水平线上',
+    en: 'Keep phone level with baby\'s head',
+  },
+  'detection.topView.shootingTips.tip3Detail': {
+    zh: '确保前额朝上，头部轮廓清晰可见',
+    en: 'Ensure forehead points upward with clear head contour',
+  },
+  'detection.topView.shootingTips.tip4Detail': {
+    zh: '如头发较多，可用水润湿贴在头上，或洗澡后拍摄',
+    en: 'If hair is thick, wet it to stick to the head, or take photos after bathing',
+  },
+  'detection.topView.shootingTips.safety': {
+    zh: '⚠️ 所有拍摄请确保宝宝安全、健康！',
+    en: '⚠️ Ensure baby safety and health during all photography!',
+  },
+  'detection.topView.annotations.forehead': {
+    zh: '前额',
+    en: 'Forehead',
+  },
+  'detection.topView.annotations.noseVisible': {
+    zh: '刚刚漏出鼻子',
+    en: 'Just showing nose',
+  },
+  'detection.topView.annotations.occiput': {
+    zh: '后枕',
+    en: 'Occiput',
+  },
+  'detection.topView.upload.clickOrDrag': {
+    zh: '点击或拖拽图片到此处',
+    en: 'Click or drag image here',
+  },
+  'detection.topView.upload.supportFormat': {
+    zh: '支持 JPG、PNG 格式，最大 10MB',
+    en: 'Supports JPG, PNG formats, max 10MB',
+  },
+  'detection.topView.upload.rotation': {
+    zh: '旋转调整',
+    en: 'Rotation',
+  },
+  'detection.topView.upload.rotationTip': {
+    zh: '💡 调整图片角度，确保前额朝上',
+    en: '💡 Rotate image so forehead points upward',
+  },
+  'detection.topView.exampleImageAlt': {
+    zh: '正确拍摄示例图片',
+    en: 'Correct shooting example image',
+  },
+  'detection.topView.originalImageAlt': {
+    zh: '原始上传图片',
+    en: 'Original uploaded image',
+  },
+  'detection.topView.analysisResult': {
+    zh: '分析结果',
+    en: 'Analysis Results',
+  },
+  'detection.topView.analysisDescription': {
+    zh: '基于识别的头型轮廓，计算头颅指数和不对称指数',
+    en: 'Calculate CI and CVAI based on identified head contour',
+  },
+  'detection.topView.buttons.analyzing': {
+    zh: '分析中...',
+    en: 'Analyzing...',
+  },
+  'detection.topView.buttons.startAnalysis': {
+    zh: '开始分析',
+    en: 'Analyze Now',
+  },
+  'detection.topView.buttons.reupload': {
+    zh: '重新上传',
+    en: 'Upload New Photo',
+  },
+  'detection.topView.buttons.downloadResult': {
+    zh: '下载结果',
+    en: 'Download Result',
+  },
+  'detection.topView.analysis.startAnalysis': {
+    zh: '开始分析',
+    en: 'Analyze Now',
+  },
+  'detection.topView.analysis.reupload': {
+    zh: '重新上传',
+    en: 'Upload New Photo',
+  },
+  'detection.topView.analysis.downloadResult': {
+    zh: '下载结果',
+    en: 'Save Results',
+  },
+   'detection.topView.upload.modelLoading': {
+     zh: '模型加载中...',
+     en: 'Model loading...',
+   },
+  'detection.topView.analysis.title': {
+    zh: '分析结果',
+    en: 'Analysis Results',
+  },
+  'detection.topView.analysis.description': {
+    zh: '根据识别的头型轮廓，计算 CI、CVAI',
+    en: 'Calculate CI, CVAI based on identified head shape contour',
+  },
+  'detection.topView.analysis.waitingUpload': {
+    zh: '等待图片上传',
+    en: 'Waiting for image upload',
+  },
+  'detection.topView.analysis.waitingUploadDesc': {
+    zh: '上传图片后开始AI智能分析',
+    en: 'Start AI intelligent analysis after uploading image',
+  },
+  'detection.topView.analysis.analyzing': {
+    zh: 'AI正在分析中',
+    en: 'AI is analyzing',
+  },
+  'detection.topView.analysis.analyzingDesc': {
+    zh: '深度学习算法正在处理您的图片...',
+    en: 'Deep learning algorithm is processing your image...',
+  },
+  'detection.topView.analysis.completed': {
+    zh: 'AI分析完成',
+    en: 'AI analysis completed',
+  },
+  'detection.topView.analysis.completedDesc': {
+    zh: '基于深度学习的头型识别',
+    en: 'Based on deep learning head shape recognition',
+  },
+  'detection.topView.analysis.measurementAnnotations': {
+    zh: '测量标注',
+    en: 'Measurement Annotations',
+  },
+  'detection.topView.analysis.bpd': {
+    zh: 'BPD (双顶径)',
+    en: 'BPD (Biparietal Diameter)',
+  },
+  'detection.topView.analysis.ofd': {
+    zh: 'OFD (枕额径)',
+    en: 'OFD (Occipitofrontal Diameter)',
+  },
+  'detection.topView.analysis.diagonal': {
+    zh: '对角线',
+    en: 'Diagonal',
+  },
+  'detection.topView.analysis.detectionFailed': {
+    zh: '检测失败',
+    en: 'Detection Failed',
+  },
+
+  // Detection profile view
+  'detection.profileView.title': {
+    zh: '侧面轮廓对比',
+    en: 'Profile Contour Comparison',
+  },
+  'detection.profileView.description': {
+    zh: '上传宝宝左右侧面照片，与标准轮廓进行精确对比',
+    en: 'Upload left and right profile photos of your baby for precise comparison with standard head contours',
+  },
+  'detection.profileView.shootingTips.title': {
+    zh: '拍摄要点',
+    en: 'Photo guidelines',
+  },
+  'detection.profileView.shootingTips.tip1': {
+    zh: '侧头侧身',
+    en: 'Side head and body',
+  },
+  'detection.profileView.shootingTips.tip1Desc': {
+    zh: '确保宝宝侧面完全朝向镜头',
+    en: 'Ensure baby\'s profile completely faces the camera',
+  },
+  'detection.profileView.shootingTips.tip2': {
+    zh: '避免头发遮挡',
+    en: 'Avoid hair covering',
+  },
+  'detection.profileView.shootingTips.tip2Desc': {
+    zh: '如头发较多，可用水润湿贴在头上，或洗澡后拍摄',
+    en: 'If hair is thick, wet it to stick to the head, or take photos after bathing',
+  },
+  'detection.profileView.shootingTips.tip3': {
+    zh: '保持自然姿态',
+    en: 'Maintain natural posture',
+  },
+  'detection.profileView.shootingTips.tip3Desc': {
+    zh: '确保头部轮廓清晰可见',
+    en: 'Ensure head contour is clearly visible',
+  },
+  'detection.profileView.shootingTips.safety': {
+    zh: '⚠️ 所有拍摄请确保宝宝安全、健康！',
+    en: '⚠️ Ensure baby safety and health during all photography!',
+  },
+  'detection.profileView.shootingTips': {
+    zh: '拍摄要点',
+    en: 'Shooting Tips',
+  },
+  'detection.profileView.leftProfile': {
+    zh: '左侧轮廓',
+    en: 'Left Profile',
+  },
+  'detection.profileView.rightProfile': {
+    zh: '右侧轮廓',
+    en: 'Right Profile',
+  },
+  'detection.profileView.showTemplate': {
+    zh: '显示模板',
+    en: 'Show Template',
+  },
+  'detection.profileView.hideTemplate': {
+    zh: '隐藏模板',
+    en: 'Hide Template',
+  },
+  'detection.profileView.resetImage': {
+    zh: '重置图片',
+    en: 'Reset Image',
+  },
+
+  'detection.profileView.uploadPrompt': {
+    zh: '点击或拖拽图片到此处',
+    en: 'Click or drag image here',
+  },
+  'detection.profileView.uploadHint': {
+    zh: '支持 JPG、PNG 格式，最大 10MB',
+    en: 'Support JPG, PNG format, max 10MB',
+  },
+  'detection.profileView.instructions.title': {
+    zh: '操作说明',
+    en: 'Instructions',
+  },
+  'detection.profileView.instructions.clickToSelect': {
+    zh: '点击图片选中后可进行操作',
+    en: 'Click image to select for operations',
+  },
+  'detection.profileView.instructions.dragToMove': {
+    zh: '拖拽图片可移动位置',
+    en: 'Drag image to move position',
+  },
+  'detection.profileView.instructions.dragToResize': {
+    zh: '拖拽角落控制点可缩放图片',
+    en: 'Drag corner control points to resize image',
+  },
+  'detection.profileView.instructions.dragToRotate': {
+    zh: '拖拽旋转控制点可旋转图片',
+    en: 'Drag rotation control point to rotate image',
+  },
+  'detection.profileView.instructions.clickToDeselect': {
+    zh: '点击空白区域取消选中',
+    en: 'Click empty area to deselect',
+  },
+
+  // Analysis results
+  'detection.analysis.ci.title': {
+    zh: '头颅宽长比 (CI)',
+    en: 'Cephalic Index (CI)',
+  },
+  'detection.analysis.ci.longHead': {
+    zh: '长头',
+    en: 'Dolichocephaly',
+  },
+  'detection.analysis.ci.flatHead': {
+    zh: '扁头',
+    en: 'Brachycephaly',
+  },
+  'detection.analysis.cvai.title': {
+    zh: '颅穹不对称指数 (CVAI)',
+    en: 'Cranial Vault Asymmetry Index (CVAI)',
+  },
+  'detection.analysis.cvai.diagonal1': {
+    zh: '对角线1',
+    en: 'Diagonal 1',
+  },
+  'detection.analysis.cvai.diagonal2': {
+    zh: '对角线2',
+    en: 'Diagonal 2',
+  },
+
+
+
+  // Detection profile view - additional keys
+  'detection.profileView.leftTemplateAlt': {
+    zh: '左侧轮廓模板',
+    en: 'Left Profile Template',
+  },
+  'detection.profileView.rightTemplateAlt': {
+    zh: '右侧轮廓模板',
+    en: 'Right Profile Template',
+  },
+  'detection.profileView.clickOrDrag': {
+    zh: '点击或拖拽图片到此处',
+    en: 'Click or drag image here',
+  },
+
+  // Detection model manager
+  'detection.modelManager.title': {
+    zh: '模型管理 (调试模式)',
+    en: 'Model Management (Debug Mode)',
+  },
+  'detection.modelManager.openDebugMode': {
+    zh: '打开调试模式',
+    en: 'Open Debug Mode',
+  },
+  'detection.modelManager.closeDebugMode': {
+    zh: '关闭调试模式',
+    en: 'Close Debug Mode',
+  },
+  'detection.modelManager.debugModeTitle': {
+    zh: '调试模式 (快捷键: Ctrl+Shift+D)',
+    en: 'Debug Mode (Shortcut: Ctrl+Shift+D)',
+  },
+  'detection.modelManager.loadModel': {
+    zh: '加载模型',
+    en: 'Load Model',
+  },
+  'detection.modelManager.modelPathPlaceholder': {
+    zh: 'ONNX模型文件路径',
+    en: 'ONNX model file path',
+  },
+  'detection.modelManager.confidenceThreshold': {
+    zh: '置信度阈值',
+    en: 'Confidence Threshold',
+  },
+  'detection.modelManager.error': {
+    zh: '错误',
+    en: 'Error',
+  },
+  'detection.modelManager.status.loading': {
+    zh: '加载中...',
+    en: 'Loading...',
+  },
+  'detection.modelManager.status.loaded': {
+    zh: '模型已加载',
+    en: 'Model Loaded',
+  },
+  'detection.modelManager.status.notLoaded': {
+    zh: '模型未加载',
+    en: 'Model Not Loaded',
+  },
+  'detection.modelManager.status.loadFailed': {
+    zh: '加载失败',
+    en: 'Load Failed',
+  },
+  'detection.modelManager.errors.enterModelPath': {
+    zh: '请输入模型路径',
+    en: 'Please enter model path',
+  },
+  'detection.modelManager.errors.unknownError': {
+    zh: '未知错误',
+    en: 'Unknown error',
+  },
+  'detection.modelManager.tips.defaultModel': {
+    zh: '💡 提示：默认模型 model_weights_best.onnx 会自动加载，您也可以指定其他模型路径',
+    en: '💡 Tip: Default model model_weights_best.onnx will load automatically, or you can specify another model path',
+  },
+  'detection.modelManager.tips.confidenceThreshold': {
+    zh: '🎯 置信度阈值：只保留高于此阈值的检测结果，建议值 0.7-0.8',
+    en: '🎯 Confidence Threshold: Only keep detection results above this threshold, recommended value 0.7-0.8',
+  },
+
+  // Additional error messages
+  'detection.errors.noHeadDetected': {
+    zh: '未检测到头型，请确保图像中包含清晰的头部轮廓',
+    en: 'No head shape detected, please ensure the image contains a clear head contour',
+  },
+
+  // Additional classification labels
+  'detection.classification.normal': {
+    zh: '正常',
+    en: 'Normal',
+  },
+  'detection.classification.brachycephaly': {
+    zh: '短头型 (Brachycephaly)',
+    en: 'Brachycephaly',
+  },
+  'detection.classification.dolichocephaly': {
+    zh: '长头型 (Dolichocephaly)',
+    en: 'Dolichocephaly',
+  },
+  'detection.classification.plagiocephaly': {
+    zh: '偏头型 (Plagiocephaly)',
+    en: 'Plagiocephaly',
+  },
+
+  // Error messages
+  'detection.errors.modelNotLoaded': {
+    zh: '模型未加载，请先加载模型',
+    en: 'Model not loaded, please load the model first',
+  },
+  'detection.errors.analysisFailed': {
+    zh: '分析失败',
+    en: 'Analysis failed',
+  },
+  'detection.errors.unknownError': {
+    zh: '未知错误',
+    en: 'Unknown error',
+  },
+  'detection.errors.imageLoadFailed': {
+    zh: '图片加载失败，请重新上传',
+    en: 'Image loading failed, please re-upload',
+  },
+
+  // Classification labels
+  'detection.classification.unknown': {
+    zh: '未知',
+    en: 'Unknown',
+  },
+  'detection.classification.ci.severeLong': {
+    zh: '重度长头',
+    en: 'Severe',
+  },
+  'detection.classification.ci.moderateLong': {
+    zh: '中度长头',
+    en: 'Moderate',
+  },
+  'detection.classification.ci.mildLong': {
+    zh: '轻度长头',
+    en: 'Mild',
+  },
+  'detection.classification.ci.normal': {
+    zh: '正常',
+    en: 'Normal',
+  },
+  'detection.classification.ci.mildFlat': {
+    zh: '轻度扁头',
+    en: 'Mild',
+  },
+  'detection.classification.ci.moderateFlat': {
+    zh: '中度扁头',
+    en: 'Moderate',
+  },
+  'detection.classification.ci.severeFlat': {
+    zh: '重度扁头',
+    en: 'Severe',
+  },
+  'detection.classification.cvai.normal': {
+    zh: '正常',
+    en: 'Normal',
+  },
+  'detection.classification.cvai.mildAsymmetric': {
+    zh: '轻度斜头',
+    en: 'Mild Plagiocephaly',
+  },
+  'detection.classification.cvai.moderateAsymmetric': {
+    zh: '中度斜头',
+    en: 'Moderate Plagiocephaly',
+  },
+  'detection.classification.cvai.severeAsymmetric': {
+    zh: '重度斜头',
+    en: 'Severe Plagiocephaly',
   },
 }
 

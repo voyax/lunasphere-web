@@ -6,7 +6,7 @@
 export interface ClassificationRange {
   min: number
   max: number
-  label: string
+  labelKey: string
   severity: 'normal' | 'mild' | 'moderate' | 'severe'
 }
 
@@ -26,43 +26,43 @@ export const CI_CLASSIFICATION_CONFIG: ClassificationConfig = {
     {
       min: 0,
       max: 72,
-      label: '重度长头',
+      labelKey: 'detection.classification.ci.severeLong',
       severity: 'severe',
     },
     {
       min: 72,
       max: 74,
-      label: '中度长头',
+      labelKey: 'detection.classification.ci.moderateLong',
       severity: 'moderate',
     },
     {
       min: 74,
       max: 76,
-      label: '轻度长头',
+      labelKey: 'detection.classification.ci.mildLong',
       severity: 'mild',
     },
     {
       min: 76,
       max: 90,
-      label: '正常',
+      labelKey: 'detection.classification.ci.normal',
       severity: 'normal',
     },
     {
       min: 90,
       max: 93,
-      label: '轻度扁头',
+      labelKey: 'detection.classification.ci.mildFlat',
       severity: 'mild',
     },
     {
       min: 93,
       max: 97,
-      label: '中度扁头',
+      labelKey: 'detection.classification.ci.moderateFlat',
       severity: 'moderate',
     },
     {
       min: 97,
       max: Infinity,
-      label: '重度扁头',
+      labelKey: 'detection.classification.ci.severeFlat',
       severity: 'severe',
     },
   ],
@@ -75,25 +75,25 @@ export const CVAI_CLASSIFICATION_CONFIG: ClassificationConfig = {
     {
       min: 0,
       max: 3.5,
-      label: '正常',
+      labelKey: 'detection.classification.cvai.normal',
       severity: 'normal',
     },
     {
       min: 3.5,
       max: 6.25,
-      label: '轻度斜头',
+      labelKey: 'detection.classification.cvai.mildAsymmetric',
       severity: 'mild',
     },
     {
       min: 6.25,
       max: 8.75,
-      label: '中度斜头',
+      labelKey: 'detection.classification.cvai.moderateAsymmetric',
       severity: 'moderate',
     },
     {
       min: 8.75,
       max: Infinity,
-      label: '重度斜头',
+      labelKey: 'detection.classification.cvai.severeAsymmetric',
       severity: 'severe',
     },
   ],
@@ -111,7 +111,7 @@ export function classifyCI(ci: number): ClassificationResult {
   for (const range of CI_CLASSIFICATION_CONFIG.ranges) {
     if (ciPercentage >= range.min && ciPercentage < range.max) {
       return {
-        classification: range.label,
+        classification: range.labelKey,
         severity: range.severity,
       }
     }
@@ -122,7 +122,7 @@ export function classifyCI(ci: number): ClassificationResult {
     CI_CLASSIFICATION_CONFIG.ranges[CI_CLASSIFICATION_CONFIG.ranges.length - 1]
 
   return {
-    classification: lastRange.label,
+    classification: lastRange.labelKey,
     severity: lastRange.severity,
   }
 }
@@ -138,7 +138,7 @@ export function classifyCVAI(cvai: number): ClassificationResult {
   for (const range of CVAI_CLASSIFICATION_CONFIG.ranges) {
     if (cvaiPercentage >= range.min && cvaiPercentage < range.max) {
       return {
-        classification: range.label,
+        classification: range.labelKey,
         severity: range.severity,
       }
     }
@@ -151,7 +151,7 @@ export function classifyCVAI(cvai: number): ClassificationResult {
     ]
 
   return {
-    classification: lastRange.label,
+    classification: lastRange.labelKey,
     severity: lastRange.severity,
   }
 }

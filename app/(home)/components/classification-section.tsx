@@ -75,7 +75,7 @@ export async function ClassificationSection() {
               >
                 <CardHeader className='pb-4'>
                   <div className='w-full space-y-4'>
-                    {/* 图片占位 */}
+                    {/* Image placeholder */}
                     <div className='relative w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-lg overflow-hidden'>
                       <div className='absolute inset-0 flex items-center justify-center'>
                         <div className='text-center space-y-2'>
@@ -91,7 +91,7 @@ export async function ClassificationSection() {
                       </div>
                     </div>
                     
-                    {/* 严重程度和分类标签 */}
+                    {/* Severity and category labels */}
                     <div className='flex justify-center gap-2'>
                       <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                         shape.severity === 'common' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300' :
@@ -124,7 +124,7 @@ export async function ClassificationSection() {
 
                     </div>
                     
-                    {/* 描述 */}
+                    {/* Description */}
                     <div className='space-y-2'>
                       <h4 className='text-sm font-semibold text-default-700 flex items-center gap-2'>
                         <span className='w-2 h-2 bg-blue-500 rounded-full'></span>
@@ -140,7 +140,7 @@ export async function ClassificationSection() {
                       </div>
                     </div>
                     
-                    {/* 成因 */}
+                    {/* Causes */}
                     <div className='space-y-2'>
                       <h4 className='text-sm font-semibold text-default-700 flex items-center gap-2'>
                         <span className='w-2 h-2 bg-orange-500 rounded-full'></span>
@@ -153,7 +153,7 @@ export async function ClassificationSection() {
                       </div>
                     </div>
                     
-                    {/* 纠正手段 */}
+                    {/* Correction methods */}
                     <div className='space-y-2'>
                       <h4 className='text-sm font-semibold text-default-700 flex items-center gap-2'>
                         <span className='w-2 h-2 bg-green-500 rounded-full'></span>
@@ -177,7 +177,7 @@ export async function ClassificationSection() {
 
         {/* Bottom reminders */}
         <SectionAnimations delay={0.6} className='mt-16 space-y-6'>
-          {/* 体位性头型提醒 */}
+          {/* Positional head shape reminder */}
           <Card className='bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950/20 dark:to-blue-950/20 border border-green-200 dark:border-green-800 shadow-lg max-w-3xl mx-auto'>
             <CardBody className='p-6'>
               <div className='flex items-start space-x-3'>
@@ -208,7 +208,7 @@ export async function ClassificationSection() {
             </CardBody>
           </Card>
           
-          {/* 病理性头型警示 */}
+          {/* Pathological head shape warning */}
           <Card className='bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 border border-amber-200 dark:border-amber-800 shadow-lg max-w-3xl mx-auto'>
             <CardBody className='p-6'>
               <div className='flex items-start space-x-3'>
