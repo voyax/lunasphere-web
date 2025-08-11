@@ -1,8 +1,10 @@
 'use client'
 
+import type { ImageType, ImageUploadData, AnalysisResult } from '../types'
+
 import { Button } from '@heroui/button'
 import { Tooltip } from '@heroui/tooltip'
-import { Upload, Sparkles, Brain } from 'lucide-react'
+import { Upload, Camera, CheckCircle } from 'lucide-react'
 
 import RotationControl from './RotationControl'
 import {
@@ -10,11 +12,10 @@ import {
   downloadCanvasAsPNG,
   createDownloadableCanvas,
 } from './utils/canvasDrawing'
-
-import { getModelInstance, type ModelPrediction } from '@/lib/model-inference'
 import CICard from './CICard'
 import CVAICard from './CVAICard'
-import type { ImageType, ImageUploadData, AnalysisResult } from '../types'
+
+import { getModelInstance, type ModelPrediction } from '@/lib/model-inference'
 
 interface TopViewAnalysisProps {
   images: Record<ImageType, ImageUploadData | null>
@@ -30,6 +31,7 @@ interface TopViewAnalysisProps {
   modelPath: string
   confidenceThreshold: number
   isModelLoaded: boolean
+  isLoadingModel: boolean
 }
 
 export default function TopViewAnalysis({
@@ -44,6 +46,7 @@ export default function TopViewAnalysis({
   modelPath,
   confidenceThreshold,
   isModelLoaded,
+  isLoadingModel,
 }: TopViewAnalysisProps) {
   const handleFileUpload = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -138,18 +141,36 @@ export default function TopViewAnalysis({
   }
 
   return (
-    <div className='max-w-7xl mx-auto space-y-8'>
-      <div className='text-center mb-16'>
-        <div className='inline-flex items-center gap-2 px-3 py-1 bg-primary/5 rounded-full text-primary text-sm font-medium mb-6'>
-          <Brain className='w-4 h-4' />
-          俯视图分析
-        </div>
-        <h2 className='text-4xl font-light mb-6 text-gray-900 dark:text-white'>
-          精准的头型测量
-        </h2>
-        <p className='text-lg text-gray-600 dark:text-gray-400 font-light'>
-          上传宝宝俯视图，获得CI和CVAI指数的专业分析
+    <div className='max-w-7xl mx-auto space-y-6'>
+      {/* Enhanced Hero Section integrated with Top View Analysis */}
+      <div className='text-center mb-12'>
+        {/* Main Title */}
+        <h1 className='text-4xl md:text-5xl lg:text-6xl font-light mb-6 tracking-tight leading-tight'>
+          <span className='font-extralight text-gray-900 dark:text-white drop-shadow-sm'>
+            婴儿头型测量
+          </span>
+        </h1>
+
+        {/* Subtitle */}
+        <p className='text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed font-light mb-8'>
+          基于深度学习的头型检测，所有计算均在浏览器本地完成，照片不会上传到任何服务器，确保您和宝宝的隐私安全
         </p>
+
+        {/* Feature highlights */}
+        <div className='flex flex-wrap justify-center gap-4 max-w-2xl mx-auto mb-8'>
+          <div className='inline-flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-950/20 rounded-full text-blue-600 dark:text-blue-400 text-sm font-medium border border-blue-200 dark:border-blue-800'>
+            <span className='text-base'>🧠</span>
+            深度学习算法
+          </div>
+          <div className='inline-flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-950/20 rounded-full text-green-600 dark:text-green-400 text-sm font-medium border border-green-200 dark:border-green-800'>
+            <span className='text-base'>🔒</span>
+            本地处理，隐私安全
+          </div>
+          <div className='inline-flex items-center gap-2 px-4 py-2 bg-purple-50 dark:bg-purple-950/20 rounded-full text-purple-600 dark:text-purple-400 text-sm font-medium border border-purple-200 dark:border-purple-800'>
+            <span className='text-base'>⚕️</span>
+            专业医学标准
+          </div>
+        </div>
       </div>
 
       {/* Analysis Interface */}
@@ -172,9 +193,9 @@ export default function TopViewAnalysis({
                           1
                         </span>
                         <div>
-                          <p className='font-medium text-xs'>📐 垂直拍摄</p>
+                          <p className='font-medium text-xs'>👃 微微透出鼻尖</p>
                           <p className='text-xs text-gray-600 dark:text-gray-400'>
-                            相机垂直向下，与宝宝头部保持90度角，距离30-50cm
+                            拍摄角度应能看到宝宝的鼻尖，确保俯视角度正确
                           </p>
                         </div>
                       </div>
@@ -183,9 +204,11 @@ export default function TopViewAnalysis({
                           2
                         </span>
                         <div>
-                          <p className='font-medium text-xs'>🎯 头部居中</p>
+                          <p className='font-medium text-xs'>
+                            💡 光线充足，避免阴影
+                          </p>
                           <p className='text-xs text-gray-600 dark:text-gray-400'>
-                            确保头部完整且位于画面正中央，参考十字辅助线
+                            确保头型轮廓清晰可见，建议自然光拍摄
                           </p>
                         </div>
                       </div>
@@ -194,9 +217,11 @@ export default function TopViewAnalysis({
                           3
                         </span>
                         <div>
-                          <p className='font-medium text-xs'>💡 光线充足</p>
+                          <p className='font-medium text-xs'>
+                            📱 手机与头部平行
+                          </p>
                           <p className='text-xs text-gray-600 dark:text-gray-400'>
-                            避免阴影，确保头型轮廓清晰可见，建议自然光拍摄
+                            减少拍摄偏差，保持手机水平
                           </p>
                         </div>
                       </div>
@@ -205,12 +230,15 @@ export default function TopViewAnalysis({
                           4
                         </span>
                         <div>
-                          <p className='font-medium text-xs'>🎨 背景简洁</p>
+                          <p className='font-medium text-xs'>💧 避免头发遮挡</p>
                           <p className='text-xs text-gray-600 dark:text-gray-400'>
-                            使用纯色背景，与头部形成良好对比，避免花纹干扰
+                            如头发较多，可用水润湿贴在头上，或洗澡后拍摄
                           </p>
                         </div>
                       </div>
+                      <p className='text-xs text-red-600 dark:text-red-400 font-medium mt-3'>
+                        ⚠️ 所有拍摄请确保宝宝安全、健康！
+                      </p>
                     </div>
                   </div>
                 }
@@ -330,9 +358,14 @@ export default function TopViewAnalysis({
               <div className='space-y-4'>
                 {/* Rotation Control */}
                 <div className='flex items-center justify-between'>
-                  <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
-                    旋转调整
-                  </span>
+                  <div className='flex items-center gap-2'>
+                    <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
+                      旋转调整
+                    </span>
+                    <span className='text-xs text-gray-500 dark:text-gray-400'>
+                      💡 调整图片角度，确保前额朝上
+                    </span>
+                  </div>
                   <RotationControl
                     rotation={images.top?.rotation || 0}
                     onChange={rotation => setImageRotation('top', rotation)}
@@ -343,18 +376,24 @@ export default function TopViewAnalysis({
                 <div className='flex gap-2'>
                   <Button
                     className='flex-1 h-10 bg-primary text-white font-medium'
-                    disabled={isProcessing}
+                    disabled={isProcessing || isLoadingModel || !isModelLoaded}
                     size='md'
                     startContent={
-                      isProcessing ? (
+                      isLoadingModel ? (
+                        <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin' />
+                      ) : isProcessing ? (
                         <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin' />
                       ) : (
-                        <Sparkles className='w-4 h-4' />
+                        <CheckCircle className='w-4 h-4' />
                       )
                     }
                     onClick={analyzeTopView}
                   >
-                    {isProcessing ? '分析中...' : '开始分析'}
+                    {isLoadingModel
+                      ? '模型加载中...'
+                      : isProcessing
+                        ? '分析中...'
+                        : '开始分析'}
                   </Button>
                   <Button
                     className='h-10 px-3'
@@ -387,7 +426,7 @@ export default function TopViewAnalysis({
               分析结果
             </h3>
             <p className='text-gray-600 dark:text-gray-400'>
-              AI智能评估与头型判断
+              根据识别的头型轮廓，计算 CI、CVAI
             </p>
           </div>
 
@@ -397,7 +436,7 @@ export default function TopViewAnalysis({
                 {currentStep === 1 ? (
                   <>
                     <div className='w-20 h-20 mx-auto bg-white dark:bg-gray-700 rounded-2xl flex items-center justify-center shadow-lg'>
-                      <Brain className='w-10 h-10 text-gray-400' />
+                      <Camera className='w-10 h-10 text-gray-400' />
                     </div>
                     <div>
                       <p className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
@@ -491,7 +530,7 @@ export default function TopViewAnalysis({
                     <div className='flex items-center justify-center h-full'>
                       <div className='text-center space-y-4'>
                         <div className='w-16 h-16 mx-auto bg-primary rounded-2xl flex items-center justify-center shadow-lg'>
-                          <Brain className='w-8 h-8 text-white' />
+                          <CheckCircle className='w-8 h-8 text-white' />
                         </div>
                         <div>
                           <p className='text-lg font-semibold text-gray-900 dark:text-white'>
@@ -583,26 +622,50 @@ export default function TopViewAnalysis({
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4'>
               {/* CI Index with Classification */}
               <CICard
+                measurements={
+                  analysisResult.measurements
+                    ? {
+                        bpd: analysisResult.measurements.bpd,
+                        ofd: analysisResult.measurements.ofd,
+                      }
+                    : undefined
+                }
                 value={analysisResult.ci || 0}
-                measurements={analysisResult.measurements ? {
-                  bpd: analysisResult.measurements.bpd,
-                  ofd: analysisResult.measurements.ofd
-                } : undefined}
               />
 
               {/* CVAI Index with Classification */}
               <CVAICard
+                measurements={
+                  analysisResult.measurements
+                    ? {
+                        diagonal1: Math.sqrt(
+                          Math.pow(
+                            analysisResult.measurements.diagonal1.end.x -
+                              analysisResult.measurements.diagonal1.start.x,
+                            2
+                          ) +
+                            Math.pow(
+                              analysisResult.measurements.diagonal1.end.y -
+                                analysisResult.measurements.diagonal1.start.y,
+                              2
+                            )
+                        ),
+                        diagonal2: Math.sqrt(
+                          Math.pow(
+                            analysisResult.measurements.diagonal2.end.x -
+                              analysisResult.measurements.diagonal2.start.x,
+                            2
+                          ) +
+                            Math.pow(
+                              analysisResult.measurements.diagonal2.end.y -
+                                analysisResult.measurements.diagonal2.start.y,
+                              2
+                            )
+                        ),
+                      }
+                    : undefined
+                }
                 value={analysisResult.cvai || 0}
-                measurements={analysisResult.measurements ? {
-                  diagonal1: Math.sqrt(
-                    Math.pow(analysisResult.measurements.diagonal1.end.x - analysisResult.measurements.diagonal1.start.x, 2) +
-                    Math.pow(analysisResult.measurements.diagonal1.end.y - analysisResult.measurements.diagonal1.start.y, 2)
-                  ),
-                  diagonal2: Math.sqrt(
-                    Math.pow(analysisResult.measurements.diagonal2.end.x - analysisResult.measurements.diagonal2.start.x, 2) +
-                    Math.pow(analysisResult.measurements.diagonal2.end.y - analysisResult.measurements.diagonal2.start.y, 2)
-                  )
-                } : undefined}
               />
             </div>
           )}

@@ -181,39 +181,68 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
     }
   }, [leftImage, rightImage])
 
-  // Handle file upload
-  const handleFileUpload = useCallback((file: File, side: 'left' | 'right') => {
-    const url = URL.createObjectURL(file)
-
-    // Create image to get dimensions
-    const img = new Image()
-
-    img.onload = () => {
-      const scale =
-        Math.min(stageSize.width / img.width, stageSize.height / img.height) *
-        0.6
-      const newImage: UploadedImage = {
-        file,
-        url,
-        x: (stageSize.width - img.width * scale) / 2,
-        y: (stageSize.height - img.height * scale) / 2,
-        scaleX: 1,
-        scaleY: 1,
-        rotation: 0,
-        width: img.width * scale,
-        height: img.height * scale,
+  // Cleanup URL objects on component unmount
+  useEffect(() => {
+    return () => {
+      if (leftImage) {
+        URL.revokeObjectURL(leftImage.url)
       }
-
-      if (side === 'left') {
-        setLeftImage(newImage)
-        setSelectedId('left')
-      } else {
-        setRightImage(newImage)
-        setSelectedId('right')
+      if (rightImage) {
+        URL.revokeObjectURL(rightImage.url)
       }
     }
-    img.src = url
   }, [])
+
+  // Handle file upload
+  const handleFileUpload = useCallback(
+    (file: File, side: 'left' | 'right') => {
+      // Clean up previous URL object before creating new one
+      if (side === 'left' && leftImage) {
+        URL.revokeObjectURL(leftImage.url)
+      } else if (side === 'right' && rightImage) {
+        URL.revokeObjectURL(rightImage.url)
+      }
+
+      const url = URL.createObjectURL(file)
+
+      // Create image to get dimensions
+      const img = new Image()
+
+      img.onload = () => {
+        const scale =
+          Math.min(stageSize.width / img.width, stageSize.height / img.height) *
+          0.6
+        const newImage: UploadedImage = {
+          file,
+          url,
+          x: (stageSize.width - img.width * scale) / 2,
+          y: (stageSize.height - img.height * scale) / 2,
+          scaleX: 1,
+          scaleY: 1,
+          rotation: 0,
+          width: img.width * scale,
+          height: img.height * scale,
+        }
+
+        if (side === 'left') {
+          setLeftImage(newImage)
+          setSelectedId('left')
+        } else {
+          setRightImage(newImage)
+          setSelectedId('right')
+        }
+      }
+
+      img.onerror = () => {
+        // Clean up URL object if image loading fails
+        URL.revokeObjectURL(url)
+        console.error('Failed to load image:', file.name)
+      }
+
+      img.src = url
+    },
+    [leftImage, rightImage, stageSize.width, stageSize.height]
+  )
 
   // Handle drag over for file drop
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -242,6 +271,9 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
       if (file) {
         handleFileUpload(file, side)
       }
+
+      // Reset input value to allow re-selecting the same file
+      e.target.value = ''
     },
     [handleFileUpload]
   )
@@ -291,37 +323,65 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
   return (
     <div className='w-full max-w-6xl mx-auto p-6'>
       <div className='space-y-8'>
-      <div className='text-center mb-16'>
-        <div className='inline-flex items-center gap-2 px-3 py-1 bg-primary/5 rounded-full text-primary text-sm font-medium mb-6'>
-          <span className='text-lg'>👤</span>
-          侧面轮廓分析
-        </div>
-        <h2 className='text-4xl font-light mb-6 text-gray-900 dark:text-white'>
-          侧面轮廓对比分析
-        </h2>
-        <p className='text-lg text-gray-600 dark:text-gray-400 font-light'>
-          上传宝宝左右侧面照片，与标准轮廓进行对比分析
-          <Tooltip
-            content={
-              <div className='p-4 max-w-xs'>
-                <h4 className='font-semibold mb-2'>📋 拍摄要点</h4>
-                <ul className='space-y-1 text-sm'>
-                  <li>• 宝宝侧面完全朝向镜头</li>
-                  <li>• 头部轮廓清晰可见</li>
-                  <li>• 避免头发遮挡轮廓线</li>
-                  <li>• 保持头部自然姿态</li>
-                  <li>• 确保光线充足均匀</li>
-                </ul>
-              </div>
-            }
-            placement='bottom'
-          >
-            <span className='ml-2 text-primary cursor-help hover:text-primary/80 transition-colors'>
-              📋 拍摄要点
+        <div className='text-center mb-12'>
+          <h2 className='text-3xl md:text-4xl font-light mb-4 tracking-tight leading-tight'>
+            <span className='font-medium text-gray-900 dark:text-white'>
+              侧面轮廓对比
             </span>
-          </Tooltip>
-        </p>
-      </div>
+          </h2>
+          <p className='text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed font-light mb-6'>
+            上传宝宝左右侧面照片，与标准轮廓进行精确对比
+            <Tooltip
+              content={
+                <div className='p-4 max-w-xs'>
+                  <div className='space-y-2'>
+                    <div className='flex items-start gap-2'>
+                      <span className='text-blue-500 font-bold text-xs mt-0.5'>
+                        1
+                      </span>
+                      <div>
+                        <p className='font-medium text-xs'>👤 侧头侧身</p>
+                        <p className='text-xs text-gray-600 dark:text-gray-400'>
+                          确保宝宝侧面完全朝向镜头
+                        </p>
+                      </div>
+                    </div>
+                    <div className='flex items-start gap-2'>
+                      <span className='text-green-500 font-bold text-xs mt-0.5'>
+                        2
+                      </span>
+                      <div>
+                        <p className='font-medium text-xs'>💧 避免头发遮挡</p>
+                        <p className='text-xs text-gray-600 dark:text-gray-400'>
+                          如头发较多，可用水润湿贴在头上，或洗澡后拍摄
+                        </p>
+                      </div>
+                    </div>
+                    <div className='flex items-start gap-2'>
+                      <span className='text-yellow-500 font-bold text-xs mt-0.5'>
+                        3
+                      </span>
+                      <div>
+                        <p className='font-medium text-xs'>🎯 保持自然姿态</p>
+                        <p className='text-xs text-gray-600 dark:text-gray-400'>
+                          确保头部轮廓清晰可见
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <p className='text-xs text-red-600 dark:text-red-400 font-medium mt-3'>
+                    ⚠️ 所有拍摄请确保宝宝安全、健康！
+                  </p>
+                </div>
+              }
+              placement='bottom'
+            >
+              <span className='inline-flex items-center gap-1 px-2 py-1 bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 rounded-full text-xs font-medium cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors duration-200 border border-blue-200/50 dark:border-blue-700/50'>
+                📋 拍摄要点
+              </span>
+            </Tooltip>
+          </p>
+        </div>
 
         {/* Main Content */}
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>

@@ -1,14 +1,14 @@
 'use client'
 
-import { useState } from 'react'
-import { Card, CardBody } from '@heroui/card'
-import { Chip } from '@heroui/chip'
+import type { ImageType, ImageUploadData, AnalysisResult } from './types'
+
+import { useState, useEffect } from 'react'
 
 import ModelManager from './components/ModelManager'
 import TopViewAnalysis from './components/TopViewAnalysis'
 import ProfileViewComparison from './components/ProfileViewComparison'
+
 import { useLocale } from '@/contexts/LocaleContext'
-import type { ImageType, ImageUploadData, AnalysisResult } from './types'
 
 export default function DetectionPage() {
   const { t } = useLocale()
@@ -29,8 +29,19 @@ export default function DetectionPage() {
   const [isModelLoaded, setIsModelLoaded] = useState(false)
   const [isLoadingModel, setIsLoadingModel] = useState(false)
   const [confidenceThreshold, setConfidenceThreshold] = useState(0.7)
+  const [showModelReadyBanner, setShowModelReadyBanner] = useState(false)
 
+  // Show model ready banner for 5 seconds when model loads
+  useEffect(() => {
+    if (isModelLoaded && !isLoadingModel) {
+      setShowModelReadyBanner(true)
+      const timer = setTimeout(() => {
+        setShowModelReadyBanner(false)
+      }, 5000)
 
+      return () => clearTimeout(timer)
+    }
+  }, [isModelLoaded, isLoadingModel])
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-950 dark:via-gray-900 dark:to-blue-950/20'>
@@ -42,49 +53,67 @@ export default function DetectionPage() {
       </div>
 
       <div className='relative z-10'>
-        <div className='container mx-auto px-6 py-12'>
-          {/* Hero Section */}
-          <div className='text-center mb-20'>
-            <h1 className='text-5xl md:text-6xl font-light mb-6 tracking-tight leading-tight'>
-              <span className='font-semibold text-gray-900 dark:text-white drop-shadow-sm'>
-                {t('detection.hero.title')}
-              </span>
-            </h1>
-            {/* <p className='text-xl text-primary font-medium mb-6'>
-              {t('detection.hero.subtitle')}
-            </p> */}
-            <p className='text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed font-light mb-8'>
-              {t('detection.hero.description')}
-            </p>
-            
-            {/* Feature highlights */}
-            <div className='flex flex-wrap justify-center gap-4 max-w-2xl mx-auto'>
-              <Chip
-                variant='flat'
-                color='primary'
-                size='lg'
-                className='px-4 py-2'
-              >
-                {t('detection.hero.features.ai')}
-              </Chip>
-              <Chip
-                variant='flat'
-                color='success'
-                size='lg'
-                className='px-4 py-2'
-              >
-                {t('detection.hero.features.privacy')}
-              </Chip>
-              <Chip
-                variant='flat'
-                color='secondary'
-                size='lg'
-                className='px-4 py-2'
-              >
-                {t('detection.hero.features.professional')}
-              </Chip>
+        <div className='container mx-auto px-6 py-8'>
+          {/* Model Status Banner */}
+          {isLoadingModel && (
+            <div className='mb-6 p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg'>
+              <div className='flex items-center gap-3'>
+                <div className='w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
+                <div>
+                  <p className='text-sm font-medium text-blue-900 dark:text-blue-100'>
+                    AI模型加载中，请稍候...
+                  </p>
+                  <p className='text-xs text-blue-700 dark:text-blue-300'>
+                    首次加载可能需要较长时间，请耐心等待
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
+          )}
+
+          {!isModelLoaded && !isLoadingModel && (
+            <div className='mb-6 p-4 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg'>
+              <div className='flex items-center gap-3'>
+                <div className='w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center'>
+                  <span className='text-white text-xs font-bold'>!</span>
+                </div>
+                <div>
+                  <p className='text-sm font-medium text-amber-900 dark:text-amber-100'>
+                    AI模型未加载
+                  </p>
+                  <p className='text-xs text-amber-700 dark:text-amber-300'>
+                    请等待模型自动加载完成后再进行检测
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {showModelReadyBanner && isModelLoaded && !isLoadingModel && (
+            <div className='mb-6 p-4 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg transition-all duration-300'>
+              <div className='flex items-center justify-between'>
+                <div className='flex items-center gap-3'>
+                  <div className='w-5 h-5 bg-green-500 rounded-full flex items-center justify-center'>
+                    <span className='text-white text-xs'>✓</span>
+                  </div>
+                  <div>
+                    <p className='text-sm font-medium text-green-900 dark:text-green-100'>
+                      AI模型已就绪
+                    </p>
+                    <p className='text-xs text-green-700 dark:text-green-300'>
+                      现在可以上传图片进行头型检测分析
+                    </p>
+                  </div>
+                </div>
+                <button
+                  className='text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-200 transition-colors'
+                  onClick={() => setShowModelReadyBanner(false)}
+                >
+                  <span className='text-lg'>×</span>
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Model Management Section */}
           <ModelManager
@@ -106,6 +135,7 @@ export default function DetectionPage() {
               confidenceThreshold={confidenceThreshold}
               currentStep={currentStep}
               images={images}
+              isLoadingModel={isLoadingModel}
               isModelLoaded={isModelLoaded}
               isProcessing={isProcessing}
               modelPath={modelPath}
@@ -117,8 +147,6 @@ export default function DetectionPage() {
 
             {/* Side View Comparison Section */}
             <ProfileViewComparison />
-
-
           </div>
         </div>
       </div>
