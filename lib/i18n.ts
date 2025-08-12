@@ -1334,8 +1334,8 @@ export const translations: TranslationKeys = {
   },
 
   'faq.medicalDisclaimer': {
-    zh: '本页面提供的信息仅供教育和参考目的，不能替代专业医疗建议、诊断或治疗。如果您对宝宝的头型发育有任何担忧，请及时咨询合格的医疗专业人员。每个宝宝的情况都是独特的，需要个性化的评估和护理方案。',
-    en: 'The information provided on this page is for educational and reference purposes only and cannot replace professional medical advice, diagnosis, or treatment. If you have any concerns about your baby\'s head shape development, please consult qualified medical professionals promptly. Each baby\'s situation is unique and requires personalized assessment and care plans.',
+    zh: '本页面提供的信息仅供教育和参考目的，不能替代专业医疗建议、诊断或治疗。如果您对宝宝的头型发育有任何担忧，请及时咨询合格的医疗专业人员。',
+    en: 'The information provided on this page is for educational and reference purposes only and cannot replace professional medical advice, diagnosis, or treatment. If you have any concerns about your baby\'s head shape development, please consult qualified medical professionals promptly.',
   },
 
   'faq.references.title': {
