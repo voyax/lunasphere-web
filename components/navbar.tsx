@@ -29,6 +29,10 @@ export function Navbar() {
       label: t('nav.detection'),
       href: '/detection',
     },
+    {
+      label: t('nav.faq'),
+      href: '/faq',
+    },
   ]
 
   const isActive = (href: string) => {

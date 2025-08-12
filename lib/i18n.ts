@@ -45,6 +45,10 @@ export const translations: TranslationKeys = {
     zh: '头型检测',
     en: 'Head Shape Detection',
   },
+  'nav.faq': {
+    zh: '常见问题',
+    en: 'FAQ',
+  },
   'nav.language': {
     zh: '语言',
     en: 'Language',
@@ -1189,6 +1193,195 @@ export const translations: TranslationKeys = {
   'detection.classification.cvai.severeAsymmetric': {
     zh: '重度斜头',
     en: 'Severe Plagiocephaly',
+  },
+
+  // FAQ Page
+  'faq.title': {
+    zh: '常见问题',
+    en: 'Frequently Asked Questions',
+  },
+  'faq.subtitle': {
+    zh: '关于婴儿头型发育的常见疑问解答，帮助新手父母科学护理',
+    en: 'Common questions about infant head shape development, helping new parents with scientific care',
+  },
+  'faq.commonQuestions': {
+    zh: '常见问题解答',
+    en: 'Common Questions & Answers',
+  },
+
+  // FAQ Categories
+  'faq.category.basic_knowledge': {
+    zh: '基础知识',
+    en: 'Basic Knowledge',
+  },
+  'faq.category.daily_care': {
+    zh: '日常护理',
+    en: 'Daily Care',
+  },
+  'faq.category.treatment_timeline': {
+    zh: '治疗与时间',
+    en: 'Treatment & Timeline',
+  },
+
+  // FAQ Questions and Answers
+  'faq.normalDevelopment.question': {
+    zh: '什么是正常的婴儿头型发育？',
+    en: 'What is normal infant head shape development?',
+  },
+  'faq.normalDevelopment.answer': {
+    zh: '正常的婴儿头型发育是一个渐进的过程。新生儿的头骨由多块骨板组成，通过颅缝连接，这使得头部能够随着大脑的快速发育而增长。\n\n在出生后的前几个月，由于头骨的可塑性，宝宝的头型可能会因为睡姿、喂养姿势等因素而发生轻微变化。这些变化大多是暂时的，随着宝宝活动能力的增强和头骨的逐渐硬化，头型会趋于稳定。\n\n正常情况下，宝宝的头型应该是相对圆润和对称的，前后、左右基本平衡。',
+    en: 'Normal infant head shape development is a gradual process. A newborn\'s skull consists of multiple bone plates connected by cranial sutures, allowing the head to grow with rapid brain development.\n\nIn the first few months after birth, due to skull plasticity, a baby\'s head shape may change slightly due to factors like sleeping position and feeding posture. These changes are mostly temporary and will stabilize as the baby becomes more active and the skull gradually hardens.\n\nNormally, a baby\'s head shape should be relatively round and symmetrical, with basic balance front-to-back and left-to-right.',
+  },
+
+  'faq.whenToWorry.question': {
+    zh: '什么时候需要担心宝宝的头型？',
+    en: 'When should I be concerned about my baby\'s head shape?',
+  },
+  'faq.whenToWorry.answer': {
+    zh: '虽然大多数头型变化都是正常的，但以下情况需要引起注意：\n\n• 头型严重不对称，一侧明显扁平或突出\n• 头围增长过快或过慢\n• 囟门过早闭合或异常凸起\n• 伴有发育迟缓、喂养困难等其他症状\n• 6个月后头型仍无改善趋势\n\n如果出现这些情况，建议及时咨询儿科医生或头颅外科专家，进行专业评估。早期发现和干预可以获得更好的效果。',
+    en: 'While most head shape changes are normal, the following situations require attention:\n\n• Severe head asymmetry with one side noticeably flat or protruding\n• Head circumference growing too fast or too slow\n• Fontanelles closing too early or abnormally bulging\n• Accompanied by developmental delays, feeding difficulties, or other symptoms\n• No improvement trend in head shape after 6 months\n\nIf these situations occur, it\'s recommended to consult a pediatrician or cranial specialist promptly for professional evaluation. Early detection and intervention can achieve better results.',
+  },
+
+
+  'faq.tummyTime.question': {
+    zh: '俯卧时间对头型发育有什么帮助？',
+    en: 'How does tummy time help with head shape development?',
+  },
+  'faq.tummyTime.answer': {
+    zh: '俯卧时间对婴儿头型发育非常重要，具有多重益处：\n\n• 减轻后脑勺压力：让宝宝脱离仰卧姿势，减少对后脑勺的持续压迫\n• 促进颈部肌肉发育：增强颈部和背部肌肉力量\n• 鼓励头部活动：促使宝宝主动转动头部，锻炼颈部灵活性\n• 预防扁头综合征：有效预防位置性扁头的发生\n\n建议从新生儿期开始，每天进行多次短时间的俯卧练习。开始时每次2-3分钟，随着宝宝适应逐渐增加时间。务必在宝宝清醒且有成人监督的情况下进行。',
+    en: 'Tummy time is very important for infant head shape development and has multiple benefits:\n\n• Relieves pressure on the back of the head: Gets baby off their back, reducing continuous pressure on the occiput\n• Promotes neck muscle development: Strengthens neck and back muscles\n• Encourages head movement: Prompts baby to actively turn their head, exercising neck flexibility\n• Prevents flat head syndrome: Effectively prevents positional brachycephaly\n\nIt\'s recommended to start from the newborn period with multiple short tummy time sessions daily. Begin with 2-3 minutes each time, gradually increasing as baby adapts. Always ensure baby is awake and under adult supervision.',
+  },
+
+
+
+  'faq.improvementTime.question': {
+    zh: '头型改善需要多长时间？',
+    en: 'How long does it take for head shape to improve?',
+  },
+  'faq.improvementTime.answer': {
+    zh: '头型改善的时间因个体差异而不同，一般遵循以下规律：\n\n• 轻度头型问题：通过体位调整，通常在2-4个月内看到明显改善\n• 中度头型问题：可能需要4-8个月的持续护理和观察\n• 重度头型问题：可能需要专业干预，改善时间较长\n\n影响改善速度的因素包括：\n• 宝宝的年龄（越小改善越快）\n• 头型问题的严重程度\n• 护理措施的执行情况\n• 个体的生长发育速度\n\n重要的是保持耐心和坚持，大多数头型问题都会随着时间逐渐改善。',
+    en: 'Head shape improvement time varies by individual, generally following these patterns:\n\n• Mild head shape issues: Usually see significant improvement within 2-4 months through position adjustments\n• Moderate head shape issues: May require 4-8 months of continuous care and observation\n• Severe head shape issues: May require professional intervention with longer improvement times\n\nFactors affecting improvement speed include:\n• Baby\'s age (younger babies improve faster)\n• Severity of head shape issues\n• Implementation of care measures\n• Individual growth and development rate\n\nIt\'s important to remain patient and persistent, as most head shape issues gradually improve over time.',
+  },
+
+  'faq.prevention.question': {
+    zh: '如何预防婴儿头型问题？',
+    en: 'How can infant head shape problems be prevented?',
+  },
+  'faq.prevention.answer': {
+    zh: '预防婴儿头型问题的关键在于早期建立良好的护理习惯：\n\n• 多样化体位：避免宝宝长时间保持同一姿势\n• 规律俯卧时间：每天进行适当的俯卧练习\n• 交替喂养姿势：左右交替抱宝宝喂奶\n• 减少器械依赖：限制在汽车座椅、摇椅等设备中的时间\n• 鼓励活动：随着宝宝成长，鼓励更多的自主活动\n• 定期检查：关注宝宝头型变化，及时调整护理方式\n\n预防比治疗更重要，从新生儿期开始就要注意这些细节。',
+    en: 'The key to preventing infant head shape problems is establishing good care habits early:\n\n• Diversified positioning: Avoid baby staying in the same position for long periods\n• Regular tummy time: Conduct appropriate tummy time exercises daily\n• Alternate feeding positions: Alternate left and right when holding baby for feeding\n• Reduce equipment dependence: Limit time in car seats, bouncers, and other devices\n• Encourage movement: As baby grows, encourage more independent movement\n• Regular monitoring: Pay attention to head shape changes and adjust care methods promptly\n\nPrevention is more important than treatment, so attention to these details should start from the newborn period.',
+  },
+
+  'faq.doctorConsultation.question': {
+    zh: '什么时候应该咨询医生？',
+    en: 'When should I consult a doctor?',
+  },
+  'faq.doctorConsultation.answer': {
+    zh: '以下情况建议及时咨询医生：\n\n• 头型严重不对称或持续恶化\n• 囟门异常（过早闭合、异常凸起或凹陷）\n• 头围增长异常（过快或过慢）\n• 伴有其他发育问题或神经症状\n• 6个月后头型仍无改善\n• 家长对头型发育有严重担忧\n\n建议咨询的医生类型：\n• 儿科医生：进行初步评估和常规检查\n• 神经外科医生：处理复杂的颅骨问题\n• 整形外科医生：提供头型矫正方案\n\n当任何疑惑、不安，咨询医生是最快捷、安全的解决方案。',
+    en: 'The following situations warrant prompt medical consultation:\n\n• Severe head asymmetry or continuous worsening\n• Abnormal fontanelles (premature closure, abnormal bulging or depression)\n• Abnormal head circumference growth (too fast or too slow)\n• Accompanied by other developmental issues or neurological symptoms\n• No improvement in head shape after 6 months\n• Parents have serious concerns about head shape development\n\nRecommended types of doctors to consult:\n• Pediatrician: For initial assessment and routine examinations\n• Neurosurgeon: For complex cranial issues\n• Plastic surgeon: For head shape correction options\n\nEarly consultation helps identify problems promptly and develop appropriate treatment plans.',
+  },
+
+  'faq.brainDevelopment.question': {
+    zh: '头型问题是否影响大脑发育？',
+    en: 'Do head shape problems affect brain development?',
+  },
+  'faq.brainDevelopment.answer': {
+    zh: '这是家长们最关心的问题之一。根据目前的医学研究：\n\n• 轻度到中度的体位性头型异常（如扁头、斜头）通常不会影响大脑发育和智力\n• 这类头型问题主要是外观上的变化，不会损害大脑容积或神经功能\n• 现有研究显示，头型异常与智力问题之间可能存在关联，但无法证明因果关系\n• 大多数研究认为，在排除疾病因素后，单纯的头型异常不会导致认知神经发育问题\n\n需要注意的是：\n• 病理性头型异常（如颅缝早闭）可能影响大脑发育，需要及时医疗干预\n• 如果头型异常伴有其他发育迟缓症状，应及时就医评估\n\n总的来说，家长不必过度担心轻度头型问题对智力的影响。',
+    en: 'This is one of the most concerning questions for parents. According to current medical research:\n\n• Mild to moderate positional head shape abnormalities (such as flat head, tilted head) usually do not affect brain development and intelligence\n• These head shape problems are mainly cosmetic changes and do not damage brain volume or neurological function\n• Existing studies show there may be associations between head shape abnormalities and intelligence issues, but cannot prove causation\n• Most research suggests that after excluding disease factors, simple head shape abnormalities do not cause cognitive neurological developmental problems\n\nImportant considerations:\n• Pathological head shape abnormalities (such as craniosynostosis) may affect brain development and require prompt medical intervention\n• If head shape abnormalities are accompanied by other developmental delay symptoms, seek medical evaluation promptly\n\nOverall, parents should not be overly concerned about the impact of mild head shape problems on intelligence.',
+  },
+
+  'faq.pillowEffect.question': {
+    zh: '枕头能改善头型吗？',
+    en: 'Can pillows improve head shape?',
+  },
+  'faq.pillowEffect.answer': {
+    zh: '新生宝宝是不需要枕头的。\n\n新生宝宝的脊椎骨，尤其是靠近颈椎的部位是直的，宝宝平躺时后背和后脑勺在同一个平面。\n\n给宝宝睡枕头会使头部高过身体，颈部形成弯曲，下巴更靠近胸口，这样会限制呼吸甚至造成呼吸道紧闭，还会影响宝宝骨骼、脊椎的生长发育。\n\n美国儿科学会建议一岁以上才给宝宝用枕头，如果可以的话延迟到18个月更好。\n\n市面上打着"让宝宝头型更漂亮"旗号的产品缺乏科学依据，具有"定型"、"防偏头"功能的婴儿枕头并不能让宝宝拥有更好的头型，这些产品反而会束缚宝宝，像"紧箍咒"一样限制宝宝的睡姿。任何声称能"改善头型"的婴儿枕头都存在安全风险。',
+    en: 'Newborn babies do not need pillows.\n\nNewborn babies\' spines, especially near the cervical vertebrae, are straight, and when lying flat, the back and back of the head are on the same plane.\n\nUsing pillows makes the baby\'s head higher than the body, creating neck curvature with chin closer to chest, which restricts breathing and potentially causes airway closure, and also affects baby\'s bone and spinal development.\n\nThe American Academy of Pediatrics recommends using pillows only after 1 year of age, preferably delayed to 18 months if possible.\n\nProducts marketed as "making baby\'s head shape more beautiful" lack scientific basis. Baby pillows with "shaping" or "anti-flat head" functions cannot give babies better head shapes. These products actually restrain babies, limiting sleep positions like a "tight band". Any baby pillows claiming to "improve head shape" pose safety risks.',
+  },
+  // Additional FAQ items for the new design
+  'faq.sleepPosition.question': {
+    zh: '什么样的睡姿有助于改善宝宝的头型？',
+    en: 'What sleeping positions help improve baby\'s head shape?',
+  },
+  'faq.sleepPosition.answer': {
+    zh: '为了改善头型，建议经常变换宝宝的睡姿。虽然仰卧是最安全的睡姿，但可以在宝宝清醒时让他们侧卧或俯卧。睡觉时可以轮流让宝宝的头朝向不同方向，避免总是压迫同一个部位。使用适当的枕头和床垫也很重要。',
+    en: 'To improve head shape, it is recommended to frequently change your baby\'s sleeping position. While back sleeping is the safest, you can have them lie on their side or stomach when awake. During sleep, alternate the direction your baby\'s head faces to avoid always putting pressure on the same area. Using appropriate pillows and mattresses is also important.',
+  },
+
+  'faq.helmetTreatment.question': {
+    zh: '什么时候需要考虑头盔治疗？',
+    en: 'When should helmet treatment be considered?',
+  },
+  'faq.helmetTreatment.answer': {
+    zh: '头盔治疗通常在以下情况下考虑：宝宝4-6个月大时头型仍然严重不对称、保守治疗（如改变睡姿、增加俯卧时间）效果不佳、医生评估认为有必要进行矫正。头盔治疗的最佳时机通常是4-12个月，因为这时宝宝的头骨还比较柔软，容易塑形。',
+    en: 'Helmet treatment is usually considered in the following situations: when the baby\'s head shape remains severely asymmetrical at 4-6 months old, when conservative treatments (such as changing sleep positions, increasing tummy time) are ineffective, and when a doctor evaluates that correction is necessary. The optimal timing for helmet treatment is usually 4-12 months, as the baby\'s skull is still relatively soft and easy to reshape.',
+  },
+
+  'faq.medicalDisclaimer': {
+    zh: '本页面提供的信息仅供教育和参考目的，不能替代专业医疗建议、诊断或治疗。如果您对宝宝的头型发育有任何担忧，请及时咨询合格的医疗专业人员。每个宝宝的情况都是独特的，需要个性化的评估和护理方案。',
+    en: 'The information provided on this page is for educational and reference purposes only and cannot replace professional medical advice, diagnosis, or treatment. If you have any concerns about your baby\'s head shape development, please consult qualified medical professionals promptly. Each baby\'s situation is unique and requires personalized assessment and care plans.',
+  },
+
+  'faq.references.title': {
+    zh: '参考来源',
+    en: 'References',
+  },
+  // Reference sources data
+  'faq.references.source1.text': {
+    zh: '美国儿科学会 (AAP) - 体位性头型异常',
+    en: 'American Academy of Pediatrics (AAP) - Positional Skull Deformities',
+  },
+  'faq.references.source1.url': {
+    zh: 'https://www.healthychildren.org/English/health-issues/conditions/Cleft-Craniofacial/Pages/Positional-Skull-Deformities-and-Torticollis.aspx',
+    en: 'https://www.healthychildren.org/English/health-issues/conditions/Cleft-Craniofacial/Pages/Positional-Skull-Deformities-and-Torticollis.aspx',
+  },
+  'faq.references.source2.text': {
+    zh: 'PMC - 体位性斜头畸形的诊断和治疗',
+    en: 'PMC - Diagnosis and Treatment of Positional Plagiocephaly',
+  },
+  'faq.references.source2.url': {
+    zh: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7206465/',
+    en: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7206465/',
+  },
+  'faq.references.source3.text': {
+    zh: '约翰霍普金斯医学院 - 变形性斜头畸形',
+    en: 'Johns Hopkins Medicine - Deformational Plagiocephaly',
+  },
+  'faq.references.source3.url': {
+    zh: 'https://www.hopkinsmedicine.org/health/conditions-and-diseases/deformational-plagiocephaly',
+    en: 'https://www.hopkinsmedicine.org/health/conditions-and-diseases/deformational-plagiocephaly',
+  },
+  'faq.references.source4.text': {
+    zh: '约翰霍普金斯医学院 - 婴儿头盔治疗',
+    en: 'Johns Hopkins Medicine - Helmet Therapy for Your Baby',
+  },
+  'faq.references.source4.url': {
+    zh: 'https://www.hopkinsmedicine.org/health/treatment-tests-and-therapies/helmet-therapy-for-your-baby',
+    en: 'https://www.hopkinsmedicine.org/health/treatment-tests-and-therapies/helmet-therapy-for-your-baby',
+  },
+  'faq.references.source5.text': {
+    zh: '梅奥诊所 - 婴儿头型不对称治疗',
+    en: 'Mayo Clinic - Treating Infants with Head Shape Asymmetry',
+  },
+  'faq.references.source5.url': {
+    zh: 'https://newsnetwork.mayoclinic.org/discussion/mayo-clinic-expert-available-to-talk-about-treating-infants-with-head-shape-asymmetry/',
+    en: 'https://newsnetwork.mayoclinic.org/discussion/mayo-clinic-expert-available-to-talk-about-treating-infants-with-head-shape-asymmetry/',
+  },
+  'faq.references.source6.text': {
+    zh: 'PMC - 体位性斜头畸形和短头畸形儿童的头型发育',
+    en: 'PMC - Head Shape Development in Children with Positional Plagiocephaly and Brachycephaly',
+  },
+  'faq.references.source6.url': {
+    zh: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC5832631/',
+    en: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC5832631/',
+  },
+  'faq.references.source7.text': {
+    zh: 'Columbia Asia - 枕头如何危害婴儿',
+    en: 'Columbia Asia - How Pillows Endanger Babies',
+  },
+  'faq.references.source7.url': {
+    zh: 'https://www.columbiaasia.com/malaysia/health-articles/how-pillows-endanger-babies/',
+    en: 'https://www.columbiaasia.com/malaysia/health-articles/how-pillows-endanger-babies/',
   },
 }
 

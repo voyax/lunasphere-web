@@ -1,0 +1,414 @@
+'use client'
+
+import { ChevronDown, Search } from 'lucide-react'
+import { useState, useMemo } from 'react'
+
+import { useLocale } from '@/contexts/LocaleContext'
+
+// Reference sources data structure
+interface ReferenceSource {
+  text: string
+  url: string
+}
+
+// Generate reference sources from i18n data dynamically
+const generateReferenceSources = (t: (key: string) => string): ReferenceSource[] => {
+  const sources: ReferenceSource[] = []
+  let i = 1
+  
+  // Dynamically detect available reference sources
+  while (true) {
+    const textKey = `faq.references.source${i}.text`
+    const urlKey = `faq.references.source${i}.url`
+    
+    // Check if the translation key exists by comparing with the key itself
+    const text = t(textKey)
+    const url = t(urlKey)
+    
+    // If translation returns the key itself, it means the key doesn't exist
+    if (text === textKey || url === urlKey) {
+      break
+    }
+    
+    sources.push({ text, url })
+    i++
+  }
+  
+  return sources
+}
+
+interface FAQItem {
+  id: string
+  category: 'basic_knowledge' | 'daily_care' | 'treatment_timeline'
+  question: string
+  answer: string
+}
+
+const categoryConfig = {
+  basic_knowledge: {
+    gradient: 'from-blue-500 to-cyan-500',
+    bgGradient: 'from-blue-50 to-cyan-50',
+    icon: '🧠',
+    color: 'blue',
+  },
+  daily_care: {
+    gradient: 'from-green-500 to-emerald-500',
+    bgGradient: 'from-green-50 to-emerald-50',
+    icon: '👶',
+    color: 'green',
+  },
+  treatment_timeline: {
+    gradient: 'from-purple-500 to-pink-500',
+    bgGradient: 'from-purple-50 to-pink-50',
+    icon: '⏰',
+    color: 'purple',
+  },
+}
+
+export default function FAQPage() {
+  const { t, locale } = useLocale()
+  const [openItems, setOpenItems] = useState<Set<string>>(new Set())
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const faqItems: FAQItem[] = [
+    {
+      id: 'normalDevelopment',
+      category: 'basic_knowledge',
+      question: t('faq.normalDevelopment.question'),
+      answer: t('faq.normalDevelopment.answer'),
+    },
+    {
+      id: 'whenToWorry',
+      category: 'basic_knowledge',
+      question: t('faq.whenToWorry.question'),
+      answer: t('faq.whenToWorry.answer'),
+    },
+    {
+      id: 'brainDevelopment',
+      category: 'basic_knowledge',
+      question: t('faq.brainDevelopment.question'),
+      answer: t('faq.brainDevelopment.answer'),
+    },
+    {
+      id: 'sleepPosition',
+      category: 'daily_care',
+      question: t('faq.sleepPosition.question'),
+      answer: t('faq.sleepPosition.answer'),
+    },
+    {
+      id: 'tummyTime',
+      category: 'daily_care',
+      question: t('faq.tummyTime.question'),
+      answer: t('faq.tummyTime.answer'),
+    },
+    {
+      id: 'pillowEffect',
+      category: 'daily_care',
+      question: t('faq.pillowEffect.question'),
+      answer: t('faq.pillowEffect.answer'),
+    },
+    {
+      id: 'helmetTreatment',
+      category: 'treatment_timeline',
+      question: t('faq.helmetTreatment.question'),
+      answer: t('faq.helmetTreatment.answer'),
+    },
+    {
+      id: 'improvementTime',
+      category: 'treatment_timeline',
+      question: t('faq.improvementTime.question'),
+      answer: t('faq.improvementTime.answer'),
+    },
+    {
+      id: 'prevention',
+      category: 'daily_care',
+      question: t('faq.prevention.question'),
+      answer: t('faq.prevention.answer'),
+    },
+    {
+      id: 'doctorConsultation',
+      category: 'treatment_timeline',
+      question: t('faq.doctorConsultation.question'),
+      answer: t('faq.doctorConsultation.answer'),
+    },
+  ]
+
+  const toggleItem = (id: string) => {
+    const newOpenItems = new Set(openItems)
+
+    if (newOpenItems.has(id)) {
+      newOpenItems.delete(id)
+    } else {
+      newOpenItems.add(id)
+    }
+    setOpenItems(newOpenItems)
+  }
+
+  const filteredItems = useMemo(() => {
+    let items = faqItems
+
+    // Filter by category
+    if (selectedCategory) {
+      items = items.filter(item => item.category === selectedCategory)
+    }
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase()
+
+      items = items.filter(
+        item =>
+          item.question.toLowerCase().includes(query) ||
+          item.answer.toLowerCase().includes(query)
+      )
+    }
+
+    return items
+  }, [selectedCategory, searchQuery, faqItems])
+
+  const categories = Array.from(new Set(faqItems.map(item => item.category)))
+
+  return (
+    <div className='min-h-screen bg-gradient-to-br from-white via-slate-50 to-cyan-50/50 dark:from-gray-950 dark:via-gray-900 dark:to-blue-950/20'>
+      {/* Background Pattern */}
+      <div className='absolute inset-0'>
+        <div className='absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(14,165,233,0.03),transparent_50%)]' />
+        <div className='absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(6,182,212,0.02),transparent_50%)]' />
+        <div className='absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-200/30 to-transparent' />
+      </div>
+
+      <div className='relative z-10'>
+        {/* Hero Section */}
+        <div className='relative overflow-hidden'>
+          <div className='absolute inset-0 bg-gradient-to-br from-sky-400 via-blue-500 to-cyan-600' />
+          <div className='absolute inset-0 opacity-20'>
+            <div
+              className='w-full h-full'
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              }}
+            />
+          </div>
+          <div className='relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8'>
+            <div className='text-center'>
+              <h1 className='text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl mb-6'>
+                {t('faq.title')}
+              </h1>
+              <p className='mx-auto max-w-2xl text-xl text-white/90 mb-8'>
+                {t('faq.subtitle')}
+              </p>
+
+              {/* Search Bar */}
+              <div className='mx-auto max-w-md'>
+                <div className='relative'>
+                  <Search className='absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400' />
+                  <input
+                    className='w-full pl-12 pr-4 py-3 bg-white/90 backdrop-blur-sm rounded-2xl border-0 focus:ring-2 focus:ring-white/50 focus:bg-white transition-all duration-200 placeholder-gray-500'
+                    placeholder='搜索问题...'
+                    type='text'
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent' />
+        </div>
+
+        <div className='mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8'>
+          {/* Category Filter */}
+          <div className='mb-12'>
+            <div className='flex flex-wrap gap-3 justify-center'>
+              <button
+                className={`group px-6 py-3 rounded-2xl font-medium transition-all duration-300 transform hover:scale-105 ${
+                  selectedCategory === null
+                    ? 'bg-gradient-to-r from-gray-800 to-gray-900 text-white shadow-lg shadow-gray-500/25'
+                    : 'bg-white text-gray-700 border border-gray-200 hover:border-gray-300 hover:shadow-md'
+                }`}
+                onClick={() => setSelectedCategory(null)}
+              >
+                <span className='flex items-center gap-2'>
+                  <span className='text-lg'>📋</span>
+                  全部问题
+                  <span
+                    className={`text-xs px-2 py-1 rounded-full ${
+                      selectedCategory === null ? 'bg-white/20' : 'bg-gray-100'
+                    }`}
+                  >
+                    {faqItems.length}
+                  </span>
+                </span>
+              </button>
+              {categories.map(category => {
+                const config = categoryConfig[category]
+                const count = faqItems.filter(
+                  item => item.category === category
+                ).length
+
+                return (
+                  <button
+                    key={category}
+                    className={`group px-6 py-3 rounded-2xl font-medium transition-all duration-300 transform hover:scale-105 ${
+                      selectedCategory === category
+                        ? `bg-gradient-to-r ${config.gradient} text-white shadow-lg shadow-${config.color}-500/25`
+                        : 'bg-white text-gray-700 border border-gray-200 hover:border-gray-300 hover:shadow-md'
+                    }`}
+                    onClick={() => setSelectedCategory(category)}
+                  >
+                    <span className='flex items-center gap-2'>
+                      <span className='text-lg'>{config.icon}</span>
+                      {t(`faq.category.${category}`)}
+                      <span
+                        className={`text-xs px-2 py-1 rounded-full ${
+                          selectedCategory === category
+                            ? 'bg-white/20'
+                            : 'bg-gray-100'
+                        }`}
+                      >
+                        {count}
+                      </span>
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Results Count */}
+          {(searchQuery || selectedCategory) && (
+            <div className='mb-8 text-center'>
+              <p className='text-gray-600'>
+                找到{' '}
+                <span className='font-semibold text-gray-900'>
+                  {filteredItems.length}
+                </span>{' '}
+                个相关问题
+              </p>
+            </div>
+          )}
+
+          {/* FAQ Items */}
+          <div className='space-y-4'>
+            {filteredItems.length === 0 ? (
+              <div className='text-center py-16'>
+                <div className='text-6xl mb-4'>🔍</div>
+                <h3 className='text-xl font-semibold text-gray-900 mb-2'>
+                  未找到相关问题
+                </h3>
+                <p className='text-gray-600'>
+                  请尝试其他关键词或选择不同的分类
+                </p>
+              </div>
+            ) : (
+              filteredItems.map((item, index) => {
+                const config = categoryConfig[item.category]
+
+                return (
+                  <div
+                    key={item.id}
+                    className='group bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-gray-200 transition-all duration-300 overflow-hidden'
+                    style={{
+                      animationDelay: `${index * 50}ms`,
+                    }}
+                  >
+                    <button
+                      className='w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-50/50 transition-all duration-200'
+                      onClick={() => toggleItem(item.id)}
+                    >
+                      <div className='flex items-center gap-4 flex-1'>
+                        {/* <div
+                          className={`w-10 h-10 rounded-xl bg-gradient-to-r ${config.gradient} flex items-center justify-center flex-shrink-0 shadow-lg`}
+                        >
+                          <span className='text-white text-lg'>
+                            {config.icon}
+                          </span>
+                        </div> */}
+                        <div className='flex-1'>
+                          {/* <div className='flex items-center gap-2 mb-1'>
+                            <span
+                              className={`text-xs px-2 py-1 rounded-full bg-gradient-to-r ${config.bgGradient} text-${config.color}-700 font-medium`}
+                            >
+                              {t(`faq.category.${item.category}`)}
+                            </span>
+                          </div> */}
+                          <h3 className='text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-200'>
+                            {item.question}
+                          </h3>
+                        </div>
+                      </div>
+                      <ChevronDown
+                        className={`w-5 h-5 text-gray-400 transition-all duration-300 group-hover:text-gray-600 ${
+                          openItems.has(item.id)
+                            ? 'rotate-180 text-blue-500'
+                            : ''
+                        }`}
+                      />
+                    </button>
+                    {openItems.has(item.id) && (
+                      <div className='border-t border-gray-100'>
+                        <div className='px-8 py-6'>
+                          <div
+                            className={`p-6 rounded-xl bg-gradient-to-r ${config.bgGradient}`}
+                          >
+                            <div className='text-gray-700 leading-relaxed whitespace-pre-line'>
+                              {item.answer}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )
+              })
+            )}
+          </div>
+
+          {/* Medical Disclaimer */}
+          <div className='mt-20 bg-gradient-to-r from-amber-50 via-orange-50 to-red-50 border border-amber-200 rounded-3xl p-8 shadow-lg'>
+            <div className='flex items-start gap-6'>
+              
+              <div className='flex-1'>
+                <h3 className='text-xl font-bold text-amber-900 mb-3'>
+                  医疗免责声明
+                </h3>
+                <p className='text-amber-800 leading-relaxed text-lg'>
+                  {t('faq.medicalDisclaimer')}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* References */}
+          <div className='mt-12 bg-gradient-to-r from-slate-50 via-gray-50 to-zinc-50 border border-slate-200 rounded-3xl p-8 shadow-lg'>
+            <div className='flex items-start gap-6'>
+              <div className='flex-1'>
+                <h3 className='text-xl font-bold text-slate-900 mb-3'>
+                  {t('faq.references.title')}
+                </h3>
+                <div className='text-slate-700 leading-relaxed text-lg space-y-4'>
+                  <ul className='space-y-2'>
+                    {generateReferenceSources(t).map((source, index) => (
+                      <li key={index} className='flex items-start'>
+                        <span className='text-slate-400 mr-2'>•</span>
+                        <a
+                          className='text-blue-600 hover:text-blue-800 underline transition-colors duration-200'
+                          href={source.url}
+                          rel='noopener noreferrer'
+                          target='_blank'
+                        >
+                          {source.text}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
