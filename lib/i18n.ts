@@ -322,6 +322,10 @@ export const translations: TranslationKeys = {
     zh: '扁头示例图片',
     en: 'Brachycephaly Example',
   },
+  'classification.brachycephaly.image_alt': {
+    zh: '扁头畸形示例图片，显示后脑勺扁平的特征',
+    en: 'Brachycephaly example image showing flattened back of head characteristics',
+  },
   'classification.brachycephaly.description': {
     zh: '后脑勺出现扁平，这是婴儿期最常见的头型变化，通常在7-12周龄达到高峰。',
     en: 'Flattening of the back of the head, the most common head shape variation in infancy, typically peaking at 7-12 weeks of age.',
@@ -343,6 +347,10 @@ export const translations: TranslationKeys = {
   'classification.plagiocephaly.image_placeholder': {
     zh: '偏头畸形示例图片',
     en: 'Plagiocephaly Example',
+  },
+  'classification.plagiocephaly.image_alt': {
+    zh: '偏头畸形示例图片，显示头部一侧扁平的不对称特征',
+    en: 'Plagiocephaly example image showing asymmetrical head shape with one side flattened',
   },
   'classification.plagiocephaly.description': {
     zh: '头部一侧相对扁平，呈不对称外观。这种情况在4个月时通常达到高峰，之后开始改善。',
@@ -366,6 +374,10 @@ export const translations: TranslationKeys = {
     zh: '姿势性长头示例图片',
     en: 'Dolichocephaly Example',
   },
+  'classification.dolichocephaly.image_alt': {
+    zh: '姿势性长头示例图片，显示头部前后较长、两侧较窄的特征',
+    en: 'Dolichocephaly example image showing elongated head shape that is longer front-to-back and narrower on sides',
+  },
   'classification.dolichocephaly.description': {
     zh: '头部前后较长、两侧相对较窄，但颅缝正常开放。多见于早产儿或长期侧卧的婴儿。',
     en: 'Head is longer front-to-back and relatively narrower on the sides, but with normal open sutures. Common in premature infants or babies who lie on their sides for extended periods.',
@@ -387,6 +399,10 @@ export const translations: TranslationKeys = {
   'classification.scaphocephaly.image_placeholder': {
     zh: '病理性舟状头示例图片',
     en: 'Pathological Scaphocephaly Example',
+  },
+  'classification.scaphocephaly.image_alt': {
+    zh: '病理性舟状头示例图片，显示矢状缝早闭导致的船形头颅特征',
+    en: 'Pathological scaphocephaly example image showing boat-shaped skull caused by premature sagittal suture closure',
   },
   'classification.scaphocephaly.description': {
     zh: '矢状缝早闭导致的船形头颅，是最常见的颅缝早闭类型，占所有颅缝早闭的50%。',
