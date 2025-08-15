@@ -8,9 +8,7 @@ The Head Start project takes security seriously. We appreciate your efforts to r
 
 **Please do NOT report security vulnerabilities through public GitHub issues.**
 
-Instead, please report security vulnerabilities by emailing:
-
-📧 **security@headstart.example.com**
+Please report security vulnerabilities by emailing hi@melolib.com. Do not report security vulnerabilities through public GitHub issues.
 
 Include the following information:
 
@@ -149,8 +147,8 @@ We appreciate security researchers who help improve our security:
 
 ## 📞 Contact Information
 
-- **Security Email**: security@headstart.example.com
-- **General Contact**: support@headstart.example.com
+- **Security Email**: hi@melolib.com
+- **General Contact**: hi@melolib.com
 - **Project Maintainers**: Available through GitHub
 
 ## 📚 Additional Resources
@@ -159,6 +157,8 @@ We appreciate security researchers who help improve our security:
 - [Node.js Security Best Practices](https://nodejs.org/en/docs/guides/security/)
 - [React Security Best Practices](https://snyk.io/blog/10-react-security-best-practices/)
 - [Next.js Security Headers](https://nextjs.org/docs/advanced-features/security-headers)
+
+For more information about our security practices, please visit our [GitHub repository](https://github.com/voyax/baby-head-web).
 
 ---
 

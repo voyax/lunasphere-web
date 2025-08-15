@@ -22,8 +22,8 @@
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/head-start-web.git
-cd head-start-web
+git clone https://github.com/voyax/baby-head-web.git
+cd baby-head-web
 ```
 
 2. Install dependencies:
@@ -117,9 +117,9 @@ For security concerns, please see our [Security Policy](SECURITY.md).
 
 ## 📞 Support
 
-- 📧 Email: support@headstart.example.com
-- 🐛 Issues: [GitHub Issues](https://github.com/your-username/head-start-web/issues)
-- 📖 Documentation: [Wiki](https://github.com/your-username/head-start-web/wiki)
+- 📧 Email: hi@melolib.com
+- 🐛 Issues: [GitHub Issues](https://github.com/voyax/baby-head-web/issues)
+- 📖 Documentation: [Wiki](https://github.com/voyax/baby-head-web/wiki)
 
 ## ⚠️ Medical Disclaimer
 

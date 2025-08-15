@@ -15,13 +15,13 @@ export const Footer = () => {
             <Link
               isExternal
               className='text-default-600 hover:text-primary transition-colors'
-              href='https://github.com/your-username/head-start'
+              href='https://github.com/voyax/baby-head-web'
             >
               <Github className='w-4 h-4' />
             </Link>
             <Link
               className='text-default-600 hover:text-primary transition-colors'
-              href='mailto:contact@example.com'
+              href='mailto:hi@melolib.com'
             >
               <Mail className='w-4 h-4' />
             </Link>

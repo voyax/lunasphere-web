@@ -41,8 +41,8 @@ This project adheres to a code of conduct that promotes a welcoming and inclusiv
 
 2. **Clone your fork**
    ```bash
-   git clone https://github.com/your-username/head-start-web.git
-   cd head-start-web
+   git clone https://github.com/your-username/baby-head-web.git
+   cd baby-head-web
    ```
 
 3. **Install dependencies**

@@ -14,18 +14,18 @@
     "react",
     "typescript"
   ],
-  "homepage": "https://github.com/your-username/head-start-web#readme",
+  "homepage": "https://github.com/voyax/baby-head-web#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-username/head-start-web.git"
+    "url": "git+https://github.com/voyax/baby-head-web.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/head-start-web/issues"
+    "url": "https://github.com/voyax/baby-head-web/issues"
   },
   "license": "MIT",
   "author": {
     "name": "Head Start Project Contributors",
-    "email": "support@headstart.example.com"
+    "email": "hi@melolib.com"
   },
   "private": false,
   "scripts": {
