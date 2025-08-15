@@ -46,9 +46,9 @@ export function Navbar() {
   return (
     <HeroUINavbar
       className='bg-background/70 backdrop-blur-md'
+      isMenuOpen={isMenuOpen}
       maxWidth='xl'
       position='sticky'
-      isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent className='sm:hidden' justify='center'>

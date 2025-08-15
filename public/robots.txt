@@ -1,0 +1,22 @@
+# Robots.txt for HeadStart (小月颅)
+# https://head.melolib.com
+
+User-agent: *
+Allow: /
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /private/
+
+# Allow important pages
+Allow: /
+Allow: /detection
+Allow: /faq
+
+# Sitemap
+Sitemap: https://head.melolib.com/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1

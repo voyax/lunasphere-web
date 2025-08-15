@@ -1,0 +1,25 @@
+{
+  "name": "小月颅 - 婴儿头型发育指南",
+  "short_name": "小月颅",
+  "description": "科学认知婴儿头型发育，理性护理减少焦虑",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "192x192",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "512x512",
+      "type": "image/x-icon"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
+  "scope": "/",
+  "lang": "zh-CN",
+  "categories": ["health", "medical", "parenting", "education"]
+}
