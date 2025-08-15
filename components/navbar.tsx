@@ -50,7 +50,7 @@ export function Navbar() {
       position='sticky'
       onMenuOpenChange={setIsMenuOpen}
     >
-      <NavbarContent className='sm:hidden' justify='start'>
+      <NavbarContent className='sm:hidden' justify='center'>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         />
@@ -71,11 +71,11 @@ export function Navbar() {
           </NextLink>
         </NavbarBrand>
 
-        <div className='h-full py-4'>
+        <div className='h-full py-4 hidden sm:block'>
           <Divider orientation='vertical' />
         </div>
         {menuItems.map(item => (
-          <NavbarItem key={item.href} isActive={isActive(item.href)}>
+          <NavbarItem key={item.href} isActive={isActive(item.href)} className='hidden sm:flex'>
             <NextLink
               className={`transition-colors ${
                 isActive(item.href)
