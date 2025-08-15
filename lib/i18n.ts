@@ -1173,15 +1173,15 @@ export const translations: TranslationKeys = {
     en: 'Unknown',
   },
   'detection.classification.ci.severeLong': {
-    zh: '重度长头',
+    zh: '重度',
     en: 'Severe',
   },
   'detection.classification.ci.moderateLong': {
-    zh: '中度长头',
+    zh: '中度',
     en: 'Moderate',
   },
   'detection.classification.ci.mildLong': {
-    zh: '轻度长头',
+    zh: '轻度',
     en: 'Mild',
   },
   'detection.classification.ci.normal': {
@@ -1189,15 +1189,15 @@ export const translations: TranslationKeys = {
     en: 'Normal',
   },
   'detection.classification.ci.mildFlat': {
-    zh: '轻度扁头',
+    zh: '轻度',
     en: 'Mild',
   },
   'detection.classification.ci.moderateFlat': {
-    zh: '中度扁头',
+    zh: '中度',
     en: 'Moderate',
   },
   'detection.classification.ci.severeFlat': {
-    zh: '重度扁头',
+    zh: '重度',
     en: 'Severe',
   },
   'detection.classification.cvai.normal': {
