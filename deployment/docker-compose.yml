@@ -1,0 +1,156 @@
+# Head Start Web - Docker Compose Configuration
+# Production deployment reference using pre-built images
+
+version: '3.8'
+
+services:
+  # Main application service
+  head-start-web:
+    image: ${IMAGE_NAME:-voyax/head-start-web}:${IMAGE_TAG:-latest}
+    container_name: head-start-${ENVIRONMENT:-dev}
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - NEXT_TELEMETRY_DISABLED=1
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-change-me-in-production}
+    env_file:
+      - .env.local
+    healthcheck:
+      test: ["CMD", "node", "healthcheck.js"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+          cpus: '0.5'
+    networks:
+      - head-start-network
+    profiles:
+      - dev
+      - staging
+      - prod
+
+  # Reverse proxy for production (optional)
+  caddy:
+    image: caddy:2-alpine
+    container_name: head-start-proxy-${ENVIRONMENT:-dev}
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      - DOMAIN=${DOMAIN:-localhost}
+      - UPSTREAM_HOST=head-start-web
+      - UPSTREAM_PORT=3000
+    depends_on:
+      head-start-web:
+        condition: service_healthy
+    networks:
+      - head-start-network
+    profiles:
+      - prod
+
+  # Development tools (optional)
+  adminer:
+    image: adminer:4-standalone
+    container_name: head-start-adminer-${ENVIRONMENT:-dev}
+    restart: unless-stopped
+    ports:
+      - "${ADMINER_PORT:-8080}:8080"
+    environment:
+      - ADMINER_DEFAULT_SERVER=db
+    networks:
+      - head-start-network
+    profiles:
+      - dev
+
+networks:
+  head-start-network:
+    driver: bridge
+    name: head-start-network-${ENVIRONMENT:-dev}
+
+volumes:
+  caddy_data:
+    name: head-start-caddy-data-${ENVIRONMENT:-dev}
+  caddy_config:
+    name: head-start-caddy-config-${ENVIRONMENT:-dev}
+
+# Environment-specific configurations
+# Use profiles to control which services run in each environment:
+#
+# Development:
+#   docker-compose --profile dev up -d
+#   - Runs: head-start-web, adminer
+#   - Ports: 3000 (app), 8080 (adminer)
+#
+# Staging:
+#   docker-compose --profile staging up -d
+#   - Runs: head-start-web
+#   - Ports: 3001 (app)
+#
+# Production:
+#   docker-compose --profile prod up -d
+#   - Runs: head-start-web, caddy
+#   - Ports: 80 (http), 443 (https)
+#
+# Environment Variables:
+#   IMAGE_NAME: Docker image name (default: head-start-web)
+#   IMAGE_TAG: Docker image tag (default: latest)
+#   ENVIRONMENT: Deployment environment (dev/staging/prod)
+#   APP_PORT: Application port mapping (default: 3000)
+#   HTTP_PORT: HTTP port for Caddy (default: 80)
+#   HTTPS_PORT: HTTPS port for Caddy (default: 443)
+#   DOMAIN: Domain name for production (default: localhost)
+#   NODE_ENV: Node.js environment (default: production)
+#   NEXT_PUBLIC_APP_URL: Public application URL
+#   NEXTAUTH_SECRET: NextAuth secret key
+#
+# Usage Examples:
+#
+# 1. Development with local image:
+#    IMAGE_TAG=dev-abc1234 docker-compose --profile dev up -d
+#
+# 2. Staging with registry image:
+#    IMAGE_NAME=registry.example.com/head-start-web \
+#    IMAGE_TAG=v1.0.0-abc1234 \
+#    ENVIRONMENT=staging \
+#    APP_PORT=3001 \
+#    docker-compose --profile staging up -d
+#
+# 3. Production with custom domain:
+#    IMAGE_NAME=registry.example.com/head-start-web \
+#    IMAGE_TAG=v1.0.0-abc1234 \
+#    ENVIRONMENT=prod \
+#    DOMAIN=headstart.example.com \
+#    NEXT_PUBLIC_APP_URL=https://headstart.example.com \
+#    NEXTAUTH_SECRET=your-secure-secret \
+#    docker-compose --profile prod up -d
+#
+# Security Notes:
+# - Always use strong NEXTAUTH_SECRET in production
+# - Use HTTPS in production environments
+# - Regularly update base images for security patches
+# - Consider using Docker secrets for sensitive data
+# - Implement proper firewall rules
+# - Monitor container logs and metrics
+#
+# Scaling:
+# - For horizontal scaling, use Docker Swarm or Kubernetes
+# - Consider using external load balancer for multiple instances
+# - Use external database for stateful data
+# - Implement proper session management for multiple instances

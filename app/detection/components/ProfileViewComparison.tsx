@@ -7,6 +7,8 @@ import { Upload, RotateCcw, Eye, EyeOff } from 'lucide-react'
 import { Stage, Layer, Image as KonvaImage, Transformer } from 'react-konva'
 import useImage from 'use-image'
 import Konva from 'konva'
+import NextImage from 'next/image'
+
 import { useLocale } from '@/contexts/LocaleContext'
 
 interface ProfileViewComparisonProps {
@@ -342,7 +344,9 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                         1
                       </span>
                       <div>
-                        <p className='font-medium text-xs'>{t('detection.profileView.shootingTips.tip1')}</p>
+                        <p className='font-medium text-xs'>
+                          {t('detection.profileView.shootingTips.tip1')}
+                        </p>
                         <p className='text-xs text-gray-600 dark:text-gray-400'>
                           {t('detection.profileView.shootingTips.tip1Desc')}
                         </p>
@@ -353,7 +357,9 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                         2
                       </span>
                       <div>
-                        <p className='font-medium text-xs'>{t('detection.profileView.shootingTips.tip2')}</p>
+                        <p className='font-medium text-xs'>
+                          {t('detection.profileView.shootingTips.tip2')}
+                        </p>
                         <p className='text-xs text-gray-600 dark:text-gray-400'>
                           {t('detection.profileView.shootingTips.tip2Desc')}
                         </p>
@@ -364,7 +370,9 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                         3
                       </span>
                       <div>
-                        <p className='font-medium text-xs'>{t('detection.profileView.shootingTips.tip3')}</p>
+                        <p className='font-medium text-xs'>
+                          {t('detection.profileView.shootingTips.tip3')}
+                        </p>
                         <p className='text-xs text-gray-600 dark:text-gray-400'>
                           {t('detection.profileView.shootingTips.tip3Desc')}
                         </p>
@@ -397,7 +405,11 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                 {rightImage && (
                   <>
                     <Tooltip
-                      content={showRightTemplate ? t('detection.profileView.hideTemplate') : t('detection.profileView.showTemplate')}
+                      content={
+                        showRightTemplate
+                          ? t('detection.profileView.hideTemplate')
+                          : t('detection.profileView.showTemplate')
+                      }
                     >
                       <Button
                         isIconOnly
@@ -445,9 +457,11 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                 >
                   {/* Background template image */}
                   <div className='absolute inset-0'>
-                    <img
+                    <NextImage
+                      fill
                       alt={t('detection.profileView.rightTemplateAlt')}
                       className='w-full h-full object-contain'
+                      sizes='(max-width: 768px) 100vw, 50vw'
                       src='/images/detection/head_right.svg'
                     />
                     <div className='absolute inset-0 bg-white/20 dark:bg-gray-900/20' />
@@ -531,7 +545,11 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                 {leftImage && (
                   <>
                     <Tooltip
-                      content={showLeftTemplate ? t('detection.profileView.hideTemplate') : t('detection.profileView.showTemplate')}
+                      content={
+                        showLeftTemplate
+                          ? t('detection.profileView.hideTemplate')
+                          : t('detection.profileView.showTemplate')
+                      }
                     >
                       <Button
                         isIconOnly
@@ -579,9 +597,11 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                 >
                   {/* Background template image */}
                   <div className='absolute inset-0'>
-                    <img
+                    <NextImage
+                      fill
                       alt={t('detection.profileView.leftTemplateAlt')}
                       className='w-full h-full object-contain'
+                      sizes='(max-width: 768px) 100vw, 50vw'
                       src='/images/detection/head_left.svg'
                     />
                     <div className='absolute inset-0 bg-white/20 dark:bg-gray-900/20' />

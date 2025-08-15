@@ -92,6 +92,7 @@ export class HeadShapeModel {
   isModelLoaded(modelPath?: string): boolean {
     if (!this.session) return false
     if (modelPath && this.modelPath !== modelPath) return false
+
     return true
   }
 
@@ -839,7 +840,7 @@ export function getModelInstance(
     if (modelPath && modelInstance['modelPath'] !== modelPath) {
       modelInstance['modelPath'] = modelPath
     }
-    
+
     // Update config if provided
     if (config) {
       modelInstance['config'] = { ...modelInstance['config'], ...config }

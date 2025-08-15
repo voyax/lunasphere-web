@@ -4,6 +4,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 const nextConfig = {
   reactStrictMode: true,
+  output: 'standalone', // Enable standalone output for Docker deployment
   webpack: (config, { }) => {
     config.resolve.extensions.push(".ts", ".tsx");
     config.resolve.fallback = { fs: false };
@@ -27,5 +28,7 @@ const nextConfig = {
     return config;
   },
 };
+
+module.exports = nextConfig;
 
 module.exports = nextConfig;

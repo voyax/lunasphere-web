@@ -13,9 +13,9 @@ export const Footer = () => {
           {/* Links */}
           <div className='flex items-center space-x-4'>
             <Link
+              isExternal
               className='text-default-600 hover:text-primary transition-colors'
               href='https://github.com/your-username/head-start'
-              isExternal
             >
               <Github className='w-4 h-4' />
             </Link>

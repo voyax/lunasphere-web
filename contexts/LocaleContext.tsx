@@ -45,8 +45,9 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     // Update server-side cookie using server action
     try {
       await updateLocalecookie(newLocale)
-    } catch (error) {
-      console.error('Failed to update server locale:', error)
+    } catch {
+      // Failed to update server locale, revert client state
+      // In production, this could be logged to an error monitoring service
       // Revert client state if server update fails
       setLocale(locale)
       localStorage.setItem(LOCALE_COOKIE_CONFIG.name, locale)

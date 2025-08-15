@@ -12,28 +12,30 @@ interface ReferenceSource {
 }
 
 // Generate reference sources from i18n data dynamically
-const generateReferenceSources = (t: (key: string) => string): ReferenceSource[] => {
+const generateReferenceSources = (
+  t: (key: string) => string
+): ReferenceSource[] => {
   const sources: ReferenceSource[] = []
   let i = 1
-  
+
   // Dynamically detect available reference sources
   while (true) {
     const textKey = `faq.references.source${i}.text`
     const urlKey = `faq.references.source${i}.url`
-    
+
     // Check if the translation key exists by comparing with the key itself
     const text = t(textKey)
     const url = t(urlKey)
-    
+
     // If translation returns the key itself, it means the key doesn't exist
     if (text === textKey || url === urlKey) {
       break
     }
-    
+
     sources.push({ text, url })
     i++
   }
-  
+
   return sources
 }
 
@@ -66,7 +68,7 @@ const categoryConfig = {
 }
 
 export default function FAQPage() {
-  const { t, locale } = useLocale()
+  const { t } = useLocale()
   const [openItems, setOpenItems] = useState<Set<string>>(new Set())
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
@@ -368,7 +370,6 @@ export default function FAQPage() {
           {/* Medical Disclaimer */}
           <div className='mt-20 bg-gradient-to-r from-amber-50 via-orange-50 to-red-50 border border-amber-200 rounded-3xl p-8 shadow-lg'>
             <div className='flex items-start gap-6'>
-              
               <div className='flex-1'>
                 <h3 className='text-xl font-bold text-amber-900 mb-3'>
                   医疗免责声明

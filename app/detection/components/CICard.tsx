@@ -3,12 +3,11 @@
  * Displays CI classification results with specific visualization
  */
 
-
-
 import {
   classifyCI,
   CI_CLASSIFICATION_CONFIG,
 } from './config/headShapeClassification'
+
 import { useLocale } from '@/contexts/LocaleContext'
 
 interface CICardProps {
@@ -94,8 +93,8 @@ export default function CICard({ value, measurements }: CICardProps) {
   const colors = getSeverityColors(result.severity)
   const position = calculateCIPosition(ciPercentage)
   // Use translated labels from config
-  const categoryLabels = CI_CLASSIFICATION_CONFIG.ranges.map(
-    range => t(range.labelKey)
+  const categoryLabels = CI_CLASSIFICATION_CONFIG.ranges.map(range =>
+    t(range.labelKey)
   )
 
   return (

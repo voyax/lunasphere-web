@@ -5,6 +5,7 @@ import type { ImageType, ImageUploadData, AnalysisResult } from '../types'
 import { Button } from '@heroui/button'
 import { Tooltip } from '@heroui/tooltip'
 import { Upload, Camera, CheckCircle } from 'lucide-react'
+import NextImage from 'next/image'
 
 import RotationControl from './RotationControl'
 import {
@@ -95,8 +96,6 @@ export default function TopViewAnalysis({
       }
 
       const model = getModelInstance(modelPath, { confidenceThreshold })
-      const canvas = document.createElement('canvas')
-      const ctx = canvas.getContext('2d')!
       const img = new Image()
 
       img.onload = async () => {
@@ -194,7 +193,9 @@ export default function TopViewAnalysis({
                           1
                         </span>
                         <div>
-                          <p className='font-medium text-xs'>{t('detection.topView.shootingTips.tip1')}</p>
+                          <p className='font-medium text-xs'>
+                            {t('detection.topView.shootingTips.tip1')}
+                          </p>
                           <p className='text-xs text-gray-600 dark:text-gray-400'>
                             {t('detection.topView.shootingTips.tip1Detail')}
                           </p>
@@ -231,7 +232,9 @@ export default function TopViewAnalysis({
                           4
                         </span>
                         <div>
-                          <p className='font-medium text-xs'>{t('detection.topView.shootingTips.tip4')}</p>
+                          <p className='font-medium text-xs'>
+                            {t('detection.topView.shootingTips.tip4')}
+                          </p>
                           <p className='text-xs text-gray-600 dark:text-gray-400'>
                             {t('detection.topView.shootingTips.tip4Detail')}
                           </p>
@@ -270,9 +273,11 @@ export default function TopViewAnalysis({
             >
               {/* Background placeholder image with annotations */}
               <div className='absolute inset-0'>
-                <img
+                <NextImage
+                  fill
                   alt={t('detection.topView.exampleImageAlt')}
                   className='w-full h-full object-contain opacity-70 dark:opacity-60'
+                  sizes='(max-width: 768px) 100vw, 50vw'
                   src='/images/detection/head_normal_top.jpg'
                 />
                 <div className='absolute inset-0 bg-white/30 dark:bg-gray-900/30' />
@@ -331,9 +336,11 @@ export default function TopViewAnalysis({
           ) : (
             <div className='space-y-6'>
               <div className='relative aspect-square bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700'>
-                <img
+                <NextImage
+                  fill
                   alt={t('detection.topView.originalImageAlt')}
                   className='w-full h-full object-contain'
+                  sizes='(max-width: 768px) 100vw, 50vw'
                   src={images.top.url}
                   style={{
                     transform: `rotate(${images.top.rotation}deg) scale(${images.top.scale})`,
@@ -390,12 +397,12 @@ export default function TopViewAnalysis({
                     }
                     onClick={analyzeTopView}
                   >
-                      {isLoadingModel
-                        ? t('detection.model.loadingButton')
-                        : isProcessing
-                          ? t('detection.topView.buttons.analyzing')
-                          : t('detection.topView.buttons.startAnalysis')}
-                    </Button>
+                    {isLoadingModel
+                      ? t('detection.model.loadingButton')
+                      : isProcessing
+                        ? t('detection.topView.buttons.analyzing')
+                        : t('detection.topView.buttons.startAnalysis')}
+                  </Button>
                   <Button
                     className='h-10 px-3'
                     size='md'
@@ -524,8 +531,8 @@ export default function TopViewAnalysis({
                           }
                         }}
                       >
-                          {t('detection.topView.buttons.downloadResult')}
-                        </button>
+                        {t('detection.topView.buttons.downloadResult')}
+                      </button>
                     </>
                   ) : (
                     <div className='flex items-center justify-center h-full'>

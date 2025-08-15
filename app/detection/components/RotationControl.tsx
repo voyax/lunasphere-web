@@ -13,13 +13,13 @@ interface RotationControlProps {
 
 /**
  * RotationControl Component
- * 
+ *
  * A reusable component for controlling image rotation with multiple interaction methods:
  * - Click buttons for 15-degree increments
  * - Direct input for precise values
  * - Drag the circular control for smooth rotation
  * - Keyboard navigation with arrow keys
- * 
+ *
  * @param rotation - Current rotation value in degrees (0-359)
  * @param onChange - Callback function when rotation changes
  * @param className - Additional CSS classes
@@ -81,6 +81,7 @@ const RotationControl: React.FC<RotationControlProps> = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value) || 0
     const normalizedValue = Math.max(0, Math.min(359, value))
+
     onChange(normalizedValue)
   }
 
@@ -89,11 +90,11 @@ const RotationControl: React.FC<RotationControlProps> = ({
       {/* Rotate counter-clockwise button */}
       <Button
         isIconOnly
+        aria-label='Rotate counter-clockwise 15 degrees'
         className='w-8 h-8 min-w-8'
         size='sm'
         variant='light'
         onClick={() => onChange((rotation - 15 + 360) % 360)}
-        aria-label='Rotate counter-clockwise 15 degrees'
       >
         <RotateCcw className='w-3 h-3' />
       </Button>
@@ -101,13 +102,13 @@ const RotationControl: React.FC<RotationControlProps> = ({
       {/* Direct input control */}
       <div className='flex items-center gap-2 bg-gray-100 dark:bg-gray-800 rounded-lg px-3 py-1'>
         <input
+          aria-label='Rotation angle in degrees'
           className='w-12 text-xs text-center bg-transparent border-none outline-none'
           max='359'
           min='0'
           type='number'
           value={Math.round(rotation)}
           onChange={handleInputChange}
-          aria-label='Rotation angle in degrees'
         />
         <span className='text-xs text-gray-500'>°</span>
       </div>
@@ -139,11 +140,11 @@ const RotationControl: React.FC<RotationControlProps> = ({
       {/* Rotate clockwise button */}
       <Button
         isIconOnly
+        aria-label='Rotate clockwise 15 degrees'
         className='w-8 h-8 min-w-8'
         size='sm'
         variant='light'
         onClick={() => onChange((rotation + 15) % 360)}
-        aria-label='Rotate clockwise 15 degrees'
       >
         <RotateCw className='w-3 h-3' />
       </Button>

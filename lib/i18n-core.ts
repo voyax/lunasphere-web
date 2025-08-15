@@ -13,7 +13,8 @@ export function createTranslationFunction(locale: Locale) {
 
     // 开发环境下警告缺失翻译
     if (process.env.NODE_ENV === 'development') {
-      console.warn(`Missing translation for key: ${key}`)
+      // Missing translation warning - could be logged to development tools
+      // console.warn(`Missing translation for key: ${key}`)
     }
 
     // 回退到 key

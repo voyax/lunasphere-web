@@ -3,12 +3,11 @@
  * Displays CVAI classification results with specific visualization
  */
 
-
-
 import {
   classifyCVAI,
   CVAI_CLASSIFICATION_CONFIG,
 } from './config/headShapeClassification'
+
 import { useLocale } from '@/contexts/LocaleContext'
 
 interface CVAICardProps {
@@ -94,8 +93,8 @@ export default function CVAICard({ value, measurements }: CVAICardProps) {
   const colors = getSeverityColors(result.severity)
   const position = calculateCVAIPosition(cvaiPercentage)
   // Use translated labels from config
-  const categoryLabels = CVAI_CLASSIFICATION_CONFIG.ranges.map(
-    range => t(range.labelKey)
+  const categoryLabels = CVAI_CLASSIFICATION_CONFIG.ranges.map(range =>
+    t(range.labelKey)
   )
 
   return (
@@ -122,10 +121,12 @@ export default function CVAICard({ value, measurements }: CVAICardProps) {
       {/* Formula display */}
       {measurements && (
         <div className='text-sm text-gray-600 dark:text-gray-400 mb-3'>
-          = |{t('detection.analysis.cvai.diagonal1')}({measurements.diagonal1.toFixed(1)}) - {t('detection.analysis.cvai.diagonal2')}(
-          {measurements.diagonal2.toFixed(1)})| / {t('detection.analysis.cvai.diagonal1')}(
-          {measurements.diagonal1.toFixed(1)}
-) × 100
+          = |{t('detection.analysis.cvai.diagonal1')}(
+          {measurements.diagonal1.toFixed(1)}) -{' '}
+          {t('detection.analysis.cvai.diagonal2')}(
+          {measurements.diagonal2.toFixed(1)})| /{' '}
+          {t('detection.analysis.cvai.diagonal1')}(
+          {measurements.diagonal1.toFixed(1)}) × 100
         </div>
       )}
 

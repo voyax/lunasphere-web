@@ -65,7 +65,7 @@ export const translations: TranslationKeys = {
   },
   'hero.description': {
     zh: '大多数头型问题属于正常发育现象，通过科学的护理方法可以自然改善。我们帮助新手父母建立正确认知，减少不必要的焦虑。',
-    en: 'Most head shape concerns are part of normal development and improve naturally with proper care. We help new parents understand what\'s normal and reduce unnecessary worry.',
+    en: "Most head shape concerns are part of normal development and improve naturally with proper care. We help new parents understand what's normal and reduce unnecessary worry.",
   },
   'hero.cta': {
     zh: '头型自测',
@@ -83,7 +83,7 @@ export const translations: TranslationKeys = {
   },
   'development.subtitle': {
     zh: '宝宝的头型会随着发育自然变化，0–18 个月是关键观察期',
-    en: 'Baby\'s head shape changes naturally during development, with 0-18 months being the key observation period',
+    en: "Baby's head shape changes naturally during development, with 0-18 months being the key observation period",
   },
   'development.structure': {
     zh: '头骨结构',
@@ -252,7 +252,7 @@ export const translations: TranslationKeys = {
   },
   'classification.reminder_note': {
     zh: '💡 建议：定期变换宝宝睡觉和玩耍的姿势，促进头型自然发育',
-    en: '💡 Tip: Regularly vary baby\'s sleeping and play positions to encourage natural head shape development',
+    en: "💡 Tip: Regularly vary baby's sleeping and play positions to encourage natural head shape development",
   },
   'classification.medical_warning_title': {
     zh: '病理性头型需要医疗关注',
@@ -450,7 +450,7 @@ export const translations: TranslationKeys = {
   },
   'sleep.principle3.desc': {
     zh: '选用硬度适中的床垫，既能提供充分支撑，又不会过度下陷。过软的床垫会使宝宝的头部受力不均，某一侧长时间陷入，反而容易导致扁头或偏头等问题，且不利于婴儿脊椎发育',
-    en: 'Select a firm mattress that provides proper support without excessive sinking. Soft mattresses can create uneven pressure on your baby\'s head, causing one side to sink in and potentially leading to flat spots or asymmetry, while also hindering healthy spinal development.',
+    en: "Select a firm mattress that provides proper support without excessive sinking. Soft mattresses can create uneven pressure on your baby's head, causing one side to sink in and potentially leading to flat spots or asymmetry, while also hindering healthy spinal development.",
   },
   'sleep.principle4': {
     zh: '细心观察，及时调整',
@@ -458,7 +458,7 @@ export const translations: TranslationKeys = {
   },
   'sleep.principle4.desc': {
     zh: '前6个月是头型塑造的黄金期，家长应密切关注宝宝头型变化。发现偏平或不对称时，及时调整护理方式。6个月后随着宝宝活动增加，头型会逐渐趋于圆润',
-    en: 'The first 6 months are crucial for head shape development. Monitor your baby\'s head shape closely and adjust care practices immediately if you notice flattening or asymmetry. After 6 months, increased mobility naturally helps round out the head shape.',
+    en: "The first 6 months are crucial for head shape development. Monitor your baby's head shape closely and adjust care practices immediately if you notice flattening or asymmetry. After 6 months, increased mobility naturally helps round out the head shape.",
   },
 
   // 分龄指导
@@ -518,7 +518,7 @@ export const translations: TranslationKeys = {
   },
   'sleep.technique3.desc': {
     zh: '合理布置婴儿床周围环境，定期更换玩具、音乐盒或彩色图案的位置，利用宝宝的好奇心引导其主动转头。每隔几天调换宝宝睡觉的方向（头脚位置对调），这样光线和环境刺激就会从不同方向吸引宝宝转头，简单有效地避免头部总是偏向同一侧',
-    en: 'Strategically arrange your baby\'s environment by regularly moving toys, music boxes, or colorful patterns around the crib to encourage natural head turning. Every few days, alternate which end of the crib your baby\'s head faces, so light and visual stimuli naturally draw their attention in different directions.',
+    en: "Strategically arrange your baby's environment by regularly moving toys, music boxes, or colorful patterns around the crib to encourage natural head turning. Every few days, alternate which end of the crib your baby's head faces, so light and visual stimuli naturally draw their attention in different directions.",
   },
   'sleep.technique4': {
     zh: '侧睡小妙招',
@@ -526,7 +526,7 @@ export const translations: TranslationKeys = {
   },
   'sleep.technique4.desc': {
     zh: '让宝宝侧睡时要做到侧头侧身睡，避免只侧头不侧身的错误姿势。只侧头不侧身会让颈部承受过大压力，可能导致颈部不适或加重头型偏斜。可以在宝宝背后垫一个卷起来的小毛巾或小枕头，帮助其保持稳定的侧卧姿势，左右两侧要轮流进行',
-    en: 'When positioning your baby on their side, ensure both head and body face the same direction—never just turn the head while keeping the body straight. This misalignment strains the neck and can worsen head asymmetry. Use a rolled towel or small pillow behind your baby\'s back for support, and remember to alternate between left and right sides.',
+    en: "When positioning your baby on their side, ensure both head and body face the same direction—never just turn the head while keeping the body straight. This misalignment strains the neck and can worsen head asymmetry. Use a rolled towel or small pillow behind your baby's back for support, and remember to alternate between left and right sides.",
   },
 
   // Head shape examples section
@@ -632,7 +632,7 @@ export const translations: TranslationKeys = {
   },
   'sleep.cta_description': {
     zh: '欢迎尝试我们的在线头型测试，或者发送邮件给我们。我们会尽力为每一位家长提供帮助和解答，这些服务都是免费的。',
-    en: 'Try our free online head shape assessment or reach out via email. We\'re here to support every parent with personalized guidance and answers.',
+    en: "Try our free online head shape assessment or reach out via email. We're here to support every parent with personalized guidance and answers.",
   },
 
   // Buttons and interactions
@@ -660,7 +660,7 @@ export const translations: TranslationKeys = {
   },
   'detection.hero.description': {
     zh: '基于先进深度学习算法的专业头型评估系统，所有数据处理均在您的设备本地完成，无需上传任何照片，确保您和宝宝的隐私安全。',
-    en: 'Professional head shape assessment system based on advanced deep learning algorithms. All data processing is completed locally on your device without uploading any photos, ensuring your and your baby\'s privacy and security.',
+    en: "Professional head shape assessment system based on advanced deep learning algorithms. All data processing is completed locally on your device without uploading any photos, ensuring your and your baby's privacy and security.",
   },
   'detection.hero.features.ai': {
     zh: '深度学习算法',
@@ -697,21 +697,21 @@ export const translations: TranslationKeys = {
     en: 'Model not loaded, please load the model first',
   },
   'detection.model.imageLoadFailed': {
-     zh: '图片加载失败，请重新上传',
-     en: 'Image loading failed, please re-upload',
-   },
-   'detection.model.loadingHint': {
-     zh: '首次加载可能需要较长时间，请耐心等待',
-     en: 'First-time loading may take longer, please be patient',
-   },
-   'detection.model.notLoadedHint': {
-     zh: '请等待模型自动加载完成后再进行检测',
-     en: 'Please wait for the model to load automatically before detection',
-   },
-   'detection.model.readyHint': {
-     zh: '现在可以上传图片进行头型检测分析',
-     en: 'You can now upload images for head shape detection analysis',
-   },
+    zh: '图片加载失败，请重新上传',
+    en: 'Image loading failed, please re-upload',
+  },
+  'detection.model.loadingHint': {
+    zh: '首次加载可能需要较长时间，请耐心等待',
+    en: 'First-time loading may take longer, please be patient',
+  },
+  'detection.model.notLoadedHint': {
+    zh: '请等待模型自动加载完成后再进行检测',
+    en: 'Please wait for the model to load automatically before detection',
+  },
+  'detection.model.readyHint': {
+    zh: '现在可以上传图片进行头型检测分析',
+    en: 'You can now upload images for head shape detection analysis',
+  },
 
   // Detection top view
   'detection.topView.title': {
@@ -724,7 +724,7 @@ export const translations: TranslationKeys = {
   },
   'detection.topView.description': {
     zh: '上传宝宝头部俯视图，获得专业AI分析',
-    en: 'Upload your baby\'s top view photo for professional AI analysis',
+    en: "Upload your baby's top view photo for professional AI analysis",
   },
   'detection.pageSubtitle': {
     zh: '基于深度学习的头型评估算法，所有计算在浏览器本地完成，照片不会上传到任何服务器，确保您和宝宝的隐私安全',
@@ -773,11 +773,11 @@ export const translations: TranslationKeys = {
   },
   'detection.topView.shootingTips.tip1Detail': {
     zh: '确保能看到一点鼻尖，但不要露出太多面部',
-    en: 'Ensure nose tip is barely visible, but don\'t show too much face',
+    en: "Ensure nose tip is barely visible, but don't show too much face",
   },
   'detection.topView.shootingTips.tip2Detail': {
     zh: '保持手机与宝宝头部在同一水平线上',
-    en: 'Keep phone level with baby\'s head',
+    en: "Keep phone level with baby's head",
   },
   'detection.topView.shootingTips.tip3Detail': {
     zh: '确保前额朝上，头部轮廓清晰可见',
@@ -863,10 +863,10 @@ export const translations: TranslationKeys = {
     zh: '下载结果',
     en: 'Save Results',
   },
-   'detection.topView.upload.modelLoading': {
-     zh: '模型加载中...',
-     en: 'Model loading...',
-   },
+  'detection.topView.upload.modelLoading': {
+    zh: '模型加载中...',
+    en: 'Model loading...',
+  },
   'detection.topView.analysis.title': {
     zh: '分析结果',
     en: 'Analysis Results',
@@ -939,7 +939,7 @@ export const translations: TranslationKeys = {
   },
   'detection.profileView.shootingTips.tip1Desc': {
     zh: '确保宝宝侧面完全朝向镜头',
-    en: 'Ensure baby\'s profile completely faces the camera',
+    en: "Ensure baby's profile completely faces the camera",
   },
   'detection.profileView.shootingTips.tip2': {
     zh: '避免头发遮挡',
@@ -1044,8 +1044,6 @@ export const translations: TranslationKeys = {
     zh: '对角线2',
     en: 'Diagonal 2',
   },
-
-
 
   // Detection profile view - additional keys
   'detection.profileView.leftTemplateAlt': {
@@ -1254,18 +1252,17 @@ export const translations: TranslationKeys = {
   },
   'faq.normalDevelopment.answer': {
     zh: '正常的婴儿头型发育是一个渐进的过程。新生儿的头骨由多块骨板组成，通过颅缝连接，这使得头部能够随着大脑的快速发育而增长。\n\n在出生后的前几个月，由于头骨的可塑性，宝宝的头型可能会因为睡姿、喂养姿势等因素而发生轻微变化。这些变化大多是暂时的，随着宝宝活动能力的增强和头骨的逐渐硬化，头型会趋于稳定。\n\n正常情况下，宝宝的头型应该是相对圆润和对称的，前后、左右基本平衡。',
-    en: 'Normal infant head shape development is a gradual process. A newborn\'s skull consists of multiple bone plates connected by cranial sutures, allowing the head to grow with rapid brain development.\n\nIn the first few months after birth, due to skull plasticity, a baby\'s head shape may change slightly due to factors like sleeping position and feeding posture. These changes are mostly temporary and will stabilize as the baby becomes more active and the skull gradually hardens.\n\nNormally, a baby\'s head shape should be relatively round and symmetrical, with basic balance front-to-back and left-to-right.',
+    en: "Normal infant head shape development is a gradual process. A newborn's skull consists of multiple bone plates connected by cranial sutures, allowing the head to grow with rapid brain development.\n\nIn the first few months after birth, due to skull plasticity, a baby's head shape may change slightly due to factors like sleeping position and feeding posture. These changes are mostly temporary and will stabilize as the baby becomes more active and the skull gradually hardens.\n\nNormally, a baby's head shape should be relatively round and symmetrical, with basic balance front-to-back and left-to-right.",
   },
 
   'faq.whenToWorry.question': {
     zh: '什么时候需要担心宝宝的头型？',
-    en: 'When should I be concerned about my baby\'s head shape?',
+    en: "When should I be concerned about my baby's head shape?",
   },
   'faq.whenToWorry.answer': {
     zh: '虽然大多数头型变化都是正常的，但以下情况需要引起注意：\n\n• 头型严重不对称，一侧明显扁平或突出\n• 头围增长过快或过慢\n• 囟门过早闭合或异常凸起\n• 伴有发育迟缓、喂养困难等其他症状\n• 6个月后头型仍无改善趋势\n\n如果出现这些情况，建议及时咨询儿科医生或头颅外科专家，进行专业评估。早期发现和干预可以获得更好的效果。',
-    en: 'While most head shape changes are normal, the following situations require attention:\n\n• Severe head asymmetry with one side noticeably flat or protruding\n• Head circumference growing too fast or too slow\n• Fontanelles closing too early or abnormally bulging\n• Accompanied by developmental delays, feeding difficulties, or other symptoms\n• No improvement trend in head shape after 6 months\n\nIf these situations occur, it\'s recommended to consult a pediatrician or cranial specialist promptly for professional evaluation. Early detection and intervention can achieve better results.',
+    en: "While most head shape changes are normal, the following situations require attention:\n\n• Severe head asymmetry with one side noticeably flat or protruding\n• Head circumference growing too fast or too slow\n• Fontanelles closing too early or abnormally bulging\n• Accompanied by developmental delays, feeding difficulties, or other symptoms\n• No improvement trend in head shape after 6 months\n\nIf these situations occur, it's recommended to consult a pediatrician or cranial specialist promptly for professional evaluation. Early detection and intervention can achieve better results.",
   },
-
 
   'faq.tummyTime.question': {
     zh: '俯卧时间对头型发育有什么帮助？',
@@ -1273,10 +1270,8 @@ export const translations: TranslationKeys = {
   },
   'faq.tummyTime.answer': {
     zh: '俯卧时间对婴儿头型发育非常重要，具有多重益处：\n\n• 减轻后脑勺压力：让宝宝脱离仰卧姿势，减少对后脑勺的持续压迫\n• 促进颈部肌肉发育：增强颈部和背部肌肉力量\n• 鼓励头部活动：促使宝宝主动转动头部，锻炼颈部灵活性\n• 预防扁头综合征：有效预防位置性扁头的发生\n\n建议从新生儿期开始，每天进行多次短时间的俯卧练习。开始时每次2-3分钟，随着宝宝适应逐渐增加时间。务必在宝宝清醒且有成人监督的情况下进行。',
-    en: 'Tummy time is very important for infant head shape development and has multiple benefits:\n\n• Relieves pressure on the back of the head: Gets baby off their back, reducing continuous pressure on the occiput\n• Promotes neck muscle development: Strengthens neck and back muscles\n• Encourages head movement: Prompts baby to actively turn their head, exercising neck flexibility\n• Prevents flat head syndrome: Effectively prevents positional brachycephaly\n\nIt\'s recommended to start from the newborn period with multiple short tummy time sessions daily. Begin with 2-3 minutes each time, gradually increasing as baby adapts. Always ensure baby is awake and under adult supervision.',
+    en: "Tummy time is very important for infant head shape development and has multiple benefits:\n\n• Relieves pressure on the back of the head: Gets baby off their back, reducing continuous pressure on the occiput\n• Promotes neck muscle development: Strengthens neck and back muscles\n• Encourages head movement: Prompts baby to actively turn their head, exercising neck flexibility\n• Prevents flat head syndrome: Effectively prevents positional brachycephaly\n\nIt's recommended to start from the newborn period with multiple short tummy time sessions daily. Begin with 2-3 minutes each time, gradually increasing as baby adapts. Always ensure baby is awake and under adult supervision.",
   },
-
-
 
   'faq.improvementTime.question': {
     zh: '头型改善需要多长时间？',
@@ -1284,7 +1279,7 @@ export const translations: TranslationKeys = {
   },
   'faq.improvementTime.answer': {
     zh: '头型改善的时间因个体差异而不同，一般遵循以下规律：\n\n• 轻度头型问题：通过体位调整，通常在2-4个月内看到明显改善\n• 中度头型问题：可能需要4-8个月的持续护理和观察\n• 重度头型问题：可能需要专业干预，改善时间较长\n\n影响改善速度的因素包括：\n• 宝宝的年龄（越小改善越快）\n• 头型问题的严重程度\n• 护理措施的执行情况\n• 个体的生长发育速度\n\n重要的是保持耐心和坚持，大多数头型问题都会随着时间逐渐改善。',
-    en: 'Head shape improvement time varies by individual, generally following these patterns:\n\n• Mild head shape issues: Usually see significant improvement within 2-4 months through position adjustments\n• Moderate head shape issues: May require 4-8 months of continuous care and observation\n• Severe head shape issues: May require professional intervention with longer improvement times\n\nFactors affecting improvement speed include:\n• Baby\'s age (younger babies improve faster)\n• Severity of head shape issues\n• Implementation of care measures\n• Individual growth and development rate\n\nIt\'s important to remain patient and persistent, as most head shape issues gradually improve over time.',
+    en: "Head shape improvement time varies by individual, generally following these patterns:\n\n• Mild head shape issues: Usually see significant improvement within 2-4 months through position adjustments\n• Moderate head shape issues: May require 4-8 months of continuous care and observation\n• Severe head shape issues: May require professional intervention with longer improvement times\n\nFactors affecting improvement speed include:\n• Baby's age (younger babies improve faster)\n• Severity of head shape issues\n• Implementation of care measures\n• Individual growth and development rate\n\nIt's important to remain patient and persistent, as most head shape issues gradually improve over time.",
   },
 
   'faq.prevention.question': {
@@ -1325,11 +1320,11 @@ export const translations: TranslationKeys = {
   // Additional FAQ items for the new design
   'faq.sleepPosition.question': {
     zh: '什么样的睡姿有助于改善宝宝的头型？',
-    en: 'What sleeping positions help improve baby\'s head shape?',
+    en: "What sleeping positions help improve baby's head shape?",
   },
   'faq.sleepPosition.answer': {
     zh: '为了改善头型，建议经常变换宝宝的睡姿。虽然仰卧是最安全的睡姿，但可以在宝宝清醒时让他们侧卧或俯卧。睡觉时可以轮流让宝宝的头朝向不同方向，避免总是压迫同一个部位。使用适当的枕头和床垫也很重要。',
-    en: 'To improve head shape, it is recommended to frequently change your baby\'s sleeping position. While back sleeping is the safest, you can have them lie on their side or stomach when awake. During sleep, alternate the direction your baby\'s head faces to avoid always putting pressure on the same area. Using appropriate pillows and mattresses is also important.',
+    en: "To improve head shape, it is recommended to frequently change your baby's sleeping position. While back sleeping is the safest, you can have them lie on their side or stomach when awake. During sleep, alternate the direction your baby's head faces to avoid always putting pressure on the same area. Using appropriate pillows and mattresses is also important.",
   },
 
   'faq.helmetTreatment.question': {
@@ -1338,12 +1333,12 @@ export const translations: TranslationKeys = {
   },
   'faq.helmetTreatment.answer': {
     zh: '头盔治疗通常在以下情况下考虑：宝宝4-6个月大时头型仍然严重不对称、保守治疗（如改变睡姿、增加俯卧时间）效果不佳、医生评估认为有必要进行矫正。头盔治疗的最佳时机通常是4-12个月，因为这时宝宝的头骨还比较柔软，容易塑形。',
-    en: 'Helmet treatment is usually considered in the following situations: when the baby\'s head shape remains severely asymmetrical at 4-6 months old, when conservative treatments (such as changing sleep positions, increasing tummy time) are ineffective, and when a doctor evaluates that correction is necessary. The optimal timing for helmet treatment is usually 4-12 months, as the baby\'s skull is still relatively soft and easy to reshape.',
+    en: "Helmet treatment is usually considered in the following situations: when the baby's head shape remains severely asymmetrical at 4-6 months old, when conservative treatments (such as changing sleep positions, increasing tummy time) are ineffective, and when a doctor evaluates that correction is necessary. The optimal timing for helmet treatment is usually 4-12 months, as the baby's skull is still relatively soft and easy to reshape.",
   },
 
   'faq.medicalDisclaimer': {
     zh: '本页面提供的信息仅供教育和参考目的，不能替代专业医疗建议、诊断或治疗。如果您对宝宝的头型发育有任何担忧，请及时咨询合格的医疗专业人员。',
-    en: 'The information provided on this page is for educational and reference purposes only and cannot replace professional medical advice, diagnosis, or treatment. If you have any concerns about your baby\'s head shape development, please consult qualified medical professionals promptly.',
+    en: "The information provided on this page is for educational and reference purposes only and cannot replace professional medical advice, diagnosis, or treatment. If you have any concerns about your baby's head shape development, please consult qualified medical professionals promptly.",
   },
 
   'faq.references.title': {

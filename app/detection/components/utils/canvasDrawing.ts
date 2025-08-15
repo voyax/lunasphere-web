@@ -76,16 +76,16 @@ function drawLine(
 ): void {
   ctx.strokeStyle = color
   ctx.fillStyle = color
-  
+
   if (isDashed) {
     ctx.setLineDash([5, 5])
   }
-  
+
   ctx.beginPath()
   ctx.moveTo(line.start.x, line.start.y)
   ctx.lineTo(line.end.x, line.end.y)
   ctx.stroke()
-  
+
   if (isDashed) {
     ctx.setLineDash([])
   }
@@ -106,7 +106,7 @@ function drawPoint(
   ctx.beginPath()
   ctx.arc(point.x, point.y, radius, 0, 2 * Math.PI)
   ctx.fill()
-  
+
   // Draw border
   ctx.strokeStyle = borderColor
   ctx.lineWidth = 1
@@ -136,22 +136,34 @@ function drawBPDLine(
 ): void {
   const { bpdLine, bpd } = measurements
   const { colors, labelOffsets } = config
-  
+
   // Draw line
   drawLine(ctx, bpdLine, colors.bpd)
-  
+
   // Draw label
   const midpoint = getMidpoint(bpdLine)
   const labelPosition = {
     x: midpoint.x + labelOffsets.bpd.x,
     y: midpoint.y + labelOffsets.bpd.y,
   }
-  
+
   drawLabel(ctx, `BPD: ${bpd.toFixed(1)}px`, labelPosition, colors.bpd)
-  
+
   // Draw points
-  drawPoint(ctx, bpdLine.start, colors.bpd, config.pointRadius, colors.pointBorder)
-  drawPoint(ctx, bpdLine.end, colors.bpd, config.pointRadius, colors.pointBorder)
+  drawPoint(
+    ctx,
+    bpdLine.start,
+    colors.bpd,
+    config.pointRadius,
+    colors.pointBorder
+  )
+  drawPoint(
+    ctx,
+    bpdLine.end,
+    colors.bpd,
+    config.pointRadius,
+    colors.pointBorder
+  )
 }
 
 /**
@@ -164,22 +176,34 @@ function drawOFDLine(
 ): void {
   const { ofdLine, ofd } = measurements
   const { colors, labelOffsets } = config
-  
+
   // Draw line
   drawLine(ctx, ofdLine, colors.ofd)
-  
+
   // Draw label
   const midpoint = getMidpoint(ofdLine)
   const labelPosition = {
     x: midpoint.x + labelOffsets.ofd.x,
     y: midpoint.y + labelOffsets.ofd.y,
   }
-  
+
   drawLabel(ctx, `OFD: ${ofd.toFixed(1)}px`, labelPosition, colors.ofd)
-  
+
   // Draw points
-  drawPoint(ctx, ofdLine.start, colors.ofd, config.pointRadius, colors.pointBorder)
-  drawPoint(ctx, ofdLine.end, colors.ofd, config.pointRadius, colors.pointBorder)
+  drawPoint(
+    ctx,
+    ofdLine.start,
+    colors.ofd,
+    config.pointRadius,
+    colors.pointBorder
+  )
+  drawPoint(
+    ctx,
+    ofdLine.end,
+    colors.ofd,
+    config.pointRadius,
+    colors.pointBorder
+  )
 }
 
 /**
@@ -192,16 +216,40 @@ function drawDiagonalLines(
 ): void {
   const { diagonal1, diagonal2 } = measurements
   const { colors } = config
-  
+
   // Draw both diagonal lines as dashed
   drawLine(ctx, diagonal1, colors.diagonal, true)
   drawLine(ctx, diagonal2, colors.diagonal, true)
-  
+
   // Draw points for diagonals
-  drawPoint(ctx, diagonal1.start, colors.diagonal, config.pointRadius, colors.pointBorder)
-  drawPoint(ctx, diagonal1.end, colors.diagonal, config.pointRadius, colors.pointBorder)
-  drawPoint(ctx, diagonal2.start, colors.diagonal, config.pointRadius, colors.pointBorder)
-  drawPoint(ctx, diagonal2.end, colors.diagonal, config.pointRadius, colors.pointBorder)
+  drawPoint(
+    ctx,
+    diagonal1.start,
+    colors.diagonal,
+    config.pointRadius,
+    colors.pointBorder
+  )
+  drawPoint(
+    ctx,
+    diagonal1.end,
+    colors.diagonal,
+    config.pointRadius,
+    colors.pointBorder
+  )
+  drawPoint(
+    ctx,
+    diagonal2.start,
+    colors.diagonal,
+    config.pointRadius,
+    colors.pointBorder
+  )
+  drawPoint(
+    ctx,
+    diagonal2.end,
+    colors.diagonal,
+    config.pointRadius,
+    colors.pointBorder
+  )
 }
 
 /**
@@ -215,23 +263,23 @@ export function drawMeasurementAnnotations(
 ): void {
   const config = { ...DEFAULT_CONFIG, ...customConfig }
   const ctx = canvas.getContext('2d')
-  
+
   if (!ctx) {
     throw new Error('Failed to get canvas 2D context')
   }
-  
+
   // Set canvas dimensions
   canvas.width = mask.width
   canvas.height = mask.height
-  
+
   // Clear canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height)
-  
+
   // Set drawing style
   ctx.lineWidth = config.lineWidth
   ctx.font = config.fontSize
   ctx.textAlign = 'center'
-  
+
   // Draw all measurement elements
   drawBPDLine(ctx, measurements, config)
   drawOFDLine(ctx, measurements, config)
@@ -247,18 +295,18 @@ export function createDownloadableCanvas(
 ): HTMLCanvasElement {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')!
-  
+
   canvas.width = mask.width
   canvas.height = mask.height
-  
+
   // Draw the mask
   ctx.putImageData(mask, 0, 0)
-  
+
   // Draw measurements if provided
   if (measurements) {
     drawMeasurementAnnotations(canvas, mask, measurements)
   }
-  
+
   return canvas
 }
 
@@ -270,6 +318,7 @@ export function downloadCanvasAsPNG(
   filename = 'head-analysis-result.png'
 ): void {
   const link = document.createElement('a')
+
   link.download = filename
   link.href = canvas.toDataURL('image/png')
   link.click()

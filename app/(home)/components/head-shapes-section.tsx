@@ -137,8 +137,8 @@ export async function HeadShapesSection() {
 
   return (
     <section
-      id='stages'
       className='py-20 bg-gradient-to-br from-green-50 via-blue-50 to-indigo-50 dark:from-green-950/10 dark:via-blue-950/10 dark:to-indigo-950/10'
+      id='stages'
     >
       <div className='container mx-auto px-4'>
         <SectionAnimations className='text-center mb-16'>
@@ -156,8 +156,8 @@ export async function HeadShapesSection() {
           {headShapeTypes.map((headShape, index) => (
             <SectionAnimations
               key={headShape.id}
-              delay={index * 0.2}
               className='w-full'
+              delay={index * 0.2}
             >
               <div className='relative'>
                 {/* Background decoration - Minimal dots pattern */}
@@ -229,10 +229,10 @@ export async function HeadShapesSection() {
                                   viewBox='0 0 24 24'
                                 >
                                   <path
+                                    d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
                                     strokeLinecap='round'
                                     strokeLinejoin='round'
                                     strokeWidth={1.5}
-                                    d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
                                   />
                                 </svg>
                                 <p className='text-sm font-medium opacity-70'>
@@ -265,7 +265,9 @@ export async function HeadShapesSection() {
                       <div className='mt-6 p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg'>
                         <div className='flex items-start justify-center gap-3'>
                           <div className='w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
-                            <span className='text-white text-xs font-bold'>!</span>
+                            <span className='text-white text-xs font-bold'>
+                              !
+                            </span>
                           </div>
                           <p className='text-sm font-medium text-amber-800 dark:text-amber-200'>
                             {t('examples.scaphocephaly.medical_note')}

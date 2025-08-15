@@ -1,0 +1,277 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  lint-and-test:
+    name: Lint and Test
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run ESLint
+      run: npm run lint
+    
+    - name: Run type checking
+      run: npm run type-check
+    
+    - name: Run tests
+      run: npm test
+      env:
+        CI: true
+    
+    - name: Upload test coverage
+      uses: codecov/codecov-action@v3
+      if: matrix.node-version == '20.x'
+      with:
+        file: ./coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run security audit
+      run: npm audit --audit-level=moderate
+    
+    - name: Run dependency check
+      uses: actions/dependency-review-action@v3
+      if: github.event_name == 'pull_request'
+
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+    needs: [lint-and-test, security-audit]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+      env:
+        NODE_ENV: production
+        NEXT_TELEMETRY_DISABLED: 1
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-files
+        path: |
+          .next/
+          public/
+        retention-days: 7
+
+  docker-build:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.event_name == 'push'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    
+    - name: Extract metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: |
+          ${{ secrets.DOCKER_USERNAME }}/head-start-web
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=sha,prefix={{branch}}-
+          type=raw,value=latest,enable={{is_default_branch}}
+    
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        platforms: linux/amd64,linux/arm64
+        push: ${{ github.ref == 'refs/heads/main' }}
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+  accessibility-test:
+    name: Accessibility Testing
+    runs-on: ubuntu-latest
+    needs: [build]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Start application
+      run: npm start &
+      env:
+        PORT: 3000
+    
+    - name: Wait for application
+      run: npx wait-on http://localhost:3000
+    
+    - name: Run accessibility tests
+      run: |
+        npx @axe-core/cli http://localhost:3000 \
+          --exit \
+          --save accessibility-report.json \
+          --tags wcag2a,wcag2aa
+    
+    - name: Upload accessibility report
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: accessibility-report
+        path: accessibility-report.json
+
+  medical-content-check:
+    name: Medical Content Validation
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Check for medical content changes
+      id: medical-check
+      run: |
+        # Check if medical content files have been modified
+        MEDICAL_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep -E '(faq|detection|medical|health)' || true)
+        if [ -n "$MEDICAL_FILES" ]; then
+          echo "medical_content_changed=true" >> $GITHUB_OUTPUT
+          echo "Medical content files changed: $MEDICAL_FILES"
+        else
+          echo "medical_content_changed=false" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Medical content review reminder
+      if: steps.medical-check.outputs.medical_content_changed == 'true'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '⚠️ **Medical Content Review Required**\n\nThis PR contains changes to medical content. Please ensure:\n\n- [ ] Content is evidence-based and accurate\n- [ ] Sources are properly cited\n- [ ] Appropriate disclaimers are included\n- [ ] Content has been reviewed by a healthcare professional (if possible)\n\nSee [Contributing Guidelines](CONTRIBUTING.md#medical-content-guidelines) for details.'
+          })
+
+  deploy-preview:
+    name: Deploy Preview
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build application
+      run: npm run build
+    
+    - name: Deploy to Vercel Preview
+      uses: amondnet/vercel-action@v25
+      if: github.event_name == 'pull_request'
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        scope: ${{ secrets.VERCEL_ORG_ID }}
+        alias-domains: |
+          head-start-pr-{{PR_NUMBER}}.vercel.app
+
+  notify-status:
+    name: Notify Status
+    runs-on: ubuntu-latest
+    needs: [lint-and-test, security-audit, build, docker-build, accessibility-test]
+    if: always()
+    
+    steps:
+    - name: Notify success
+      if: needs.lint-and-test.result == 'success' && needs.security-audit.result == 'success' && needs.build.result == 'success'
+      run: echo "✅ All checks passed successfully!"
+    
+    - name: Notify failure
+      if: needs.lint-and-test.result == 'failure' || needs.security-audit.result == 'failure' || needs.build.result == 'failure'
+      run: |
+        echo "❌ Some checks failed:"
+        echo "Lint and Test: ${{ needs.lint-and-test.result }}"
+        echo "Security Audit: ${{ needs.security-audit.result }}"
+        echo "Build: ${{ needs.build.result }}"
+        exit 1

@@ -76,7 +76,8 @@ class TranslationManager {
 
     // 开发环境警告
     if (process.env.NODE_ENV === 'development') {
-      console.warn(`Missing translation for key: ${key} (${locale})`)
+      // Missing translation warning - could be logged to development tools
+      // console.warn(`Missing translation for key: ${key} (${locale})`)
     }
 
     // 缓存回退值

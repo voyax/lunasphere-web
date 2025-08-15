@@ -58,8 +58,6 @@ export class I18nDevTools {
           const mapKey = `${locale}:${value}`
 
           if (valueMap.has(mapKey)) {
-            const original = valueMap.get(mapKey)!
-
             duplicateValues.push({ key, locale, value })
           } else {
             valueMap.set(mapKey, { key, locale })

@@ -45,22 +45,22 @@ export async function HeroSection() {
               {/* Action buttons */}
               <div className='flex flex-col sm:flex-row gap-4 pt-2'>
                 <Button
+                  as='a'
                   className='bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all duration-300'
+                  href='/detection'
                   radius='full'
                   size='lg'
-                  as='a'
-                  href='/detection'
                 >
                   {t('hero.cta')}
                 </Button>
 
                 <Button
+                  as='a'
                   className='border-2 border-pink-300 text-pink-600 dark:text-pink-400 px-8 py-6 text-lg hover:bg-pink-50 dark:hover:bg-pink-950/20 transition-all duration-300'
+                  href='/faq'
                   radius='full'
                   size='lg'
                   variant='bordered'
-                  as='a'
-                  href='/faq'
                 >
                   {t('button.learn-more')}
                 </Button>

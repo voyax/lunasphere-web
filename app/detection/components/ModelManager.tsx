@@ -58,13 +58,14 @@ export default function ModelManager({
           // Check if model is already loaded to avoid duplicate loading
           if (model.isModelLoaded(modelPath)) {
             setIsModelLoaded(true)
+
             return
           }
 
           await model.loadModel(modelPath)
           setIsModelLoaded(true)
           // Default model loaded successfully
-        } catch (error) {
+        } catch {
           // Failed to auto-load default model
           setIsModelLoaded(false)
         } finally {
@@ -92,6 +93,7 @@ export default function ModelManager({
       if (model.isModelLoaded(modelPath.trim())) {
         setIsModelLoaded(true)
         setLoadError(null)
+
         return
       }
 
@@ -101,7 +103,11 @@ export default function ModelManager({
     } catch (error) {
       // Model loading failed
       setIsModelLoaded(false)
-      setLoadError(error instanceof Error ? error.message : t('detection.modelManager.errors.unknownError'))
+      setLoadError(
+        error instanceof Error
+          ? error.message
+          : t('detection.modelManager.errors.unknownError')
+      )
     } finally {
       setIsLoadingModel(false)
     }
@@ -205,7 +211,9 @@ export default function ModelManager({
                       <input
                         className='w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all'
                         disabled={isLoadingModel}
-                        placeholder={t('detection.modelManager.modelPathPlaceholder')}
+                        placeholder={t(
+                          'detection.modelManager.modelPathPlaceholder'
+                        )}
                         type='text'
                         value={modelPath}
                         onChange={e => setModelPath(e.target.value)}
@@ -217,7 +225,9 @@ export default function ModelManager({
                       isLoading={isLoadingModel}
                       onClick={loadModel}
                     >
-                      {isLoadingModel ? t('detection.modelManager.status.loading') : t('detection.modelManager.loadModel')}
+                      {isLoadingModel
+                        ? t('detection.modelManager.status.loading')
+                        : t('detection.modelManager.loadModel')}
                     </Button>
                   </div>
 

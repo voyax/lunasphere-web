@@ -59,11 +59,11 @@ export function Navbar() {
         <NavbarBrand>
           <NextLink className='flex justify-start items-center gap-2' href='/'>
             <Image
-              src='/logo_with_bg.png'
               alt='Logo'
-              width={32}
-              height={32}
               className='w-8 h-8'
+              height={32}
+              src='/logo_with_bg.png'
+              width={32}
             />
             <p className='font-bold text-inherit text-sm md:text-base'>
               {t('site.title')}
