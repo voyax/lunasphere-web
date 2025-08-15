@@ -48,6 +48,7 @@ export function Navbar() {
       className='bg-background/70 backdrop-blur-md'
       maxWidth='xl'
       position='sticky'
+      isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent className='sm:hidden' justify='center'>
@@ -75,7 +76,11 @@ export function Navbar() {
           <Divider orientation='vertical' />
         </div>
         {menuItems.map(item => (
-          <NavbarItem key={item.href} isActive={isActive(item.href)} className='hidden sm:flex'>
+          <NavbarItem
+            key={item.href}
+            className='hidden sm:flex'
+            isActive={isActive(item.href)}
+          >
             <NextLink
               className={`transition-colors ${
                 isActive(item.href)
