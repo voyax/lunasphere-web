@@ -311,22 +311,22 @@ export default function TopViewAnalysis({
 
               {/* Upload content overlay */}
               <div className='relative z-10 flex items-center justify-center h-full'>
-                <div className='text-center space-y-6 p-8'>
+                <div className='text-center space-y-4 p-6'>
                   {/* Centered upload prompt */}
-                  <div className='flex flex-col items-center justify-center gap-4'>
-                    <div className='w-14 h-14 bg-white/95 dark:bg-gray-700/95 rounded-2xl flex items-center justify-center shadow-xl backdrop-blur-sm border border-white/70 dark:border-gray-600/70 transition-all duration-300 hover:scale-105'>
-                      <Upload className='w-7 h-7 text-primary' />
+                  <div className='flex flex-col items-center justify-center gap-3'>
+                    <div className='w-12 h-12 bg-white/80 dark:bg-gray-700/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-white/50 dark:border-gray-600/50 transition-all duration-200 hover:scale-102'>
+                      <Upload className='w-5 h-5 text-gray-600 dark:text-gray-400' />
                     </div>
                     <div className='text-center'>
-                      <p className='text-lg font-semibold text-gray-900 dark:text-white drop-shadow-sm'>
+                      <p className='text-base font-medium text-gray-700 dark:text-gray-300 drop-shadow-sm'>
                         {t('detection.topView.upload.clickOrDrag')}
                       </p>
                     </div>
                   </div>
                   {/* File format info with refined style */}
-                  <div className='inline-flex items-center gap-2 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-lg px-4 py-2.5 border border-white/80 dark:border-gray-600/80 shadow-lg'>
-                    <div className='w-2 h-2 bg-primary/60 rounded-full' />
-                    <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
+                  <div className='inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-md px-3 py-2 border border-white/60 dark:border-gray-600/60 shadow-sm'>
+                    <div className='w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full' />
+                    <span className='text-xs font-normal text-gray-600 dark:text-gray-400'>
                       {t('detection.topView.upload.supportFormat')}
                     </span>
                   </div>
