@@ -170,18 +170,18 @@ export default function FAQPage() {
   const categories = Array.from(new Set(faqItems.map(item => item.category)))
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-white via-slate-50 to-cyan-50/50 dark:from-gray-950 dark:via-gray-900 dark:to-blue-950/20'>
+    <div className='min-h-screen bg-gradient-to-br from-white via-yellow-50/20 to-amber-50/30 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800'>
       {/* Background Pattern */}
       <div className='absolute inset-0'>
-        <div className='absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(14,165,233,0.03),transparent_50%)]' />
-        <div className='absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(6,182,212,0.02),transparent_50%)]' />
-        <div className='absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-200/30 to-transparent' />
+        <div className='absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(251,191,36,0.015),transparent_50%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(156,163,175,0.02),transparent_50%)]' />
+        <div className='absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(245,158,11,0.01),transparent_50%)] dark:bg-[radial-gradient(circle_at_70%_80%,rgba(107,114,128,0.015),transparent_50%)]' />
+        <div className='absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-yellow-200/20 to-transparent dark:via-gray-600/20' />
       </div>
 
       <div className='relative z-10'>
         {/* Hero Section */}
         <div className='relative overflow-hidden'>
-          <div className='absolute inset-0 bg-gradient-to-br from-sky-400 via-blue-500 to-cyan-600' />
+          <div className='absolute inset-0 bg-gradient-to-br from-yellow-200 via-amber-200 to-orange-300 dark:from-yellow-900/40 dark:via-amber-900/40 dark:to-orange-900/40' />
           <div className='absolute inset-0 opacity-20'>
             <div
               className='w-full h-full'
@@ -192,10 +192,10 @@ export default function FAQPage() {
           </div>
           <div className='relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8'>
             <div className='text-center'>
-              <h1 className='text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl mb-6'>
+              <h1 className='text-4xl font-normal tracking-tight text-default-700 sm:text-5xl lg:text-6xl mb-6'>
                 {t('faq.title')}
               </h1>
-              <p className='mx-auto max-w-2xl text-xl text-white/90 mb-8'>
+              <p className='mx-auto max-w-2xl text-xl font-extralight text-default-700 mb-8'>
                 {t('faq.subtitle')}
               </p>
 
@@ -214,7 +214,7 @@ export default function FAQPage() {
               </div>
             </div>
           </div>
-          <div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent' />
+          <div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent dark:from-gray-950 dark:to-transparent' />
         </div>
 
         <div className='mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8'>
