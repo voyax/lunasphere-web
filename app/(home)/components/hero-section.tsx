@@ -48,6 +48,8 @@ export async function HeroSection() {
                   className='bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all duration-300'
                   radius='full'
                   size='lg'
+                  as='a'
+                  href='/detection'
                 >
                   {t('hero.cta')}
                 </Button>
@@ -57,6 +59,8 @@ export async function HeroSection() {
                   radius='full'
                   size='lg'
                   variant='bordered'
+                  as='a'
+                  href='/faq'
                 >
                   {t('button.learn-more')}
                 </Button>

@@ -117,7 +117,7 @@ export default function TopViewAnalysis({
           })
           setCurrentStep(3)
         } catch (error) {
-          console.error('Analysis failed:', error)
+          // Analysis failed
           setAnalysisResult({
             error: `${t('detection.errors.analysisFailed')}: ${error instanceof Error ? error.message : t('detection.errors.unknownError')}`,
           })
@@ -132,7 +132,7 @@ export default function TopViewAnalysis({
 
       img.src = images.top.url
     } catch (error) {
-      console.error('Analysis setup failed:', error)
+      // Analysis setup failed
       setAnalysisResult({
         error: `${t('detection.errors.analysisFailed')}: ${error instanceof Error ? error.message : t('detection.errors.unknownError')}`,
       })
@@ -155,7 +155,7 @@ export default function TopViewAnalysis({
 
         {/* Subtitle */}
         <p className='text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed font-light mb-8'>
-          {t('detection.topView.description')}
+          {t('detection.pageSubtitle')}
         </p>
 
         {/* Feature highlights */}

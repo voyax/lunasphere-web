@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef, useCallback, useEffect } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { Button } from '@heroui/button'
 import { Tooltip } from '@heroui/tooltip'
 import { Upload, RotateCcw, Eye, EyeOff } from 'lucide-react'
@@ -238,7 +238,7 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
       img.onerror = () => {
         // Clean up URL object if image loading fails
         URL.revokeObjectURL(url)
-        console.error('Failed to load image:', file.name)
+        // Failed to load image
       }
 
       img.src = url

@@ -72,8 +72,8 @@ export const translations: TranslationKeys = {
     en: 'Head Shape Assessment',
   },
   'hero.consultation': {
-    zh: '如有疑虑，可尝试我们的AI头型分析，仅需提供三张照片即可获得专业建议',
-    en: 'If you have concerns, try our AI head shape analysis. Simply upload three photos for professional insights',
+    zh: '如有疑虑，可尝试我们的AI头型分析，一张照片即可测出宝宝的头型指标',
+    en: 'If you have any concerns, try our AI head shape analysis. Simply upload one photo to get professional insights',
   },
 
   // Development section
@@ -259,8 +259,8 @@ export const translations: TranslationKeys = {
     en: 'Pathological Head Shapes Require Medical Attention',
   },
   'classification.medical_warning_content': {
-    zh: '如果发现头型异常严重或伴有其他症状，建议及时咨询儿科医生或头颅外科专家',
-    en: 'If you notice severe head shape abnormalities or other concerning symptoms, please consult a pediatrician or cranial specialist promptly',
+    zh: '病理性头型（如舟状头）无法通过调整睡姿、使用矫正头盔等方式治疗。这类情况需要专业的医疗诊断和外科治疗，如发现头型异常严重、头围增长异常或伴有其他症状，必须及时咨询儿科医生或头颅外科专家进行专业评估。',
+    en: 'Pathological head shapes (such as scaphocephaly) cannot be treated through sleep position adjustments or corrective helmets. These conditions require professional medical diagnosis and surgical treatment. If severe head shape abnormalities, abnormal head circumference growth, or other symptoms are observed, immediate consultation with a pediatrician or cranial specialist for professional evaluation is essential.',
   },
 
   // Severity levels
@@ -405,16 +405,16 @@ export const translations: TranslationKeys = {
     en: 'Pathological scaphocephaly example image showing boat-shaped skull caused by premature sagittal suture closure',
   },
   'classification.scaphocephaly.description': {
-    zh: '矢状缝早闭导致的船形头颅，是最常见的颅缝早闭类型，占所有颅缝早闭的50%。',
-    en: 'Boat-shaped skull caused by premature sagittal suture closure, the most common type of craniosynostosis, accounting for 50% of all craniosynostosis cases.',
+    zh: '矢状缝早闭导致，顶上有一道自前向后隆起的骨脊，前后尖，头型如舟，是最常见的颅缝早闭类型。',
+    en: 'Caused by premature sagittal suture closure, characterized by a prominent bony ridge running from front to back on top of the head, with pointed front and back, resembling a boat shape, the most common type of craniosynostosis.',
   },
   'classification.scaphocephaly.causes': {
     zh: '矢状缝过早融合，阻止头颅横向生长而前后生长继续，形成狭长头型。男性发病率是女性的3倍。',
     en: 'Premature fusion of sagittal suture prevents lateral skull growth while anteroposterior growth continues, forming an elongated narrow head. Male incidence is 3 times higher than female.',
   },
   'classification.scaphocephaly.correction': {
-    zh: '需要神经外科手术治疗。通常需要切除融合的矢状缝并重塑头颅形状，早期手术效果更佳。',
-    en: 'Requires neurosurgical treatment. Usually involves removal of fused sagittal suture and skull reshaping, with better outcomes from early surgery.',
+    zh: '病理性舟状头属于颅缝早闭，必须通过神经外科手术治疗，无法通过调整睡姿、物理治疗或矫正头盔等保守方式改善。手术通常需要切除融合的矢状缝并重塑头颅形状，早期诊断和手术治疗效果更佳，需要由专业的神经外科医生进行评估和治疗',
+    en: 'Pathological scaphocephaly is a form of craniosynostosis that must be treated through neurosurgical intervention and cannot be improved through conservative methods such as sleep position adjustments, physical therapy, or corrective helmets. Surgery typically involves removal of the fused sagittal suture and skull reshaping, with better outcomes from early diagnosis and surgical treatment, requiring evaluation and treatment by specialized neurosurgeons',
   },
 
   // Sleep tips section
@@ -600,6 +600,10 @@ export const translations: TranslationKeys = {
     zh: '舟状头 - 3D',
     en: 'Scaphocephaly - 3D',
   },
+  'examples.scaphocephaly.medical_note': {
+    zh: '舟状头 ≠ 体位性长头，必须经专业的医学判断。医学影像参考：https://radiopaedia.org/articles/scaphocephaly',
+    en: 'Scaphocephaly ≠ positional dolichocephaly, requires medical assessment. Medical imaging ref: https://radiopaedia.org/articles/scaphocephaly ',
+  },
   'examples.image_placeholder': {
     zh: '图片占位符',
     en: 'Image Placeholder',
@@ -720,7 +724,11 @@ export const translations: TranslationKeys = {
   },
   'detection.topView.description': {
     zh: '上传宝宝头部俯视图，获得专业AI分析',
-    en: 'Upload a top-down photo of your baby\'s head for professional AI analysis',
+    en: 'Upload your baby\'s top view photo for professional AI analysis',
+  },
+  'detection.pageSubtitle': {
+    zh: '基于深度学习的头型评估算法，所有计算在浏览器本地完成，照片不会上传到任何服务器，确保您和宝宝的隐私安全',
+    en: 'Powered by advanced AI technology, all analysis happens right in your browser. Your photos stay private and secure - nothing is ever uploaded to our servers.',
   },
   'detection.topView.features.deepLearning': {
     zh: '深度学习算法',

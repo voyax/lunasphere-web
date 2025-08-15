@@ -259,6 +259,20 @@ export async function HeadShapesSection() {
                         </div>
                       ))}
                     </div>
+
+                    {/* Medical note for scaphocephaly */}
+                    {headShape.id === 'scaphocephaly' && (
+                      <div className='mt-6 p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg'>
+                        <div className='flex items-start justify-center gap-3'>
+                          <div className='w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5'>
+                            <span className='text-white text-xs font-bold'>!</span>
+                          </div>
+                          <p className='text-sm font-medium text-amber-800 dark:text-amber-200'>
+                            {t('examples.scaphocephaly.medical_note')}
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

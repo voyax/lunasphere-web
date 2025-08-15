@@ -3,7 +3,7 @@
  * Displays CI classification results with specific visualization
  */
 
-import React from 'react'
+
 
 import {
   classifyCI,

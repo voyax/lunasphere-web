@@ -87,6 +87,15 @@ export class HeadShapeModel {
   }
 
   /**
+   * Check if model is loaded
+   */
+  isModelLoaded(modelPath?: string): boolean {
+    if (!this.session) return false
+    if (modelPath && this.modelPath !== modelPath) return false
+    return true
+  }
+
+  /**
    * Load the ONNX model
    */
   async loadModel(modelPath?: string): Promise<void> {
@@ -97,10 +106,22 @@ export class HeadShapeModel {
         throw new Error('Model path is required')
       }
 
+      // Check if model is already loaded with the same path
+      if (this.session && this.modelPath === path) {
+        // Model already loaded with the same path, skip loading
+        return
+      }
+
+      // Dispose existing session if loading a different model
+      if (this.session && this.modelPath !== path) {
+        this.session = null
+      }
+
+      this.modelPath = path
       this.session = await ort.InferenceSession.create(path)
-      console.log('Model loaded successfully')
+      // Model loaded successfully
     } catch (error) {
-      console.error('Failed to load model:', error)
+      // Model loading failed
       throw error
     }
   }
@@ -373,7 +394,7 @@ export class HeadShapeModel {
       return null
     }
 
-    console.log('Head bounding box:', boundingBox)
+    // Head bounding box calculated
 
     // Calculate BPD (Biparietal Diameter) - maximum horizontal width
     const bpdMeasurement = this.calculateBPD(outputData, width, boundingBox)
@@ -746,7 +767,7 @@ export class HeadShapeModel {
         measurements,
       }
     } catch (error) {
-      console.error('Inference failed:', error)
+      // Inference failed
       throw error
     }
   }
@@ -805,7 +826,7 @@ export class HeadShapeModel {
 let modelInstance: HeadShapeModel | null = null
 
 /**
- * Get or create model instance
+ * Get or create model instance (singleton pattern)
  */
 export function getModelInstance(
   modelPath?: string,
@@ -813,9 +834,16 @@ export function getModelInstance(
 ): HeadShapeModel {
   if (!modelInstance) {
     modelInstance = new HeadShapeModel(modelPath, config)
-  } else if (config) {
+  } else {
+    // Update model path if provided and different
+    if (modelPath && modelInstance['modelPath'] !== modelPath) {
+      modelInstance['modelPath'] = modelPath
+    }
+    
     // Update config if provided
-    modelInstance['config'] = { ...modelInstance['config'], ...config }
+    if (config) {
+      modelInstance['config'] = { ...modelInstance['config'], ...config }
+    }
   }
 
   return modelInstance

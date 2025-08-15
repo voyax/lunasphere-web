@@ -3,7 +3,7 @@
  * Displays CVAI classification results with specific visualization
  */
 
-import React from 'react'
+
 
 import {
   classifyCVAI,

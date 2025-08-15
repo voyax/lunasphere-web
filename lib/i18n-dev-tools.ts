@@ -131,47 +131,8 @@ export class I18nDevTools {
       return
     }
 
-    const report = this.generateReport()
-
-    console.group('🌍 I18n Translation Report')
-    console.log(`📊 Total Keys: ${report.totalKeys}`)
-    console.log(
-      `🇨🇳 Chinese Coverage: ${(report.coverage.zh * 100).toFixed(1)}%`
-    )
-    console.log(
-      `🇺🇸 English Coverage: ${(report.coverage.en * 100).toFixed(1)}%`
-    )
-
-    console.group('📁 Namespaces')
-    Object.entries(report.namespaces).forEach(([ns, count]) => {
-      console.log(`  ${ns}: ${count} keys`)
-    })
-    console.groupEnd()
-
-    if (report.integrity.incompleteKeys.length > 0) {
-      console.group('⚠️  Incomplete Translations')
-      report.integrity.incompleteKeys.forEach(key => {
-        console.log(`  ${key}`)
-      })
-      console.groupEnd()
-    }
-
-    if (report.missingKeys.length > 0) {
-      console.group('❌ Missing Keys (Runtime)')
-      report.missingKeys.forEach(key => {
-        console.log(`  ${key}`)
-      })
-      console.groupEnd()
-    }
-
-    console.group('🚀 Performance')
-    console.log(`Cache Size: ${report.performance.cache.size}`)
-    console.log(
-      `Cache Hit Rate: ${(report.performance.cache.hitRate * 100).toFixed(1)}%`
-    )
-    console.groupEnd()
-
-    console.groupEnd()
+    // Report generation available but console output removed for production readiness
+    // Use generateReport() method to get translation statistics programmatically
   }
 }
 

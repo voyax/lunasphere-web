@@ -55,11 +55,17 @@ export default function ModelManager({
         try {
           const model = getModelInstance(modelPath, { confidenceThreshold })
 
+          // Check if model is already loaded to avoid duplicate loading
+          if (model.isModelLoaded(modelPath)) {
+            setIsModelLoaded(true)
+            return
+          }
+
           await model.loadModel(modelPath)
           setIsModelLoaded(true)
-          console.log('Default model loaded successfully')
+          // Default model loaded successfully
         } catch (error) {
-          console.error('Failed to auto-load default model:', error)
+          // Failed to auto-load default model
           setIsModelLoaded(false)
         } finally {
           setIsLoadingModel(false)
@@ -82,11 +88,18 @@ export default function ModelManager({
     try {
       const model = getModelInstance(modelPath.trim(), { confidenceThreshold })
 
+      // Check if model is already loaded to avoid duplicate loading
+      if (model.isModelLoaded(modelPath.trim())) {
+        setIsModelLoaded(true)
+        setLoadError(null)
+        return
+      }
+
       await model.loadModel(modelPath.trim())
       setIsModelLoaded(true)
       setLoadError(null)
     } catch (error) {
-      console.error('Model loading failed:', error)
+      // Model loading failed
       setIsModelLoaded(false)
       setLoadError(error instanceof Error ? error.message : t('detection.modelManager.errors.unknownError'))
     } finally {

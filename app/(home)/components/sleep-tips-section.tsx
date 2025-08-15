@@ -17,7 +17,7 @@ export async function SleepTipsSection() {
       borderColor: 'border-red-200 dark:border-red-800',
     },
     {
-      key: 'principle2', 
+      key: 'principle2',
       icon: '🔄',
       color: 'text-blue-600',
       bgColor: 'bg-blue-50 dark:bg-blue-950/20',
@@ -26,7 +26,7 @@ export async function SleepTipsSection() {
     {
       key: 'principle3',
       icon: '🛏️',
-      color: 'text-green-600', 
+      color: 'text-green-600',
       bgColor: 'bg-green-50 dark:bg-green-950/20',
       borderColor: 'border-green-200 dark:border-green-800',
     },
@@ -38,8 +38,6 @@ export async function SleepTipsSection() {
       borderColor: 'border-purple-200 dark:border-purple-800',
     },
   ]
-
-
 
   // Practical techniques
   const techniques = [
@@ -90,11 +88,7 @@ export async function SleepTipsSection() {
         </SectionAnimations>
 
         {/* Core Principles Section */}
-        <SectionAnimations
-          className='mb-20'
-          delay={0.1}
-          direction='up'
-        >
+        <SectionAnimations className='mb-20' delay={0.1} direction='up'>
           <div className='text-center mb-12'>
             <h3 className='text-2xl md:text-3xl font-bold mb-4 text-gray-900 dark:text-white'>
               {t('sleep.principles_title')}
@@ -110,14 +104,18 @@ export async function SleepTipsSection() {
                 delay={index * 0.1}
                 direction='up'
               >
-                <Card className={`h-full hover:shadow-lg transition-all duration-300 border ${principle.borderColor} ${principle.bgColor}`}>
+                <Card
+                  className={`h-full hover:shadow-lg transition-all duration-300 border ${principle.borderColor} ${principle.bgColor}`}
+                >
                   <CardBody className='p-6'>
                     <div className='flex items-start space-x-4'>
                       <div className='w-14 h-14 rounded-xl bg-white dark:bg-gray-800 flex items-center justify-center flex-shrink-0 shadow-sm'>
                         <span className='text-2xl'>{principle.icon}</span>
                       </div>
                       <div className='flex-1'>
-                        <h4 className={`text-lg font-semibold mb-3 ${principle.color}`}>
+                        <h4
+                          className={`text-lg font-semibold mb-3 ${principle.color}`}
+                        >
                           {t(`sleep.${principle.key}`)}
                         </h4>
                         <p className='text-gray-600 dark:text-gray-300 leading-relaxed text-sm'>
@@ -132,14 +130,8 @@ export async function SleepTipsSection() {
           </div>
         </SectionAnimations>
 
-
-
         {/* Practical Techniques Section */}
-        <SectionAnimations
-          className='mb-16'
-          delay={0.3}
-          direction='up'
-        >
+        <SectionAnimations className='mb-16' delay={0.3} direction='up'>
           <div className='text-center mb-12'>
             <h3 className='text-2xl md:text-3xl font-bold mb-4 text-gray-900 dark:text-white'>
               {t('sleep.techniques_title')}
@@ -155,14 +147,18 @@ export async function SleepTipsSection() {
                 delay={index * 0.1}
                 direction='up'
               >
-                <Card className={`hover:shadow-md transition-all duration-300 border border-gray-200 dark:border-gray-700 ${technique.bgColor}`}>
+                <Card
+                  className={`hover:shadow-md transition-all duration-300 border border-gray-200 dark:border-gray-700 ${technique.bgColor}`}
+                >
                   <CardBody className='p-5'>
                     <div className='flex items-start space-x-3'>
                       <div className='w-12 h-12 rounded-lg bg-white dark:bg-gray-800 flex items-center justify-center flex-shrink-0 shadow-sm'>
                         <span className='text-xl'>{technique.icon}</span>
                       </div>
                       <div className='flex-1'>
-                        <h4 className={`text-base font-semibold mb-2 ${technique.color}`}>
+                        <h4
+                          className={`text-base font-semibold mb-2 ${technique.color}`}
+                        >
                           {t(`sleep.${technique.key}`)}
                         </h4>
                         <p className='text-gray-600 dark:text-gray-300 leading-relaxed text-sm'>
@@ -177,14 +173,8 @@ export async function SleepTipsSection() {
           </div>
         </SectionAnimations>
 
-
-
         {/* Call to Action */}
-        <SectionAnimations
-          className='text-center'
-          delay={0.5}
-          direction='up'
-        >
+        <SectionAnimations className='text-center' delay={0.5} direction='up'>
           <div className='bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 rounded-2xl p-8 border border-blue-200 dark:border-blue-800'>
             <h3 className='text-2xl font-semibold mb-4 text-gray-900 dark:text-white'>
               {t('sleep.cta_title')}
@@ -194,17 +184,15 @@ export async function SleepTipsSection() {
             </p>
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
               <Button
-                color='primary'
-                size='lg'
+                as='a'
                 className='font-medium'
+                color='primary'
+                href='/detection'
+                size='lg'
               >
                 {t('button.test-now')}
               </Button>
-              <Button
-                variant='bordered'
-                size='lg'
-                className='font-medium'
-              >
+              <Button className='font-medium' size='lg' variant='bordered'>
                 {t('button.contact')}
               </Button>
             </div>

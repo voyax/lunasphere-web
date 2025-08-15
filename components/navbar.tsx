@@ -13,10 +13,10 @@ import NextLink from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { Divider } from '@heroui/react'
+import Image from 'next/image'
 
 import { ThemeSwitch } from '@/components/theme-switch'
 import { LanguageSwitcher } from '@/components/language-switcher'
-import { Logo } from '@/components/icons'
 import { useLocale } from '@/contexts/LocaleContext'
 
 export function Navbar() {
@@ -58,7 +58,13 @@ export function Navbar() {
       <NavbarContent justify='center'>
         <NavbarBrand>
           <NextLink className='flex justify-start items-center gap-2' href='/'>
-            <Logo />
+            <Image
+              src='/logo_with_bg.png'
+              alt='Logo'
+              width={32}
+              height={32}
+              className='w-8 h-8'
+            />
             <p className='font-bold text-inherit text-sm md:text-base'>
               {t('site.title')}
             </p>
