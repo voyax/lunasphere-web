@@ -1,8 +1,9 @@
 'use client'
 
-import type { ImageType, ImageUploadData, AnalysisResult } from '../types'
+import type { ImageUploadData, AnalysisResult } from '../types'
 import { ModelState, AnalysisState } from '../types'
 
+import { useState } from 'react'
 import { Button } from '@heroui/button'
 import { Tooltip } from '@heroui/tooltip'
 import { Upload, Camera, CheckCircle } from 'lucide-react'
@@ -21,71 +22,50 @@ import { getModelInstance, type ModelPrediction } from '@/lib/model-inference'
 import { useLocale } from '@/contexts/LocaleContext'
 
 interface TopViewAnalysisProps {
-  images: Record<ImageType, ImageUploadData | null>
-  setImages: React.Dispatch<
-    React.SetStateAction<Record<ImageType, ImageUploadData | null>>
-  >
-  analysisState: AnalysisState
-  setAnalysisState: (state: AnalysisState) => void
-  analysisResult: AnalysisResult | null
-  setAnalysisResult: (result: AnalysisResult | null) => void
   modelPath: string
   confidenceThreshold: number
   modelState: ModelState
 }
 
 export default function TopViewAnalysis({
-  images,
-  setImages,
-  analysisState,
-  setAnalysisState,
-  analysisResult,
-  setAnalysisResult,
   modelPath,
   confidenceThreshold,
   modelState,
 }: TopViewAnalysisProps) {
   const { t } = useLocale()
+  
+  // Internal state management
+  const [topImage, setTopImage] = useState<ImageUploadData | null>(null)
+  const [analysisState, setAnalysisState] = useState(AnalysisState.WAITING_FOR_IMAGE)
+  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null)
   const handleFileUpload = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    imageType: ImageType
+    event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files?.[0]
 
     if (file) {
       const url = URL.createObjectURL(file)
-
-      setImages(prev => ({
-        ...prev,
-        [imageType]: {
-          file,
-          url,
-          rotation: 0,
-          scale: 1,
-        },
-      }))
-
-      // Update analysis state to indicate image is ready for analysis
-      if (imageType === 'top') {
-        setAnalysisState(AnalysisState.READY_TO_ANALYZE)
-        setAnalysisResult(null) // Clear any previous results
+      const imageData = {
+        file,
+        url,
+        rotation: 0,
+        scale: 1,
       }
 
-      if (imageType === 'left' || imageType === 'right') {
-        // This would be handled by parent component if needed
-      }
+      setTopImage(imageData)
+      setAnalysisState(AnalysisState.READY_TO_ANALYZE)
+      setAnalysisResult(null) // Clear any previous results
     }
   }
 
-  const setImageRotation = (imageType: ImageType, rotation: number) => {
-    setImages(prev => ({
-      ...prev,
-      [imageType]: prev[imageType] ? { ...prev[imageType]!, rotation } : null,
-    }))
+  const setImageRotation = (rotation: number) => {
+    if (topImage) {
+      setTopImage({ ...topImage, rotation })
+    }
   }
 
   const analyzeTopView = async () => {
-    if (!images.top) {
+    if (!topImage) {
       setAnalysisResult({ error: t('detection.errors.noImageUploaded') })
       return
     }
@@ -110,7 +90,7 @@ export default function TopViewAnalysis({
         try {
           const prediction: ModelPrediction = await model.predict(
             img,
-            images.top!.rotation
+            topImage.rotation
           )
 
           setAnalysisResult({
@@ -137,7 +117,7 @@ export default function TopViewAnalysis({
         setAnalysisState(AnalysisState.ERROR)
       }
 
-      img.src = images.top.url
+      img.src = topImage.url
     } catch (error) {
       // Analysis setup failed
       setAnalysisResult({
@@ -266,7 +246,7 @@ export default function TopViewAnalysis({
             </p>
           </div>
 
-          {!images.top ? (
+          {!topImage ? (
             <div
               className={`relative aspect-square border-2 border-dashed rounded-2xl overflow-hidden transition-all duration-300 ${
                 modelState !== ModelState.LOADED
@@ -403,9 +383,9 @@ export default function TopViewAnalysis({
                   alt={t('detection.topView.originalImageAlt')}
                   className='w-full h-full object-contain'
                   sizes='(max-width: 768px) 100vw, 50vw'
-                  src={images.top.url}
+                  src={topImage.url}
                   style={{
-                    transform: `rotate(${images.top.rotation}deg) scale(${images.top.scale})`,
+                    transform: `rotate(${topImage.rotation}deg) scale(${topImage.scale})`,
                   }}
                 />
 
@@ -437,8 +417,8 @@ export default function TopViewAnalysis({
                     </span>
                   </div>
                   <RotationControl
-                    rotation={images.top?.rotation || 0}
-                    onChange={rotation => setImageRotation('top', rotation)}
+                    rotation={topImage?.rotation || 0}
+                    onChange={rotation => setImageRotation(rotation)}
                   />
                 </div>
 
@@ -523,7 +503,7 @@ export default function TopViewAnalysis({
             disabled={modelState !== ModelState.LOADED}
             id='top-upload'
             type='file'
-            onChange={e => handleFileUpload(e, 'top')}
+            onChange={e => handleFileUpload(e)}
           />
         </div>
 

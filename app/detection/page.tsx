@@ -1,7 +1,6 @@
 'use client'
 
-import type { ImageType, ImageUploadData, AnalysisResult } from './types'
-import { ModelState, AnalysisState } from './types'
+import { ModelState } from './types'
 
 import { useState, useEffect } from 'react'
 
@@ -13,17 +12,8 @@ import { useLocale } from '@/contexts/LocaleContext'
 
 export default function DetectionPage() {
   const { t } = useLocale()
-  const [images, setImages] = useState<
-    Record<ImageType, ImageUploadData | null>
-  >({
-    top: null,
-    left: null,
-    right: null,
-  })
-  const [analysisState, setAnalysisState] = useState(AnalysisState.WAITING_FOR_IMAGE)
-  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(
-    null
-  )
+
+
 
   const [modelPath, setModelPath] = useState('/models/model_weights_best.onnx')
   const [modelState, setModelState] = useState(ModelState.NOT_LOADED)
@@ -129,15 +119,9 @@ export default function DetectionPage() {
           <div className='w-full space-y-24'>
             {/* Top View Analysis Section */}
             <TopViewAnalysis
-              analysisResult={analysisResult}
-              analysisState={analysisState}
-              confidenceThreshold={confidenceThreshold}
-              images={images}
               modelPath={modelPath}
+              confidenceThreshold={confidenceThreshold}
               modelState={modelState}
-              setAnalysisResult={setAnalysisResult}
-              setAnalysisState={setAnalysisState}
-              setImages={setImages}
             />
 
             {/* Side View Comparison Section */}
