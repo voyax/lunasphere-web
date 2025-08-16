@@ -1,9 +1,8 @@
 'use client'
 
-import { ModelState } from './types'
-
 import { useState, useEffect } from 'react'
 
+import { ModelState } from './types'
 import ModelManager from './components/ModelManager'
 import TopViewAnalysis from './components/TopViewAnalysis'
 import ProfileViewComparison from './components/ProfileViewComparison'
@@ -12,8 +11,6 @@ import { useLocale } from '@/contexts/LocaleContext'
 
 export default function DetectionPage() {
   const { t } = useLocale()
-
-
 
   const [modelPath, setModelPath] = useState('/models/model_weights_best.onnx')
   const [modelState, setModelState] = useState(ModelState.NOT_LOADED)
@@ -119,8 +116,8 @@ export default function DetectionPage() {
           <div className='w-full space-y-24'>
             {/* Top View Analysis Section */}
             <TopViewAnalysis
-              modelPath={modelPath}
               confidenceThreshold={confidenceThreshold}
+              modelPath={modelPath}
               modelState={modelState}
             />
 

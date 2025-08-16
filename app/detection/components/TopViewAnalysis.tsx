@@ -1,13 +1,14 @@
 'use client'
 
 import type { ImageUploadData, AnalysisResult } from '../types'
-import { ModelState, AnalysisState } from '../types'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Button } from '@heroui/button'
 import { Tooltip } from '@heroui/tooltip'
 import { Upload, Camera, CheckCircle } from 'lucide-react'
 import NextImage from 'next/image'
+
+import { ModelState, AnalysisState } from '../types'
 
 import RotationControl from './RotationControl'
 import {
@@ -33,14 +34,19 @@ export default function TopViewAnalysis({
   modelState,
 }: TopViewAnalysisProps) {
   const { t } = useLocale()
-  
+
   // Internal state management
   const [topImage, setTopImage] = useState<ImageUploadData | null>(null)
-  const [analysisState, setAnalysisState] = useState(AnalysisState.WAITING_FOR_IMAGE)
-  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null)
-  const handleFileUpload = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const [analysisState, setAnalysisState] = useState(
+    AnalysisState.WAITING_FOR_IMAGE
+  )
+  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(
+    null
+  )
+
+  // Ref for file input
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
 
     if (file) {
@@ -67,14 +73,18 @@ export default function TopViewAnalysis({
   const analyzeTopView = async () => {
     if (!topImage) {
       setAnalysisResult({ error: t('detection.errors.noImageUploaded') })
+
       return
     }
 
     if (modelState !== ModelState.LOADED) {
-      const errorMessage = modelState === ModelState.LOADING 
-        ? t('detection.errors.modelStillLoading')
-        : t('detection.errors.modelNotLoaded')
+      const errorMessage =
+        modelState === ModelState.LOADING
+          ? t('detection.errors.modelStillLoading')
+          : t('detection.errors.modelNotLoaded')
+
       setAnalysisResult({ error: errorMessage })
+
       return
     }
 
@@ -257,13 +267,16 @@ export default function TopViewAnalysis({
               tabIndex={modelState === ModelState.LOADED ? 0 : -1}
               onClick={() => {
                 if (modelState === ModelState.LOADED) {
-                  document.getElementById('top-upload')?.click()
+                  fileInputRef.current?.click()
                 }
               }}
               onKeyDown={e => {
-                if ((e.key === 'Enter' || e.key === ' ') && modelState === ModelState.LOADED) {
+                if (
+                  (e.key === 'Enter' || e.key === ' ') &&
+                  modelState === ModelState.LOADED
+                ) {
                   e.preventDefault()
-                  document.getElementById('top-upload')?.click()
+                  fileInputRef.current?.click()
                 }
               }}
             >
@@ -310,31 +323,37 @@ export default function TopViewAnalysis({
                 <div className='text-center space-y-4 p-6'>
                   {/* Centered upload prompt */}
                   <div className='flex flex-col items-center justify-center gap-3'>
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 ${
-                      modelState === ModelState.LOADING
-                        ? 'bg-blue-50/80 dark:bg-blue-950/80 border-blue-200/50 dark:border-blue-700/50'
-                        : modelState !== ModelState.LOADED
-                          ? 'bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/50 dark:border-gray-600/50'
-                          : 'bg-white/80 dark:bg-gray-700/80 border-white/50 dark:border-gray-600/50 hover:scale-102'
-                    }`}>
+                    <div
+                      className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 ${
+                        modelState === ModelState.LOADING
+                          ? 'bg-blue-50/80 dark:bg-blue-950/80 border-blue-200/50 dark:border-blue-700/50'
+                          : modelState !== ModelState.LOADED
+                            ? 'bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/50 dark:border-gray-600/50'
+                            : 'bg-white/80 dark:bg-gray-700/80 border-white/50 dark:border-gray-600/50 hover:scale-102'
+                      }`}
+                    >
                       {modelState === ModelState.LOADING ? (
                         <div className='w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
                       ) : (
-                        <Upload className={`w-5 h-5 ${
-                          modelState !== ModelState.LOADED
-                            ? 'text-gray-400 dark:text-gray-500'
-                            : 'text-gray-600 dark:text-gray-400'
-                        }`} />
+                        <Upload
+                          className={`w-5 h-5 ${
+                            modelState !== ModelState.LOADED
+                              ? 'text-gray-400 dark:text-gray-500'
+                              : 'text-gray-600 dark:text-gray-400'
+                          }`}
+                        />
                       )}
                     </div>
                     <div className='text-center'>
-                      <p className={`text-base font-medium drop-shadow-sm ${
-                        modelState === ModelState.LOADING
-                          ? 'text-blue-600 dark:text-blue-400'
-                          : modelState !== ModelState.LOADED
-                            ? 'text-gray-500 dark:text-gray-500'
-                            : 'text-gray-700 dark:text-gray-300'
-                      }`}>
+                      <p
+                        className={`text-base font-medium drop-shadow-sm ${
+                          modelState === ModelState.LOADING
+                            ? 'text-blue-600 dark:text-blue-400'
+                            : modelState !== ModelState.LOADED
+                              ? 'text-gray-500 dark:text-gray-500'
+                              : 'text-gray-700 dark:text-gray-300'
+                        }`}
+                      >
                         {modelState === ModelState.LOADING
                           ? t('detection.model.loading')
                           : modelState !== ModelState.LOADED
@@ -344,27 +363,33 @@ export default function TopViewAnalysis({
                     </div>
                   </div>
                   {/* Status info with refined style */}
-                  <div className={`inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 border shadow-sm ${
-                    modelState === ModelState.LOADING
-                      ? 'bg-blue-50/80 dark:bg-blue-950/80 border-blue-200/60 dark:border-blue-700/60'
-                      : modelState !== ModelState.LOADED
-                        ? 'bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/60 dark:border-gray-600/60'
-                        : 'bg-white/80 dark:bg-gray-800/80 border-white/60 dark:border-gray-600/60'
-                  }`}>
-                    <div className={`w-1.5 h-1.5 rounded-full ${
+                  <div
+                    className={`inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 border shadow-sm ${
                       modelState === ModelState.LOADING
-                        ? 'bg-blue-500 animate-pulse'
+                        ? 'bg-blue-50/80 dark:bg-blue-950/80 border-blue-200/60 dark:border-blue-700/60'
                         : modelState !== ModelState.LOADED
-                          ? 'bg-gray-400 dark:bg-gray-500'
-                          : 'bg-gray-400 dark:bg-gray-500'
-                    }`} />
-                    <span className={`text-xs font-normal ${
-                      modelState === ModelState.LOADING
-                        ? 'text-blue-600 dark:text-blue-400'
-                        : modelState !== ModelState.LOADED
-                          ? 'text-gray-500 dark:text-gray-500'
-                          : 'text-gray-600 dark:text-gray-400'
-                    }`}>
+                          ? 'bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/60 dark:border-gray-600/60'
+                          : 'bg-white/80 dark:bg-gray-800/80 border-white/60 dark:border-gray-600/60'
+                    }`}
+                  >
+                    <div
+                      className={`w-1.5 h-1.5 rounded-full ${
+                        modelState === ModelState.LOADING
+                          ? 'bg-blue-500 animate-pulse'
+                          : modelState !== ModelState.LOADED
+                            ? 'bg-gray-400 dark:bg-gray-500'
+                            : 'bg-gray-400 dark:bg-gray-500'
+                      }`}
+                    />
+                    <span
+                      className={`text-xs font-normal ${
+                        modelState === ModelState.LOADING
+                          ? 'text-blue-600 dark:text-blue-400'
+                          : modelState !== ModelState.LOADED
+                            ? 'text-gray-500 dark:text-gray-500'
+                            : 'text-gray-600 dark:text-gray-400'
+                      }`}
+                    >
                       {modelState === ModelState.LOADING
                         ? t('detection.model.loadingHint')
                         : modelState !== ModelState.LOADED
@@ -435,11 +460,17 @@ export default function TopViewAnalysis({
                             ? t('detection.topView.tooltips.analyzing')
                             : t('detection.topView.tooltips.readyToAnalyze')
                     }
-                    isDisabled={modelState === ModelState.LOADED && analysisState !== AnalysisState.ANALYZING}
+                    isDisabled={
+                      modelState === ModelState.LOADED &&
+                      analysisState !== AnalysisState.ANALYZING
+                    }
                   >
                     <Button
                       className='flex-1 h-10 bg-primary text-white font-medium'
-                      disabled={analysisState === AnalysisState.ANALYZING || modelState !== ModelState.LOADED}
+                      disabled={
+                        analysisState === AnalysisState.ANALYZING ||
+                        modelState !== ModelState.LOADED
+                      }
                       size='md'
                       startContent={
                         modelState === ModelState.LOADING ? (
@@ -498,10 +529,10 @@ export default function TopViewAnalysis({
             </div>
           )}
           <input
+            ref={fileInputRef}
             accept='image/*'
             className='hidden'
             disabled={modelState !== ModelState.LOADED}
-            id='top-upload'
             type='file'
             onChange={e => handleFileUpload(e)}
           />
