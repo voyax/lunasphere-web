@@ -1,6 +1,7 @@
 'use client'
 
 import type { ImageType, ImageUploadData, AnalysisResult } from '../types'
+import { ModelState, AnalysisState } from '../types'
 
 import { Button } from '@heroui/button'
 import { Tooltip } from '@heroui/tooltip'
@@ -24,31 +25,25 @@ interface TopViewAnalysisProps {
   setImages: React.Dispatch<
     React.SetStateAction<Record<ImageType, ImageUploadData | null>>
   >
-  currentStep: number
-  setCurrentStep: (step: number) => void
-  isProcessing: boolean
-  setIsProcessing: (processing: boolean) => void
+  analysisState: AnalysisState
+  setAnalysisState: (state: AnalysisState) => void
   analysisResult: AnalysisResult | null
   setAnalysisResult: (result: AnalysisResult | null) => void
   modelPath: string
   confidenceThreshold: number
-  isModelLoaded: boolean
-  isLoadingModel: boolean
+  modelState: ModelState
 }
 
 export default function TopViewAnalysis({
   images,
   setImages,
-  currentStep,
-  setCurrentStep,
-  isProcessing,
-  setIsProcessing,
+  analysisState,
+  setAnalysisState,
   analysisResult,
   setAnalysisResult,
   modelPath,
   confidenceThreshold,
-  isModelLoaded,
-  isLoadingModel,
+  modelState,
 }: TopViewAnalysisProps) {
   const { t } = useLocale()
   const handleFileUpload = (
@@ -70,6 +65,12 @@ export default function TopViewAnalysis({
         },
       }))
 
+      // Update analysis state to indicate image is ready for analysis
+      if (imageType === 'top') {
+        setAnalysisState(AnalysisState.READY_TO_ANALYZE)
+        setAnalysisResult(null) // Clear any previous results
+      }
+
       if (imageType === 'left' || imageType === 'right') {
         // This would be handled by parent component if needed
       }
@@ -84,17 +85,24 @@ export default function TopViewAnalysis({
   }
 
   const analyzeTopView = async () => {
-    if (!images.top) return
+    if (!images.top) {
+      setAnalysisResult({ error: t('detection.errors.noImageUploaded') })
+      return
+    }
 
-    setIsProcessing(true)
-    setCurrentStep(2)
+    if (modelState !== ModelState.LOADED) {
+      const errorMessage = modelState === ModelState.LOADING 
+        ? t('detection.errors.modelStillLoading')
+        : t('detection.errors.modelNotLoaded')
+      setAnalysisResult({ error: errorMessage })
+      return
+    }
+
+    setAnalysisState(AnalysisState.ANALYZING)
+    // Set analysis state to analyzing to show the analyzing state in the UI
     setAnalysisResult(null)
 
     try {
-      if (!isModelLoaded) {
-        throw new Error(t('detection.errors.modelNotLoaded'))
-      }
-
       const model = getModelInstance(modelPath, { confidenceThreshold })
       const img = new Image()
 
@@ -114,19 +122,19 @@ export default function TopViewAnalysis({
             originalImage: prediction.originalImage,
             measurements: prediction.measurements,
           })
-          setCurrentStep(3)
+          setAnalysisState(AnalysisState.COMPLETED)
         } catch (error) {
           // Analysis failed
           setAnalysisResult({
             error: `${t('detection.errors.analysisFailed')}: ${error instanceof Error ? error.message : t('detection.errors.unknownError')}`,
           })
-          setCurrentStep(3)
+          setAnalysisState(AnalysisState.ERROR)
         }
       }
 
       img.onerror = () => {
         setAnalysisResult({ error: t('detection.errors.imageLoadFailed') })
-        setCurrentStep(3)
+        setAnalysisState(AnalysisState.ERROR)
       }
 
       img.src = images.top.url
@@ -135,9 +143,9 @@ export default function TopViewAnalysis({
       setAnalysisResult({
         error: `${t('detection.errors.analysisFailed')}: ${error instanceof Error ? error.message : t('detection.errors.unknownError')}`,
       })
-      setCurrentStep(3)
+      setAnalysisState(AnalysisState.ERROR)
     } finally {
-      setIsProcessing(false)
+      // Analysis state is already set in success/error cases above
     }
   }
 
@@ -260,12 +268,20 @@ export default function TopViewAnalysis({
 
           {!images.top ? (
             <div
-              className='relative aspect-square border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl overflow-hidden cursor-pointer hover:border-primary transition-all duration-300'
+              className={`relative aspect-square border-2 border-dashed rounded-2xl overflow-hidden transition-all duration-300 ${
+                modelState !== ModelState.LOADED
+                  ? 'border-gray-200 dark:border-gray-700 cursor-not-allowed opacity-60'
+                  : 'border-gray-300 dark:border-gray-600 cursor-pointer hover:border-primary'
+              }`}
               role='button'
-              tabIndex={0}
-              onClick={() => document.getElementById('top-upload')?.click()}
+              tabIndex={modelState === ModelState.LOADED ? 0 : -1}
+              onClick={() => {
+                if (modelState === ModelState.LOADED) {
+                  document.getElementById('top-upload')?.click()
+                }
+              }}
               onKeyDown={e => {
-                if (e.key === 'Enter' || e.key === ' ') {
+                if ((e.key === 'Enter' || e.key === ' ') && modelState === ModelState.LOADED) {
                   e.preventDefault()
                   document.getElementById('top-upload')?.click()
                 }
@@ -314,20 +330,66 @@ export default function TopViewAnalysis({
                 <div className='text-center space-y-4 p-6'>
                   {/* Centered upload prompt */}
                   <div className='flex flex-col items-center justify-center gap-3'>
-                    <div className='w-12 h-12 bg-white/80 dark:bg-gray-700/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-white/50 dark:border-gray-600/50 transition-all duration-200 hover:scale-102'>
-                      <Upload className='w-5 h-5 text-gray-600 dark:text-gray-400' />
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 ${
+                      modelState === ModelState.LOADING
+                        ? 'bg-blue-50/80 dark:bg-blue-950/80 border-blue-200/50 dark:border-blue-700/50'
+                        : modelState !== ModelState.LOADED
+                          ? 'bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/50 dark:border-gray-600/50'
+                          : 'bg-white/80 dark:bg-gray-700/80 border-white/50 dark:border-gray-600/50 hover:scale-102'
+                    }`}>
+                      {modelState === ModelState.LOADING ? (
+                        <div className='w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
+                      ) : (
+                        <Upload className={`w-5 h-5 ${
+                          modelState !== ModelState.LOADED
+                            ? 'text-gray-400 dark:text-gray-500'
+                            : 'text-gray-600 dark:text-gray-400'
+                        }`} />
+                      )}
                     </div>
                     <div className='text-center'>
-                      <p className='text-base font-medium text-gray-700 dark:text-gray-300 drop-shadow-sm'>
-                        {t('detection.topView.upload.clickOrDrag')}
+                      <p className={`text-base font-medium drop-shadow-sm ${
+                        modelState === ModelState.LOADING
+                          ? 'text-blue-600 dark:text-blue-400'
+                          : modelState !== ModelState.LOADED
+                            ? 'text-gray-500 dark:text-gray-500'
+                            : 'text-gray-700 dark:text-gray-300'
+                      }`}>
+                        {modelState === ModelState.LOADING
+                          ? t('detection.model.loading')
+                          : modelState !== ModelState.LOADED
+                            ? t('detection.model.notLoadedMessage')
+                            : t('detection.topView.upload.clickOrDrag')}
                       </p>
                     </div>
                   </div>
-                  {/* File format info with refined style */}
-                  <div className='inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-md px-3 py-2 border border-white/60 dark:border-gray-600/60 shadow-sm'>
-                    <div className='w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full' />
-                    <span className='text-xs font-normal text-gray-600 dark:text-gray-400'>
-                      {t('detection.topView.upload.supportFormat')}
+                  {/* Status info with refined style */}
+                  <div className={`inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 border shadow-sm ${
+                    modelState === ModelState.LOADING
+                      ? 'bg-blue-50/80 dark:bg-blue-950/80 border-blue-200/60 dark:border-blue-700/60'
+                      : modelState !== ModelState.LOADED
+                        ? 'bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/60 dark:border-gray-600/60'
+                        : 'bg-white/80 dark:bg-gray-800/80 border-white/60 dark:border-gray-600/60'
+                  }`}>
+                    <div className={`w-1.5 h-1.5 rounded-full ${
+                      modelState === ModelState.LOADING
+                        ? 'bg-blue-500 animate-pulse'
+                        : modelState !== ModelState.LOADED
+                          ? 'bg-gray-400 dark:bg-gray-500'
+                          : 'bg-gray-400 dark:bg-gray-500'
+                    }`} />
+                    <span className={`text-xs font-normal ${
+                      modelState === ModelState.LOADING
+                        ? 'text-blue-600 dark:text-blue-400'
+                        : modelState !== ModelState.LOADED
+                          ? 'text-gray-500 dark:text-gray-500'
+                          : 'text-gray-600 dark:text-gray-400'
+                    }`}>
+                      {modelState === ModelState.LOADING
+                        ? t('detection.model.loadingHint')
+                        : modelState !== ModelState.LOADED
+                          ? t('detection.model.notLoadedHint')
+                          : t('detection.topView.upload.supportFormat')}
                     </span>
                   </div>
                 </div>
@@ -382,38 +444,75 @@ export default function TopViewAnalysis({
 
                 {/* Action Buttons */}
                 <div className='flex gap-2'>
-                  <Button
-                    className='flex-1 h-10 bg-primary text-white font-medium'
-                    disabled={isProcessing || isLoadingModel || !isModelLoaded}
-                    size='md'
-                    startContent={
-                      isLoadingModel ? (
-                        <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin' />
-                      ) : isProcessing ? (
-                        <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin' />
-                      ) : (
-                        <CheckCircle className='w-4 h-4' />
-                      )
+                  <Tooltip
+                    showArrow
+                    content={
+                      modelState === ModelState.LOADING
+                        ? t('detection.model.loadingTooltip')
+                        : modelState !== ModelState.LOADED
+                          ? t('detection.model.notLoadedTooltip')
+                          : analysisState === AnalysisState.ANALYZING
+                            ? t('detection.topView.tooltips.analyzing')
+                            : t('detection.topView.tooltips.readyToAnalyze')
                     }
-                    onClick={analyzeTopView}
+                    isDisabled={modelState === ModelState.LOADED && analysisState !== AnalysisState.ANALYZING}
                   >
-                    {isLoadingModel
-                      ? t('detection.model.loadingButton')
-                      : isProcessing
-                        ? t('detection.topView.buttons.analyzing')
-                        : t('detection.topView.buttons.startAnalysis')}
-                  </Button>
-                  <Button
-                    className='h-10 px-3'
-                    size='md'
-                    startContent={<Upload className='w-4 h-4' />}
-                    variant='bordered'
-                    onClick={() =>
-                      document.getElementById('top-upload')?.click()
+                    <Button
+                      className='flex-1 h-10 bg-primary text-white font-medium'
+                      disabled={analysisState === AnalysisState.ANALYZING || modelState !== ModelState.LOADED}
+                      size='md'
+                      startContent={
+                        modelState === ModelState.LOADING ? (
+                          <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin' />
+                        ) : analysisState === AnalysisState.ANALYZING ? (
+                          <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin' />
+                        ) : (
+                          <CheckCircle className='w-4 h-4' />
+                        )
+                      }
+                      onClick={analyzeTopView}
+                    >
+                      {modelState === ModelState.LOADING
+                        ? t('detection.model.loadingButton')
+                        : analysisState === AnalysisState.ANALYZING
+                          ? t('detection.topView.buttons.analyzing')
+                          : t('detection.topView.buttons.startAnalysis')}
+                    </Button>
+                  </Tooltip>
+                  <Tooltip
+                    showArrow
+                    content={
+                      modelState === ModelState.LOADING
+                        ? t('detection.model.loadingTooltip')
+                        : modelState !== ModelState.LOADED
+                          ? t('detection.model.notLoadedTooltip')
+                          : t('detection.topView.tooltips.reupload')
                     }
+                    isDisabled={modelState === ModelState.LOADED}
                   >
-                    {t('detection.topView.buttons.reupload')}
-                  </Button>
+                    <Button
+                      className='h-10 px-3'
+                      disabled={modelState !== ModelState.LOADED}
+                      size='md'
+                      startContent={
+                        modelState === ModelState.LOADING ? (
+                          <div className='w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin' />
+                        ) : (
+                          <Upload className='w-4 h-4' />
+                        )
+                      }
+                      variant='bordered'
+                      onClick={() => {
+                        if (modelState === ModelState.LOADED) {
+                          document.getElementById('top-upload')?.click()
+                        }
+                      }}
+                    >
+                      {modelState === ModelState.LOADING
+                        ? t('detection.model.loadingButton')
+                        : t('detection.topView.buttons.reupload')}
+                    </Button>
+                  </Tooltip>
                 </div>
               </div>
             </div>
@@ -421,6 +520,7 @@ export default function TopViewAnalysis({
           <input
             accept='image/*'
             className='hidden'
+            disabled={modelState !== ModelState.LOADED}
             id='top-upload'
             type='file'
             onChange={e => handleFileUpload(e, 'top')}
@@ -438,10 +538,10 @@ export default function TopViewAnalysis({
             </p>
           </div>
 
-          {currentStep < 3 ? (
+          {analysisState !== AnalysisState.COMPLETED ? (
             <div className='aspect-square flex items-center justify-center bg-gray-50/50 dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-gray-700'>
               <div className='text-center space-y-6'>
-                {currentStep === 1 ? (
+                {analysisState === AnalysisState.WAITING_FOR_IMAGE ? (
                   <>
                     <div className='w-20 h-20 mx-auto bg-white dark:bg-gray-700 rounded-2xl flex items-center justify-center shadow-lg'>
                       <Camera className='w-10 h-10 text-gray-400' />
@@ -455,13 +555,13 @@ export default function TopViewAnalysis({
                       </p>
                     </div>
                   </>
-                ) : (
+                ) : analysisState === AnalysisState.ANALYZING ? (
                   <>
-                    <div className='w-20 h-20 mx-auto bg-primary rounded-2xl flex items-center justify-center shadow-lg'>
-                      <div className='w-8 h-8 border-3 border-white border-t-transparent rounded-full animate-spin' />
+                    <div className='w-12 h-12 mx-auto bg-blue-50/80 dark:bg-blue-950/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/50'>
+                      <div className='w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
                     </div>
                     <div>
-                      <p className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
+                      <p className='text-lg font-semibold text-blue-600 dark:text-blue-400 mb-2'>
                         {t('detection.topView.analysis.analyzing')}
                       </p>
                       <p className='text-gray-500 dark:text-gray-400'>
@@ -469,7 +569,21 @@ export default function TopViewAnalysis({
                       </p>
                     </div>
                   </>
-                )}
+                ) : analysisState === AnalysisState.READY_TO_ANALYZE ? (
+                  <>
+                    <div className='w-20 h-20 mx-auto bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center shadow-lg border border-green-200 dark:border-green-700'>
+                      <CheckCircle className='w-10 h-10 text-green-600 dark:text-green-400' />
+                    </div>
+                    <div>
+                      <p className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
+                        {t('detection.topView.analysis.readyToAnalyze')}
+                      </p>
+                      <p className='text-gray-500 dark:text-gray-400'>
+                        {t('detection.topView.analysis.readyToAnalyzeDesc')}
+                      </p>
+                    </div>
+                  </>
+                ) : null}
               </div>
             </div>
           ) : (

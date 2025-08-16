@@ -7,14 +7,13 @@ import { Brain, Settings } from 'lucide-react'
 
 import { getModelInstance } from '@/lib/model-inference'
 import { useLocale } from '@/contexts/LocaleContext'
+import { ModelState } from '../types'
 
 interface ModelManagerProps {
   modelPath: string
   setModelPath: (path: string) => void
-  isModelLoaded: boolean
-  setIsModelLoaded: (loaded: boolean) => void
-  isLoadingModel: boolean
-  setIsLoadingModel: (loading: boolean) => void
+  modelState: ModelState
+  setModelState: (state: ModelState) => void
   confidenceThreshold: number
   setConfidenceThreshold: (threshold: number) => void
 }
@@ -22,10 +21,8 @@ interface ModelManagerProps {
 export default function ModelManager({
   modelPath,
   setModelPath,
-  isModelLoaded,
-  setIsModelLoaded,
-  isLoadingModel,
-  setIsLoadingModel,
+  modelState,
+  setModelState,
   confidenceThreshold,
   setConfidenceThreshold,
 }: ModelManagerProps) {
@@ -50,26 +47,24 @@ export default function ModelManager({
   // Auto-load default model on component mount
   useEffect(() => {
     const autoLoadModel = async () => {
-      if (modelPath && !isModelLoaded && !isLoadingModel) {
-        setIsLoadingModel(true)
+      if (modelPath && modelState === ModelState.NOT_LOADED) {
+        setModelState(ModelState.LOADING)
         try {
           const model = getModelInstance(modelPath, { confidenceThreshold })
 
           // Check if model is already loaded to avoid duplicate loading
           if (model.isModelLoaded(modelPath)) {
-            setIsModelLoaded(true)
+            setModelState(ModelState.LOADED)
 
             return
           }
 
           await model.loadModel(modelPath)
-          setIsModelLoaded(true)
+          setModelState(ModelState.LOADED)
           // Default model loaded successfully
         } catch {
           // Failed to auto-load default model
-          setIsModelLoaded(false)
-        } finally {
-          setIsLoadingModel(false)
+          setModelState(ModelState.ERROR)
         }
       }
     }
@@ -84,32 +79,30 @@ export default function ModelManager({
       return
     }
 
-    setIsLoadingModel(true)
+    setModelState(ModelState.LOADING)
     setLoadError(null) // Clear previous errors
     try {
       const model = getModelInstance(modelPath.trim(), { confidenceThreshold })
 
       // Check if model is already loaded to avoid duplicate loading
       if (model.isModelLoaded(modelPath.trim())) {
-        setIsModelLoaded(true)
+        setModelState(ModelState.LOADED)
         setLoadError(null)
 
         return
       }
 
       await model.loadModel(modelPath.trim())
-      setIsModelLoaded(true)
+      setModelState(ModelState.LOADED)
       setLoadError(null)
     } catch (error) {
       // Model loading failed
-      setIsModelLoaded(false)
+      setModelState(ModelState.ERROR)
       setLoadError(
         error instanceof Error
           ? error.message
           : t('detection.modelManager.errors.unknownError')
       )
-    } finally {
-      setIsLoadingModel(false)
     }
   }
 
@@ -169,31 +162,31 @@ export default function ModelManager({
                   </div>
                   <div
                     className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${
-                      isLoadingModel
+                      modelState === ModelState.LOADING
                         ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400'
-                        : loadError
+                        : loadError || modelState === ModelState.ERROR
                           ? 'bg-red-500/10 text-red-600 dark:text-red-400'
-                          : isModelLoaded
+                          : modelState === ModelState.LOADED
                             ? 'bg-green-500/10 text-green-600 dark:text-green-400'
                             : 'bg-gray-500/10 text-gray-600 dark:text-gray-400'
                     }`}
                   >
                     <div
                       className={`w-2 h-2 rounded-full ${
-                        isLoadingModel
+                        modelState === ModelState.LOADING
                           ? 'bg-blue-500 animate-pulse'
-                          : loadError
+                          : loadError || modelState === ModelState.ERROR
                             ? 'bg-red-500'
-                            : isModelLoaded
+                            : modelState === ModelState.LOADED
                               ? 'bg-green-500'
                               : 'bg-gray-400'
                       }`}
                     />
-                    {isLoadingModel
+                    {modelState === ModelState.LOADING
                       ? t('detection.modelManager.status.loading')
-                      : loadError
+                      : loadError || modelState === ModelState.ERROR
                         ? t('detection.modelManager.status.loadFailed')
-                        : isModelLoaded
+                        : modelState === ModelState.LOADED
                           ? t('detection.modelManager.status.loaded')
                           : t('detection.modelManager.status.notLoaded')}
                   </div>
@@ -210,7 +203,7 @@ export default function ModelManager({
                     <div className='flex-1'>
                       <input
                         className='w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all'
-                        disabled={isLoadingModel}
+                        disabled={modelState === ModelState.LOADING}
                         placeholder={t(
                           'detection.modelManager.modelPathPlaceholder'
                         )}
@@ -221,11 +214,11 @@ export default function ModelManager({
                     </div>
                     <Button
                       className='bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium transition-colors min-w-[120px]'
-                      disabled={isLoadingModel || !modelPath.trim()}
-                      isLoading={isLoadingModel}
+                      disabled={modelState === ModelState.LOADING || !modelPath.trim()}
+                      isLoading={modelState === ModelState.LOADING}
                       onClick={loadModel}
                     >
-                      {isLoadingModel
+                      {modelState === ModelState.LOADING
                         ? t('detection.modelManager.status.loading')
                         : t('detection.modelManager.loadModel')}
                     </Button>
@@ -241,7 +234,7 @@ export default function ModelManager({
                     <div className='flex-1 flex items-center gap-3'>
                       <input
                         className='flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer slider'
-                        disabled={isLoadingModel}
+                        disabled={modelState === ModelState.LOADING}
                         id='confidence-threshold'
                         max='0.9'
                         min='0.1'

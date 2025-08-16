@@ -1,6 +1,7 @@
 'use client'
 
 import type { ImageType, ImageUploadData, AnalysisResult } from './types'
+import { ModelState, AnalysisState } from './types'
 
 import { useState, useEffect } from 'react'
 
@@ -19,21 +20,19 @@ export default function DetectionPage() {
     left: null,
     right: null,
   })
-  const [currentStep, setCurrentStep] = useState(1)
-  const [isProcessing, setIsProcessing] = useState(false)
+  const [analysisState, setAnalysisState] = useState(AnalysisState.WAITING_FOR_IMAGE)
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(
     null
   )
 
   const [modelPath, setModelPath] = useState('/models/model_weights_best.onnx')
-  const [isModelLoaded, setIsModelLoaded] = useState(false)
-  const [isLoadingModel, setIsLoadingModel] = useState(false)
+  const [modelState, setModelState] = useState(ModelState.NOT_LOADED)
   const [confidenceThreshold, setConfidenceThreshold] = useState(0.7)
   const [showModelReadyBanner, setShowModelReadyBanner] = useState(false)
 
   // Show model ready banner for 5 seconds when model loads
   useEffect(() => {
-    if (isModelLoaded && !isLoadingModel) {
+    if (modelState === ModelState.LOADED) {
       setShowModelReadyBanner(true)
       const timer = setTimeout(() => {
         setShowModelReadyBanner(false)
@@ -41,7 +40,7 @@ export default function DetectionPage() {
 
       return () => clearTimeout(timer)
     }
-  }, [isModelLoaded, isLoadingModel])
+  }, [modelState])
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-950 dark:via-gray-900 dark:to-blue-950/20'>
@@ -55,7 +54,7 @@ export default function DetectionPage() {
       <div className='relative z-10'>
         <div className='container mx-auto px-6 py-8'>
           {/* Model Status Banner */}
-          {isLoadingModel && (
+          {modelState === ModelState.LOADING && (
             <div className='mb-6 p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg'>
               <div className='flex items-center gap-3'>
                 <div className='w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
@@ -71,7 +70,7 @@ export default function DetectionPage() {
             </div>
           )}
 
-          {!isModelLoaded && !isLoadingModel && (
+          {modelState === ModelState.NOT_LOADED && (
             <div className='mb-6 p-4 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg'>
               <div className='flex items-center gap-3'>
                 <div className='w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center'>
@@ -89,8 +88,8 @@ export default function DetectionPage() {
             </div>
           )}
 
-          {showModelReadyBanner && isModelLoaded && !isLoadingModel && (
-            <div className='mb-6 p-4 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg transition-all duration-300'>
+          {showModelReadyBanner && modelState === ModelState.LOADED && (
+            <div className='mb-6 p-4 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg'>
               <div className='flex items-center justify-between'>
                 <div className='flex items-center gap-3'>
                   <div className='w-5 h-5 bg-green-500 rounded-full flex items-center justify-center'>
@@ -106,6 +105,7 @@ export default function DetectionPage() {
                   </div>
                 </div>
                 <button
+                  aria-label={t('detection.model.closeBanner')}
                   className='text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-200 transition-colors'
                   onClick={() => setShowModelReadyBanner(false)}
                 >
@@ -118,13 +118,11 @@ export default function DetectionPage() {
           {/* Model Management Section */}
           <ModelManager
             confidenceThreshold={confidenceThreshold}
-            isLoadingModel={isLoadingModel}
-            isModelLoaded={isModelLoaded}
             modelPath={modelPath}
+            modelState={modelState}
             setConfidenceThreshold={setConfidenceThreshold}
-            setIsLoadingModel={setIsLoadingModel}
-            setIsModelLoaded={setIsModelLoaded}
             setModelPath={setModelPath}
+            setModelState={setModelState}
           />
 
           {/* Main Content */}
@@ -132,17 +130,14 @@ export default function DetectionPage() {
             {/* Top View Analysis Section */}
             <TopViewAnalysis
               analysisResult={analysisResult}
+              analysisState={analysisState}
               confidenceThreshold={confidenceThreshold}
-              currentStep={currentStep}
               images={images}
-              isLoadingModel={isLoadingModel}
-              isModelLoaded={isModelLoaded}
-              isProcessing={isProcessing}
               modelPath={modelPath}
+              modelState={modelState}
               setAnalysisResult={setAnalysisResult}
-              setCurrentStep={setCurrentStep}
+              setAnalysisState={setAnalysisState}
               setImages={setImages}
-              setIsProcessing={setIsProcessing}
             />
 
             {/* Side View Comparison Section */}

@@ -681,8 +681,8 @@ export const translations: TranslationKeys = {
     en: 'AI model loading, please wait...',
   },
   'detection.model.notLoaded': {
-    zh: 'AI模型未加载',
-    en: 'AI model not loaded',
+    zh: 'AI模型准备加载中',
+    en: 'AI model initializing',
   },
   'detection.model.ready': {
     zh: 'AI模型已就绪',
@@ -693,8 +693,8 @@ export const translations: TranslationKeys = {
     en: 'Model loading...',
   },
   'detection.model.notLoadedMessage': {
-    zh: '模型未加载，请先加载模型',
-    en: 'Model not loaded, please load the model first',
+    zh: 'AI模型准备加载中，请稍候',
+    en: 'AI model is initializing, please wait a moment',
   },
   'detection.model.imageLoadFailed': {
     zh: '图片加载失败，请重新上传',
@@ -711,6 +711,14 @@ export const translations: TranslationKeys = {
   'detection.model.readyHint': {
     zh: '现在可以上传图片进行头型检测分析',
     en: 'You can now upload images for head shape detection analysis',
+  },
+  'detection.model.loadingTooltip': {
+    zh: '模型正在加载中，请稍候...',
+    en: 'Model is loading, please wait...',
+  },
+  'detection.model.notLoadedTooltip': {
+    zh: 'AI模型准备加载中，请稍候',
+    en: 'AI model is initializing, please wait',
   },
 
   // Detection top view
@@ -750,6 +758,18 @@ export const translations: TranslationKeys = {
   'detection.topView.features.medicalDesc': {
     zh: '基于临床测量标准，提供可靠的分析结果',
     en: 'Based on clinical measurement standards, providing reliable results',
+  },
+  'detection.topView.tooltips.analyzing': {
+    zh: 'AI正在分析图片，请稍候...',
+    en: 'AI is analyzing the image, please wait...',
+  },
+  'detection.topView.tooltips.readyToAnalyze': {
+    zh: '点击开始AI分析',
+    en: 'Click to start AI analysis',
+  },
+  'detection.topView.tooltips.reupload': {
+    zh: '重新上传图片',
+    en: 'Re-upload image',
   },
   'detection.topView.shootingTips.title': {
     zh: '拍摄要点',
@@ -882,6 +902,14 @@ export const translations: TranslationKeys = {
   'detection.topView.analysis.waitingUploadDesc': {
     zh: '上传图片后开始AI智能分析',
     en: 'Start AI intelligent analysis after uploading image',
+  },
+  'detection.topView.analysis.readyToAnalyze': {
+    zh: '图片已上传，准备分析',
+    en: 'Image uploaded, ready to analyze',
+  },
+  'detection.topView.analysis.readyToAnalyzeDesc': {
+    zh: '点击分析按钮开始AI智能分析',
+    en: 'Click the analyze button to start AI intelligent analysis',
   },
   'detection.topView.analysis.analyzing': {
     zh: 'AI正在分析中',
@@ -1101,8 +1129,8 @@ export const translations: TranslationKeys = {
     en: 'Model Loaded',
   },
   'detection.modelManager.status.notLoaded': {
-    zh: '模型未加载',
-    en: 'Model Not Loaded',
+    zh: '模型准备加载中',
+    en: 'Initializing',
   },
   'detection.modelManager.status.loadFailed': {
     zh: '加载失败',
@@ -1151,8 +1179,8 @@ export const translations: TranslationKeys = {
 
   // Error messages
   'detection.errors.modelNotLoaded': {
-    zh: '模型未加载，请先加载模型',
-    en: 'Model not loaded, please load the model first',
+    zh: 'AI模型准备加载中，请稍候',
+    en: 'AI model is still initializing, please wait',
   },
   'detection.errors.analysisFailed': {
     zh: '分析失败',
@@ -1165,6 +1193,14 @@ export const translations: TranslationKeys = {
   'detection.errors.imageLoadFailed': {
     zh: '图片加载失败，请重新上传',
     en: 'Image loading failed, please re-upload',
+  },
+  'detection.errors.noImageUploaded': {
+    zh: '请先上传图片',
+    en: 'Please upload an image first',
+  },
+  'detection.errors.modelStillLoading': {
+    zh: '模型正在加载中，请稍候再试',
+    en: 'Model is still loading, please try again later',
   },
 
   // Classification labels
