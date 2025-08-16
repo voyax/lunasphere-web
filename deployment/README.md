@@ -6,13 +6,12 @@ This directory contains all deployment-related files for the Head Start Web appl
 
 ### 🐳 Docker Configuration
 
-- **`docker-compose.yml`** - Complete production configuration (with environment variables)
-- **`docker-compose.simple.yml`** - Simplified configuration (no environment variables)
+- **`docker-compose.yml`** - Production deployment configuration
 
 ### 🔧 Build Scripts
 
-- **`build.sh`** - Docker image build script
-- **`push.sh`** - Docker image push script
+- **`build.sh`** - Standard Docker image build script (builds from source)
+- **`docker-build-local.sh`** - Local Docker build script (uses pre-built files)
 
 ### ⚙️ Environment Configuration
 
@@ -23,60 +22,27 @@ This directory contains all deployment-related files for the Head Start Web appl
 ### 1. Build Image
 
 ```bash
-# Build development version
+# Standard build (from source)
 ./build.sh
 
 # Build specific version
 ./build.sh v1.0.0
+
+# Local build (from pre-built files)
+./docker-build-local.sh
 ```
 
-### 2. Push Image
+### 2. Deploy Application
 
 ```bash
-# Push to Docker Hub
-./push.sh dev-abc1234
-```
-
-### 3. Deploy Application
-
-#### Option 1: Simple Deployment (Recommended)
-
-```bash
-# Start application only (web service)
-docker-compose -f docker-compose.simple.yml up head-start-web
-
-# Full deployment (web + proxy)
-docker-compose -f docker-compose.simple.yml up -d
-```
-
-#### Option 2: Environment Variable Configuration
-
-```bash
-# Copy environment template
-cp .env.production .env.local
-
-# Edit configuration
-vim .env.local
-
-# Start services
+# Start application
 docker-compose up -d
+
+# View logs
+docker-compose logs -f
 ```
 
-## 🌍 Environment Configuration
 
-### Development Environment
-
-```bash
-# Start application only
-docker-compose --profile dev up -d
-```
-
-### Production Environment
-
-```bash
-# Start application + reverse proxy
-docker-compose --profile prod up -d
-```
 
 ## 🔧 Common Commands
 
@@ -85,50 +51,41 @@ docker-compose --profile prod up -d
 docker-compose ps
 
 # View logs
-docker-compose logs -f head-start-web
+docker-compose logs -f
 
 # Stop services
 docker-compose down
 
 # Restart services
-docker-compose restart head-start-web
+docker-compose restart
 
 # Update images
-docker-compose pull
-docker-compose up -d
+docker-compose pull && docker-compose up -d
 ```
-
-## 📊 Resource Configuration
-
-- **Memory Limit**: 1GB
-- **CPU Limit**: 1 core
-- **Minimum Resources**: 512MB memory, 0.5 core
-- **Health Check**: 30-second interval
 
 ## 🆘 Troubleshooting
 
 ### Common Issues
 
-1. **Image Pull Failed**
+1. **Port Conflict (Port 3000 already in use)**
    ```bash
-   docker login
-   docker pull voyax/head-start-web:latest
-   ```
-
-2. **Port Conflict**
-   ```bash
-   # Check port usage
+   # Check what's using port 3000
    lsof -i :3000
    
-   # Modify port mapping
-   # Edit ports configuration in docker-compose.yml
+   # Stop conflicting service or modify docker-compose.yml
    ```
 
-3. **Health Check Failed**
+2. **Application Not Starting**
    ```bash
-   # Check application logs
-   docker-compose logs head-start-web
+   # Check logs for errors
+   docker-compose logs
    
-   # Manual health check test
-   docker exec head-start-web-prod node healthcheck.js
+   # Restart services
+   docker-compose down && docker-compose up -d
+   ```
+
+3. **Image Not Found**
+   ```bash
+   # Build image locally first
+   ./build.sh
    ```

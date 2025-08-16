@@ -1,0 +1,43 @@
+# Dockerfile for pre-built application
+# This Dockerfile copies already built files from local machine
+# Usage: 
+#   1. Run 'npm run build' locally first
+#   2. Then build Docker image: docker build -f Dockerfile.local -t app .
+
+FROM node:18-alpine
+WORKDIR /app
+
+ENV NODE_ENV production
+ENV NEXT_TELEMETRY_DISABLED 1
+
+# Install only runtime dependencies
+RUN apk add --no-cache libc6-compat && \
+    rm -rf /var/cache/apk/*
+
+# Create nextjs user for security
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
+
+# Copy pre-built application files directly
+COPY --chown=nextjs:nodejs public ./public
+COPY --chown=nextjs:nodejs .next/standalone ./
+COPY --chown=nextjs:nodejs .next/static ./.next/static
+
+# Copy health check script
+COPY --chown=nextjs:nodejs healthcheck.js ./
+
+# Switch to non-root user
+USER nextjs
+
+# Expose port
+EXPOSE 3000
+
+ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD node healthcheck.js
+
+# Start the application
+CMD ["node", "server.js"]
