@@ -2,7 +2,7 @@
 
 import type { ImageUploadData, AnalysisResult } from '../types'
 
-import { useState, useRef, memo, useMemo, useCallback } from 'react'
+import { useState, useRef, memo, useMemo, useCallback, useEffect } from 'react'
 import { Button } from '@heroui/button'
 import { Tooltip } from '@heroui/tooltip'
 import { Upload, Camera, CheckCircle } from 'lucide-react'
@@ -305,6 +305,19 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
 
   // Ref for file input
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Cleanup URL objects to prevent memory leaks
+  useEffect(() => {
+    // Store the current URL for cleanup
+    const currentUrl = topImage?.url
+    
+    return () => {
+      // Cleanup URL object when component unmounts or topImage changes
+      if (currentUrl) {
+        URL.revokeObjectURL(currentUrl)
+      }
+    }
+  }, [topImage?.url])
 
   // Component for error display
   const ErrorDisplay = () => {
@@ -811,7 +824,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                       variant='bordered'
                       onClick={() => {
                         if (modelState === ModelState.LOADED) {
-                          document.getElementById('top-upload')?.click()
+                          fileInputRef.current?.click()
                         }
                       }}
                     >
