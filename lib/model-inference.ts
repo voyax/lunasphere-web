@@ -862,3 +862,20 @@ export async function initializeModel(
 
   return model
 }
+
+/**
+ * Dispose the singleton model instance and release resources
+ */
+export function disposeModelInstance(): void {
+  if (modelInstance) {
+    modelInstance.dispose()
+    modelInstance = null
+  }
+}
+
+/**
+ * Check if model instance exists
+ */
+export function hasModelInstance(): boolean {
+  return modelInstance !== null
+}

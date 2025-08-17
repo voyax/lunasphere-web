@@ -8,6 +8,7 @@ import TopViewAnalysis from './components/TopViewAnalysis'
 import ProfileViewComparison from './components/ProfileViewComparison'
 
 import { useLocale } from '@/contexts/LocaleContext'
+import { disposeModelInstance } from '@/lib/model-inference'
 
 export default function DetectionPage() {
   const { t } = useLocale()
@@ -28,6 +29,14 @@ export default function DetectionPage() {
       return () => clearTimeout(timer)
     }
   }, [modelState])
+
+  // Cleanup model instance when page unmounts to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      // Dispose model instance when detection page unmounts
+      disposeModelInstance()
+    }
+  }, [])
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-950 dark:via-gray-900 dark:to-blue-950/20'>
