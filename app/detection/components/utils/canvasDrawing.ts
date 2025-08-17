@@ -255,35 +255,34 @@ function drawDiagonalLines(
 /**
  * Main function to draw all measurement annotations on canvas
  */
+// Cache for canvas contexts to avoid repeated getContext calls
+/**
+ * Draw measurement annotations on canvas with provided context
+ */
 export function drawMeasurementAnnotations(
-  canvas: HTMLCanvasElement,
-  mask: ImageData,
+  ctx: CanvasRenderingContext2D,
   measurements: Measurements,
   customConfig?: Partial<DrawingConfig>
 ): void {
   const config = { ...DEFAULT_CONFIG, ...customConfig }
-  const ctx = canvas.getContext('2d')
 
-  if (!ctx) {
-    throw new Error('Failed to get canvas 2D context')
-  }
-
-  // Set canvas dimensions
-  canvas.width = mask.width
-  canvas.height = mask.height
-
-  // Clear canvas
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-  // Set drawing style
+  // Set drawing style once
   ctx.lineWidth = config.lineWidth
   ctx.font = config.fontSize
   ctx.textAlign = 'center'
 
-  // Draw all measurement elements
-  drawBPDLine(ctx, measurements, config)
-  drawOFDLine(ctx, measurements, config)
-  drawDiagonalLines(ctx, measurements, config)
+  // Save context state before drawing
+  ctx.save()
+
+  try {
+    // Draw all measurement elements
+    drawBPDLine(ctx, measurements, config)
+    drawOFDLine(ctx, measurements, config)
+    drawDiagonalLines(ctx, measurements, config)
+  } finally {
+    // Always restore context state
+    ctx.restore()
+  }
 }
 
 /**
@@ -294,17 +293,29 @@ export function createDownloadableCanvas(
   measurements?: Measurements
 ): HTMLCanvasElement {
   const canvas = document.createElement('canvas')
-  const ctx = canvas.getContext('2d')!
+  const ctx = canvas.getContext('2d')
+
+  if (!ctx) {
+    throw new Error('Failed to create canvas context for download')
+  }
 
   canvas.width = mask.width
   canvas.height = mask.height
 
-  // Draw the mask
-  ctx.putImageData(mask, 0, 0)
+  // Save context state
+  ctx.save()
 
-  // Draw measurements if provided
-  if (measurements) {
-    drawMeasurementAnnotations(canvas, mask, measurements)
+  try {
+    // Draw the mask
+    ctx.putImageData(mask, 0, 0)
+
+    // Draw measurements if provided
+    if (measurements) {
+      drawMeasurementAnnotations(ctx, measurements)
+    }
+  } finally {
+    // Restore context state
+    ctx.restore()
   }
 
   return canvas

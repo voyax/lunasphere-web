@@ -206,6 +206,74 @@ interface ImageVisualizationProps {
 
 const ImageVisualization = memo(
   ({ analysisResult, t }: ImageVisualizationProps) => {
+    const maskCanvasRef = useRef<HTMLCanvasElement>(null)
+    const measurementCanvasRef = useRef<HTMLCanvasElement>(null)
+
+    // Memoize canvas drawing operations to prevent unnecessary redraws
+    const drawMaskCanvas = useCallback(() => {
+      const canvas = maskCanvasRef.current
+
+      if (!canvas || !analysisResult?.mask) return
+
+      const ctx = canvas.getContext('2d')
+
+      if (!ctx) return
+
+      // Only redraw if dimensions changed
+      if (
+        canvas.width !== analysisResult.mask.width ||
+        canvas.height !== analysisResult.mask.height
+      ) {
+        canvas.width = analysisResult.mask.width
+        canvas.height = analysisResult.mask.height
+      }
+
+      // Clear and draw mask
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.putImageData(analysisResult.mask, 0, 0)
+    }, [analysisResult?.mask])
+
+    const drawMeasurementCanvas = useCallback(() => {
+      const canvas = measurementCanvasRef.current
+
+      if (!canvas || !analysisResult?.mask || !analysisResult?.measurements)
+        return
+
+      const ctx = canvas.getContext('2d')
+
+      if (!ctx) return
+
+      // Only redraw if dimensions changed
+      if (
+        canvas.width !== analysisResult.mask.width ||
+        canvas.height !== analysisResult.mask.height
+      ) {
+        canvas.width = analysisResult.mask.width
+        canvas.height = analysisResult.mask.height
+      }
+
+      // Clear and draw measurements
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      drawMeasurementAnnotations(ctx, analysisResult.measurements)
+    }, [analysisResult?.mask, analysisResult?.measurements])
+
+    // Effect to draw canvases when data changes
+    useEffect(() => {
+      drawMaskCanvas()
+    }, [drawMaskCanvas])
+
+    useEffect(() => {
+      drawMeasurementCanvas()
+    }, [drawMeasurementCanvas])
+
+    // Cleanup canvas contexts on unmount
+    useEffect(() => {
+      return () => {
+        // Canvas contexts are automatically cleaned up when canvas elements are removed
+        // No explicit cleanup needed for 2D contexts
+      }
+    }, [])
+
     if (!analysisResult?.mask) {
       return (
         <div className='flex items-center justify-center h-full'>
@@ -229,37 +297,12 @@ const ImageVisualization = memo(
     return (
       <>
         {/* Base mask visualization */}
-        <canvas
-          ref={canvas => {
-            if (canvas && analysisResult.mask) {
-              canvas.width = analysisResult.mask.width
-              canvas.height = analysisResult.mask.height
-              const ctx = canvas.getContext('2d')!
-
-              ctx.putImageData(analysisResult.mask, 0, 0)
-            }
-          }}
-          className='w-full h-full object-contain'
-        />
+        <canvas ref={maskCanvasRef} className='w-full h-full object-contain' />
 
         {/* Measurement lines overlay */}
         {analysisResult.measurements && (
           <canvas
-            ref={canvas => {
-              if (
-                canvas &&
-                analysisResult.measurements &&
-                analysisResult.mask
-              ) {
-                canvas.width = analysisResult.mask.width
-                canvas.height = analysisResult.mask.height
-                drawMeasurementAnnotations(
-                  canvas,
-                  analysisResult.mask,
-                  analysisResult.measurements
-                )
-              }
-            }}
+            ref={measurementCanvasRef}
             className='absolute inset-0 w-full h-full object-contain pointer-events-none'
           />
         )}
@@ -310,7 +353,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
   useEffect(() => {
     // Store the current URL for cleanup
     const currentUrl = topImage?.url
-    
+
     return () => {
       // Cleanup URL object when component unmounts or topImage changes
       if (currentUrl) {
