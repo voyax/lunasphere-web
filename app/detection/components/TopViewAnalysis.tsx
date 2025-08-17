@@ -2,7 +2,7 @@
 
 import type { ImageUploadData, AnalysisResult } from '../types'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, memo, useMemo, useCallback } from 'react'
 import { Button } from '@heroui/button'
 import { Tooltip } from '@heroui/tooltip'
 import { Upload, Camera, CheckCircle } from 'lucide-react'
@@ -28,7 +28,266 @@ interface TopViewAnalysisProps {
   modelState: ModelState
 }
 
-export default function TopViewAnalysis({
+// Component for upload state indicator
+interface UploadStateIndicatorProps {
+  modelState: ModelState
+  t: (key: string) => string
+}
+
+const UploadStateIndicator = memo(
+  ({ modelState, t }: UploadStateIndicatorProps) => {
+    switch (modelState) {
+      case ModelState.LOADING:
+        return (
+          <>
+            <div className='w-12 h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-blue-50/80 dark:bg-blue-950/80 border-blue-200/50 dark:border-blue-700/50'>
+              <div className='w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
+            </div>
+            <div className='text-center'>
+              <p className='text-base font-medium drop-shadow-sm text-blue-600 dark:text-blue-400'>
+                {t('detection.model.loading')}
+              </p>
+            </div>
+          </>
+        )
+
+      case ModelState.NOT_LOADED:
+      case ModelState.ERROR:
+        return (
+          <>
+            <div className='w-12 h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/50 dark:border-gray-600/50'>
+              <Upload className='w-5 h-5 text-gray-400 dark:text-gray-500' />
+            </div>
+            <div className='text-center'>
+              <p className='text-base font-medium drop-shadow-sm text-gray-500 dark:text-gray-500'>
+                {t('detection.model.notLoadedMessage')}
+              </p>
+            </div>
+          </>
+        )
+
+      case ModelState.LOADED:
+      default:
+        return (
+          <>
+            <div className='w-12 h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-white/80 dark:bg-gray-700/80 border-white/50 dark:border-gray-600/50 hover:scale-102'>
+              <Upload className='w-5 h-5 text-gray-600 dark:text-gray-400' />
+            </div>
+            <div className='text-center'>
+              <p className='text-base font-medium drop-shadow-sm text-gray-700 dark:text-gray-300'>
+                {t('detection.topView.upload.clickOrDrag')}
+              </p>
+            </div>
+          </>
+        )
+    }
+  }
+)
+
+UploadStateIndicator.displayName = 'UploadStateIndicator'
+
+// Component for status information
+interface StatusInfoProps {
+  modelState: ModelState
+  t: (key: string) => string
+}
+
+const StatusInfo = memo(({ modelState, t }: StatusInfoProps) => {
+  switch (modelState) {
+    case ModelState.LOADING:
+      return (
+        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 border shadow-sm bg-blue-50/80 dark:bg-blue-950/80 border-blue-200/60 dark:border-blue-700/60'>
+          <div className='w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse' />
+          <span className='text-xs font-normal text-blue-600 dark:text-blue-400'>
+            {t('detection.model.loadingHint')}
+          </span>
+        </div>
+      )
+
+    case ModelState.NOT_LOADED:
+    case ModelState.ERROR:
+      return (
+        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 border shadow-sm bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/60 dark:border-gray-600/60'>
+          <div className='w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500' />
+          <span className='text-xs font-normal text-gray-500 dark:text-gray-500'>
+            {t('detection.model.notLoadedHint')}
+          </span>
+        </div>
+      )
+
+    case ModelState.LOADED:
+    default:
+      return (
+        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 border shadow-sm bg-white/80 dark:bg-gray-800/80 border-white/60 dark:border-gray-600/60'>
+          <div className='w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500' />
+          <span className='text-xs font-normal text-gray-600 dark:text-gray-400'>
+            {t('detection.topView.upload.supportFormat')}
+          </span>
+        </div>
+      )
+  }
+})
+
+StatusInfo.displayName = 'StatusInfo'
+
+// Component for analysis state display
+interface AnalysisStateDisplayProps {
+  analysisState: AnalysisState
+  t: (key: string) => string
+}
+
+const AnalysisStateDisplay = memo(
+  ({ analysisState, t }: AnalysisStateDisplayProps) => {
+    switch (analysisState) {
+      case AnalysisState.WAITING_FOR_IMAGE:
+        return (
+          <>
+            <div className='w-20 h-20 mx-auto bg-white dark:bg-gray-700 rounded-2xl flex items-center justify-center shadow-lg'>
+              <Camera className='w-10 h-10 text-gray-400' />
+            </div>
+            <div>
+              <p className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
+                {t('detection.topView.analysis.waitingUpload')}
+              </p>
+              <p className='text-gray-500 dark:text-gray-400'>
+                {t('detection.topView.analysis.waitingUploadDesc')}
+              </p>
+            </div>
+          </>
+        )
+
+      case AnalysisState.ANALYZING:
+        return (
+          <>
+            <div className='w-12 h-12 mx-auto bg-blue-50/80 dark:bg-blue-950/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/50'>
+              <div className='w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
+            </div>
+            <div>
+              <p className='text-lg font-semibold text-blue-600 dark:text-blue-400 mb-2'>
+                {t('detection.topView.analysis.analyzing')}
+              </p>
+              <p className='text-gray-500 dark:text-gray-400'>
+                {t('detection.topView.analysis.analyzingDesc')}
+              </p>
+            </div>
+          </>
+        )
+
+      case AnalysisState.READY_TO_ANALYZE:
+        return (
+          <>
+            <div className='w-20 h-20 mx-auto bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center shadow-lg border border-green-200 dark:border-green-700'>
+              <CheckCircle className='w-10 h-10 text-green-600 dark:text-green-400' />
+            </div>
+            <div>
+              <p className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
+                {t('detection.topView.analysis.readyToAnalyze')}
+              </p>
+              <p className='text-gray-500 dark:text-gray-400'>
+                {t('detection.topView.analysis.readyToAnalyzeDesc')}
+              </p>
+            </div>
+          </>
+        )
+
+      default:
+        return null
+    }
+  }
+)
+
+AnalysisStateDisplay.displayName = 'AnalysisStateDisplay'
+
+// Component for image visualization
+interface ImageVisualizationProps {
+  analysisResult: AnalysisResult | null
+  t: (key: string) => string
+}
+
+const ImageVisualization = memo(
+  ({ analysisResult, t }: ImageVisualizationProps) => {
+    if (!analysisResult?.mask) {
+      return (
+        <div className='flex items-center justify-center h-full'>
+          <div className='text-center space-y-4'>
+            <div className='w-16 h-16 mx-auto bg-primary rounded-2xl flex items-center justify-center shadow-lg'>
+              <CheckCircle className='w-8 h-8 text-white' />
+            </div>
+            <div>
+              <p className='text-lg font-semibold text-gray-900 dark:text-white'>
+                {t('detection.topView.analysis.completed')}
+              </p>
+              <p className='text-sm text-gray-600 dark:text-gray-400'>
+                {t('detection.topView.analysis.completedDesc')}
+              </p>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <>
+        {/* Base mask visualization */}
+        <canvas
+          ref={canvas => {
+            if (canvas && analysisResult.mask) {
+              canvas.width = analysisResult.mask.width
+              canvas.height = analysisResult.mask.height
+              const ctx = canvas.getContext('2d')!
+
+              ctx.putImageData(analysisResult.mask, 0, 0)
+            }
+          }}
+          className='w-full h-full object-contain'
+        />
+
+        {/* Measurement lines overlay */}
+        {analysisResult.measurements && (
+          <canvas
+            ref={canvas => {
+              if (
+                canvas &&
+                analysisResult.measurements &&
+                analysisResult.mask
+              ) {
+                canvas.width = analysisResult.mask.width
+                canvas.height = analysisResult.mask.height
+                drawMeasurementAnnotations(
+                  canvas,
+                  analysisResult.mask,
+                  analysisResult.measurements
+                )
+              }
+            }}
+            className='absolute inset-0 w-full h-full object-contain pointer-events-none'
+          />
+        )}
+
+        {/* Download button overlay */}
+        <button
+          className='absolute top-3 right-3 px-3 py-1 text-xs bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 rounded-full hover:bg-white dark:hover:bg-gray-800 transition-colors shadow-md backdrop-blur-sm'
+          onClick={() => {
+            if (analysisResult?.mask) {
+              const canvas = createDownloadableCanvas(
+                analysisResult.mask,
+                analysisResult.measurements
+              )
+
+              downloadCanvasAsPNG(canvas, 'head-analysis-result.png')
+            }
+          }}
+        >
+          {t('detection.topView.buttons.downloadResult')}
+        </button>
+      </>
+    )
+  }
+)
+
+ImageVisualization.displayName = 'ImageVisualization'
+
+const TopViewAnalysis = memo(function TopViewAnalysis({
   modelPath,
   confidenceThreshold,
   modelState,
@@ -46,31 +305,130 @@ export default function TopViewAnalysis({
 
   // Ref for file input
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
 
-    if (file) {
-      const url = URL.createObjectURL(file)
-      const imageData = {
-        file,
-        url,
-        rotation: 0,
-        scale: 1,
+  // Component for error display
+  const ErrorDisplay = () => {
+    if (analysisState !== AnalysisState.ERROR || !analysisResult?.error) {
+      return null
+    }
+
+    return (
+      <div className='bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4'>
+        <div className='flex items-start space-x-3'>
+          <div className='flex-shrink-0'>
+            <div className='w-8 h-8 bg-red-100 dark:bg-red-900/50 rounded-full flex items-center justify-center'>
+              <svg
+                className='w-4 h-4 text-red-600 dark:text-red-400'
+                fill='currentColor'
+                viewBox='0 0 20 20'
+              >
+                <path
+                  clipRule='evenodd'
+                  d='M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z'
+                  fillRule='evenodd'
+                />
+              </svg>
+            </div>
+          </div>
+          <div className='flex-1'>
+            <h3 className='text-sm font-medium text-red-800 dark:text-red-200'>
+              {t('detection.topView.analysis.error')}
+            </h3>
+            <p className='mt-1 text-sm text-red-700 dark:text-red-300'>
+              {analysisResult.error}
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Component for analysis results cards
+  const AnalysisResultsCards = useMemo(() => {
+    if (!analysisResult) {
+      return null
+    }
+
+    const ciMeasurements = analysisResult.measurements
+      ? {
+          bpd: analysisResult.measurements.bpd,
+          ofd: analysisResult.measurements.ofd,
+        }
+      : undefined
+
+    const cvaiMeasurements = analysisResult.measurements
+      ? {
+          diagonal1: Math.sqrt(
+            Math.pow(
+              analysisResult.measurements.diagonal1.end.x -
+                analysisResult.measurements.diagonal1.start.x,
+              2
+            ) +
+              Math.pow(
+                analysisResult.measurements.diagonal1.end.y -
+                  analysisResult.measurements.diagonal1.start.y,
+                2
+              )
+          ),
+          diagonal2: Math.sqrt(
+            Math.pow(
+              analysisResult.measurements.diagonal2.end.x -
+                analysisResult.measurements.diagonal2.start.x,
+              2
+            ) +
+              Math.pow(
+                analysisResult.measurements.diagonal2.end.y -
+                  analysisResult.measurements.diagonal2.start.y,
+                2
+              )
+          ),
+        }
+      : undefined
+
+    return (
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4'>
+        {/* CI Index with Classification */}
+        <CICard measurements={ciMeasurements} value={analysisResult.ci || 0} />
+
+        {/* CVAI Index with Classification */}
+        <CVAICard
+          measurements={cvaiMeasurements}
+          value={analysisResult.cvai || 0}
+        />
+      </div>
+    )
+  }, [analysisResult])
+  const handleFileUpload = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0]
+
+      if (file) {
+        const url = URL.createObjectURL(file)
+        const imageData = {
+          file,
+          url,
+          rotation: 0,
+          scale: 1,
+        }
+
+        setTopImage(imageData)
+        setAnalysisState(AnalysisState.READY_TO_ANALYZE)
+        setAnalysisResult(null) // Clear any previous results
       }
+    },
+    []
+  )
 
-      setTopImage(imageData)
-      setAnalysisState(AnalysisState.READY_TO_ANALYZE)
-      setAnalysisResult(null) // Clear any previous results
-    }
-  }
+  const setImageRotation = useCallback(
+    (rotation: number) => {
+      if (topImage) {
+        setTopImage({ ...topImage, rotation })
+      }
+    },
+    [topImage]
+  )
 
-  const setImageRotation = (rotation: number) => {
-    if (topImage) {
-      setTopImage({ ...topImage, rotation })
-    }
-  }
-
-  const analyzeTopView = async () => {
+  const analyzeTopView = useCallback(async () => {
     if (!topImage) {
       setAnalysisResult({ error: t('detection.errors.noImageUploaded') })
 
@@ -78,10 +436,18 @@ export default function TopViewAnalysis({
     }
 
     if (modelState !== ModelState.LOADED) {
-      const errorMessage =
-        modelState === ModelState.LOADING
-          ? t('detection.errors.modelStillLoading')
-          : t('detection.errors.modelNotLoaded')
+      let errorMessage: string
+
+      switch (modelState) {
+        case ModelState.LOADING:
+          errorMessage = t('detection.errors.modelStillLoading')
+          break
+        case ModelState.NOT_LOADED:
+        case ModelState.ERROR:
+        default:
+          errorMessage = t('detection.errors.modelNotLoaded')
+          break
+      }
 
       setAnalysisResult({ error: errorMessage })
 
@@ -137,7 +503,7 @@ export default function TopViewAnalysis({
     } finally {
       // Analysis state is already set in success/error cases above
     }
-  }
+  }, [topImage, modelState, modelPath, confidenceThreshold, t])
 
   return (
     <div className='max-w-7xl mx-auto space-y-6'>
@@ -323,80 +689,10 @@ export default function TopViewAnalysis({
                 <div className='text-center space-y-4 p-6'>
                   {/* Centered upload prompt */}
                   <div className='flex flex-col items-center justify-center gap-3'>
-                    <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 ${
-                        modelState === ModelState.LOADING
-                          ? 'bg-blue-50/80 dark:bg-blue-950/80 border-blue-200/50 dark:border-blue-700/50'
-                          : modelState !== ModelState.LOADED
-                            ? 'bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/50 dark:border-gray-600/50'
-                            : 'bg-white/80 dark:bg-gray-700/80 border-white/50 dark:border-gray-600/50 hover:scale-102'
-                      }`}
-                    >
-                      {modelState === ModelState.LOADING ? (
-                        <div className='w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
-                      ) : (
-                        <Upload
-                          className={`w-5 h-5 ${
-                            modelState !== ModelState.LOADED
-                              ? 'text-gray-400 dark:text-gray-500'
-                              : 'text-gray-600 dark:text-gray-400'
-                          }`}
-                        />
-                      )}
-                    </div>
-                    <div className='text-center'>
-                      <p
-                        className={`text-base font-medium drop-shadow-sm ${
-                          modelState === ModelState.LOADING
-                            ? 'text-blue-600 dark:text-blue-400'
-                            : modelState !== ModelState.LOADED
-                              ? 'text-gray-500 dark:text-gray-500'
-                              : 'text-gray-700 dark:text-gray-300'
-                        }`}
-                      >
-                        {modelState === ModelState.LOADING
-                          ? t('detection.model.loading')
-                          : modelState !== ModelState.LOADED
-                            ? t('detection.model.notLoadedMessage')
-                            : t('detection.topView.upload.clickOrDrag')}
-                      </p>
-                    </div>
+                    <UploadStateIndicator modelState={modelState} t={t} />
                   </div>
                   {/* Status info with refined style */}
-                  <div
-                    className={`inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 border shadow-sm ${
-                      modelState === ModelState.LOADING
-                        ? 'bg-blue-50/80 dark:bg-blue-950/80 border-blue-200/60 dark:border-blue-700/60'
-                        : modelState !== ModelState.LOADED
-                          ? 'bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/60 dark:border-gray-600/60'
-                          : 'bg-white/80 dark:bg-gray-800/80 border-white/60 dark:border-gray-600/60'
-                    }`}
-                  >
-                    <div
-                      className={`w-1.5 h-1.5 rounded-full ${
-                        modelState === ModelState.LOADING
-                          ? 'bg-blue-500 animate-pulse'
-                          : modelState !== ModelState.LOADED
-                            ? 'bg-gray-400 dark:bg-gray-500'
-                            : 'bg-gray-400 dark:bg-gray-500'
-                      }`}
-                    />
-                    <span
-                      className={`text-xs font-normal ${
-                        modelState === ModelState.LOADING
-                          ? 'text-blue-600 dark:text-blue-400'
-                          : modelState !== ModelState.LOADED
-                            ? 'text-gray-500 dark:text-gray-500'
-                            : 'text-gray-600 dark:text-gray-400'
-                      }`}
-                    >
-                      {modelState === ModelState.LOADING
-                        ? t('detection.model.loadingHint')
-                        : modelState !== ModelState.LOADED
-                          ? t('detection.model.notLoadedHint')
-                          : t('detection.topView.upload.supportFormat')}
-                    </span>
-                  </div>
+                  <StatusInfo modelState={modelState} t={t} />
                 </div>
               </div>
             </div>
@@ -552,49 +848,7 @@ export default function TopViewAnalysis({
           {analysisState !== AnalysisState.COMPLETED ? (
             <div className='aspect-square flex items-center justify-center bg-gray-50/50 dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-gray-700'>
               <div className='text-center space-y-6'>
-                {analysisState === AnalysisState.WAITING_FOR_IMAGE ? (
-                  <>
-                    <div className='w-20 h-20 mx-auto bg-white dark:bg-gray-700 rounded-2xl flex items-center justify-center shadow-lg'>
-                      <Camera className='w-10 h-10 text-gray-400' />
-                    </div>
-                    <div>
-                      <p className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
-                        {t('detection.topView.analysis.waitingUpload')}
-                      </p>
-                      <p className='text-gray-500 dark:text-gray-400'>
-                        {t('detection.topView.analysis.waitingUploadDesc')}
-                      </p>
-                    </div>
-                  </>
-                ) : analysisState === AnalysisState.ANALYZING ? (
-                  <>
-                    <div className='w-12 h-12 mx-auto bg-blue-50/80 dark:bg-blue-950/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/50'>
-                      <div className='w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
-                    </div>
-                    <div>
-                      <p className='text-lg font-semibold text-blue-600 dark:text-blue-400 mb-2'>
-                        {t('detection.topView.analysis.analyzing')}
-                      </p>
-                      <p className='text-gray-500 dark:text-gray-400'>
-                        {t('detection.topView.analysis.analyzingDesc')}
-                      </p>
-                    </div>
-                  </>
-                ) : analysisState === AnalysisState.READY_TO_ANALYZE ? (
-                  <>
-                    <div className='w-20 h-20 mx-auto bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center shadow-lg border border-green-200 dark:border-green-700'>
-                      <CheckCircle className='w-10 h-10 text-green-600 dark:text-green-400' />
-                    </div>
-                    <div>
-                      <p className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
-                        {t('detection.topView.analysis.readyToAnalyze')}
-                      </p>
-                      <p className='text-gray-500 dark:text-gray-400'>
-                        {t('detection.topView.analysis.readyToAnalyzeDesc')}
-                      </p>
-                    </div>
-                  </>
-                ) : null}
+                <AnalysisStateDisplay analysisState={analysisState} t={t} />
               </div>
             </div>
           ) : (
@@ -602,80 +856,7 @@ export default function TopViewAnalysis({
               <div className='space-y-8'>
                 {/* Visualization */}
                 <div className='aspect-square bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl border border-primary/20 dark:border-primary/30 overflow-hidden relative'>
-                  {analysisResult?.mask ? (
-                    <>
-                      {/* Base mask visualization */}
-                      <canvas
-                        ref={canvas => {
-                          if (canvas && analysisResult.mask) {
-                            canvas.width = analysisResult.mask.width
-                            canvas.height = analysisResult.mask.height
-                            const ctx = canvas.getContext('2d')!
-
-                            ctx.putImageData(analysisResult.mask, 0, 0)
-                          }
-                        }}
-                        className='w-full h-full object-contain'
-                      />
-
-                      {/* Measurement lines overlay */}
-                      {analysisResult.measurements && (
-                        <canvas
-                          ref={canvas => {
-                            if (
-                              canvas &&
-                              analysisResult.measurements &&
-                              analysisResult.mask
-                            ) {
-                              canvas.width = analysisResult.mask.width
-                              canvas.height = analysisResult.mask.height
-                              drawMeasurementAnnotations(
-                                canvas,
-                                analysisResult.mask,
-                                analysisResult.measurements
-                              )
-                            }
-                          }}
-                          className='absolute inset-0 w-full h-full object-contain pointer-events-none'
-                        />
-                      )}
-                      {/* Download button overlay */}
-                      <button
-                        className='absolute top-3 right-3 px-3 py-1 text-xs bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 rounded-full hover:bg-white dark:hover:bg-gray-800 transition-colors shadow-md backdrop-blur-sm'
-                        onClick={() => {
-                          if (analysisResult?.mask) {
-                            const canvas = createDownloadableCanvas(
-                              analysisResult.mask,
-                              analysisResult.measurements
-                            )
-
-                            downloadCanvasAsPNG(
-                              canvas,
-                              'head-analysis-result.png'
-                            )
-                          }
-                        }}
-                      >
-                        {t('detection.topView.buttons.downloadResult')}
-                      </button>
-                    </>
-                  ) : (
-                    <div className='flex items-center justify-center h-full'>
-                      <div className='text-center space-y-4'>
-                        <div className='w-16 h-16 mx-auto bg-primary rounded-2xl flex items-center justify-center shadow-lg'>
-                          <CheckCircle className='w-8 h-8 text-white' />
-                        </div>
-                        <div>
-                          <p className='text-lg font-semibold text-gray-900 dark:text-white'>
-                            {t('detection.topView.analysis.completed')}
-                          </p>
-                          <p className='text-sm text-gray-600 dark:text-gray-400'>
-                            {t('detection.topView.analysis.completedDesc')}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  <ImageVisualization analysisResult={analysisResult} t={t} />
                 </div>
 
                 {/* Legend - only show measurement annotations */}
@@ -718,6 +899,9 @@ export default function TopViewAnalysis({
                     </div>
                   </div>
                 )}
+
+                {/* Error Display */}
+                <ErrorDisplay />
               </div>
             )
           )}
@@ -752,58 +936,12 @@ export default function TopViewAnalysis({
               </div>
             </div>
           ) : (
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4'>
-              {/* CI Index with Classification */}
-              <CICard
-                measurements={
-                  analysisResult.measurements
-                    ? {
-                        bpd: analysisResult.measurements.bpd,
-                        ofd: analysisResult.measurements.ofd,
-                      }
-                    : undefined
-                }
-                value={analysisResult.ci || 0}
-              />
-
-              {/* CVAI Index with Classification */}
-              <CVAICard
-                measurements={
-                  analysisResult.measurements
-                    ? {
-                        diagonal1: Math.sqrt(
-                          Math.pow(
-                            analysisResult.measurements.diagonal1.end.x -
-                              analysisResult.measurements.diagonal1.start.x,
-                            2
-                          ) +
-                            Math.pow(
-                              analysisResult.measurements.diagonal1.end.y -
-                                analysisResult.measurements.diagonal1.start.y,
-                              2
-                            )
-                        ),
-                        diagonal2: Math.sqrt(
-                          Math.pow(
-                            analysisResult.measurements.diagonal2.end.x -
-                              analysisResult.measurements.diagonal2.start.x,
-                            2
-                          ) +
-                            Math.pow(
-                              analysisResult.measurements.diagonal2.end.y -
-                                analysisResult.measurements.diagonal2.start.y,
-                              2
-                            )
-                        ),
-                      }
-                    : undefined
-                }
-                value={analysisResult.cvai || 0}
-              />
-            </div>
+            AnalysisResultsCards
           )}
         </div>
       )}
     </div>
   )
-}
+})
+
+export default TopViewAnalysis
