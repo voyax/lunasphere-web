@@ -30,6 +30,10 @@ export function Navbar() {
       href: '/detection',
     },
     {
+      label: t('nav.profileMatch'),
+      href: '/profile-match',
+    },
+    {
       label: t('nav.faq'),
       href: '/faq',
     },

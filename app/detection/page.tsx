@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react'
 import { ModelState } from './types'
 import ModelManager from './components/ModelManager'
 import TopViewAnalysis from './components/TopViewAnalysis'
-import ProfileViewComparison from './components/ProfileViewComparison'
 
 import { useLocale } from '@/contexts/LocaleContext'
 import { disposeModelInstance } from '@/lib/model-inference'
@@ -129,9 +128,6 @@ export default function DetectionPage() {
               modelPath={modelPath}
               modelState={modelState}
             />
-
-            {/* Side View Comparison Section */}
-            <ProfileViewComparison />
           </div>
         </div>
       </div>

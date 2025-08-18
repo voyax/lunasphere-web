@@ -45,6 +45,10 @@ export const translations: TranslationKeys = {
     zh: '头型检测',
     en: 'Head Shape Detection',
   },
+  'nav.profileMatch': {
+    zh: '轮廓匹配',
+    en: 'Profile Match',
+  },
   'nav.faq': {
     zh: '常见问题',
     en: 'FAQ',
