@@ -812,8 +812,8 @@ export const translations: TranslationKeys = {
     en: 'If hair is thick, wet it to stick to the head, or take photos after bathing',
   },
   'detection.topView.shootingTips.safety': {
-    zh: '⚠️ 所有拍摄请确保宝宝安全、健康！',
-    en: '⚠️ Ensure baby safety and health during all photography!',
+    zh: '所有拍摄请确保宝宝安全、健康！',
+    en: 'Ensure baby safety and health during all photography!',
   },
   'detection.topView.annotations.forehead': {
     zh: '前额',
@@ -961,6 +961,10 @@ export const translations: TranslationKeys = {
     zh: '上传宝宝左右侧面照片，与标准轮廓进行精确对比',
     en: 'Upload left and right profile photos of your baby for precise comparison with standard head contours',
   },
+  'detection.profileView.pageDescription': {
+    zh: '通过专业的侧面轮廓对比分析，帮助您更好地了解宝宝的头型发育情况',
+    en: 'Professional profile contour comparison analysis to help you better understand your baby\'s head shape development',
+  },
   'detection.profileView.shootingTips.title': {
     zh: '拍摄要点',
     en: 'Photo guidelines',
@@ -990,8 +994,8 @@ export const translations: TranslationKeys = {
     en: 'Ensure head contour is clearly visible',
   },
   'detection.profileView.shootingTips.safety': {
-    zh: '⚠️ 所有拍摄请确保宝宝安全、健康！',
-    en: '⚠️ Ensure baby safety and health during all photography!',
+    zh: '所有拍摄请确保宝宝安全、健康！',
+    en: 'Ensure baby safety and health during all photography!',
   },
   'detection.profileView.shootingTips': {
     zh: '拍摄要点',

@@ -325,82 +325,67 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
   )
 
   return (
-    <div className='w-full max-w-6xl mx-auto p-6'>
+    <div className='w-full max-w-6xl mx-auto'>
       <div className='space-y-8'>
-        <div className='text-center mb-12'>
-          <h2 className='text-3xl md:text-4xl font-light mb-4 tracking-tight leading-tight'>
-            <span className='font-medium text-gray-900 dark:text-white'>
-              {t('detection.profileView.title')}
-            </span>
-          </h2>
-          <p className='text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed font-light mb-6'>
-            {t('detection.profileView.description')}
-            <Tooltip
-              content={
-                <div className='p-4 max-w-xs'>
-                  <div className='space-y-2'>
-                    <div className='flex items-start gap-2'>
-                      <span className='text-blue-500 font-bold text-xs mt-0.5'>
-                        1
-                      </span>
-                      <div>
-                        <p className='font-medium text-xs'>
-                          {t('detection.profileView.shootingTips.tip1')}
-                        </p>
-                        <p className='text-xs text-gray-600 dark:text-gray-400'>
-                          {t('detection.profileView.shootingTips.tip1Desc')}
-                        </p>
-                      </div>
-                    </div>
-                    <div className='flex items-start gap-2'>
-                      <span className='text-green-500 font-bold text-xs mt-0.5'>
-                        2
-                      </span>
-                      <div>
-                        <p className='font-medium text-xs'>
-                          {t('detection.profileView.shootingTips.tip2')}
-                        </p>
-                        <p className='text-xs text-gray-600 dark:text-gray-400'>
-                          {t('detection.profileView.shootingTips.tip2Desc')}
-                        </p>
-                      </div>
-                    </div>
-                    <div className='flex items-start gap-2'>
-                      <span className='text-yellow-500 font-bold text-xs mt-0.5'>
-                        3
-                      </span>
-                      <div>
-                        <p className='font-medium text-xs'>
-                          {t('detection.profileView.shootingTips.tip3')}
-                        </p>
-                        <p className='text-xs text-gray-600 dark:text-gray-400'>
-                          {t('detection.profileView.shootingTips.tip3Desc')}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <p className='text-xs text-red-600 dark:text-red-400 font-medium mt-3'>
+        {/* Shooting Tips Banner */}
+        <div className='bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 rounded-xl p-4 border border-blue-200/50 dark:border-blue-700/50'>
+          <div className='flex items-start gap-3'>
+            <div className='w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-white text-sm flex-shrink-0'>
+              📸
+            </div>
+            <div className='flex-1 min-w-0'>
+              <div className='mb-3'>
+                <div className='flex items-center gap-4 mb-2'>
+                  <h3 className='font-semibold text-blue-900 dark:text-blue-100 text-base'>
+                    {t('detection.profileView.shootingTips.title')}
+                  </h3>
+                  <p className='text-xs text-red-600 dark:text-red-400 font-medium flex items-center gap-1'>
+                    {/* <span>⚠️</span> */}
                     {t('detection.profileView.shootingTips.safety')}
                   </p>
                 </div>
-              }
-              placement='bottom'
-            >
-              <span className='inline-flex items-center gap-1 px-2 py-1 bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 rounded-full text-xs font-medium cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors duration-200 border border-blue-200/50 dark:border-blue-700/50'>
-                {t('detection.profileView.shootingTips')}
-              </span>
-            </Tooltip>
-          </p>
+              </div>
+              <div className='grid grid-cols-1 lg:grid-cols-3 gap-3 text-xs'>
+                <div className='bg-white/60 dark:bg-gray-800/60 rounded-lg p-3 border border-blue-200/30 dark:border-blue-700/30'>
+                  <p className='font-medium text-green-800 dark:text-green-200 mb-1'>
+                    {t('detection.profileView.shootingTips.tip1')}
+                  </p>
+                  <p className='text-green-700 dark:text-green-300 leading-relaxed'>
+                    {t('detection.profileView.shootingTips.tip1Desc')}
+                  </p>
+                </div>
+                <div className='bg-white/60 dark:bg-gray-800/60 rounded-lg p-3 border border-green-200/30 dark:border-green-700/30'>
+                  <p className='font-medium text-green-800 dark:text-green-200 mb-1'>
+                    {t('detection.profileView.shootingTips.tip2')}
+                  </p>
+                  <p className='text-green-700 dark:text-green-300 leading-relaxed'>
+                    {t('detection.profileView.shootingTips.tip2Desc')}
+                  </p>
+                </div>
+                <div className='bg-white/60 dark:bg-gray-800/60 rounded-lg p-3 border border-orange-200/30 dark:border-orange-700/30'>
+                  <p className='font-medium text-green-800 dark:text-green-200 mb-1'>
+                    {t('detection.profileView.shootingTips.tip3')}
+                  </p>
+                  <p className='text-green-700 dark:text-green-300 leading-relaxed'>
+                    {t('detection.profileView.shootingTips.tip3Desc')}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Main Content */}
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
-          {/* Right Side */}
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 py-8'>
+          {/* Left Side */}
           <div className='space-y-6'>
-            <div className='flex items-center justify-between'>
-              <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
-                {t('detection.profileView.rightProfile')}
-              </h3>
+            <div className='flex items-center justify-between relative'>
+              <div className='flex items-center gap-3'>
+                <div className='w-1 h-6 bg-gradient-to-b from-purple-400 to-blue-500 rounded-full' />
+                <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
+                  {t('detection.profileView.rightProfile')}
+                </h3>
+              </div>
               <div className='flex items-center gap-2'>
                 {rightImage && (
                   <>
@@ -491,10 +476,15 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                 </div>
               ) : (
                 <div className='space-y-4'>
-                  <div
-                    ref={rightContainerRef}
-                    className='aspect-square bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700'
-                  >
+                  {/* Decorative background */}
+                  <div className='relative'>
+                    <div className='absolute -inset-4 bg-gradient-to-br from-purple-100/50 via-blue-50/30 to-indigo-100/50 dark:from-purple-900/20 dark:via-blue-900/10 dark:to-indigo-900/20 rounded-3xl blur-xl' />
+                    <div className='absolute -inset-2 bg-gradient-to-br from-white/60 to-gray-50/40 dark:from-gray-800/60 dark:to-gray-900/40 rounded-2xl' />
+                    <div
+                      ref={rightContainerRef}
+                      className='relative aspect-square bg-gradient-to-br from-white via-gray-50/50 to-white dark:from-gray-800 dark:via-gray-750 dark:to-gray-800 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm'
+                    >
+
                     <Stage
                       height={stageSize.height}
                       style={{ width: '100%', height: '100%' }}
@@ -522,6 +512,7 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                         )}
                       </Layer>
                     </Stage>
+                    </div>
                   </div>
                 </div>
               )}
@@ -537,10 +528,13 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
           </div>
           {/* Left Side */}
           <div className='space-y-6'>
-            <div className='flex items-center justify-between'>
-              <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
-                {t('detection.profileView.leftProfile')}
-              </h3>
+            <div className='flex items-center justify-between relative'>
+              <div className='flex items-center gap-3'>
+                <div className='w-1 h-6 bg-gradient-to-b from-emerald-400 to-teal-500 rounded-full' />
+                <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
+                  {t('detection.profileView.leftProfile')}
+                </h3>
+              </div>
               <div className='flex items-center gap-2'>
                 {leftImage && (
                   <>
@@ -631,10 +625,15 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                 </div>
               ) : (
                 <div className='space-y-4'>
-                  <div
-                    ref={leftContainerRef}
-                    className='aspect-square bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700'
-                  >
+                  {/* Decorative background */}
+                  <div className='relative'>
+                    <div className='absolute -inset-4 bg-gradient-to-bl from-emerald-100/50 via-teal-50/30 to-cyan-100/50 dark:from-emerald-900/20 dark:via-teal-900/10 dark:to-cyan-900/20 rounded-3xl blur-xl' />
+                    <div className='absolute -inset-2 bg-gradient-to-bl from-white/60 to-gray-50/40 dark:from-gray-800/60 dark:to-gray-900/40 rounded-2xl' />
+                    <div
+                      ref={leftContainerRef}
+                      className='relative aspect-square bg-gradient-to-bl from-white via-gray-50/50 to-white dark:from-gray-800 dark:via-gray-750 dark:to-gray-800 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm'
+                    >
+
                     <Stage
                       ref={stageRef}
                       height={stageSize.height}
@@ -663,6 +662,7 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                         )}
                       </Layer>
                     </Stage>
+                    </div>
                   </div>
                 </div>
               )}
