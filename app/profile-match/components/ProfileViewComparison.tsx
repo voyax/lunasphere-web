@@ -441,14 +441,16 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                   }}
                 >
                   {/* Background template image */}
-                  <div className='absolute inset-0'>
-                    <NextImage
-                      fill
-                      alt={t('detection.profileView.rightTemplateAlt')}
-                      className='w-full h-full object-contain'
-                      sizes='(max-width: 768px) 100vw, 50vw'
-                      src='/images/detection/head_right.svg'
-                    />
+                  <div className='absolute inset-0 flex items-center justify-center'>
+                    <div className='w-4/5 h-4/5 relative'>
+                      <NextImage
+                        fill
+                        alt={t('detection.profileView.rightTemplateAlt')}
+                        className='w-full h-full object-contain'
+                        sizes='(max-width: 768px) 100vw, 50vw'
+                        src='/images/detection/head_right.svg'
+                      />
+                    </div>
                     <div className='absolute inset-0 bg-white/20 dark:bg-gray-900/20' />
                   </div>
 
@@ -478,40 +480,39 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                 <div className='space-y-4'>
                   {/* Decorative background */}
                   <div className='relative'>
-                    <div className='absolute -inset-4 bg-gradient-to-br from-purple-100/50 via-blue-50/30 to-indigo-100/50 dark:from-purple-900/20 dark:via-blue-900/10 dark:to-indigo-900/20 rounded-3xl blur-xl' />
-                    <div className='absolute -inset-2 bg-gradient-to-br from-white/60 to-gray-50/40 dark:from-gray-800/60 dark:to-gray-900/40 rounded-2xl' />
                     <div
                       ref={rightContainerRef}
                       className='relative aspect-square bg-gradient-to-br from-white via-gray-50/50 to-white dark:from-gray-800 dark:via-gray-750 dark:to-gray-800 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm'
                     >
-
-                    <Stage
-                      height={stageSize.height}
-                      style={{ width: '100%', height: '100%' }}
-                      width={stageSize.width}
-                      onClick={handleStageClick}
-                      onTap={handleStageClick}
-                    >
-                      <Layer>
-                        {/* User uploaded image */}
-                        <TransformableImage
-                          image={rightImage}
-                          isSelected={selectedId === 'right'}
-                          opacity={0.8}
-                          onChange={newAttrs => updateImage('right', newAttrs)}
-                          onSelect={() => setSelectedId('right')}
-                        />
-                        {/* Standard template image (on top of user image) */}
-                        {showRightTemplate && (
-                          <StandardTemplateImage
-                            opacity={1.0}
-                            src='/images/detection/head_right.svg'
-                            stageHeight={stageSize.height}
-                            stageWidth={stageSize.width}
+                      <Stage
+                        height={stageSize.height}
+                        style={{ width: '100%', height: '100%' }}
+                        width={stageSize.width}
+                        onClick={handleStageClick}
+                        onTap={handleStageClick}
+                      >
+                        <Layer>
+                          {/* User uploaded image */}
+                          <TransformableImage
+                            image={rightImage}
+                            isSelected={selectedId === 'right'}
+                            opacity={0.8}
+                            onChange={newAttrs =>
+                              updateImage('right', newAttrs)
+                            }
+                            onSelect={() => setSelectedId('right')}
                           />
-                        )}
-                      </Layer>
-                    </Stage>
+                          {/* Standard template image (on top of user image) */}
+                          {showRightTemplate && (
+                            <StandardTemplateImage
+                              opacity={1.0}
+                              src='/images/detection/head_right.svg'
+                              stageHeight={stageSize.height}
+                              stageWidth={stageSize.width}
+                            />
+                          )}
+                        </Layer>
+                      </Stage>
                     </div>
                   </div>
                 </div>
@@ -530,7 +531,6 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
           <div className='space-y-6'>
             <div className='flex items-center justify-between relative'>
               <div className='flex items-center gap-3'>
-                <div className='w-1 h-6 bg-gradient-to-b from-emerald-400 to-teal-500 rounded-full' />
                 <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
                   {t('detection.profileView.leftProfile')}
                 </h3>
@@ -590,14 +590,16 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                   }}
                 >
                   {/* Background template image */}
-                  <div className='absolute inset-0'>
-                    <NextImage
-                      fill
-                      alt={t('detection.profileView.leftTemplateAlt')}
-                      className='w-full h-full object-contain'
-                      sizes='(max-width: 768px) 100vw, 50vw'
-                      src='/images/detection/head_left.svg'
-                    />
+                  <div className='absolute inset-0 flex items-center justify-center'>
+                    <div className='w-4/5 h-4/5 relative'>
+                      <NextImage
+                        fill
+                        alt={t('detection.profileView.leftTemplateAlt')}
+                        className='w-full h-full object-contain'
+                        sizes='(max-width: 768px) 100vw, 50vw'
+                        src='/images/detection/head_left.svg'
+                      />
+                    </div>
                     <div className='absolute inset-0 bg-white/20 dark:bg-gray-900/20' />
                   </div>
 
@@ -627,41 +629,38 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                 <div className='space-y-4'>
                   {/* Decorative background */}
                   <div className='relative'>
-                    <div className='absolute -inset-4 bg-gradient-to-bl from-emerald-100/50 via-teal-50/30 to-cyan-100/50 dark:from-emerald-900/20 dark:via-teal-900/10 dark:to-cyan-900/20 rounded-3xl blur-xl' />
-                    <div className='absolute -inset-2 bg-gradient-to-bl from-white/60 to-gray-50/40 dark:from-gray-800/60 dark:to-gray-900/40 rounded-2xl' />
                     <div
                       ref={leftContainerRef}
                       className='relative aspect-square bg-gradient-to-bl from-white via-gray-50/50 to-white dark:from-gray-800 dark:via-gray-750 dark:to-gray-800 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm'
                     >
-
-                    <Stage
-                      ref={stageRef}
-                      height={stageSize.height}
-                      style={{ width: '100%', height: '100%' }}
-                      width={stageSize.width}
-                      onClick={handleStageClick}
-                      onTap={handleStageClick}
-                    >
-                      <Layer>
-                        {/* User uploaded image */}
-                        <TransformableImage
-                          image={leftImage}
-                          isSelected={selectedId === 'left'}
-                          opacity={0.8}
-                          onChange={newAttrs => updateImage('left', newAttrs)}
-                          onSelect={() => setSelectedId('left')}
-                        />
-                        {/* Standard template image (on top of user image) */}
-                        {showLeftTemplate && (
-                          <StandardTemplateImage
-                            opacity={1.0}
-                            src='/images/detection/head_left.svg'
-                            stageHeight={stageSize.height}
-                            stageWidth={stageSize.width}
+                      <Stage
+                        ref={stageRef}
+                        height={stageSize.height}
+                        style={{ width: '100%', height: '100%' }}
+                        width={stageSize.width}
+                        onClick={handleStageClick}
+                        onTap={handleStageClick}
+                      >
+                        <Layer>
+                          {/* User uploaded image */}
+                          <TransformableImage
+                            image={leftImage}
+                            isSelected={selectedId === 'left'}
+                            opacity={0.8}
+                            onChange={newAttrs => updateImage('left', newAttrs)}
+                            onSelect={() => setSelectedId('left')}
                           />
-                        )}
-                      </Layer>
-                    </Stage>
+                          {/* Standard template image (on top of user image) */}
+                          {showLeftTemplate && (
+                            <StandardTemplateImage
+                              opacity={1.0}
+                              src='/images/detection/head_left.svg'
+                              stageHeight={stageSize.height}
+                              stageWidth={stageSize.width}
+                            />
+                          )}
+                        </Layer>
+                      </Stage>
                     </div>
                   </div>
                 </div>
