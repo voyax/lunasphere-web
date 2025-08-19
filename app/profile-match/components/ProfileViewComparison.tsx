@@ -3,11 +3,9 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { Button } from '@heroui/button'
 import { Tooltip } from '@heroui/tooltip'
-import { Upload, RotateCcw, Eye, EyeOff } from 'lucide-react'
-import { Stage, Layer, Image as KonvaImage, Transformer } from 'react-konva'
-import useImage from 'use-image'
-import Konva from 'konva'
-import NextImage from 'next/image'
+import { RotateCcw } from 'lucide-react'
+
+import { ProfileUploadArea } from './ProfileUploadArea'
 
 import { useLocale } from '@/contexts/LocaleContext'
 
@@ -27,138 +25,17 @@ interface UploadedImage {
   height: number
 }
 
-// Konva Image Component with Transformer
-const TransformableImage: React.FC<{
-  image: UploadedImage
-  isSelected: boolean
-  onSelect: () => void
-  onChange: (newAttrs: Partial<UploadedImage>) => void
-  opacity?: number
-}> = ({ image, isSelected, onSelect, onChange, opacity = 1 }) => {
-  const [img] = useImage(image.url)
-  const imageRef = useRef<Konva.Image>(null)
-  const transformerRef = useRef<Konva.Transformer>(null)
-
-  useEffect(() => {
-    if (isSelected && transformerRef.current && imageRef.current) {
-      transformerRef.current.nodes([imageRef.current])
-      transformerRef.current.getLayer()?.batchDraw()
-    }
-  }, [isSelected])
-
-  return (
-    <>
-      <KonvaImage
-        ref={imageRef}
-        draggable
-        height={image.height}
-        image={img}
-        opacity={opacity}
-        rotation={image.rotation}
-        scaleX={image.scaleX}
-        scaleY={image.scaleY}
-        width={image.width}
-        x={image.x}
-        y={image.y}
-        onClick={onSelect}
-        onDragEnd={e => {
-          onChange({
-            x: e.target.x(),
-            y: e.target.y(),
-          })
-        }}
-        onTap={onSelect}
-        onTransformEnd={e => {
-          const node = e.target as Konva.Image
-          const scaleX = node.scaleX()
-          const scaleY = node.scaleY()
-
-          // Reset scale and adjust width/height instead
-          node.scaleX(1)
-          node.scaleY(1)
-
-          onChange({
-            x: node.x(),
-            y: node.y(),
-            width: Math.max(5, node.width() * scaleX),
-            height: Math.max(5, node.height() * scaleY),
-            rotation: node.rotation(),
-          })
-        }}
-      />
-      {isSelected && (
-        <Transformer
-          ref={transformerRef}
-          anchorFill='white'
-          anchorSize={8}
-          anchorStroke='#4F46E5'
-          anchorStrokeWidth={2}
-          borderStroke='#4F46E5'
-          borderStrokeWidth={2}
-          boundBoxFunc={(oldBox, newBox) => {
-            // Limit resize
-            if (newBox.width < 5 || newBox.height < 5) {
-              return oldBox
-            }
-
-            return newBox
-          }}
-          enabledAnchors={[
-            'top-left',
-            'top-right',
-            'bottom-left',
-            'bottom-right',
-          ]}
-          rotateEnabled={true}
-        />
-      )}
-    </>
-  )
-}
-
-// Standard template image component
-const StandardTemplateImage: React.FC<{
-  src: string
-  opacity: number
-  stageWidth: number
-  stageHeight: number
-}> = ({ src, opacity, stageWidth, stageHeight }) => {
-  const [img] = useImage(src)
-
-  if (!img) return null
-
-  // Center the template image and scale it to fit the stage
-  const scale = Math.min(stageWidth / img.width, stageHeight / img.height) * 0.8
-  const x = (stageWidth - img.width * scale) / 2
-  const y = (stageHeight - img.height * scale) / 2
-
-  return (
-    <KonvaImage
-      image={img}
-      listening={false} // Make it non-interactive
-      opacity={opacity}
-      scaleX={scale}
-      scaleY={scale}
-      x={x}
-      y={y}
-    />
-  )
-}
-
 export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
   const { t } = useLocale()
   const [leftImage, setLeftImage] = useState<UploadedImage | null>(null)
   const [rightImage, setRightImage] = useState<UploadedImage | null>(null)
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
-  const [showLeftTemplate, setShowLeftTemplate] = useState(true)
-  const [showRightTemplate, setShowRightTemplate] = useState(true)
   const [stageSize, setStageSize] = useState({ width: 400, height: 300 })
-  const leftFileInputRef = useRef<HTMLInputElement>(null)
-  const rightFileInputRef = useRef<HTMLInputElement>(null)
   const leftContainerRef = useRef<HTMLDivElement>(null)
   const rightContainerRef = useRef<HTMLDivElement>(null)
-  const stageRef = useRef<Konva.Stage>(null)
+  const leftStageRef = useRef<any>(null)
+  const rightStageRef = useRef<any>(null)
 
   // Update stage size based on container
   useEffect(() => {
@@ -248,40 +125,6 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
     [leftImage, rightImage, stageSize.width, stageSize.height]
   )
 
-  // Handle drag over for file drop
-  const handleDragOver = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-  }, [])
-
-  // Handle file drop
-  const handleDrop = useCallback(
-    (e: React.DragEvent, side: 'left' | 'right') => {
-      e.preventDefault()
-      const files = Array.from(e.dataTransfer.files)
-      const imageFile = files.find(file => file.type.startsWith('image/'))
-
-      if (imageFile) {
-        handleFileUpload(imageFile, side)
-      }
-    },
-    [handleFileUpload]
-  )
-
-  // Handle file input change
-  const handleFileInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, side: 'left' | 'right') => {
-      const file = e.target.files?.[0]
-
-      if (file) {
-        handleFileUpload(file, side)
-      }
-
-      // Reset input value to allow re-selecting the same file
-      e.target.value = ''
-    },
-    [handleFileUpload]
-  )
-
   // Reset image
   const resetImage = useCallback(
     (side: 'left' | 'right') => {
@@ -299,17 +142,6 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
       setSelectedId(null)
     },
     [leftImage, rightImage]
-  )
-
-  // Handle stage click to deselect
-  const handleStageClick = useCallback(
-    (e: Konva.KonvaEventObject<MouseEvent>) => {
-      // Check if clicked on empty area
-      if (e.target === e.target.getStage()) {
-        setSelectedId(null)
-      }
-    },
-    []
   )
 
   // Update image attributes
@@ -377,7 +209,7 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
 
         {/* Main Content */}
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 py-8'>
-          {/* Left Side */}
+          {/* Right Side */}
           <div className='space-y-6'>
             <div className='flex items-center justify-between relative'>
               <div className='flex items-center gap-3'>
@@ -389,26 +221,6 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
               <div className='flex items-center gap-2'>
                 {rightImage && (
                   <>
-                    <Tooltip
-                      content={
-                        showRightTemplate
-                          ? t('detection.profileView.hideTemplate')
-                          : t('detection.profileView.showTemplate')
-                      }
-                    >
-                      <Button
-                        isIconOnly
-                        size='sm'
-                        variant='light'
-                        onClick={() => setShowRightTemplate(!showRightTemplate)}
-                      >
-                        {showRightTemplate ? (
-                          <EyeOff className='h-4 w-4' />
-                        ) : (
-                          <Eye className='h-4 w-4' />
-                        )}
-                      </Button>
-                    </Tooltip>
                     <Tooltip content={t('detection.profileView.resetImage')}>
                       <Button
                         isIconOnly
@@ -424,108 +236,18 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
               </div>
             </div>
 
-            <div className='relative'>
-              {!rightImage ? (
-                <div
-                  className='relative aspect-square border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl overflow-hidden cursor-pointer hover:border-primary transition-all duration-300'
-                  role='button'
-                  tabIndex={0}
-                  onClick={() => rightFileInputRef.current?.click()}
-                  onDragOver={handleDragOver}
-                  onDrop={e => handleDrop(e, 'right')}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault()
-                      rightFileInputRef.current?.click()
-                    }
-                  }}
-                >
-                  {/* Background template image */}
-                  <div className='absolute inset-0 flex items-center justify-center'>
-                    <div className='w-4/5 h-4/5 relative'>
-                      <NextImage
-                        fill
-                        alt={t('detection.profileView.rightTemplateAlt')}
-                        className='w-full h-full object-contain'
-                        sizes='(max-width: 768px) 100vw, 50vw'
-                        src='/images/detection/head_right.svg'
-                      />
-                    </div>
-                    <div className='absolute inset-0 bg-white/20 dark:bg-gray-900/20' />
-                  </div>
-
-                  {/* Upload content overlay */}
-                  <div className='relative z-10 flex items-center justify-center h-full'>
-                    <div className='text-center space-y-4 p-6'>
-                      <div className='flex flex-col items-center justify-center gap-3'>
-                        <div className='w-12 h-12 bg-white/80 dark:bg-gray-700/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-white/50 dark:border-gray-600/50 transition-all duration-200 hover:scale-102'>
-                          <Upload className='w-5 h-5 text-gray-600 dark:text-gray-400' />
-                        </div>
-                        <div className='text-center'>
-                          <p className='text-base font-medium text-gray-700 dark:text-gray-300 drop-shadow-sm'>
-                            {t('detection.profileView.uploadPrompt')}
-                          </p>
-                        </div>
-                      </div>
-                      <div className='inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-md px-3 py-2 border border-white/60 dark:border-gray-600/60 shadow-sm'>
-                        <div className='w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full' />
-                        <span className='text-xs font-normal text-gray-600 dark:text-gray-400'>
-                          {t('detection.profileView.uploadHint')}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className='space-y-4'>
-                  {/* Decorative background */}
-                  <div className='relative'>
-                    <div
-                      ref={rightContainerRef}
-                      className='relative aspect-square bg-gradient-to-br from-white via-gray-50/50 to-white dark:from-gray-800 dark:via-gray-750 dark:to-gray-800 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm'
-                    >
-                      <Stage
-                        height={stageSize.height}
-                        style={{ width: '100%', height: '100%' }}
-                        width={stageSize.width}
-                        onClick={handleStageClick}
-                        onTap={handleStageClick}
-                      >
-                        <Layer>
-                          {/* User uploaded image */}
-                          <TransformableImage
-                            image={rightImage}
-                            isSelected={selectedId === 'right'}
-                            opacity={0.8}
-                            onChange={newAttrs =>
-                              updateImage('right', newAttrs)
-                            }
-                            onSelect={() => setSelectedId('right')}
-                          />
-                          {/* Standard template image (on top of user image) */}
-                          {showRightTemplate && (
-                            <StandardTemplateImage
-                              opacity={1.0}
-                              src='/images/detection/head_right.svg'
-                              stageHeight={stageSize.height}
-                              stageWidth={stageSize.width}
-                            />
-                          )}
-                        </Layer>
-                      </Stage>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <input
-                ref={rightFileInputRef}
-                accept='image/*'
-                className='hidden'
-                type='file'
-                onChange={e => handleFileInputChange(e, 'right')}
-              />
-            </div>
+            <ProfileUploadArea
+              containerRef={rightContainerRef}
+              image={rightImage}
+              isSelected={selectedId === 'right'}
+              stageRef={rightStageRef}
+              stageSize={stageSize}
+              templateAltKey='detection.profileView.rightTemplateAlt'
+              templateSrc='/images/detection/head_right.svg'
+              onImageChange={newAttrs => updateImage('right', newAttrs)}
+              onImageSelect={() => setSelectedId('right')}
+              onImageUpload={file => handleFileUpload(file, 'right')}
+            />
           </div>
           {/* Left Side */}
           <div className='space-y-6'>
@@ -538,26 +260,6 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
               <div className='flex items-center gap-2'>
                 {leftImage && (
                   <>
-                    <Tooltip
-                      content={
-                        showLeftTemplate
-                          ? t('detection.profileView.hideTemplate')
-                          : t('detection.profileView.showTemplate')
-                      }
-                    >
-                      <Button
-                        isIconOnly
-                        size='sm'
-                        variant='light'
-                        onClick={() => setShowLeftTemplate(!showLeftTemplate)}
-                      >
-                        {showLeftTemplate ? (
-                          <EyeOff className='h-4 w-4' />
-                        ) : (
-                          <Eye className='h-4 w-4' />
-                        )}
-                      </Button>
-                    </Tooltip>
                     <Tooltip content={t('detection.profileView.resetImage')}>
                       <Button
                         isIconOnly
@@ -573,107 +275,18 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
               </div>
             </div>
 
-            <div className='relative'>
-              {!leftImage ? (
-                <div
-                  className='relative aspect-square border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl overflow-hidden cursor-pointer hover:border-primary transition-all duration-300'
-                  role='button'
-                  tabIndex={0}
-                  onClick={() => leftFileInputRef.current?.click()}
-                  onDragOver={handleDragOver}
-                  onDrop={e => handleDrop(e, 'left')}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault()
-                      leftFileInputRef.current?.click()
-                    }
-                  }}
-                >
-                  {/* Background template image */}
-                  <div className='absolute inset-0 flex items-center justify-center'>
-                    <div className='w-4/5 h-4/5 relative'>
-                      <NextImage
-                        fill
-                        alt={t('detection.profileView.leftTemplateAlt')}
-                        className='w-full h-full object-contain'
-                        sizes='(max-width: 768px) 100vw, 50vw'
-                        src='/images/detection/head_left.svg'
-                      />
-                    </div>
-                    <div className='absolute inset-0 bg-white/20 dark:bg-gray-900/20' />
-                  </div>
-
-                  {/* Upload content overlay */}
-                  <div className='relative z-10 flex items-center justify-center h-full'>
-                    <div className='text-center space-y-4 p-6'>
-                      <div className='flex flex-col items-center justify-center gap-3'>
-                        <div className='w-12 h-12 bg-white/80 dark:bg-gray-700/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-white/50 dark:border-gray-600/50 transition-all duration-200 hover:scale-102'>
-                          <Upload className='w-5 h-5 text-gray-600 dark:text-gray-400' />
-                        </div>
-                        <div className='text-center'>
-                          <p className='text-base font-medium text-gray-700 dark:text-gray-300 drop-shadow-sm'>
-                            {t('detection.profileView.clickOrDrag')}
-                          </p>
-                        </div>
-                      </div>
-                      <div className='inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-md px-3 py-2 border border-white/60 dark:border-gray-600/60 shadow-sm'>
-                        <div className='w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full' />
-                        <span className='text-xs font-normal text-gray-600 dark:text-gray-400'>
-                          {t('detection.profileView.uploadHint')}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className='space-y-4'>
-                  {/* Decorative background */}
-                  <div className='relative'>
-                    <div
-                      ref={leftContainerRef}
-                      className='relative aspect-square bg-gradient-to-bl from-white via-gray-50/50 to-white dark:from-gray-800 dark:via-gray-750 dark:to-gray-800 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm'
-                    >
-                      <Stage
-                        ref={stageRef}
-                        height={stageSize.height}
-                        style={{ width: '100%', height: '100%' }}
-                        width={stageSize.width}
-                        onClick={handleStageClick}
-                        onTap={handleStageClick}
-                      >
-                        <Layer>
-                          {/* User uploaded image */}
-                          <TransformableImage
-                            image={leftImage}
-                            isSelected={selectedId === 'left'}
-                            opacity={0.8}
-                            onChange={newAttrs => updateImage('left', newAttrs)}
-                            onSelect={() => setSelectedId('left')}
-                          />
-                          {/* Standard template image (on top of user image) */}
-                          {showLeftTemplate && (
-                            <StandardTemplateImage
-                              opacity={1.0}
-                              src='/images/detection/head_left.svg'
-                              stageHeight={stageSize.height}
-                              stageWidth={stageSize.width}
-                            />
-                          )}
-                        </Layer>
-                      </Stage>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <input
-                ref={leftFileInputRef}
-                accept='image/*'
-                className='hidden'
-                type='file'
-                onChange={e => handleFileInputChange(e, 'left')}
-              />
-            </div>
+            <ProfileUploadArea
+              containerRef={leftContainerRef}
+              image={leftImage}
+              isSelected={selectedId === 'left'}
+              stageRef={leftStageRef}
+              stageSize={stageSize}
+              templateAltKey='detection.profileView.leftTemplateAlt'
+              templateSrc='/images/detection/head_left.svg'
+              onImageChange={newAttrs => updateImage('left', newAttrs)}
+              onImageSelect={() => setSelectedId('left')}
+              onImageUpload={file => handleFileUpload(file, 'left')}
+            />
           </div>
         </div>
 
