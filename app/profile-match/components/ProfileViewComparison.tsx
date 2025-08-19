@@ -258,26 +258,24 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 py-8'>
           {/* Right Side */}
           <div ref={rightContainerRef} className='space-y-6'>
-            <div className='flex items-center justify-between relative'>
+            <div className='flex items-center justify-between relative h-10'>
               <div className='flex items-center gap-3'>
                 <div className='w-1 h-6 bg-gradient-to-b from-purple-400 to-blue-500 rounded-full' />
                 <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
                   {t('detection.profileView.rightProfile')}
                 </h3>
               </div>
-              <div className='flex items-center gap-2'>
+              <div className='flex items-center gap-2 h-full'>
                 {rightImage && (
-                  <>
-                    <Button
-                      className='h-10 px-3'
-                      size='md'
-                      startContent={<Upload className='w-4 h-4' />}
-                      variant='bordered'
-                      onPress={() => reuploadImage('right')}
-                    >
-                      {t('detection.profileView.reuploadImage')}
-                    </Button>
-                  </>
+                  <Button
+                    color='primary'
+                    size='sm'
+                    startContent={<Upload className='w-4 h-4' />}
+                    variant='ghost'
+                    onPress={() => reuploadImage('right')}
+                  >
+                    {t('detection.profileView.reuploadImage')}
+                  </Button>
                 )}
               </div>
             </div>
@@ -296,25 +294,23 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
           </div>
           {/* Left Side */}
           <div ref={leftContainerRef} className='space-y-6'>
-            <div className='flex items-center justify-between relative'>
+            <div className='flex items-center justify-between relative h-10'>
               <div className='flex items-center gap-3'>
                 <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
                   {t('detection.profileView.leftProfile')}
                 </h3>
               </div>
-              <div className='flex items-center gap-2'>
+              <div className='flex items-center gap-2 h-full'>
                 {leftImage && (
-                  <>
-                    <Button
-                      className='h-10 px-3'
-                      size='md'
-                      startContent={<Upload className='w-4 h-4' />}
-                      variant='bordered'
-                      onPress={() => reuploadImage('left')}
-                    >
-                      {t('detection.profileView.reuploadImage')}
-                    </Button>
-                  </>
+                  <Button
+                    color='primary'
+                    size='sm'
+                    startContent={<Upload className='w-4 h-4' />}
+                    variant='ghost'
+                    onPress={() => reuploadImage('left')}
+                  >
+                    {t('detection.profileView.reuploadImage')}
+                  </Button>
                 )}
               </div>
             </div>
