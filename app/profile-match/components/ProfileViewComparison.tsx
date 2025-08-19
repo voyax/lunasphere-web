@@ -2,8 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { Button } from '@heroui/button'
-import { Tooltip } from '@heroui/tooltip'
-import { RotateCcw } from 'lucide-react'
+import { Upload } from 'lucide-react'
 
 import { ProfileUploadArea } from './ProfileUploadArea'
 
@@ -31,36 +30,79 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
   const [rightImage, setRightImage] = useState<UploadedImage | null>(null)
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
-  const [stageSize, setStageSize] = useState({ width: 400, height: 300 })
+  // Separate stage sizes for left and right containers
+  const [leftStageSize, setLeftStageSize] = useState({
+    width: 400,
+    height: 300,
+  })
+  const [rightStageSize, setRightStageSize] = useState({
+    width: 400,
+    height: 300,
+  })
+  // Container refs for ResizeObserver to monitor size changes
   const leftContainerRef = useRef<HTMLDivElement>(null)
   const rightContainerRef = useRef<HTMLDivElement>(null)
-  const leftStageRef = useRef<any>(null)
-  const rightStageRef = useRef<any>(null)
+  // File input refs for triggering file selection dialog
+  const leftFileInputRef = useRef<HTMLInputElement>(null)
+  const rightFileInputRef = useRef<HTMLInputElement>(null)
 
-  // Update stage size based on container
+  // Use ResizeObserver to monitor container size changes
   useEffect(() => {
-    const updateStageSize = () => {
-      const container = leftContainerRef.current || rightContainerRef.current
+    const resizeObserver = new ResizeObserver(entries => {
+      entries.forEach(entry => {
+        const { width } = entry.contentRect
 
-      if (container) {
-        const rect = container.getBoundingClientRect()
+        if (width > 0) {
+          // Since ProfileUploadArea uses aspect-square, the stage should be square based on container width
+          const size = Math.min(width, 600) // Cap at reasonable max size
 
-        if (rect.width > 0 && rect.height > 0) {
-          setStageSize({ width: rect.width, height: rect.height })
+          if (entry.target === leftContainerRef.current) {
+            setLeftStageSize({ width: size, height: size })
+          } else if (entry.target === rightContainerRef.current) {
+            setRightStageSize({ width: size, height: size })
+          }
+        }
+      })
+    })
+
+    // Function to update stage sizes based on current container dimensions
+    const updateStageSizes = () => {
+      if (leftContainerRef.current) {
+        const rect = leftContainerRef.current.getBoundingClientRect()
+
+        if (rect.width > 0) {
+          const size = Math.min(rect.width, 600)
+
+          setLeftStageSize({ width: size, height: size })
+        }
+      }
+
+      if (rightContainerRef.current) {
+        const rect = rightContainerRef.current.getBoundingClientRect()
+
+        if (rect.width > 0) {
+          const size = Math.min(rect.width, 600)
+
+          setRightStageSize({ width: size, height: size })
         }
       }
     }
 
-    // Use setTimeout to ensure DOM is fully rendered
-    const timer = setTimeout(updateStageSize, 100)
-
-    window.addEventListener('resize', updateStageSize)
+    // Set up ResizeObserver
+    const observerTimer = setTimeout(() => {
+      if (leftContainerRef.current) {
+        resizeObserver.observe(leftContainerRef.current)
+      }
+      if (rightContainerRef.current) {
+        resizeObserver.observe(rightContainerRef.current)
+      }
+    }, 200)
 
     return () => {
-      clearTimeout(timer)
-      window.removeEventListener('resize', updateStageSize)
+      clearTimeout(observerTimer)
+      resizeObserver.disconnect()
     }
-  }, [leftImage, rightImage])
+  }, [])
 
   // Cleanup URL objects on component unmount
   useEffect(() => {
@@ -77,6 +119,19 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
   // Handle file upload
   const handleFileUpload = useCallback(
     (file: File, side: 'left' | 'right') => {
+      // Get the appropriate stage size for the side
+      const currentStageSize = side === 'left' ? leftStageSize : rightStageSize
+
+      console.log('leftStageSize: ', leftStageSize)
+      // Ensure stage size is properly initialized
+      if (currentStageSize.width <= 0 || currentStageSize.height <= 0) {
+        console.warn(`Stage size not ready for ${side} side, delaying upload`)
+        // Retry after a short delay
+        setTimeout(() => handleFileUpload(file, side), 100)
+
+        return
+      }
+
       // Clean up previous URL object before creating new one
       if (side === 'left' && leftImage) {
         URL.revokeObjectURL(leftImage.url)
@@ -91,13 +146,15 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
 
       img.onload = () => {
         const scale =
-          Math.min(stageSize.width / img.width, stageSize.height / img.height) *
-          0.6
+          Math.min(
+            currentStageSize.width / img.width,
+            currentStageSize.height / img.height
+          ) * 0.6
         const newImage: UploadedImage = {
           file,
           url,
-          x: (stageSize.width - img.width * scale) / 2,
-          y: (stageSize.height - img.height * scale) / 2,
+          x: (currentStageSize.width - img.width * scale) / 2,
+          y: (currentStageSize.height - img.height * scale) / 2,
           scaleX: 1,
           scaleY: 1,
           rotation: 0,
@@ -117,32 +174,22 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
       img.onerror = () => {
         // Clean up URL object if image loading fails
         URL.revokeObjectURL(url)
-        // Failed to load image
+        console.error('Failed to load image')
       }
 
       img.src = url
     },
-    [leftImage, rightImage, stageSize.width, stageSize.height]
+    [leftImage, rightImage, leftStageSize, rightStageSize]
   )
 
-  // Reset image
-  const resetImage = useCallback(
-    (side: 'left' | 'right') => {
-      if (side === 'left') {
-        if (leftImage) {
-          URL.revokeObjectURL(leftImage.url)
-        }
-        setLeftImage(null)
-      } else {
-        if (rightImage) {
-          URL.revokeObjectURL(rightImage.url)
-        }
-        setRightImage(null)
-      }
-      setSelectedId(null)
-    },
-    [leftImage, rightImage]
-  )
+  // Trigger file upload dialog for re-upload
+  const reuploadImage = useCallback((side: 'left' | 'right') => {
+    if (side === 'left' && leftFileInputRef.current) {
+      leftFileInputRef.current.click()
+    } else if (side === 'right' && rightFileInputRef.current) {
+      rightFileInputRef.current.click()
+    }
+  }, [])
 
   // Update image attributes
   const updateImage = useCallback(
@@ -210,7 +257,7 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
         {/* Main Content */}
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 py-8'>
           {/* Right Side */}
-          <div className='space-y-6'>
+          <div ref={rightContainerRef} className='space-y-6'>
             <div className='flex items-center justify-between relative'>
               <div className='flex items-center gap-3'>
                 <div className='w-1 h-6 bg-gradient-to-b from-purple-400 to-blue-500 rounded-full' />
@@ -221,27 +268,25 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
               <div className='flex items-center gap-2'>
                 {rightImage && (
                   <>
-                    <Tooltip content={t('detection.profileView.resetImage')}>
-                      <Button
-                        isIconOnly
-                        size='sm'
-                        variant='light'
-                        onClick={() => resetImage('right')}
-                      >
-                        <RotateCcw className='h-4 w-4' />
-                      </Button>
-                    </Tooltip>
+                    <Button
+                      className='h-10 px-3'
+                      size='md'
+                      startContent={<Upload className='w-4 h-4' />}
+                      variant='bordered'
+                      onPress={() => reuploadImage('right')}
+                    >
+                      {t('detection.profileView.reuploadImage')}
+                    </Button>
                   </>
                 )}
               </div>
             </div>
 
             <ProfileUploadArea
-              containerRef={rightContainerRef}
+              fileInputRef={rightFileInputRef}
               image={rightImage}
               isSelected={selectedId === 'right'}
-              stageRef={rightStageRef}
-              stageSize={stageSize}
+              stageSize={rightStageSize}
               templateAltKey='detection.profileView.rightTemplateAlt'
               templateSrc='/images/detection/head_right.svg'
               onImageChange={newAttrs => updateImage('right', newAttrs)}
@@ -250,7 +295,7 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
             />
           </div>
           {/* Left Side */}
-          <div className='space-y-6'>
+          <div ref={leftContainerRef} className='space-y-6'>
             <div className='flex items-center justify-between relative'>
               <div className='flex items-center gap-3'>
                 <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
@@ -260,27 +305,25 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
               <div className='flex items-center gap-2'>
                 {leftImage && (
                   <>
-                    <Tooltip content={t('detection.profileView.resetImage')}>
-                      <Button
-                        isIconOnly
-                        size='sm'
-                        variant='light'
-                        onClick={() => resetImage('left')}
-                      >
-                        <RotateCcw className='h-4 w-4' />
-                      </Button>
-                    </Tooltip>
+                    <Button
+                      className='h-10 px-3'
+                      size='md'
+                      startContent={<Upload className='w-4 h-4' />}
+                      variant='bordered'
+                      onPress={() => reuploadImage('left')}
+                    >
+                      {t('detection.profileView.reuploadImage')}
+                    </Button>
                   </>
                 )}
               </div>
             </div>
 
             <ProfileUploadArea
-              containerRef={leftContainerRef}
+              fileInputRef={leftFileInputRef}
               image={leftImage}
               isSelected={selectedId === 'left'}
-              stageRef={leftStageRef}
-              stageSize={stageSize}
+              stageSize={leftStageSize}
               templateAltKey='detection.profileView.leftTemplateAlt'
               templateSrc='/images/detection/head_left.svg'
               onImageChange={newAttrs => updateImage('left', newAttrs)}

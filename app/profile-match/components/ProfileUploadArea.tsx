@@ -8,6 +8,7 @@ import useImage from 'use-image'
 import Konva from 'konva'
 import { KonvaEventObject } from 'konva/lib/Node'
 import { RefObject } from 'react'
+
 import { useLocale } from '@/contexts/LocaleContext'
 
 interface UploadedImage {
@@ -140,21 +141,20 @@ const StandardTemplateImage: React.FC<{
 }
 
 interface ProfileUploadAreaProps {
-  // Core data
+  // Image data
   image: UploadedImage | null
   isSelected?: boolean
-  
+
   // Template configuration
   templateSrc: string
   templateAltKey: string
-  
-  // Optional refs for advanced usage
-  containerRef?: RefObject<HTMLDivElement>
-  stageRef?: RefObject<any>
-  
+
+  // Required ref for file input control
+  fileInputRef: RefObject<HTMLInputElement>
+
   // Stage configuration
   stageSize?: { width: number; height: number }
-  
+
   // Event handlers
   onImageUpload: (file: File) => void
   onImageChange?: (newAttrs: Partial<UploadedImage>) => void
@@ -166,19 +166,13 @@ export function ProfileUploadArea({
   isSelected = false,
   templateSrc,
   templateAltKey,
-  containerRef,
-  stageRef,
+  fileInputRef,
   stageSize = { width: 400, height: 400 },
   onImageUpload,
   onImageChange,
-  onImageSelect
+  onImageSelect,
 }: ProfileUploadAreaProps) {
   const { t } = useLocale()
-  // Internal refs if not provided
-  const internalFileInputRef = useRef<HTMLInputElement>(null)
-  const internalContainerRef = useRef<HTMLDivElement>(null)
-  const fileInputRef = internalFileInputRef
-  const finalContainerRef = containerRef || internalContainerRef
 
   // Event handlers
   const handleFileInputClick = () => {
@@ -272,12 +266,8 @@ export function ProfileUploadArea({
         <div className='space-y-4'>
           {/* Decorative background */}
           <div className='relative'>
-            <div
-              ref={finalContainerRef}
-              className="relative aspect-square bg-gradient-to-br from-white via-gray-50/50 to-white dark:from-gray-800 dark:via-gray-750 dark:to-gray-800 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm"
-            >
+            <div className='relative aspect-square bg-gradient-to-br from-white via-gray-50/50 to-white dark:from-gray-800 dark:via-gray-750 dark:to-gray-800 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm'>
               <Stage
-                ref={stageRef}
                 height={stageSize.height}
                 style={{ width: '100%', height: '100%' }}
                 width={stageSize.width}
