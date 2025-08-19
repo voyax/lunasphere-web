@@ -153,8 +153,8 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
         const newImage: UploadedImage = {
           file,
           url,
-          x: (currentStageSize.width - img.width * scale) / 2,
-          y: (currentStageSize.height - img.height * scale) / 2,
+          x: currentStageSize.width / 2,
+          y: currentStageSize.height / 2,
           scaleX: 1,
           scaleY: 1,
           rotation: 0,

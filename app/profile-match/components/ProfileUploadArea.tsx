@@ -1,13 +1,14 @@
 'use client'
 
-import { Upload } from 'lucide-react'
+import { Upload, RotateCw, ZoomIn } from 'lucide-react'
 import Image from 'next/image'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useCallback } from 'react'
 import { Stage, Layer, Image as KonvaImage, Transformer } from 'react-konva'
 import useImage from 'use-image'
 import Konva from 'konva'
 import { KonvaEventObject } from 'konva/lib/Node'
 import { RefObject } from 'react'
+import { Slider, Input } from '@heroui/react'
 
 import { useLocale } from '@/contexts/LocaleContext'
 
@@ -49,6 +50,8 @@ const TransformableImage: React.FC<{
         draggable
         height={image.height}
         image={img}
+        offsetX={image.width / 2}
+        offsetY={image.height / 2}
         opacity={opacity}
         rotation={image.rotation}
         scaleX={image.scaleX}
@@ -69,16 +72,17 @@ const TransformableImage: React.FC<{
           const scaleX = node.scaleX()
           const scaleY = node.scaleY()
 
-          // Reset scale and apply to width/height
+          // Use the absolute scale values from the transform
+          // Reset node scale to 1 to avoid double scaling
           node.scaleX(1)
           node.scaleY(1)
 
           onChange({
             x: node.x(),
             y: node.y(),
-            width: Math.max(5, node.width() * scaleX),
-            height: Math.max(5, node.height() * scaleY),
             rotation: node.rotation(),
+            scaleX: scaleX,
+            scaleY: scaleY,
           })
         }}
       />
@@ -178,6 +182,88 @@ export function ProfileUploadArea({
   const handleFileInputClick = () => {
     fileInputRef.current?.click()
   }
+
+  // Scale and rotation handlers
+  const handleScaleChange = useCallback(
+    (value: number | number[]) => {
+      if (!image || !onImageChange) return
+      const scaleValue = Array.isArray(value) ? value[0] : value
+      // Convert percentage to scale value (e.g., 100% = 1.0)
+      const actualScale = scaleValue / 100
+
+      onImageChange({
+        scaleX: actualScale,
+        scaleY: actualScale,
+      })
+    },
+    [image, onImageChange]
+  )
+
+  const handleScaleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!image || !onImageChange) return
+      const value = e.target.value
+
+      // Allow empty input for editing
+      if (value === '') {
+        return
+      }
+
+      const percentageValue = parseFloat(value)
+
+      if (
+        !isNaN(percentageValue) &&
+        percentageValue >= 0 &&
+        percentageValue <= 300
+      ) {
+        // Convert percentage to scale value
+        const actualScale = percentageValue / 100
+
+        onImageChange({
+          scaleX: actualScale,
+          scaleY: actualScale,
+        })
+      }
+    },
+    [image, onImageChange]
+  )
+
+  const handleRotationChange = useCallback(
+    (value: number | number[]) => {
+      if (!image || !onImageChange) return
+      const rotationValue = Array.isArray(value) ? value[0] : value
+
+      onImageChange({
+        rotation: rotationValue,
+      })
+    },
+    [image, onImageChange]
+  )
+
+  const handleRotationInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!image || !onImageChange) return
+      const value = e.target.value
+
+      // Allow empty input for editing
+      if (value === '') {
+        return
+      }
+
+      const rotationValue = parseFloat(value)
+
+      if (
+        !isNaN(rotationValue) &&
+        rotationValue >= -360 &&
+        rotationValue <= 360
+      ) {
+        onImageChange({
+          rotation: rotationValue,
+        })
+      }
+    },
+    [image, onImageChange]
+  )
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
@@ -292,6 +378,69 @@ export function ProfileUploadArea({
                   />
                 </Layer>
               </Stage>
+            </div>
+          </div>
+
+          {/* Image Controls */}
+          <div className='p-4 space-y-4'>
+            {/* Scale Control */}
+            <div className='space-y-2'>
+              <div className='flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300'>
+                <ZoomIn className='w-4 h-4' />
+                <span>{t('detection.profileView.scale')}</span>
+              </div>
+              <div className='flex items-center gap-3'>
+                <Slider
+                  className='flex-1'
+                  color='primary'
+                  maxValue={300}
+                  minValue={0}
+                  step={1}
+                  value={Math.round(image.scaleX * 100)}
+                  onChange={handleScaleChange}
+                />
+                <Input
+                  className='w-20'
+                  endContent={<span className='text-xs text-gray-500'>%</span>}
+                  max={300}
+                  min={0}
+                  size='sm'
+                  step={1}
+                  type='number'
+                  value={Math.round(image.scaleX * 100).toString()}
+                  onChange={handleScaleInputChange}
+                />
+              </div>
+            </div>
+
+            {/* Rotation Control */}
+            <div className='space-y-2'>
+              <div className='flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300'>
+                <RotateCw className='w-4 h-4' />
+                <span>{t('detection.profileView.rotation')}</span>
+              </div>
+              <div className='flex items-center gap-3'>
+                <Slider
+                  className='flex-1'
+                  color='primary'
+                  maxValue={360}
+                  minValue={-360}
+                  step={1}
+                  value={image.rotation}
+                  onChange={handleRotationChange}
+                />
+                <Input
+                  className='w-20'
+                  endContent={<span className='text-xs text-gray-500'>°</span>}
+                  max={360}
+                  min={-360}
+                  size='sm'
+                  step={1}
+                  type='number'
+                  value={Math.round(image.rotation).toString()}
+                  onChange={handleRotationInputChange}
+                />
+              </div>
             </div>
           </div>
         </div>

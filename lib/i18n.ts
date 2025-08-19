@@ -1025,6 +1025,14 @@ export const translations: TranslationKeys = {
     zh: '重新上传',
     en: 'Re-upload',
   },
+  'detection.profileView.scale': {
+    zh: '缩放',
+    en: 'Scale',
+  },
+  'detection.profileView.rotation': {
+    zh: '旋转',
+    en: 'Rotation',
+  },
 
   'detection.profileView.uploadPrompt': {
     zh: '点击或拖拽图片到此处',
