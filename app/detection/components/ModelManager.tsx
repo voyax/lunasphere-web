@@ -5,9 +5,10 @@ import { Button } from '@heroui/button'
 import { Card, CardBody, CardHeader } from '@heroui/card'
 import { Brain, Settings } from 'lucide-react'
 
+import { ModelState } from '../types'
+
 import { getModelInstance } from '@/lib/model-inference'
 import { useLocale } from '@/contexts/LocaleContext'
-import { ModelState } from '../types'
 
 interface ModelManagerProps {
   modelPath: string
@@ -16,6 +17,7 @@ interface ModelManagerProps {
   setModelState: (state: ModelState) => void
   confidenceThreshold: number
   setConfidenceThreshold: (threshold: number) => void
+  onLoadError?: (error: string | null) => void
 }
 
 export default function ModelManager({
@@ -25,6 +27,7 @@ export default function ModelManager({
   setModelState,
   confidenceThreshold,
   setConfidenceThreshold,
+  onLoadError,
 }: ModelManagerProps) {
   const { t } = useLocale()
   const [isDebugOpen, setIsDebugOpen] = useState(false)
@@ -62,9 +65,12 @@ export default function ModelManager({
           await model.loadModel(modelPath)
           setModelState(ModelState.LOADED)
           // Default model loaded successfully
-        } catch {
+        } catch (error) {
           // Failed to auto-load default model
           setModelState(ModelState.ERROR)
+          const errorMessage = error instanceof Error ? error.message : t('detection.modelManager.errors.unknownError')
+          setLoadError(errorMessage)
+          onLoadError?.(errorMessage)
         }
       }
     }
@@ -98,11 +104,11 @@ export default function ModelManager({
     } catch (error) {
       // Model loading failed
       setModelState(ModelState.ERROR)
-      setLoadError(
-        error instanceof Error
-          ? error.message
-          : t('detection.modelManager.errors.unknownError')
-      )
+      const errorMessage = error instanceof Error
+        ? error.message
+        : t('detection.modelManager.errors.unknownError')
+      setLoadError(errorMessage)
+      onLoadError?.(errorMessage)
     }
   }
 
@@ -190,11 +196,6 @@ export default function ModelManager({
                           ? t('detection.modelManager.status.loaded')
                           : t('detection.modelManager.status.notLoaded')}
                   </div>
-                  {loadError && (
-                    <div className='text-xs text-red-500 dark:text-red-400 mt-1 px-3 py-1 bg-red-50 dark:bg-red-900/20 rounded border border-red-200 dark:border-red-800'>
-                      {t('detection.modelManager.error')}: {loadError}
-                    </div>
-                  )}
                 </div>
               </CardHeader>
               <CardBody className='pt-0'>
@@ -214,7 +215,9 @@ export default function ModelManager({
                     </div>
                     <Button
                       className='bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium transition-colors min-w-[120px]'
-                      disabled={modelState === ModelState.LOADING || !modelPath.trim()}
+                      disabled={
+                        modelState === ModelState.LOADING || !modelPath.trim()
+                      }
                       isLoading={modelState === ModelState.LOADING}
                       onClick={loadModel}
                     >

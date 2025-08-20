@@ -724,6 +724,22 @@ export const translations: TranslationKeys = {
     zh: 'AI模型准备加载中，请稍候',
     en: 'AI model is initializing, please wait',
   },
+  'detection.model.loadFailed': {
+    zh: '模型加载失败',
+    en: 'Model Loading Failed',
+  },
+  'detection.model.loadFailedHint': {
+    zh: '模型加载遇到问题，请尝试刷新页面。如问题持续存在，请联系技术支持',
+    en: 'Model loading encountered an issue. Please try refreshing the page. If the problem persists, please contact technical support',
+  },
+  'detection.model.closeBanner': {
+    zh: '关闭提示',
+    en: 'Close banner',
+  },
+  'detection.model.detailedError': {
+    zh: '详细错误信息',
+    en: 'Detailed Error Information',
+  },
 
   // Detection top view
   'detection.topView.title': {

@@ -53,7 +53,6 @@ const UploadStateIndicator = memo(
         )
 
       case ModelState.NOT_LOADED:
-      case ModelState.ERROR:
         return (
           <>
             <div className='w-12 h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/50 dark:border-gray-600/50'>
@@ -62,6 +61,20 @@ const UploadStateIndicator = memo(
             <div className='text-center'>
               <p className='text-base font-medium drop-shadow-sm text-gray-500 dark:text-gray-500'>
                 {t('detection.model.notLoadedMessage')}
+              </p>
+            </div>
+          </>
+        )
+
+      case ModelState.ERROR:
+        return (
+          <>
+            <div className='w-12 h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-red-50/80 dark:bg-red-950/80 border-red-200/50 dark:border-red-700/50'>
+              <span className='text-red-500 text-lg font-bold'>✕</span>
+            </div>
+            <div className='text-center'>
+              <p className='text-base font-medium drop-shadow-sm text-red-600 dark:text-red-400'>
+                {t('detection.model.loadFailed')}
               </p>
             </div>
           </>
@@ -106,12 +119,21 @@ const StatusInfo = memo(({ modelState, t }: StatusInfoProps) => {
       )
 
     case ModelState.NOT_LOADED:
-    case ModelState.ERROR:
       return (
         <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 border shadow-sm bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/60 dark:border-gray-600/60'>
           <div className='w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500' />
           <span className='text-xs font-normal text-gray-500 dark:text-gray-500'>
             {t('detection.model.notLoadedHint')}
+          </span>
+        </div>
+      )
+
+    case ModelState.ERROR:
+      return (
+        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 border shadow-sm bg-red-50/80 dark:bg-red-950/80 border-red-200/60 dark:border-red-700/60'>
+          <div className='w-1.5 h-1.5 rounded-full bg-red-500' />
+          <span className='text-xs font-normal text-red-600 dark:text-red-400'>
+            {t('detection.model.loadFailedHint')}
           </span>
         </div>
       )
