@@ -1,8 +1,9 @@
 'use client'
 
+import React from 'react'
 import { Upload, RotateCw, ZoomIn } from 'lucide-react'
 import Image from 'next/image'
-import { useRef, useEffect, useCallback } from 'react'
+import { useRef, useEffect, useCallback, useState, useMemo } from 'react'
 import { Stage, Layer, Image as KonvaImage, Transformer } from 'react-konva'
 import useImage from 'use-image'
 import Konva from 'konva'
@@ -11,6 +12,18 @@ import { RefObject } from 'react'
 import { Slider, Input } from '@heroui/react'
 
 import { useLocale } from '@/contexts/LocaleContext'
+import { useIsMobile } from '@/hooks/useIsMobile'
+import { useMemoryManager } from '@/hooks/useMemoryManager'
+import {
+  getDistance,
+  getCenter,
+  getAngle,
+  getCenterMovement,
+  normalizeRotationChange,
+  GESTURE_CONFIG,
+  type Point,
+} from '@/lib/gesture-utils'
+import { GestureVisualFeedback } from './GestureVisualFeedback'
 
 interface UploadedImage {
   file: File
@@ -31,86 +44,357 @@ const TransformableImage: React.FC<{
   onSelect: () => void
   onChange: (newAttrs: Partial<UploadedImage>) => void
   opacity?: number
-}> = ({ image, isSelected, onSelect, onChange, opacity = 1 }) => {
-  const [img] = useImage(image.url)
-  const imageRef = useRef<Konva.Image>(null)
-  const transformerRef = useRef<Konva.Transformer>(null)
+  onShowGestureHint?: () => void
+  onHideGestureHint?: () => void
+  onShowGestureVisualFeedback?: (
+    gestureType: 'scale' | 'rotate' | 'move',
+    centerPoint: { x: number; y: number },
+    scaleValue?: number,
+    rotationValue?: number
+  ) => void
+  onHideGestureVisualFeedback?: () => void
+}> = React.memo(
+  ({
+    image,
+    isSelected,
+    onSelect,
+    onChange,
+    opacity = 1,
+    onShowGestureHint,
+    onHideGestureHint,
+    onShowGestureVisualFeedback,
+    onHideGestureVisualFeedback,
+  }) => {
+    const [img] = useImage(image.url)
+    const imageRef = useRef<Konva.Image>(null)
+    const transformerRef = useRef<Konva.Transformer>(null)
+    const lastCenter = useRef<Point | null>(null)
+    const isMobile = useIsMobile()
+    const memoryManager = useMemoryManager()
+    const lastDist = useRef<number>(0)
+    const lastRotation = useRef<number>(0)
+    const [isMultiTouch, setIsMultiTouch] = useState(false)
+    const gestureStartTime = useRef<number>(0)
+    const stageBoxRef = useRef<DOMRect | null>(null)
+    const pendingChanges = useRef<Partial<UploadedImage> | null>(null)
 
-  useEffect(() => {
-    if (isSelected && transformerRef.current && imageRef.current) {
-      transformerRef.current.nodes([imageRef.current])
-      transformerRef.current.getLayer()?.batchDraw()
-    }
-  }, [isSelected])
+    useEffect(() => {
+      if (isSelected && transformerRef.current && imageRef.current) {
+        transformerRef.current.nodes([imageRef.current])
+        transformerRef.current.getLayer()?.batchDraw()
+      }
+    }, [isSelected])
 
-  return (
-    <>
-      <KonvaImage
-        ref={imageRef}
-        draggable
-        height={image.height}
-        image={img}
-        offsetX={image.width / 2}
-        offsetY={image.height / 2}
-        opacity={opacity}
-        rotation={image.rotation}
-        scaleX={image.scaleX}
-        scaleY={image.scaleY}
-        width={image.width}
-        x={image.x}
-        y={image.y}
-        onClick={onSelect}
-        onDragEnd={e => {
-          onChange({
-            x: e.target.x(),
-            y: e.target.y(),
-          })
-        }}
-        onTap={onSelect}
-        onTransformEnd={e => {
-          const node = e.target
-          const scaleX = node.scaleX()
-          const scaleY = node.scaleY()
+    // Optimized onChange with requestAnimationFrame batching using memory manager
+    const optimizedOnChange = useCallback(
+      (newAttrs: Partial<UploadedImage>) => {
+        // Store pending changes
+        pendingChanges.current = { ...pendingChanges.current, ...newAttrs }
 
-          // Use the absolute scale values from the transform
-          // Reset node scale to 1 to avoid double scaling
-          node.scaleX(1)
-          node.scaleY(1)
+        // Schedule update on next frame using memory manager
+        memoryManager.createAnimationFrame(() => {
+          if (pendingChanges.current) {
+            onChange(pendingChanges.current)
+            pendingChanges.current = null
+          }
+        })
+      },
+      [onChange, memoryManager]
+    )
 
-          onChange({
-            x: node.x(),
-            y: node.y(),
-            rotation: node.rotation(),
-            scaleX: scaleX,
-            scaleY: scaleY,
-          })
-        }}
-      />
-      {isSelected && (
-        <Transformer
-          ref={transformerRef}
-          boundBoxFunc={(oldBox, newBox) => {
-            // Limit resize
-            if (Math.abs(newBox.width) < 5 || Math.abs(newBox.height) < 5) {
-              return oldBox
+    // Memoized gesture calculations for performance optimization
+    const gestureCalculations = useMemo(
+      () => ({
+        getDistance,
+        getCenter,
+        getAngle,
+        getCenterMovement,
+        normalizeRotationChange,
+      }),
+      []
+    )
+
+    // Handle touch start for multi-touch gestures
+    const handleTouchStart = useCallback(
+      (e: KonvaEventObject<TouchEvent>) => {
+        e.evt.preventDefault()
+        const touches = e.evt.touches
+
+        gestureStartTime.current = Date.now()
+
+        if (touches.length === 2) {
+          // Multi-touch gesture started
+          setIsMultiTouch(true)
+          onShowGestureHint?.()
+
+          const stage = e.target.getStage()
+
+          if (stage) {
+            // Cache stage bounding box for better performance
+            stageBoxRef.current = stage.container().getBoundingClientRect()
+            const stageBox = stageBoxRef.current
+
+            const p1 = {
+              x: touches[0].clientX - stageBox.left,
+              y: touches[0].clientY - stageBox.top,
+            }
+            const p2 = {
+              x: touches[1].clientX - stageBox.left,
+              y: touches[1].clientY - stageBox.top,
             }
 
-            return newBox
+            lastCenter.current = gestureCalculations.getCenter(p1, p2)
+            lastDist.current = gestureCalculations.getDistance(p1, p2)
+            lastRotation.current = gestureCalculations.getAngle(p1, p2)
+          }
+        } else if (touches.length === 1) {
+          // Single touch - select the image after a short delay to distinguish from gestures
+          setIsMultiTouch(false)
+          memoryManager.createTimeout(() => {
+            if (
+              !isMultiTouch &&
+              Date.now() - gestureStartTime.current <
+                GESTURE_CONFIG.GESTURE_TIMEOUT
+            ) {
+              onSelect()
+            }
+          }, GESTURE_CONFIG.DEBOUNCE_DELAY)
+        }
+      },
+      [onSelect, isMultiTouch, onShowGestureHint]
+    )
+
+    // Handle touch move for multi-touch gestures
+    const handleTouchMove = useCallback(
+      (e: KonvaEventObject<TouchEvent>) => {
+        e.evt.preventDefault()
+        const touches = e.evt.touches
+
+        if (
+          touches.length === 2 &&
+          lastCenter.current &&
+          isMultiTouch &&
+          stageBoxRef.current
+        ) {
+          // Use cached stage box for better performance
+          const stageBox = stageBoxRef.current
+          const p1 = {
+            x: touches[0].clientX - stageBox.left,
+            y: touches[0].clientY - stageBox.top,
+          }
+          const p2 = {
+            x: touches[1].clientX - stageBox.left,
+            y: touches[1].clientY - stageBox.top,
+          }
+
+          const newCenter = gestureCalculations.getCenter(p1, p2)
+          const newDist = gestureCalculations.getDistance(p1, p2)
+          const newRotation = gestureCalculations.getAngle(p1, p2)
+
+          // Add minimum threshold to avoid micro-movements
+          const distanceChange = Math.abs(newDist - lastDist.current)
+          const rotationChangeAbs = Math.abs(newRotation - lastRotation.current)
+
+          let newScaleX = image.scaleX
+          let newScaleY = image.scaleY
+          let newRotationValue = image.rotation
+
+          // Only apply scale change if movement is significant enough
+          if (distanceChange > GESTURE_CONFIG.MIN_DISTANCE_THRESHOLD) {
+            const scale = newDist / lastDist.current
+            const scaleFactor =
+              1 + (scale - 1) * GESTURE_CONFIG.SCALE_SENSITIVITY
+
+            newScaleX = image.scaleX * scaleFactor
+            newScaleY = image.scaleY * scaleFactor
+            
+            // Show scale visual feedback
+            onShowGestureVisualFeedback?.(
+              'scale',
+              newCenter,
+              newScaleX
+            )
+          }
+
+          // Only apply rotation change if movement is significant enough
+          if (rotationChangeAbs > GESTURE_CONFIG.MIN_ROTATION_THRESHOLD) {
+            const rotationChange = gestureCalculations.normalizeRotationChange(
+              newRotation - lastRotation.current
+            )
+            const dampedRotationChange =
+              rotationChange * GESTURE_CONFIG.ROTATION_SENSITIVITY
+
+            newRotationValue = image.rotation + dampedRotationChange
+            
+            // Show rotation visual feedback
+            onShowGestureVisualFeedback?.(
+              'rotate',
+              newCenter,
+              undefined,
+              newRotationValue
+            )
+          }
+
+          // Calculate position change using optimized function
+          const centerMovement = gestureCalculations.getCenterMovement(
+            lastCenter.current,
+            newCenter
+          )
+
+          let newX = image.x
+          let newY = image.y
+
+          // Only apply position change if center movement is significant
+          if (centerMovement > GESTURE_CONFIG.MIN_POSITION_THRESHOLD) {
+            const dx =
+              (newCenter.x - lastCenter.current.x) *
+              GESTURE_CONFIG.POSITION_SENSITIVITY
+            const dy =
+              (newCenter.y - lastCenter.current.y) *
+              GESTURE_CONFIG.POSITION_SENSITIVITY
+
+            newX = image.x + dx
+            newY = image.y + dy
+            
+            // Show move visual feedback
+            onShowGestureVisualFeedback?.(
+              'move',
+              newCenter
+            )
+          }
+
+          // Use optimized onChange for better performance
+          optimizedOnChange({
+            x: newX,
+            y: newY,
+            scaleX: newScaleX,
+            scaleY: newScaleY,
+            rotation: newRotationValue,
+          })
+
+          // Update last values
+          lastCenter.current = newCenter
+          lastDist.current = newDist
+          lastRotation.current = newRotation
+        }
+      },
+      [
+        gestureCalculations,
+        image,
+        optimizedOnChange,
+        isMultiTouch,
+        onShowGestureVisualFeedback,
+      ]
+    )
+
+    // Handle touch end
+    const handleTouchEnd = useCallback(
+      (e: KonvaEventObject<TouchEvent>) => {
+        e.evt.preventDefault()
+        const touches = e.evt.touches
+
+        if (touches.length < 2) {
+          // Multi-touch gesture ended
+          setIsMultiTouch(false)
+          onHideGestureHint?.()
+          onHideGestureVisualFeedback?.()
+
+          // Clear cached values
+          lastCenter.current = null
+          lastDist.current = 0
+          lastRotation.current = 0
+          stageBoxRef.current = null
+        }
+      },
+      [onHideGestureHint, onHideGestureVisualFeedback]
+    )
+
+    return (
+      <>
+        <KonvaImage
+          ref={imageRef}
+          draggable={!isMultiTouch}
+          height={image.height}
+          image={img}
+          offsetX={image.width / 2}
+          offsetY={image.height / 2}
+          opacity={opacity}
+          rotation={image.rotation}
+          scaleX={image.scaleX}
+          scaleY={image.scaleY}
+          width={image.width}
+          x={image.x}
+          y={image.y}
+          onClick={onSelect}
+          onDragEnd={e => {
+            onChange({
+              x: e.target.x(),
+              y: e.target.y(),
+            })
           }}
-          enabledAnchors={[
-            'top-left',
-            'top-center',
-            'top-right',
-            'bottom-left',
-            'bottom-center',
-            'bottom-right',
-          ]}
-          flipEnabled={false}
+          onTap={onSelect}
+          onTouchEnd={handleTouchEnd}
+          onTouchMove={handleTouchMove}
+          onTouchStart={handleTouchStart}
+          onTransformEnd={e => {
+            const node = e.target
+            const scaleX = node.scaleX()
+            const scaleY = node.scaleY()
+
+            // Use the absolute scale values from the transform
+            // Reset node scale to 1 to avoid double scaling
+            node.scaleX(1)
+            node.scaleY(1)
+
+            onChange({
+              x: node.x(),
+              y: node.y(),
+              rotation: node.rotation(),
+              scaleX: scaleX,
+              scaleY: scaleY,
+            })
+          }}
         />
-      )}
-    </>
-  )
-}
+        {isSelected && !isMobile && (
+          <Transformer
+            ref={transformerRef}
+            boundBoxFunc={(oldBox, newBox) => {
+              // Limit resize
+              if (Math.abs(newBox.width) < 5 || Math.abs(newBox.height) < 5) {
+                return oldBox
+              }
+
+              return newBox
+            }}
+            enabledAnchors={[
+              'top-left',
+              'top-center',
+              'top-right',
+              'bottom-left',
+              'bottom-center',
+              'bottom-right',
+            ]}
+            flipEnabled={false}
+          />
+        )}
+      </>
+    )
+  },
+  (prevProps, nextProps) => {
+    // Custom comparison for better performance
+    return (
+      prevProps.image.x === nextProps.image.x &&
+      prevProps.image.y === nextProps.image.y &&
+      prevProps.image.scaleX === nextProps.image.scaleX &&
+      prevProps.image.scaleY === nextProps.image.scaleY &&
+      prevProps.image.rotation === nextProps.image.rotation &&
+      prevProps.isSelected === nextProps.isSelected &&
+      prevProps.opacity === nextProps.opacity
+    )
+  }
+)
+
+TransformableImage.displayName = 'TransformableImage'
 
 // Standard Template Image Component
 const StandardTemplateImage: React.FC<{
@@ -118,7 +402,7 @@ const StandardTemplateImage: React.FC<{
   opacity: number
   stageWidth: number
   stageHeight: number
-}> = ({ src, opacity, stageWidth, stageHeight }) => {
+}> = React.memo(({ src, opacity, stageWidth, stageHeight }) => {
   const [img] = useImage(src)
 
   if (!img) return null
@@ -142,7 +426,9 @@ const StandardTemplateImage: React.FC<{
       y={y}
     />
   )
-}
+})
+
+StandardTemplateImage.displayName = 'StandardTemplateImage'
 
 interface ProfileUploadAreaProps {
   // Image data
@@ -177,11 +463,75 @@ export function ProfileUploadArea({
   onImageSelect,
 }: ProfileUploadAreaProps) {
   const { t } = useLocale()
+  const isMobile = useIsMobile()
+  const memoryManager = useMemoryManager()
+  const [showGestureHint, setShowGestureHint] = useState(false)
+  
+  // Visual feedback state for gestures
+  const [gestureVisualFeedback, setGestureVisualFeedback] = useState<{
+    isVisible: boolean
+    gestureType: 'scale' | 'rotate' | 'move' | null
+    centerPoint?: { x: number; y: number }
+    scaleValue?: number
+    rotationValue?: number
+  }>({
+    isVisible: false,
+    gestureType: null,
+  })
 
   // Event handlers
   const handleFileInputClick = () => {
     fileInputRef.current?.click()
   }
+
+  // Handle gesture hint display using memory manager
+  const showGestureHintMessage = useCallback(() => {
+    setShowGestureHint(true)
+
+    // Hide hint after configured duration
+    memoryManager.createTimeout(() => {
+      setShowGestureHint(false)
+    }, GESTURE_CONFIG.HINT_DISPLAY_DURATION)
+  }, [memoryManager])
+
+  const hideGestureHint = useCallback(() => {
+    setShowGestureHint(false)
+  }, [])
+
+  // Visual feedback handlers
+  const showGestureVisualFeedback = useCallback(
+    (
+      gestureType: 'scale' | 'rotate' | 'move',
+      centerPoint: { x: number; y: number },
+      scaleValue?: number,
+      rotationValue?: number
+    ) => {
+      setGestureVisualFeedback({
+        isVisible: true,
+        gestureType,
+        centerPoint,
+        scaleValue,
+        rotationValue,
+      })
+    },
+    []
+  )
+
+  const hideGestureVisualFeedback = useCallback(() => {
+    setGestureVisualFeedback({
+      isVisible: false,
+      gestureType: null,
+    })
+  }, [])
+
+  // Memoized scale value for performance
+  const currentScalePercentage = useMemo(() => {
+    return image ? Math.round(image.scaleX * 100) : 100
+  }, [image?.scaleX])
+
+  const currentRotationValue = useMemo(() => {
+    return image ? Math.round(image.rotation) : 0
+  }, [image?.rotation])
 
   // Scale and rotation handlers
   const handleScaleChange = useCallback(
@@ -196,7 +546,7 @@ export function ProfileUploadArea({
         scaleY: actualScale,
       })
     },
-    [image, onImageChange]
+    [image, onImageChange, memoryManager]
   )
 
   const handleScaleInputChange = useCallback(
@@ -216,16 +566,18 @@ export function ProfileUploadArea({
         percentageValue >= 0 &&
         percentageValue <= 300
       ) {
-        // Convert percentage to scale value
-        const actualScale = percentageValue / 100
+        // Debounce the change for better performance using memory manager
+        memoryManager.createTimeout(() => {
+          const actualScale = percentageValue / 100
 
-        onImageChange({
-          scaleX: actualScale,
-          scaleY: actualScale,
-        })
+          onImageChange({
+            scaleX: actualScale,
+            scaleY: actualScale,
+          })
+        }, GESTURE_CONFIG.DEBOUNCE_DELAY)
       }
     },
-    [image, onImageChange]
+    [image, onImageChange, memoryManager]
   )
 
   const handleRotationChange = useCallback(
@@ -237,7 +589,7 @@ export function ProfileUploadArea({
         rotation: rotationValue,
       })
     },
-    [image, onImageChange]
+    [image, onImageChange, memoryManager]
   )
 
   const handleRotationInputChange = useCallback(
@@ -257,9 +609,12 @@ export function ProfileUploadArea({
         rotationValue >= -360 &&
         rotationValue <= 360
       ) {
-        onImageChange({
-          rotation: rotationValue,
-        })
+        // Debounce the change for better performance using memory manager
+        memoryManager.createTimeout(() => {
+          onImageChange({
+            rotation: rotationValue,
+          })
+        }, GESTURE_CONFIG.DEBOUNCE_DELAY)
       }
     },
     [image, onImageChange]
@@ -352,10 +707,10 @@ export function ProfileUploadArea({
         <div className='space-y-4'>
           {/* Decorative background */}
           <div className='relative'>
-            <div className='relative aspect-square bg-gradient-to-br from-white via-gray-50/50 to-white dark:from-gray-800 dark:via-gray-750 dark:to-gray-800 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm'>
+            <div className='relative aspect-square bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 dark:from-gray-800 dark:via-gray-750 dark:to-gray-800 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60'>
               <Stage
                 height={stageSize.height}
-                style={{ width: '100%', height: '100%' }}
+                style={{ width: '100%', height: '100%', touchAction: 'none' }}
                 width={stageSize.width}
                 onClick={handleStageClick}
                 onTap={handleStageClick}
@@ -367,7 +722,11 @@ export function ProfileUploadArea({
                     isSelected={isSelected}
                     opacity={0.8}
                     onChange={onImageChange || (() => {})}
+                    onHideGestureHint={hideGestureHint}
                     onSelect={onImageSelect || (() => {})}
+                    onShowGestureHint={showGestureHintMessage}
+                    onShowGestureVisualFeedback={showGestureVisualFeedback}
+                    onHideGestureVisualFeedback={hideGestureVisualFeedback}
                   />
                   {/* Standard template image (on top of user image) */}
                   <StandardTemplateImage
@@ -378,66 +737,86 @@ export function ProfileUploadArea({
                   />
                 </Layer>
               </Stage>
+              
+              {/* Gesture Visual Feedback Overlay */}
+              <GestureVisualFeedback
+                isVisible={gestureVisualFeedback.isVisible}
+                gestureType={gestureVisualFeedback.gestureType}
+                centerPoint={gestureVisualFeedback.centerPoint}
+                scaleValue={gestureVisualFeedback.scaleValue}
+                rotationValue={gestureVisualFeedback.rotationValue}
+                stageSize={stageSize}
+              />
             </div>
           </div>
 
           {/* Image Controls */}
-          <div className='p-4 space-y-4'>
-            {/* Scale Control */}
-            <div className='space-y-2'>
-              <div className='flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300'>
-                <ZoomIn className='w-4 h-4' />
-                <span>{t('detection.profileView.scale')}</span>
+          <div className='p-3 sm:p-4 space-y-3 sm:space-y-4'>
+            {/* Scale Control - Hidden on mobile */}
+            {!isMobile && (
+              <div className='space-y-2'>
+                <div className='flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300'>
+                  <ZoomIn className='w-4 h-4' />
+                  <span>{t('detection.profileView.scale')}</span>
+                </div>
+                <div className='flex items-center gap-3'>
+                  <Slider
+                    className='flex-1'
+                    color='primary'
+                    maxValue={300}
+                    minValue={0}
+                    step={1}
+                    value={currentScalePercentage}
+                    onChange={handleScaleChange}
+                  />
+                  <Input
+                    className='w-20'
+                    endContent={
+                      <span className='text-xs text-gray-500'>%</span>
+                    }
+                    max={300}
+                    min={0}
+                    size='sm'
+                    step={1}
+                    type='number'
+                    value={currentScalePercentage.toString()}
+                    onChange={handleScaleInputChange}
+                  />
+                </div>
               </div>
-              <div className='flex items-center gap-3'>
-                <Slider
-                  className='flex-1'
-                  color='primary'
-                  maxValue={300}
-                  minValue={0}
-                  step={1}
-                  value={Math.round(image.scaleX * 100)}
-                  onChange={handleScaleChange}
-                />
-                <Input
-                  className='w-20'
-                  endContent={<span className='text-xs text-gray-500'>%</span>}
-                  max={300}
-                  min={0}
-                  size='sm'
-                  step={1}
-                  type='number'
-                  value={Math.round(image.scaleX * 100).toString()}
-                  onChange={handleScaleInputChange}
-                />
-              </div>
-            </div>
+            )}
 
-            {/* Rotation Control */}
+            {/* Rotation Control - Enhanced for mobile */}
             <div className='space-y-2'>
               <div className='flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300'>
                 <RotateCw className='w-4 h-4' />
                 <span>{t('detection.profileView.rotation')}</span>
+                {isMobile && (
+                  <span className='text-xs text-gray-500 ml-auto'>精确控制</span>
+                )}
               </div>
-              <div className='flex items-center gap-3'>
+              <div className='flex items-center gap-2 sm:gap-3'>
                 <Slider
                   className='flex-1'
                   color='primary'
                   maxValue={360}
                   minValue={-360}
                   step={1}
-                  value={image.rotation}
+                  value={currentRotationValue}
                   onChange={handleRotationChange}
+                  size={isMobile ? 'md' : 'sm'}
                 />
                 <Input
-                  className='w-20'
-                  endContent={<span className='text-xs text-gray-500'>°</span>}
+                  className={isMobile ? 'w-16' : 'w-20'}
+                  endContent={
+                    <span className='text-xs text-gray-500'>°</span>
+                  }
                   max={360}
                   min={-360}
                   size='sm'
                   step={1}
                   type='number'
-                  value={Math.round(image.rotation).toString()}
+                  value={currentRotationValue.toString()}
                   onChange={handleRotationInputChange}
                 />
               </div>

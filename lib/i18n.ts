@@ -990,8 +990,8 @@ export const translations: TranslationKeys = {
     en: 'Maintain natural posture',
   },
   'detection.profileView.shootingTips.tip3Desc': {
-    zh: '确保头部轮廓清晰可见',
-    en: 'Ensure head contour is clearly visible',
+    zh: '让宝宝保持舒适放松的状态，避免强迫摆姿势',
+    en: 'Keep baby comfortable and relaxed, avoid forcing poses',
   },
   'detection.profileView.shootingTips.safety': {
     zh: '所有拍摄请确保宝宝安全、健康！',
