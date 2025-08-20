@@ -18,6 +18,7 @@ import {
 } from './utils/canvasDrawing'
 import CICard from './CICard'
 import CVAICard from './CVAICard'
+import ShootingTipsDisplay from './ShootingTipsDisplay'
 
 import { getModelInstance, type ModelPrediction } from '@/lib/model-inference'
 import { useLocale } from '@/contexts/LocaleContext'
@@ -603,75 +604,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
               <h3 className='text-2xl font-bold text-gray-900 dark:text-white'>
                 {t('detection.topView.title')}
               </h3>
-              <Tooltip
-                showArrow
-                content={
-                  <div className='max-w-sm p-2'>
-                    <div className='space-y-2'>
-                      <div className='flex items-start gap-2'>
-                        <span className='text-blue-500 font-bold text-xs mt-0.5'>
-                          1
-                        </span>
-                        <div>
-                          <p className='font-medium text-xs'>
-                            {t('detection.topView.shootingTips.tip1')}
-                          </p>
-                          <p className='text-xs text-gray-600 dark:text-gray-400'>
-                            {t('detection.topView.shootingTips.tip1Detail')}
-                          </p>
-                        </div>
-                      </div>
-                      <div className='flex items-start gap-2'>
-                        <span className='text-green-500 font-bold text-xs mt-0.5'>
-                          2
-                        </span>
-                        <div>
-                          <p className='font-medium text-xs'>
-                            {t('detection.topView.shootingTips.tip2')}
-                          </p>
-                          <p className='text-xs text-gray-600 dark:text-gray-400'>
-                            {t('detection.topView.shootingTips.tip2Detail')}
-                          </p>
-                        </div>
-                      </div>
-                      <div className='flex items-start gap-2'>
-                        <span className='text-yellow-500 font-bold text-xs mt-0.5'>
-                          3
-                        </span>
-                        <div>
-                          <p className='font-medium text-xs'>
-                            {t('detection.topView.shootingTips.tip3')}
-                          </p>
-                          <p className='text-xs text-gray-600 dark:text-gray-400'>
-                            {t('detection.topView.shootingTips.tip3Detail')}
-                          </p>
-                        </div>
-                      </div>
-                      <div className='flex items-start gap-2'>
-                        <span className='text-purple-500 font-bold text-xs mt-0.5'>
-                          4
-                        </span>
-                        <div>
-                          <p className='font-medium text-xs'>
-                            {t('detection.topView.shootingTips.tip4')}
-                          </p>
-                          <p className='text-xs text-gray-600 dark:text-gray-400'>
-                            {t('detection.topView.shootingTips.tip4Detail')}
-                          </p>
-                        </div>
-                      </div>
-                      <p className='text-xs text-red-600 dark:text-red-400 font-medium mt-3'>
-                        {t('detection.topView.shootingTips.safety')}
-                      </p>
-                    </div>
-                  </div>
-                }
-                placement='bottom'
-              >
-                <span className='inline-flex items-center gap-1 px-2 py-1 bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 rounded-full text-xs font-medium cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors duration-200 border border-blue-200/50 dark:border-blue-700/50'>
-                  {t('detection.topView.shootingTips.title')}
-                </span>
-              </Tooltip>
+              <ShootingTipsDisplay t={t} />
             </div>
             <p className='text-gray-600 dark:text-gray-400'>
               {t('detection.topView.description')}
