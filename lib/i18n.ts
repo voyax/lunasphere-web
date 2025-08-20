@@ -962,8 +962,8 @@ export const translations: TranslationKeys = {
     en: 'Upload left and right profile photos of your baby for precise comparison with standard head contours',
   },
   'detection.profileView.pageDescription': {
-    zh: '通过专业的侧面轮廓对比分析，帮助您更好地了解宝宝的头型发育情况',
-    en: 'Professional profile contour comparison analysis to help you better understand your baby\'s head shape development',
+    zh: '手动比对宝宝侧面轮廓与标准轮廓，作为CI、CVAI测量补充，帮助家长直观理解宝宝头型发育特征',
+    en: 'Compare your baby\'s profile against standard contours to complement CI and CVAI measurements, giving parents clear insights into head shape development',
   },
   'detection.profileView.shootingTips.title': {
     zh: '拍摄要点',
