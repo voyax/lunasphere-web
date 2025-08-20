@@ -1458,6 +1458,36 @@ export const translations: TranslationKeys = {
     zh: 'https://www.columbiaasia.com/malaysia/health-articles/how-pillows-endanger-babies/',
     en: 'https://www.columbiaasia.com/malaysia/health-articles/how-pillows-endanger-babies/',
   },
+
+  // FAQ UI Text
+  'faq.searchPlaceholder': {
+    zh: '搜索问题...',
+    en: 'Search questions...',
+  },
+  'faq.allQuestions': {
+    zh: '全部问题',
+    en: 'All Questions',
+  },
+  'faq.searchResults.prefix': {
+    zh: '找到',
+    en: 'Found',
+  },
+  'faq.searchResults.suffix': {
+    zh: '个相关问题',
+    en: 'related questions',
+  },
+  'faq.noResults.title': {
+    zh: '未找到相关问题',
+    en: 'No related questions found',
+  },
+  'faq.noResults.description': {
+    zh: '请尝试其他关键词或选择不同的分类',
+    en: 'Please try other keywords or select a different category',
+  },
+  'faq.medicalDisclaimerTitle': {
+    zh: '医疗免责声明',
+    en: 'Medical Disclaimer',
+  },
 }
 
 // Import dev tools in development to enable automatic monitoring

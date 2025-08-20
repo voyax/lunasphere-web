@@ -207,7 +207,7 @@ export default function FAQPage() {
                   <Search className='absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400' />
                   <input
                     className='w-full pl-12 pr-4 py-3 bg-white/90 backdrop-blur-sm rounded-2xl border-0 focus:ring-2 focus:ring-white/50 focus:bg-white transition-all duration-200 placeholder-gray-500'
-                    placeholder='搜索问题...'
+                    placeholder={t('faq.searchPlaceholder')}
                     type='text'
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
@@ -233,7 +233,7 @@ export default function FAQPage() {
               >
                 <span className='flex items-center gap-2'>
                   <span className='text-lg'>📋</span>
-                  全部问题
+                  {t('faq.allQuestions')}
                   <span
                     className={`text-xs px-2 py-1 rounded-full ${
                       selectedCategory === null ? 'bg-white/20' : 'bg-gray-100'
@@ -282,11 +282,7 @@ export default function FAQPage() {
           {(searchQuery || selectedCategory) && (
             <div className='mb-8 text-center'>
               <p className='text-gray-600'>
-                找到{' '}
-                <span className='font-semibold text-gray-900'>
-                  {filteredItems.length}
-                </span>{' '}
-                个相关问题
+                {t('faq.searchResults.prefix')} <span className='font-semibold text-gray-900'>{filteredItems.length}</span> {t('faq.searchResults.suffix')}
               </p>
             </div>
           )}
@@ -297,10 +293,10 @@ export default function FAQPage() {
               <div className='text-center py-16'>
                 <div className='text-6xl mb-4'>🔍</div>
                 <h3 className='text-xl font-semibold text-gray-900 mb-2'>
-                  未找到相关问题
+                  {t('faq.noResults.title')}
                 </h3>
                 <p className='text-gray-600'>
-                  请尝试其他关键词或选择不同的分类
+                  {t('faq.noResults.description')}
                 </p>
               </div>
             ) : (
@@ -372,7 +368,7 @@ export default function FAQPage() {
             <div className='flex items-start gap-6'>
               <div className='flex-1'>
                 <h3 className='text-xl font-bold text-amber-900 mb-3'>
-                  医疗免责声明
+                  {t('faq.medicalDisclaimerTitle')}
                 </h3>
                 <p className='text-amber-800 leading-relaxed text-lg'>
                   {t('faq.medicalDisclaimer')}
