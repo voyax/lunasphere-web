@@ -935,7 +935,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
 
                 {/* Legend - only show measurement annotations */}
                 {analysisResult?.measurements && (
-                  <div className='bg-gray-50 dark:bg-gray-800 rounded-lg p-6'>
+                  <div className='hidden md:block bg-gray-50 dark:bg-gray-800 rounded-lg p-6'>
                     <h6 className='text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4'>
                       {t('detection.topView.analysis.measurementAnnotations')}
                     </h6>

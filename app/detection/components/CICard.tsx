@@ -174,13 +174,13 @@ export default function CICard({ value, measurements }: CICardProps) {
         <div className='absolute left-0' style={{ width: '42.9%' }}>
           <div className='relative'>
             {/* Left vertical line */}
-            <div className='absolute left-0 w-px h-6 bg-gray-400' />
+            <div className='absolute left-0 w-px h-4 bg-gray-400' />
             {/* Right vertical line */}
-            <div className='absolute right-0 w-px h-6 bg-gray-400' />
+            <div className='absolute right-0 w-px h-4 bg-gray-400' />
             {/* Left horizontal line */}
-            <div className='absolute left-0 top-3 w-2/5 h-px bg-gray-400' />
+            <div className='absolute left-0 top-2 w-2/5 h-px bg-gray-400' />
             {/* Right horizontal line */}
-            <div className='absolute right-0 top-3 w-2/5 h-px bg-gray-400' />
+            <div className='absolute right-0 top-2 w-2/5 h-px bg-gray-400' />
             {/* Text in the middle */}
             <div className='absolute left-1/2 top-3 transform -translate-x-1/2 -translate-y-1/2 text-xs text-gray-600 font-medium whitespace-nowrap bg-white dark:bg-gray-800 px-1'>
               {t('detection.analysis.ci.longHead')}
@@ -192,13 +192,13 @@ export default function CICard({ value, measurements }: CICardProps) {
         <div className='absolute right-0' style={{ width: '42.9%' }}>
           <div className='relative'>
             {/* Left vertical line */}
-            <div className='absolute left-0 w-px h-6 bg-gray-400' />
+            <div className='absolute left-0 w-px h-4 bg-gray-400' />
             {/* Right vertical line */}
-            <div className='absolute right-0 w-px h-6 bg-gray-400' />
+            <div className='absolute right-0 w-px h-4 bg-gray-400' />
             {/* Left horizontal line */}
-            <div className='absolute left-0 top-3 w-2/5 h-px bg-gray-400' />
+            <div className='absolute left-0 top-2 w-2/5 h-px bg-gray-400' />
             {/* Right horizontal line */}
-            <div className='absolute right-0 top-3 w-2/5 h-px bg-gray-400' />
+            <div className='absolute right-0 top-2 w-2/5 h-px bg-gray-400' />
             {/* Text in the middle */}
             <div className='absolute left-1/2 top-3 transform -translate-x-1/2 -translate-y-1/2 text-xs text-gray-600 font-medium whitespace-nowrap bg-white dark:bg-gray-800 px-1'>
               {t('detection.analysis.ci.flatHead')}
