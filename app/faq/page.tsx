@@ -187,9 +187,9 @@ export default function FAQPage() {
           <div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent dark:from-gray-950 dark:to-transparent' />
         </div>
 
-        <div className='mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8'>
+        <div className='mx-auto max-w-7xl px-4 lg:py-16 sm:py-0 sm:px-6 lg:px-8'>
           {/* Category Filter */}
-          <div className='mb-12'>
+          <div className='mb-12 hidden sm:block'>
             <div className='flex flex-wrap gap-3 justify-center'>
               <button
                 className={`group px-6 py-3 rounded-2xl font-medium transition-all duration-300 transform hover:scale-105 ${
