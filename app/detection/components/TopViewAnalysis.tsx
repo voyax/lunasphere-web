@@ -41,11 +41,11 @@ const UploadStateIndicator = memo(
       case ModelState.LOADING:
         return (
           <>
-            <div className='w-12 h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-blue-50/80 dark:bg-blue-950/80 border-blue-200/50 dark:border-blue-700/50'>
-              <div className='w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
+            <div className='w-14 h-14 md:w-12 md:h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-blue-50/80 dark:bg-blue-950/80 border-blue-200/50 dark:border-blue-700/50'>
+              <div className='w-6 h-6 md:w-5 md:h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
             </div>
             <div className='text-center'>
-              <p className='text-base font-medium drop-shadow-sm text-blue-600 dark:text-blue-400'>
+              <p className='text-sm md:text-base font-medium drop-shadow-sm text-blue-600 dark:text-blue-400'>
                 {t('detection.model.loading')}
               </p>
             </div>
@@ -55,11 +55,11 @@ const UploadStateIndicator = memo(
       case ModelState.NOT_LOADED:
         return (
           <>
-            <div className='w-12 h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/50 dark:border-gray-600/50'>
-              <Upload className='w-5 h-5 text-gray-400 dark:text-gray-500' />
+            <div className='w-14 h-14 md:w-12 md:h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/50 dark:border-gray-600/50'>
+              <Upload className='w-6 h-6 md:w-5 md:h-5 text-gray-400 dark:text-gray-500' />
             </div>
             <div className='text-center'>
-              <p className='text-base font-medium drop-shadow-sm text-gray-500 dark:text-gray-500'>
+              <p className='text-sm md:text-base font-medium drop-shadow-sm text-gray-500 dark:text-gray-500'>
                 {t('detection.model.notLoadedMessage')}
               </p>
             </div>
@@ -69,11 +69,11 @@ const UploadStateIndicator = memo(
       case ModelState.ERROR:
         return (
           <>
-            <div className='w-12 h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-red-50/80 dark:bg-red-950/80 border-red-200/50 dark:border-red-700/50'>
-              <span className='text-red-500 text-lg font-bold'>✕</span>
+            <div className='w-14 h-14 md:w-12 md:h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-red-50/80 dark:bg-red-950/80 border-red-200/50 dark:border-red-700/50'>
+              <span className='text-red-500 text-xl md:text-lg font-bold'>✕</span>
             </div>
             <div className='text-center'>
-              <p className='text-base font-medium drop-shadow-sm text-red-600 dark:text-red-400'>
+              <p className='text-sm md:text-base font-medium drop-shadow-sm text-red-600 dark:text-red-400'>
                 {t('detection.model.loadFailed')}
               </p>
             </div>
@@ -84,11 +84,11 @@ const UploadStateIndicator = memo(
       default:
         return (
           <>
-            <div className='w-12 h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-white/80 dark:bg-gray-700/80 border-white/50 dark:border-gray-600/50 hover:scale-102'>
-              <Upload className='w-5 h-5 text-gray-600 dark:text-gray-400' />
+            <div className='w-14 h-14 md:w-12 md:h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-white/80 dark:bg-gray-700/80 border-white/50 dark:border-gray-600/50 hover:scale-102 active:scale-95 md:active:scale-102'>
+              <Upload className='w-6 h-6 md:w-5 md:h-5 text-gray-600 dark:text-gray-400' />
             </div>
             <div className='text-center'>
-              <p className='text-base font-medium drop-shadow-sm text-gray-700 dark:text-gray-300'>
+              <p className='text-sm md:text-base font-medium drop-shadow-sm text-gray-700 dark:text-gray-300'>
                 {t('detection.topView.upload.clickOrDrag')}
               </p>
             </div>
@@ -165,14 +165,14 @@ const AnalysisStateDisplay = memo(
       case AnalysisState.WAITING_FOR_IMAGE:
         return (
           <>
-            <div className='w-20 h-20 mx-auto bg-white dark:bg-gray-700 rounded-2xl flex items-center justify-center shadow-lg'>
-              <Camera className='w-10 h-10 text-gray-400' />
+            <div className='w-16 h-16 md:w-20 md:h-20 mx-auto bg-white dark:bg-gray-700 rounded-2xl flex items-center justify-center shadow-lg'>
+              <Camera className='w-8 h-8 md:w-10 md:h-10 text-gray-400' />
             </div>
-            <div>
-              <p className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
+            <div className='text-center px-2'>
+              <p className='text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-1 md:mb-2'>
                 {t('detection.topView.analysis.waitingUpload')}
               </p>
-              <p className='text-gray-500 dark:text-gray-400'>
+              <p className='text-sm md:text-base text-gray-500 dark:text-gray-400'>
                 {t('detection.topView.analysis.waitingUploadDesc')}
               </p>
             </div>
@@ -182,14 +182,14 @@ const AnalysisStateDisplay = memo(
       case AnalysisState.ANALYZING:
         return (
           <>
-            <div className='w-12 h-12 mx-auto bg-blue-50/80 dark:bg-blue-950/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/50'>
-              <div className='w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
+            <div className='w-14 h-14 md:w-12 md:h-12 mx-auto bg-blue-50/80 dark:bg-blue-950/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/50'>
+              <div className='w-6 h-6 md:w-5 md:h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
             </div>
-            <div>
-              <p className='text-lg font-semibold text-blue-600 dark:text-blue-400 mb-2'>
+            <div className='text-center px-2'>
+              <p className='text-base md:text-lg font-semibold text-blue-600 dark:text-blue-400 mb-1 md:mb-2'>
                 {t('detection.topView.analysis.analyzing')}
               </p>
-              <p className='text-gray-500 dark:text-gray-400'>
+              <p className='text-sm md:text-base text-gray-500 dark:text-gray-400'>
                 {t('detection.topView.analysis.analyzingDesc')}
               </p>
             </div>
@@ -199,14 +199,14 @@ const AnalysisStateDisplay = memo(
       case AnalysisState.READY_TO_ANALYZE:
         return (
           <>
-            <div className='w-20 h-20 mx-auto bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center shadow-lg border border-green-200 dark:border-green-700'>
-              <CheckCircle className='w-10 h-10 text-green-600 dark:text-green-400' />
+            <div className='w-16 h-16 md:w-20 md:h-20 mx-auto bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center shadow-lg border border-green-200 dark:border-green-700'>
+              <CheckCircle className='w-8 h-8 md:w-10 md:h-10 text-green-600 dark:text-green-400' />
             </div>
-            <div>
-              <p className='text-lg font-semibold text-gray-900 dark:text-white mb-2'>
+            <div className='text-center px-2'>
+              <p className='text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-1 md:mb-2'>
                 {t('detection.topView.analysis.readyToAnalyze')}
               </p>
-              <p className='text-gray-500 dark:text-gray-400'>
+              <p className='text-sm md:text-base text-gray-500 dark:text-gray-400'>
                 {t('detection.topView.analysis.readyToAnalyzeDesc')}
               </p>
             </div>
@@ -368,6 +368,9 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(
     null
   )
+  
+  // State for drag and drop
+  const [isDragOver, setIsDragOver] = useState(false)
 
   // Ref for file input
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -498,6 +501,46 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
     []
   )
 
+  // Handle drag and drop events
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (modelState === ModelState.LOADED) {
+      setIsDragOver(true)
+    }
+  }, [modelState])
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragOver(false)
+  }, [])
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragOver(false)
+    
+    if (modelState !== ModelState.LOADED) return
+    
+    const files = e.dataTransfer.files
+    const file = files[0]
+    
+    if (file && file.type.startsWith('image/')) {
+      const url = URL.createObjectURL(file)
+      const imageData = {
+        file,
+        url,
+        rotation: 0,
+        scale: 1,
+      }
+
+      setTopImage(imageData)
+      setAnalysisState(AnalysisState.READY_TO_ANALYZE)
+      setAnalysisResult(null)
+    }
+  }, [modelState])
+
   const setImageRotation = useCallback(
     (rotation: number) => {
       if (topImage) {
@@ -585,60 +628,65 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
   }, [topImage, modelState, modelPath, confidenceThreshold, t])
 
   return (
-    <div className='max-w-7xl mx-auto space-y-6'>
+    <div className='max-w-7xl mx-auto space-y-4 md:space-y-6 px-4 sm:px-6 lg:px-8'>
       {/* Enhanced Hero Section integrated with Top View Analysis */}
-      <div className='text-center mb-12'>
+      <div className='text-center mb-6 md:mb-12'>
         {/* Main Title */}
-        <h1 className='text-4xl md:text-5xl lg:text-6xl font-light mb-6 tracking-tight leading-tight'>
+        <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light mb-4 md:mb-6 tracking-tight leading-tight'>
           <span className='font-extralight text-gray-900 dark:text-white drop-shadow-sm'>
             {t('detection.topView.title')}
           </span>
         </h1>
 
         {/* Subtitle */}
-        <p className='text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed font-light mb-8'>
+        <p className='text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed font-light mb-6 md:mb-8 px-4'>
           {t('detection.pageSubtitle')}
         </p>
 
         {/* Feature highlights */}
-        <div className='flex flex-wrap justify-center gap-4 max-w-2xl mx-auto mb-8'>
-          <div className='inline-flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-950/20 rounded-full text-blue-600 dark:text-blue-400 text-sm font-medium border border-blue-200 dark:border-blue-800'>
-            <span className='text-base'>🧠</span>
-            {t('detection.topView.features.deepLearning')}
+        <div className='flex flex-wrap justify-center gap-2 md:gap-4 max-w-2xl mx-auto mb-6 md:mb-8 px-2'>
+          <div className='inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-blue-50 dark:bg-blue-950/20 rounded-full text-blue-600 dark:text-blue-400 text-xs md:text-sm font-medium border border-blue-200 dark:border-blue-800'>
+            <span className='text-sm md:text-base'>🧠</span>
+            <span className='hidden sm:inline'>{t('detection.topView.features.deepLearning')}</span>
+            <span className='sm:hidden'>AI</span>
           </div>
-          <div className='inline-flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-950/20 rounded-full text-green-600 dark:text-green-400 text-sm font-medium border border-green-200 dark:border-green-800'>
-            <span className='text-base'>🔒</span>
-            {t('detection.topView.features.privacy')}
+          <div className='inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-green-50 dark:bg-green-950/20 rounded-full text-green-600 dark:text-green-400 text-xs md:text-sm font-medium border border-green-200 dark:border-green-800'>
+            <span className='text-sm md:text-base'>🔒</span>
+            <span className='hidden sm:inline'>{t('detection.topView.features.privacy')}</span>
+            <span className='sm:hidden'>隐私</span>
           </div>
-          <div className='inline-flex items-center gap-2 px-4 py-2 bg-purple-50 dark:bg-purple-950/20 rounded-full text-purple-600 dark:text-purple-400 text-sm font-medium border border-purple-200 dark:border-purple-800'>
-            <span className='text-base'>⚕️</span>
-            {t('detection.topView.features.medical')}
+          <div className='inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-purple-50 dark:bg-purple-950/20 rounded-full text-purple-600 dark:text-purple-400 text-xs md:text-sm font-medium border border-purple-200 dark:border-purple-800'>
+            <span className='text-sm md:text-base'>⚕️</span>
+            <span className='hidden sm:inline'>{t('detection.topView.features.medical')}</span>
+            <span className='sm:hidden'>医疗</span>
           </div>
         </div>
       </div>
 
       {/* Analysis Interface */}
-      <div className='grid grid-cols-1 xl:grid-cols-2 gap-16 py-8'>
+      <div className='grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-8 lg:gap-12 xl:gap-16 py-4 md:py-8'>
         {/* Upload Section */}
-        <div className='space-y-6'>
-          <div className='text-center xl:text-left'>
-            <div className='flex items-center gap-2 justify-center xl:justify-start mb-2'>
-              <h3 className='text-2xl font-bold text-gray-900 dark:text-white'>
+        <div className='space-y-4 md:space-y-6'>
+          <div className='text-center xl:text-left px-2 md:px-0'>
+            <div className='flex items-center gap-2 justify-center xl:justify-start mb-2 flex-wrap'>
+              <h3 className='text-xl md:text-2xl font-bold text-gray-900 dark:text-white'>
                 {t('detection.topView.title')}
               </h3>
               <ShootingTipsDisplay t={t} />
             </div>
-            <p className='text-gray-600 dark:text-gray-400'>
+            <p className='text-sm md:text-base text-gray-600 dark:text-gray-400'>
               {t('detection.topView.description')}
             </p>
           </div>
 
           {!topImage ? (
             <div
-              className={`relative aspect-square border-2 border-dashed rounded-2xl overflow-hidden transition-all duration-300 ${
+              className={`relative aspect-square border-2 border-dashed rounded-2xl overflow-hidden transition-all duration-300 touch-manipulation ${
                 modelState !== ModelState.LOADED
                   ? 'border-gray-200 dark:border-gray-700 cursor-not-allowed opacity-60'
-                  : 'border-gray-300 dark:border-gray-600 cursor-pointer hover:border-primary'
+                  : isDragOver
+                    ? 'border-primary bg-primary/5 scale-[1.02]'
+                    : 'border-gray-300 dark:border-gray-600 cursor-pointer hover:border-primary active:border-primary active:scale-[0.98] md:active:scale-100'
               }`}
               role='button'
               tabIndex={modelState === ModelState.LOADED ? 0 : -1}
@@ -656,6 +704,9 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                   fileInputRef.current?.click()
                 }
               }}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
             >
               {/* Background placeholder image with annotations */}
               <div className='absolute inset-0'>
@@ -697,9 +748,9 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
 
               {/* Upload content overlay */}
               <div className='relative z-10 flex items-center justify-center h-full'>
-                <div className='text-center space-y-4 p-6'>
+                <div className='text-center space-y-3 md:space-y-4 p-4 md:p-6'>
                   {/* Centered upload prompt */}
-                  <div className='flex flex-col items-center justify-center gap-3'>
+                  <div className='flex flex-col items-center justify-center gap-2 md:gap-3'>
                     <UploadStateIndicator modelState={modelState} t={t} />
                   </div>
                   {/* Status info with refined style */}
@@ -708,7 +759,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
               </div>
             </div>
           ) : (
-            <div className='space-y-6'>
+            <div className='space-y-4 md:space-y-6'>
               <div className='relative aspect-square bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700'>
                 <NextImage
                   fill
@@ -737,10 +788,10 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                   </div>
                 </div>
               </div>
-              <div className='space-y-4'>
+              <div className='space-y-3 md:space-y-4'>
                 {/* Rotation Control */}
-                <div className='flex items-center justify-between'>
-                  <div className='flex items-center gap-2'>
+                <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-2'>
+                  <div className='flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2'>
                     <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
                       {t('detection.topView.upload.rotation')}
                     </span>
@@ -748,14 +799,16 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                       {t('detection.topView.upload.rotationTip')}
                     </span>
                   </div>
-                  <RotationControl
-                    rotation={topImage?.rotation || 0}
-                    onChange={rotation => setImageRotation(rotation)}
-                  />
+                  <div className='flex justify-center sm:justify-end'>
+                    <RotationControl
+                      rotation={topImage?.rotation || 0}
+                      onChange={rotation => setImageRotation(rotation)}
+                    />
+                  </div>
                 </div>
 
                 {/* Action Buttons */}
-                <div className='flex gap-2'>
+                <div className='flex flex-col sm:flex-row gap-3 sm:gap-2'>
                   <Tooltip
                     showArrow
                     content={
@@ -773,12 +826,12 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                     }
                   >
                     <Button
-                      className='flex-1 h-10 bg-primary text-white font-medium'
+                      className='w-full sm:flex-1 h-12 sm:h-10 bg-primary text-white font-medium touch-manipulation'
                       disabled={
                         analysisState === AnalysisState.ANALYZING ||
                         modelState !== ModelState.LOADED
                       }
-                      size='md'
+                      size='lg'
                       startContent={
                         modelState === ModelState.LOADING ? (
                           <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin' />
@@ -809,9 +862,9 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                     isDisabled={modelState === ModelState.LOADED}
                   >
                     <Button
-                      className='h-10 px-3'
+                      className='w-full sm:w-auto h-12 sm:h-10 px-4 sm:px-3 touch-manipulation'
                       disabled={modelState !== ModelState.LOADED}
-                      size='md'
+                      size='lg'
                       startContent={
                         modelState === ModelState.LOADING ? (
                           <div className='w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin' />
@@ -846,12 +899,12 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
         </div>
 
         {/* Results Section */}
-        <div className='space-y-6'>
-          <div className='text-center xl:text-left'>
-            <h3 className='text-2xl font-bold text-gray-900 dark:text-white mb-2'>
+        <div className='space-y-4 md:space-y-6'>
+          <div className='text-center xl:text-left px-2 md:px-0'>
+            <h3 className='text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2'>
               {t('detection.topView.analysisResult')}
             </h3>
-            <p className='text-gray-600 dark:text-gray-400'>
+            <p className='text-sm md:text-base text-gray-600 dark:text-gray-400'>
               {t('detection.topView.analysisDescription')}
             </p>
           </div>
