@@ -37,7 +37,7 @@
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"No tests specified, skipping...\" && exit 0",
     "clean": "rm -rf .next out",
     "analyze": "ANALYZE=true npm run build",
     "postinstall": "npm run type-check"
