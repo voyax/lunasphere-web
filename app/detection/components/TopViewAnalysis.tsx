@@ -670,7 +670,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
           <div className='text-center xl:text-left px-2 md:px-0'>
             <div className='flex items-center gap-2 justify-center xl:justify-start mb-2 flex-wrap'>
               <h3 className='text-xl md:text-2xl font-bold text-gray-900 dark:text-white'>
-                {t('detection.topView.title')}
+                {t('detection.topView.uploadTitle')}
               </h3>
               <ShootingTipsDisplay t={t} />
             </div>
@@ -826,12 +826,13 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                     }
                   >
                     <Button
-                      className='w-full sm:flex-1 h-12 sm:h-10 bg-primary text-white font-medium touch-manipulation'
+                      className='w-full sm:flex-1 h-12 sm:h-10 touch-manipulation'
                       disabled={
                         analysisState === AnalysisState.ANALYZING ||
                         modelState !== ModelState.LOADED
                       }
                       size='lg'
+                      color='primary'
                       startContent={
                         modelState === ModelState.LOADING ? (
                           <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin' />
@@ -873,6 +874,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                         )
                       }
                       variant='bordered'
+                      color='primary'
                       onClick={() => {
                         if (modelState === ModelState.LOADED) {
                           fileInputRef.current?.click()

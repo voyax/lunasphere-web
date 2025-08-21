@@ -746,6 +746,10 @@ export const translations: TranslationKeys = {
     zh: '婴儿头型测量',
     en: 'Baby Head Shape Measurement',
   },
+  'detection.topView.uploadTitle': {
+    zh: '婴儿头型俯视图',
+    en: 'Baby Head Shape Top View',
+  },
   'detection.topView.subtitle': {
     zh: '俯视图上传',
     en: 'Top View Upload',
