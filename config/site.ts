@@ -33,7 +33,7 @@ export const siteConfig = {
     },
   ],
   links: {
-    github: 'https://github.com/head-start-project/head-start-web',
+    github: 'https://github.com/voyax/lunasphere-web',
     website: 'https://head.melolib.com',
   },
 }

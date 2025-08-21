@@ -1,5 +1,5 @@
 {
-  "name": "head-start-web",
+  "name": "lunasphere-web",
   "version": "1.0.0",
   "description": "A comprehensive educational platform dedicated to infant head shape development with AI-powered detection tools",
   "keywords": [
@@ -14,17 +14,17 @@
     "react",
     "typescript"
   ],
-  "homepage": "https://github.com/voyax/baby-head-web#readme",
+  "homepage": "https://github.com/voyax/lunasphere-web#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/voyax/baby-head-web.git"
+    "url": "git+https://github.com/voyax/lunasphere-web.git"
   },
   "bugs": {
-    "url": "https://github.com/voyax/baby-head-web/issues"
+    "url": "https://github.com/voyax/lunasphere-web/issues"
   },
   "license": "GPL-3.0",
   "author": {
-    "name": "Head Start Project Contributors",
+    "name": "LunaSphere Project Contributors",
     "email": "hi@melolib.com"
   },
   "private": false,

@@ -51,7 +51,7 @@ fi
 print_status "Found pre-built files in .next directory"
 
 # Get image name and tag (following build.sh naming convention)
-IMAGE_NAME="voyax/head-start-web"
+IMAGE_NAME="voyax/lunasphere-web"
 VERSION="${1:-dev}"
 TAG="${VERSION}"
 FULL_IMAGE_NAME="${IMAGE_NAME}:${TAG}"

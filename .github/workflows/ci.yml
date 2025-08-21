@@ -129,7 +129,7 @@ jobs:
       uses: docker/metadata-action@v5
       with:
         images: |
-          ${{ secrets.DOCKER_USERNAME }}/head-start-web
+          ${{ secrets.DOCKER_USERNAME }}/lunasphere-web
         tags: |
           type=ref,event=branch
           type=ref,event=pr
@@ -254,7 +254,7 @@ jobs:
         vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
         scope: ${{ secrets.VERCEL_ORG_ID }}
         alias-domains: |
-          head-start-pr-{{PR_NUMBER}}.vercel.app
+          lunasphere-pr-{{PR_NUMBER}}.vercel.app
 
   notify-status:
     name: Notify Status

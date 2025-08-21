@@ -29,7 +29,7 @@ export const Footer = () => {
 
           {/* Copyright */}
           <p className='text-sm text-default-500'>
-            © {currentYear} Head Start
+            © {currentYear} LunaSphere
           </p>
         </div>
       </div>

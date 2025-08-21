@@ -6,7 +6,7 @@
 set -e
 
 # Configuration
-IMAGE_NAME="voyax/head-start-web"
+IMAGE_NAME="voyax/lunasphere-web"
 VERSION="${1:-dev}"
 TAG="${VERSION}"
 FULL_IMAGE_NAME="${IMAGE_NAME}:${TAG}"

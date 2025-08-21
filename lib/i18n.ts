@@ -29,7 +29,7 @@ export const translations: TranslationKeys = {
   // Site basic information
   'site.title': {
     zh: '小月颅',
-    en: 'XiaoYueLu',
+    en: 'LunaSphere',
   },
   'site.description': {
     zh: '科学认知婴儿头型发育，理性护理减少焦虑',

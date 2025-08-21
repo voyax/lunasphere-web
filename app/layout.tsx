@@ -94,7 +94,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: '小月颅',
-  alternateName: 'HeadStart',
+  alternateName: 'LunaSphere',
   url: 'https://head.melolib.com',
   description: '科学认知婴儿头型发育，理性护理减少焦虑',
   inLanguage: ['zh-CN', 'en-US'],

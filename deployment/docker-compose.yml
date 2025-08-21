@@ -5,9 +5,9 @@ version: '3.8'
 
 services:
   # Main application service
-  head-start-web:
-    image: ${IMAGE_NAME:-voyax/head-start-web}:${IMAGE_TAG:-latest}
-    container_name: head-start-${ENVIRONMENT:-dev}
+  lunasphere-web:
+    image: ${IMAGE_NAME:-voyax/lunasphere-web}:${IMAGE_TAG:-latest}
+    container_name: lunasphere-${ENVIRONMENT:-dev}
     restart: unless-stopped
     ports:
       - "${APP_PORT:-3000}:3000"
@@ -35,7 +35,7 @@ services:
           memory: 512M
           cpus: '0.5'
     networks:
-      - head-start-network
+      - lunasphere-network
     profiles:
       - dev
       - staging
@@ -44,7 +44,7 @@ services:
   # Reverse proxy for production (optional)
   caddy:
     image: caddy:2-alpine
-    container_name: head-start-proxy-${ENVIRONMENT:-dev}
+    container_name: lunasphere-proxy-${ENVIRONMENT:-dev}
     restart: unless-stopped
     ports:
       - "${HTTP_PORT:-80}:80"
@@ -55,61 +55,61 @@ services:
       - caddy_config:/config
     environment:
       - DOMAIN=${DOMAIN:-localhost}
-      - UPSTREAM_HOST=head-start-web
+      - UPSTREAM_HOST=lunasphere-web
       - UPSTREAM_PORT=3000
     depends_on:
-      head-start-web:
+      lunasphere-web:
         condition: service_healthy
     networks:
-      - head-start-network
+      - lunasphere-network
     profiles:
       - prod
 
   # Development tools (optional)
   adminer:
     image: adminer:4-standalone
-    container_name: head-start-adminer-${ENVIRONMENT:-dev}
+    container_name: lunasphere-adminer-${ENVIRONMENT:-dev}
     restart: unless-stopped
     ports:
       - "${ADMINER_PORT:-8080}:8080"
     environment:
       - ADMINER_DEFAULT_SERVER=db
     networks:
-      - head-start-network
+      - lunasphere-network
     profiles:
       - dev
 
 networks:
-  head-start-network:
+  lunasphere-network:
     driver: bridge
-    name: head-start-network-${ENVIRONMENT:-dev}
+    name: lunasphere-network-${ENVIRONMENT:-dev}
 
 volumes:
   caddy_data:
-    name: head-start-caddy-data-${ENVIRONMENT:-dev}
-  caddy_config:
-    name: head-start-caddy-config-${ENVIRONMENT:-dev}
+    name: lunasphere-caddy-data-${ENVIRONMENT:-dev}
+  caddy-config:
+    name: lunasphere-caddy-config-${ENVIRONMENT:-dev}
 
 # Environment-specific configurations
 # Use profiles to control which services run in each environment:
 #
 # Development:
 #   docker-compose --profile dev up -d
-#   - Runs: head-start-web, adminer
+#   - Runs: lunasphere-web, adminer
 #   - Ports: 3000 (app), 8080 (adminer)
 #
 # Staging:
 #   docker-compose --profile staging up -d
-#   - Runs: head-start-web
+#   - Runs: lunasphere-web
 #   - Ports: 3001 (app)
 #
 # Production:
 #   docker-compose --profile prod up -d
-#   - Runs: head-start-web, caddy
+#   - Runs: lunasphere-web, caddy
 #   - Ports: 80 (http), 443 (https)
 #
 # Environment Variables:
-#   IMAGE_NAME: Docker image name (default: head-start-web)
+#   IMAGE_NAME: Docker image name (default: lunasphere-web)
 #   IMAGE_TAG: Docker image tag (default: latest)
 #   ENVIRONMENT: Deployment environment (dev/staging/prod)
 #   APP_PORT: Application port mapping (default: 3000)
@@ -126,18 +126,18 @@ volumes:
 #    IMAGE_TAG=dev-abc1234 docker-compose --profile dev up -d
 #
 # 2. Staging with registry image:
-#    IMAGE_NAME=registry.example.com/head-start-web \
+#    IMAGE_NAME=registry.example.com/lunasphere-web \
 #    IMAGE_TAG=v1.0.0-abc1234 \
 #    ENVIRONMENT=staging \
 #    APP_PORT=3001 \
 #    docker-compose --profile staging up -d
 #
 # 3. Production with custom domain:
-#    IMAGE_NAME=registry.example.com/head-start-web \
+#    IMAGE_NAME=registry.example.com/lunasphere-web \
 #    IMAGE_TAG=v1.0.0-abc1234 \
 #    ENVIRONMENT=prod \
-#    DOMAIN=headstart.example.com \
-#    NEXT_PUBLIC_APP_URL=https://headstart.example.com \
+#    DOMAIN=lunasphere.example.com \
+#    NEXT_PUBLIC_APP_URL=https://lunasphere.example.com \
 #    NEXTAUTH_SECRET=your-secure-secret \
 #    docker-compose --profile prod up -d
 #
