@@ -41,11 +41,11 @@ const UploadStateIndicator = memo(
       case ModelState.LOADING:
         return (
           <>
-            <div className='w-14 h-14 md:w-12 md:h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-blue-50/80 dark:bg-blue-950/80 border-blue-200/50 dark:border-blue-700/50'>
-              <div className='w-6 h-6 md:w-5 md:h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
+            <div className='w-12 h-12 bg-blue-50/80 dark:bg-blue-950/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/50 transition-all duration-200'>
+              <div className='w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
             </div>
             <div className='text-center'>
-              <p className='text-sm md:text-base font-medium drop-shadow-sm text-blue-600 dark:text-blue-400'>
+              <p className='text-base font-medium text-blue-600 dark:text-blue-400 drop-shadow-sm'>
                 {t('detection.model.loading')}
               </p>
             </div>
@@ -55,11 +55,11 @@ const UploadStateIndicator = memo(
       case ModelState.NOT_LOADED:
         return (
           <>
-            <div className='w-14 h-14 md:w-12 md:h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/50 dark:border-gray-600/50'>
-              <Upload className='w-6 h-6 md:w-5 md:h-5 text-gray-400 dark:text-gray-500' />
+            <div className='w-12 h-12 bg-gray-50/80 dark:bg-gray-800/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-gray-200/50 dark:border-gray-600/50 transition-all duration-200'>
+              <Upload className='w-5 h-5 text-gray-400 dark:text-gray-500' />
             </div>
             <div className='text-center'>
-              <p className='text-sm md:text-base font-medium drop-shadow-sm text-gray-500 dark:text-gray-500'>
+              <p className='text-base font-medium text-gray-500 dark:text-gray-500 drop-shadow-sm'>
                 {t('detection.model.notLoadedMessage')}
               </p>
             </div>
@@ -69,11 +69,11 @@ const UploadStateIndicator = memo(
       case ModelState.ERROR:
         return (
           <>
-            <div className='w-14 h-14 md:w-12 md:h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-red-50/80 dark:bg-red-950/80 border-red-200/50 dark:border-red-700/50'>
-              <span className='text-red-500 text-xl md:text-lg font-bold'>✕</span>
+            <div className='w-12 h-12 bg-red-50/80 dark:bg-red-950/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-red-200/50 dark:border-red-700/50 transition-all duration-200'>
+              <span className='text-red-500 text-lg font-bold'>✕</span>
             </div>
             <div className='text-center'>
-              <p className='text-sm md:text-base font-medium drop-shadow-sm text-red-600 dark:text-red-400'>
+              <p className='text-base font-medium text-red-600 dark:text-red-400 drop-shadow-sm'>
                 {t('detection.model.loadFailed')}
               </p>
             </div>
@@ -84,11 +84,11 @@ const UploadStateIndicator = memo(
       default:
         return (
           <>
-            <div className='w-14 h-14 md:w-12 md:h-12 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border transition-all duration-200 bg-white/80 dark:bg-gray-700/80 border-white/50 dark:border-gray-600/50 hover:scale-102 active:scale-95 md:active:scale-102'>
-              <Upload className='w-6 h-6 md:w-5 md:h-5 text-gray-600 dark:text-gray-400' />
+            <div className='w-12 h-12 bg-white/80 dark:bg-gray-700/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-white/50 dark:border-gray-600/50 transition-all duration-200 hover:scale-102'>
+              <Upload className='w-5 h-5 text-gray-600 dark:text-gray-400' />
             </div>
             <div className='text-center'>
-              <p className='text-sm md:text-base font-medium drop-shadow-sm text-gray-700 dark:text-gray-300'>
+              <p className='text-base font-medium text-gray-700 dark:text-gray-300 drop-shadow-sm'>
                 {t('detection.topView.upload.clickOrDrag')}
               </p>
             </div>
@@ -110,8 +110,7 @@ const StatusInfo = memo(({ modelState, t }: StatusInfoProps) => {
   switch (modelState) {
     case ModelState.LOADING:
       return (
-        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 border shadow-sm bg-blue-50/80 dark:bg-blue-950/80 border-blue-200/60 dark:border-blue-700/60'>
-          <div className='w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse' />
+        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 shadow-sm bg-blue-50/80 dark:bg-blue-950/80'>
           <span className='text-xs font-normal text-blue-600 dark:text-blue-400'>
             {t('detection.model.loadingHint')}
           </span>
@@ -120,8 +119,7 @@ const StatusInfo = memo(({ modelState, t }: StatusInfoProps) => {
 
     case ModelState.NOT_LOADED:
       return (
-        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 border shadow-sm bg-gray-50/80 dark:bg-gray-800/80 border-gray-200/60 dark:border-gray-600/60'>
-          <div className='w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500' />
+        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 shadow-sm bg-gray-50/80 dark:bg-gray-800/80'>
           <span className='text-xs font-normal text-gray-500 dark:text-gray-500'>
             {t('detection.model.notLoadedHint')}
           </span>
@@ -130,8 +128,7 @@ const StatusInfo = memo(({ modelState, t }: StatusInfoProps) => {
 
     case ModelState.ERROR:
       return (
-        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 border shadow-sm bg-red-50/80 dark:bg-red-950/80 border-red-200/60 dark:border-red-700/60'>
-          <div className='w-1.5 h-1.5 rounded-full bg-red-500' />
+        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 shadow-sm bg-red-50/80 dark:bg-red-950/80'>
           <span className='text-xs font-normal text-red-600 dark:text-red-400'>
             {t('detection.model.loadFailedHint')}
           </span>
@@ -141,8 +138,7 @@ const StatusInfo = memo(({ modelState, t }: StatusInfoProps) => {
     case ModelState.LOADED:
     default:
       return (
-        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 border shadow-sm bg-white/80 dark:bg-gray-800/80 border-white/60 dark:border-gray-600/60'>
-          <div className='w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500' />
+        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 shadow-sm bg-white/80 dark:bg-gray-800/80'>
           <span className='text-xs font-normal text-gray-600 dark:text-gray-400'>
             {t('detection.topView.upload.supportFormat')}
           </span>
@@ -748,9 +744,9 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
 
               {/* Upload content overlay */}
               <div className='relative z-10 flex items-center justify-center h-full'>
-                <div className='text-center space-y-3 md:space-y-4 p-4 md:p-6'>
+                <div className='text-center space-y-4 p-6'>
                   {/* Centered upload prompt */}
-                  <div className='flex flex-col items-center justify-center gap-2 md:gap-3'>
+                  <div className='flex flex-col items-center justify-center gap-3'>
                     <UploadStateIndicator modelState={modelState} t={t} />
                   </div>
                   {/* Status info with refined style */}
