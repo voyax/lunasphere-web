@@ -4,40 +4,8 @@ import { ChevronDown, Search } from 'lucide-react'
 import { useState, useMemo } from 'react'
 
 import { useLocale } from '@/contexts/LocaleContext'
-
-// Reference sources data structure
-interface ReferenceSource {
-  text: string
-  url: string
-}
-
-// Generate reference sources from i18n data dynamically
-const generateReferenceSources = (
-  t: (key: string) => string
-): ReferenceSource[] => {
-  const sources: ReferenceSource[] = []
-  let i = 1
-
-  // Dynamically detect available reference sources
-  while (true) {
-    const textKey = `faq.references.source${i}.text`
-    const urlKey = `faq.references.source${i}.url`
-
-    // Check if the translation key exists by comparing with the key itself
-    const text = t(textKey)
-    const url = t(urlKey)
-
-    // If translation returns the key itself, it means the key doesn't exist
-    if (text === textKey || url === urlKey) {
-      break
-    }
-
-    sources.push({ text, url })
-    i++
-  }
-
-  return sources
-}
+import MedicalDisclaimer from '@/components/medical-disclaimer'
+import ReferenceSources from '@/components/reference-sources'
 
 interface FAQItem {
   id: string
@@ -364,46 +332,10 @@ export default function FAQPage() {
           </div>
 
           {/* Medical Disclaimer */}
-          <div className='mt-20 bg-gradient-to-r from-amber-50 via-orange-50 to-red-50 border border-amber-200 rounded-3xl p-8 shadow-lg'>
-            <div className='flex items-start gap-6'>
-              <div className='flex-1'>
-                <h3 className='text-xl font-bold text-amber-900 mb-3'>
-                  {t('faq.medicalDisclaimerTitle')}
-                </h3>
-                <p className='text-amber-800 leading-relaxed text-lg'>
-                  {t('faq.medicalDisclaimer')}
-                </p>
-              </div>
-            </div>
-          </div>
+          <MedicalDisclaimer className='mt-12 sm:mt-16 lg:mt-20' />
 
           {/* References */}
-          <div className='mt-12 bg-gradient-to-r from-slate-50 via-gray-50 to-zinc-50 border border-slate-200 rounded-3xl p-8 shadow-lg'>
-            <div className='flex items-start gap-6'>
-              <div className='flex-1'>
-                <h3 className='text-xl font-bold text-slate-900 mb-3'>
-                  {t('faq.references.title')}
-                </h3>
-                <div className='text-slate-700 leading-relaxed text-lg space-y-4'>
-                  <ul className='space-y-2'>
-                    {generateReferenceSources(t).map((source, index) => (
-                      <li key={index} className='flex items-start'>
-                        <span className='text-slate-400 mr-2'>•</span>
-                        <a
-                          className='text-blue-600 hover:text-blue-800 underline transition-colors duration-200'
-                          href={source.url}
-                          rel='noopener noreferrer'
-                          target='_blank'
-                        >
-                          {source.text}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ReferenceSources className='mt-8 sm:mt-10 lg:mt-12' />
         </div>
       </div>
     </div>

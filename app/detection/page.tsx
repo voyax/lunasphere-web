@@ -8,6 +8,8 @@ import TopViewAnalysis from './components/TopViewAnalysis'
 
 import { useLocale } from '@/contexts/LocaleContext'
 import { disposeModelInstance } from '@/lib/model-inference'
+import MedicalDisclaimer from '@/components/medical-disclaimer'
+import ReferenceSources from '@/components/reference-sources'
 
 export default function DetectionPage() {
   const { t } = useLocale()
@@ -17,6 +19,7 @@ export default function DetectionPage() {
   const [confidenceThreshold, setConfidenceThreshold] = useState(0.7)
   const [showModelReadyBanner, setShowModelReadyBanner] = useState(false)
   const [modelLoadError, setModelLoadError] = useState<string | null>(null)
+  const [hasAnalysisResult, setHasAnalysisResult] = useState(false)
 
   // Show model ready banner for 5 seconds when model loads
   useEffect(() => {
@@ -155,13 +158,36 @@ export default function DetectionPage() {
           />
 
           {/* Main Content */}
-          <div className='w-full space-y-24'>
+          <div className='w-full space-y-8'>
             {/* Top View Analysis Section */}
             <TopViewAnalysis
               confidenceThreshold={confidenceThreshold}
               modelPath={modelPath}
               modelState={modelState}
+              onAnalysisResultChange={setHasAnalysisResult}
             />
+            
+            {/* Medical Disclaimer - only show when there's an analysis result */}
+            {hasAnalysisResult && (
+              <div className='max-w-7xl mx-auto lg:px-8'>
+                <MedicalDisclaimer 
+                  className='mt-12 sm:mt-16 lg:mt-20'
+                  titleKey='detection.medicalDisclaimerTitle'
+                  contentKey='detection.medicalDisclaimer'
+                />
+              </div>
+            )}
+            
+            {/* References - only show when there's an analysis result */}
+            {hasAnalysisResult && (
+              <div className='max-w-7xl mx-auto lg:px-8'>
+                <ReferenceSources 
+                  className='mt-8 sm:mt-10 lg:mt-12'
+                  titleKey='detection.references.title'
+                  sourceKeyPrefix='detection.references'
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -27,6 +27,7 @@ interface TopViewAnalysisProps {
   modelPath: string
   confidenceThreshold: number
   modelState: ModelState
+  onAnalysisResultChange?: (hasResult: boolean) => void
 }
 
 // Component for upload state indicator
@@ -353,6 +354,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
   modelPath,
   confidenceThreshold,
   modelState,
+  onAnalysisResultChange,
 }: TopViewAnalysisProps) {
   const { t } = useLocale()
 
@@ -383,6 +385,13 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
       }
     }
   }, [topImage?.url])
+
+  // Notify parent component when analysis result changes
+  useEffect(() => {
+    if (onAnalysisResultChange) {
+      onAnalysisResultChange(!!analysisResult && !analysisResult.error)
+    }
+  }, [analysisResult, onAnalysisResultChange])
 
   // Component for error display
   const ErrorDisplay = () => {
@@ -630,7 +639,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
   }, [topImage, modelState, modelPath, confidenceThreshold, t])
 
   return (
-    <div className='max-w-7xl mx-auto space-y-4 md:space-y-6 px-4 sm:px-6 lg:px-8'>
+    <div className='max-w-7xl mx-auto space-y-4 md:space-y-6 lg:px-8'>
       {/* Enhanced Hero Section integrated with Top View Analysis */}
       <div className='text-center mb-6 md:mb-12'>
         {/* Main Title */}

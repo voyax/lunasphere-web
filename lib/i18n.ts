@@ -1508,6 +1508,68 @@ export const translations: TranslationKeys = {
     zh: '医疗免责声明',
     en: 'Medical Disclaimer',
   },
+
+  // Detection page medical disclaimer and references
+  'detection.medicalDisclaimerTitle': {
+    zh: '医疗免责声明',
+    en: 'Medical Disclaimer',
+  },
+  'detection.medicalDisclaimer': {
+    zh: '我们基于权威医学论文的计算方法，采集了300张真实头型图片进行标注和模型训练，竭尽全力保证测量精度和计算的准确性。我们希望为父母提供便捷的科学参考，帮助缓解育儿焦虑。但本工具仅供教育和参考目的，不能替代专业医疗诊断。检测结果不应作为医疗决策的唯一依据。如果您对宝宝的头型发育有任何担忧，请及时咨询儿科医生或相关医疗专业人员。',
+    en: 'We employ calculation methods based on authoritative medical literature and have collected and annotated 300 real infant head shape images for model training, striving to ensure measurement precision and computational accuracy. Our goal is to provide parents with convenient scientific reference tools to help ease parenting concerns. However, this tool is intended for educational and reference purposes only and cannot substitute for professional medical diagnosis. Detection results should not serve as the sole basis for medical decisions. If you have any concerns about your baby\'s head shape development, please consult with a pediatrician or qualified healthcare professional promptly.',
+   },
+   'detection.references.title': {
+    zh: '参考来源',
+    en: 'References',
+  },
+  'detection.references.source1.text': {
+    zh: 'Interrater and Intrarater Reliability of Cranial Anthropometric Measurements in Infants with Positional Plagiocephaly',
+    en: 'Interrater and Intrarater Reliability of Cranial Anthropometric Measurements in Infants with Positional Plagiocephaly',
+  },
+  'detection.references.source1.url': {
+    zh: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7766735/',
+    en: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7766735/',
+  },
+  'detection.references.source2.text': {
+    zh: 'Interrater and Intrarater Reliability of Cranial Anthropometric Measurements in Infants with Positional Plagiocephaly',
+    en: 'Interrater and Intrarater Reliability of Cranial Anthropometric Measurements in Infants with Positional Plagiocephaly',
+  },
+  'detection.references.source2.url': {
+    zh: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7766735/',
+    en: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7766735/',
+  },
+  'detection.references.source3.text': {
+    zh: 'Cephalic Index in the First Three Years of Life: Study of Children with Normal Brain Development Based on Computed Tomography',
+    en: 'Cephalic Index in the First Three Years of Life: Study of Children with Normal Brain Development Based on Computed Tomography',
+  },
+  'detection.references.source3.url': {
+    zh: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC3933399/',
+    en: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC3933399/',
+  },
+  'detection.references.source4.text': {
+    zh: 'Significant Factors in Cranial Remolding Orthotic Treatment of Asymmetrical Brachycephaly',
+    en: 'Significant Factors in Cranial Remolding Orthotic Treatment of Asymmetrical Brachycephaly',
+  },
+  'detection.references.source4.url': {
+    zh: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7231243/',
+    en: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7231243/',
+  },
+  'detection.references.source5.text': {
+    zh: 'Revisiting the Cephalic Index: The Origin, Adaptations, and Clinical Applications',
+    en: 'Revisiting the Cephalic Index: The Origin, Adaptations, and Clinical Applications',
+  },
+  'detection.references.source5.url': {
+    zh: 'https://journals.lww.com/jpojournal/fulltext/2024/04000/revisiting_the_cephalic_index__the_origin,.10.aspx',
+    en: 'https://journals.lww.com/jpojournal/fulltext/2024/04000/revisiting_the_cephalic_index__the_origin,.10.aspx',
+  },
+  'detection.references.source6.text': {
+    zh: 'Cranial Anthropometric Measurements and Assessment Guidelines',
+    en: 'Cranial Anthropometric Measurements and Assessment Guidelines',
+  },
+  'detection.references.source6.url': {
+    zh: 'https://www.cappskids.org/cephalic-index-what-do-the-numbers-mean/',
+    en: 'https://www.cappskids.org/cephalic-index-what-do-the-numbers-mean/',
+  },
 }
 
 // Import dev tools in development to enable automatic monitoring
