@@ -1,14 +1,50 @@
 import * as ort from 'onnxruntime-web'
 
+// Device performance detection
+function getOptimalThreadCount(): number {
+  if (typeof window === 'undefined') return 1
+
+  // Check if cross-origin isolation is enabled
+  const isCrossOriginIsolated = window.crossOriginIsolated || false
+
+  // Without cross-origin isolation, ONNX Runtime can only use 1 thread
+  if (!isCrossOriginIsolated) {
+    return 1
+  }
+
+  const cores = navigator.hardwareConcurrency || 4
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    )
+  const isLowEndDevice = cores <= 2
+
+  // Conservative thread allocation for different device types (only when cross-origin isolated)
+  if (isMobile || isLowEndDevice) {
+    return Math.min(2, cores) // Mobile devices: max 2 threads
+  } else if (cores <= 4) {
+    return Math.min(3, cores) // Mid-range devices: max 3 threads
+  } else {
+    return Math.min(4, cores) // High-end devices: max 4 threads
+  }
+}
+
 // Configure ONNX Runtime for Next.js
 if (typeof window !== 'undefined') {
   // Client-side configuration
   ort.env.wasm.wasmPaths = `${window.location.origin}/onnx-wasm/`
 
-  // Set execution providers
-  ort.env.wasm.numThreads = 1
+  // Set execution providers with device-optimized thread count
+  ort.env.wasm.numThreads = getOptimalThreadCount()
   ort.env.wasm.simd = true
   ort.env.wasm.proxy = true
+
+  // Log configuration for debugging
+  const isCrossOriginIsolated = window.crossOriginIsolated || false
+
+  console.log(
+    `ONNX Runtime configured with ${ort.env.wasm.numThreads} threads for device with ${navigator.hardwareConcurrency || 'unknown'} cores (Cross-Origin Isolated: ${isCrossOriginIsolated})`
+  )
 }
 
 // Model inference types
