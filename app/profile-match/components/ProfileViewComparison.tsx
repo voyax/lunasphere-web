@@ -334,6 +334,7 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
           <div ref={leftContainerRef} className='space-y-3 sm:space-y-6'>
             <div className='flex items-center justify-between relative h-10'>
               <div className='flex items-center gap-3'>
+                <div className='w-1 h-6 bg-gradient-to-b from-purple-400 to-blue-500 rounded-full' />
                 <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
                   {t('detection.profileView.leftProfile')}
                 </h3>
