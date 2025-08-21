@@ -11,6 +11,8 @@ import { KonvaEventObject } from 'konva/lib/Node'
 import { RefObject } from 'react'
 import { Slider, Input } from '@heroui/react'
 
+import { GestureVisualFeedback } from './GestureVisualFeedback'
+
 import { useLocale } from '@/contexts/LocaleContext'
 import { useIsMobile } from '@/hooks/useIsMobile'
 import { useMemoryManager } from '@/hooks/useMemoryManager'
@@ -23,7 +25,6 @@ import {
   GESTURE_CONFIG,
   type Point,
 } from '@/lib/gesture-utils'
-import { GestureVisualFeedback } from './GestureVisualFeedback'
 
 interface UploadedImage {
   file: File
@@ -207,13 +208,9 @@ const TransformableImage: React.FC<{
 
             newScaleX = image.scaleX * scaleFactor
             newScaleY = image.scaleY * scaleFactor
-            
+
             // Show scale visual feedback
-            onShowGestureVisualFeedback?.(
-              'scale',
-              newCenter,
-              newScaleX
-            )
+            onShowGestureVisualFeedback?.('scale', newCenter, newScaleX)
           }
 
           // Only apply rotation change if movement is significant enough
@@ -225,7 +222,7 @@ const TransformableImage: React.FC<{
               rotationChange * GESTURE_CONFIG.ROTATION_SENSITIVITY
 
             newRotationValue = image.rotation + dampedRotationChange
-            
+
             // Show rotation visual feedback
             onShowGestureVisualFeedback?.(
               'rotate',
@@ -255,12 +252,9 @@ const TransformableImage: React.FC<{
 
             newX = image.x + dx
             newY = image.y + dy
-            
+
             // Show move visual feedback
-            onShowGestureVisualFeedback?.(
-              'move',
-              newCenter
-            )
+            onShowGestureVisualFeedback?.('move', newCenter)
           }
 
           // Use optimized onChange for better performance
@@ -466,7 +460,7 @@ export function ProfileUploadArea({
   const isMobile = useIsMobile()
   const memoryManager = useMemoryManager()
   const [showGestureHint, setShowGestureHint] = useState(false)
-  
+
   // Visual feedback state for gestures
   const [gestureVisualFeedback, setGestureVisualFeedback] = useState<{
     isVisible: boolean
@@ -723,10 +717,10 @@ export function ProfileUploadArea({
                     opacity={0.8}
                     onChange={onImageChange || (() => {})}
                     onHideGestureHint={hideGestureHint}
+                    onHideGestureVisualFeedback={hideGestureVisualFeedback}
                     onSelect={onImageSelect || (() => {})}
                     onShowGestureHint={showGestureHintMessage}
                     onShowGestureVisualFeedback={showGestureVisualFeedback}
-                    onHideGestureVisualFeedback={hideGestureVisualFeedback}
                   />
                   {/* Standard template image (on top of user image) */}
                   <StandardTemplateImage
@@ -737,14 +731,14 @@ export function ProfileUploadArea({
                   />
                 </Layer>
               </Stage>
-              
+
               {/* Gesture Visual Feedback Overlay */}
               <GestureVisualFeedback
-                isVisible={gestureVisualFeedback.isVisible}
-                gestureType={gestureVisualFeedback.gestureType}
                 centerPoint={gestureVisualFeedback.centerPoint}
-                scaleValue={gestureVisualFeedback.scaleValue}
+                gestureType={gestureVisualFeedback.gestureType}
+                isVisible={gestureVisualFeedback.isVisible}
                 rotationValue={gestureVisualFeedback.rotationValue}
+                scaleValue={gestureVisualFeedback.scaleValue}
                 stageSize={stageSize}
               />
             </div>
@@ -792,7 +786,9 @@ export function ProfileUploadArea({
                 <RotateCw className='w-4 h-4' />
                 <span>{t('detection.profileView.rotation')}</span>
                 {isMobile && (
-                  <span className='text-xs text-gray-500 ml-auto'>精确控制</span>
+                  <span className='text-xs text-gray-500 ml-auto'>
+                    精确控制
+                  </span>
                 )}
               </div>
               <div className='flex items-center gap-2 sm:gap-3'>
@@ -801,16 +797,14 @@ export function ProfileUploadArea({
                   color='primary'
                   maxValue={360}
                   minValue={-360}
+                  size={isMobile ? 'md' : 'sm'}
                   step={1}
                   value={currentRotationValue}
                   onChange={handleRotationChange}
-                  size={isMobile ? 'md' : 'sm'}
                 />
                 <Input
                   className={isMobile ? 'w-16' : 'w-20'}
-                  endContent={
-                    <span className='text-xs text-gray-500'>°</span>
-                  }
+                  endContent={<span className='text-xs text-gray-500'>°</span>}
                   max={360}
                   min={-360}
                   size='sm'

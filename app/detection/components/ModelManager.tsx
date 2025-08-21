@@ -68,7 +68,11 @@ export default function ModelManager({
         } catch (error) {
           // Failed to auto-load default model
           setModelState(ModelState.ERROR)
-          const errorMessage = error instanceof Error ? error.message : t('detection.modelManager.errors.unknownError')
+          const errorMessage =
+            error instanceof Error
+              ? error.message
+              : t('detection.modelManager.errors.unknownError')
+
           setLoadError(errorMessage)
           onLoadError?.(errorMessage)
         }
@@ -104,9 +108,11 @@ export default function ModelManager({
     } catch (error) {
       // Model loading failed
       setModelState(ModelState.ERROR)
-      const errorMessage = error instanceof Error
-        ? error.message
-        : t('detection.modelManager.errors.unknownError')
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : t('detection.modelManager.errors.unknownError')
+
       setLoadError(errorMessage)
       onLoadError?.(errorMessage)
     }

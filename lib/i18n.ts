@@ -1523,12 +1523,12 @@ export const translations: TranslationKeys = {
     en: 'References',
   },
   'detection.references.source1.text': {
-    zh: 'Interrater and Intrarater Reliability of Cranial Anthropometric Measurements in Infants with Positional Plagiocephaly',
-    en: 'Interrater and Intrarater Reliability of Cranial Anthropometric Measurements in Infants with Positional Plagiocephaly',
+    zh: 'Measuring for nonsynostotic head deformities in preterm infants during NICU management: A pilot study',
+    en: 'Measuring for nonsynostotic head deformities in preterm infants during NICU management: A pilot study',
   },
   'detection.references.source1.url': {
-    zh: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7766735/',
-    en: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7766735/',
+    zh: 'https://www.academia.edu/108273319/Measuring_for_nonsynostotic_head_deformities_in_preterm_infants_during_NICU_management_A_pilot_study',
+    en: 'https://www.academia.edu/108273319/Measuring_for_nonsynostotic_head_deformities_in_preterm_infants_during_NICU_management_A_pilot_study',
   },
   'detection.references.source2.text': {
     zh: 'Interrater and Intrarater Reliability of Cranial Anthropometric Measurements in Infants with Positional Plagiocephaly',

@@ -160,21 +160,21 @@ export default function FAQPage() {
               }}
             />
           </div>
-          <div className='relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8'>
+          <div className='relative mx-auto max-w-7xl px-4 py-12 sm:py-16 md:py-20 sm:px-6 lg:px-8'>
             <div className='text-center'>
-              <h1 className='text-4xl font-normal tracking-tight text-default-700 sm:text-5xl lg:text-6xl mb-6'>
+              <h1 className='text-3xl font-normal tracking-tight text-default-700 sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6'>
                 {t('faq.title')}
               </h1>
-              <p className='mx-auto max-w-2xl text-xl font-extralight text-default-700 mb-8'>
+              <p className='mx-auto max-w-2xl text-lg sm:text-xl font-extralight text-default-700 mb-6 sm:mb-8 leading-relaxed'>
                 {t('faq.subtitle')}
               </p>
 
               {/* Search Bar */}
               <div className='mx-auto max-w-md'>
                 <div className='relative'>
-                  <Search className='absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400' />
+                  <Search className='absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400' />
                   <input
-                    className='w-full pl-12 pr-4 py-3 bg-white/90 backdrop-blur-sm rounded-2xl border-0 focus:ring-2 focus:ring-white/50 focus:bg-white transition-all duration-200 placeholder-gray-500'
+                    className='w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm sm:text-base bg-white/90 backdrop-blur-sm rounded-xl sm:rounded-2xl border-0 focus:ring-2 focus:ring-white/50 focus:bg-white transition-all duration-200 placeholder-gray-500'
                     placeholder={t('faq.searchPlaceholder')}
                     type='text'
                     value={searchQuery}
@@ -187,9 +187,9 @@ export default function FAQPage() {
           <div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent dark:from-gray-950 dark:to-transparent' />
         </div>
 
-        <div className='mx-auto max-w-7xl px-4 lg:py-16 sm:py-0 sm:px-6 lg:px-8'>
+        <div className='mx-auto max-w-7xl px-4 py-8 sm:py-12 lg:py-16 sm:px-6 lg:px-8'>
           {/* Category Filter */}
-          <div className='mb-12 hidden sm:block'>
+          <div className='mb-8 sm:mb-12 hidden sm:block'>
             <div className='flex flex-wrap gap-3 justify-center'>
               <button
                 className={`group px-6 py-3 rounded-2xl font-medium transition-all duration-300 transform hover:scale-105 ${
@@ -248,9 +248,13 @@ export default function FAQPage() {
 
           {/* Results Count */}
           {(searchQuery || selectedCategory) && (
-            <div className='mb-8 text-center'>
-              <p className='text-gray-600'>
-                {t('faq.searchResults.prefix')} <span className='font-semibold text-gray-900'>{filteredItems.length}</span> {t('faq.searchResults.suffix')}
+            <div className='mb-6 sm:mb-8 text-center'>
+              <p className='text-sm sm:text-base text-gray-600'>
+                {t('faq.searchResults.prefix')}{' '}
+                <span className='font-semibold text-gray-900'>
+                  {filteredItems.length}
+                </span>{' '}
+                {t('faq.searchResults.suffix')}
               </p>
             </div>
           )}
@@ -258,12 +262,14 @@ export default function FAQPage() {
           {/* FAQ Items */}
           <div className='space-y-4'>
             {filteredItems.length === 0 ? (
-              <div className='text-center py-16'>
-                <div className='text-6xl mb-4'>🔍</div>
-                <h3 className='text-xl font-semibold text-gray-900 mb-2'>
+              <div className='text-center py-12 sm:py-16'>
+                <div className='text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-4'>
+                  🔍
+                </div>
+                <h3 className='text-lg sm:text-xl font-semibold text-gray-900 mb-2'>
                   {t('faq.noResults.title')}
                 </h3>
-                <p className='text-gray-600'>
+                <p className='text-sm sm:text-base text-gray-600 max-w-md mx-auto leading-relaxed'>
                   {t('faq.noResults.description')}
                 </p>
               </div>
@@ -280,7 +286,7 @@ export default function FAQPage() {
                     }}
                   >
                     <button
-                      className='w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-50/50 transition-all duration-200'
+                      className='w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-5 lg:py-6 text-left flex items-center justify-between hover:bg-gray-50/50 transition-all duration-200 active:bg-gray-100/50'
                       onClick={() => toggleItem(item.id)}
                     >
                       <div className='flex items-center gap-4 flex-1'>
@@ -299,13 +305,13 @@ export default function FAQPage() {
                               {t(`faq.category.${item.category}`)}
                             </span>
                           </div> */}
-                          <h3 className='text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-200'>
+                          <h3 className='text-base sm:text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-200 leading-relaxed'>
                             {item.question}
                           </h3>
                         </div>
                       </div>
                       <ChevronDown
-                        className={`w-5 h-5 text-gray-400 transition-all duration-300 group-hover:text-gray-600 ${
+                        className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-400 transition-all duration-300 group-hover:text-gray-600 flex-shrink-0 ml-2 ${
                           openItems.has(item.id)
                             ? 'rotate-180 text-blue-500'
                             : ''
@@ -314,11 +320,11 @@ export default function FAQPage() {
                     </button>
                     {openItems.has(item.id) && (
                       <div className='border-t border-gray-100'>
-                        <div className='px-8 py-6'>
+                        <div className='px-4 sm:px-6 lg:px-8 py-4 sm:py-5 lg:py-6'>
                           <div
-                            className={`p-6 rounded-xl bg-gradient-to-r ${config.bgGradient}`}
+                            className={`p-4 sm:p-5 lg:p-6 rounded-lg sm:rounded-xl bg-gradient-to-r ${config.bgGradient}`}
                           >
-                            <div className='text-gray-700 leading-relaxed whitespace-pre-line'>
+                            <div className='text-sm sm:text-base text-gray-700 leading-relaxed whitespace-pre-line'>
                               {item.answer}
                             </div>
                           </div>
