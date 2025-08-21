@@ -3,11 +3,12 @@ import * as ort from 'onnxruntime-web'
 // Configure ONNX Runtime for Next.js
 if (typeof window !== 'undefined') {
   // Client-side configuration
-  ort.env.wasm.wasmPaths = '/_next/static/chunks/pages/'
+  ort.env.wasm.wasmPaths = `${window.location.origin}/onnx-wasm/`
 
   // Set execution providers
   ort.env.wasm.numThreads = 1
   ort.env.wasm.simd = true
+  ort.env.wasm.proxy = true
 }
 
 // Model inference types
