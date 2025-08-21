@@ -364,7 +364,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(
     null
   )
-  
+
   // State for drag and drop
   const [isDragOver, setIsDragOver] = useState(false)
 
@@ -498,13 +498,16 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
   )
 
   // Handle drag and drop events
-  const handleDragOver = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    if (modelState === ModelState.LOADED) {
-      setIsDragOver(true)
-    }
-  }, [modelState])
+  const handleDragOver = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault()
+      e.stopPropagation()
+      if (modelState === ModelState.LOADED) {
+        setIsDragOver(true)
+      }
+    },
+    [modelState]
+  )
 
   const handleDragLeave = useCallback((e: React.DragEvent) => {
     e.preventDefault()
@@ -512,30 +515,33 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
     setIsDragOver(false)
   }, [])
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setIsDragOver(false)
-    
-    if (modelState !== ModelState.LOADED) return
-    
-    const files = e.dataTransfer.files
-    const file = files[0]
-    
-    if (file && file.type.startsWith('image/')) {
-      const url = URL.createObjectURL(file)
-      const imageData = {
-        file,
-        url,
-        rotation: 0,
-        scale: 1,
-      }
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault()
+      e.stopPropagation()
+      setIsDragOver(false)
 
-      setTopImage(imageData)
-      setAnalysisState(AnalysisState.READY_TO_ANALYZE)
-      setAnalysisResult(null)
-    }
-  }, [modelState])
+      if (modelState !== ModelState.LOADED) return
+
+      const files = e.dataTransfer.files
+      const file = files[0]
+
+      if (file && file.type.startsWith('image/')) {
+        const url = URL.createObjectURL(file)
+        const imageData = {
+          file,
+          url,
+          rotation: 0,
+          scale: 1,
+        }
+
+        setTopImage(imageData)
+        setAnalysisState(AnalysisState.READY_TO_ANALYZE)
+        setAnalysisResult(null)
+      }
+    },
+    [modelState]
+  )
 
   const setImageRotation = useCallback(
     (rotation: number) => {
@@ -628,14 +634,14 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
       {/* Enhanced Hero Section integrated with Top View Analysis */}
       <div className='text-center mb-6 md:mb-12'>
         {/* Main Title */}
-        <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light mb-4 md:mb-6 tracking-tight leading-tight'>
+        <h1 className='text-4xl md:text-5xl lg:text-6xl font-light mb-6 tracking-tight leading-tight'>
           <span className='font-extralight text-gray-900 dark:text-white drop-shadow-sm'>
             {t('detection.topView.title')}
           </span>
         </h1>
 
         {/* Subtitle */}
-        <p className='text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed font-light mb-6 md:mb-8 px-4'>
+        <p className='text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed font-light mb-8'>
           {t('detection.pageSubtitle')}
         </p>
 
@@ -643,17 +649,23 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
         <div className='flex flex-wrap justify-center gap-2 md:gap-4 max-w-2xl mx-auto mb-6 md:mb-8 px-2'>
           <div className='inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-blue-50 dark:bg-blue-950/20 rounded-full text-blue-600 dark:text-blue-400 text-xs md:text-sm font-medium border border-blue-200 dark:border-blue-800'>
             <span className='text-sm md:text-base'>🧠</span>
-            <span className='hidden sm:inline'>{t('detection.topView.features.deepLearning')}</span>
+            <span className='hidden sm:inline'>
+              {t('detection.topView.features.deepLearning')}
+            </span>
             <span className='sm:hidden'>AI</span>
           </div>
           <div className='inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-green-50 dark:bg-green-950/20 rounded-full text-green-600 dark:text-green-400 text-xs md:text-sm font-medium border border-green-200 dark:border-green-800'>
             <span className='text-sm md:text-base'>🔒</span>
-            <span className='hidden sm:inline'>{t('detection.topView.features.privacy')}</span>
+            <span className='hidden sm:inline'>
+              {t('detection.topView.features.privacy')}
+            </span>
             <span className='sm:hidden'>隐私</span>
           </div>
           <div className='inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-purple-50 dark:bg-purple-950/20 rounded-full text-purple-600 dark:text-purple-400 text-xs md:text-sm font-medium border border-purple-200 dark:border-purple-800'>
             <span className='text-sm md:text-base'>⚕️</span>
-            <span className='hidden sm:inline'>{t('detection.topView.features.medical')}</span>
+            <span className='hidden sm:inline'>
+              {t('detection.topView.features.medical')}
+            </span>
             <span className='sm:hidden'>医疗</span>
           </div>
         </div>
@@ -691,6 +703,9 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                   fileInputRef.current?.click()
                 }
               }}
+              onDragLeave={handleDragLeave}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
               onKeyDown={e => {
                 if (
                   (e.key === 'Enter' || e.key === ' ') &&
@@ -700,9 +715,6 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                   fileInputRef.current?.click()
                 }
               }}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
             >
               {/* Background placeholder image with annotations */}
               <div className='absolute inset-0'>
@@ -823,12 +835,12 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                   >
                     <Button
                       className='w-full sm:flex-1 h-12 sm:h-10 touch-manipulation'
+                      color='primary'
                       disabled={
                         analysisState === AnalysisState.ANALYZING ||
                         modelState !== ModelState.LOADED
                       }
                       size='lg'
-                      color='primary'
                       startContent={
                         modelState === ModelState.LOADING ? (
                           <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin' />
@@ -860,6 +872,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                   >
                     <Button
                       className='w-full sm:w-auto h-12 sm:h-10 px-4 sm:px-3 touch-manipulation'
+                      color='primary'
                       disabled={modelState !== ModelState.LOADED}
                       size='lg'
                       startContent={
@@ -870,7 +883,6 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                         )
                       }
                       variant='bordered'
-                      color='primary'
                       onClick={() => {
                         if (modelState === ModelState.LOADED) {
                           fileInputRef.current?.click()
