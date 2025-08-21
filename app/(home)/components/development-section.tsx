@@ -183,7 +183,7 @@ export async function DevelopmentSection() {
         style={{ animationDelay: '0.5s' }}
       />
 
-      <div className='container mx-auto px-4 relative z-10'>
+      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10'>
         {/* Header */}
         <SectionAnimations className='text-center mb-8'>
           <h2 className='text-3xl md:text-4xl font-bold mb-4'>

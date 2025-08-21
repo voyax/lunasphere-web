@@ -55,7 +55,7 @@ export async function ClassificationSection() {
       className='py-20 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 dark:from-purple-950/10 dark:via-pink-950/10 dark:to-orange-950/10'
       id='classification'
     >
-      <div className='container mx-auto px-4'>
+      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <SectionAnimations className='text-center mb-16'>
           <h2 className='text-3xl md:text-4xl lg:text-5xl font-bold mb-6'>
             <span className='text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600'>

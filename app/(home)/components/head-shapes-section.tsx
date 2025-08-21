@@ -140,7 +140,7 @@ export async function HeadShapesSection() {
       className='py-20 bg-gradient-to-br from-green-50 via-blue-50 to-indigo-50 dark:from-green-950/10 dark:via-blue-950/10 dark:to-indigo-950/10'
       id='stages'
     >
-      <div className='container mx-auto px-4'>
+      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <SectionAnimations className='text-center mb-16'>
           <h2 className='text-3xl md:text-4xl lg:text-5xl font-bold mb-6'>
             <span className='text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600'>

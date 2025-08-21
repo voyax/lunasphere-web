@@ -58,7 +58,7 @@ export default function DetectionPage() {
       </div>
 
       <div className='relative z-10'>
-        <div className='container mx-auto px-6 py-8'>
+        <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8'>
           {/* Model Status Banner */}
           {modelState === ModelState.LOADING && (
             <div className='mb-6 p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg'>

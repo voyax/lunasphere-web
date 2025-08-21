@@ -13,7 +13,7 @@ export async function HeroSection() {
       className='min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 via-blue-50 to-purple-50 dark:from-pink-950/20 dark:via-blue-950/20 dark:to-purple-950/20'
       id='hero'
     >
-      <div className='container mx-auto px-4 py-20'>
+      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20'>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center'>
           {/* Left content */}
           <HeroAnimations>
