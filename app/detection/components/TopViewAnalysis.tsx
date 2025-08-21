@@ -732,9 +732,9 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                   {/* Nose indicator - below frontal area */}
                   <div className='absolute top-8 left-1/2 flex items-center'>
                     {/* Horizontal dashed line pointing right */}
-                    <div className='w-32 h-0.5 border-t-2 border-dashed border-rose-500/70' />
+                    <div className='w-16 sm:w-32 h-0.5 border-t-2 border-dashed border-rose-500/70' />
                     {/* Label */}
-                    <div className='ml-2 bg-orange-100/90 text-orange-800 text-xs px-2.5 py-1 rounded font-medium shadow-md backdrop-blur-sm whitespace-nowrap'>
+                    <div className='ml-1 sm:ml-2 bg-orange-100/90 text-orange-800 text-xs px-1.5 sm:px-2.5 py-1 rounded font-medium shadow-md backdrop-blur-sm whitespace-nowrap transform -translate-x-1/2 sm:translate-x-0'>
                       {t('detection.topView.annotations.noseVisible')}
                     </div>
                   </div>
