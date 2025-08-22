@@ -26,6 +26,10 @@ export function Navbar() {
 
   const menuItems = [
     {
+      label: t('nav.home'),
+      href: '/',
+    },
+    {
       label: t('nav.detection'),
       href: '/detection',
     },
