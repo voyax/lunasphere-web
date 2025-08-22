@@ -1,9 +1,8 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: 'Infant Head Shape Development Guide',
-  description:
-    'Scientific understanding and rational care for infant head shape development.',
+  name: '小月颅',
+  description: '科学认知婴儿头型发育，理性护理减少焦虑',
   navItems: [
     {
       label: 'Home',

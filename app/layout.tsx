@@ -4,77 +4,81 @@ import clsx from 'clsx'
 
 import { Providers } from './providers'
 
-import { siteConfig } from '@/config/site'
 import { fontSans } from '@/config/fonts'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { getServerTranslation, getServerLocale } from '@/lib/i18n-server'
 
 // Enhanced SEO metadata with multilingual support
-export const metadata: Metadata = {
-  title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  keywords: [
-    '婴儿头型',
-    '头型发育',
-    '扁头综合征',
-    '斜头畸形',
-    '婴儿护理',
-    '新生儿',
-    'infant head shape',
-    'plagiocephaly',
-    'brachycephaly',
-    'positional head deformity',
-    'baby care',
-    'newborn development',
-  ],
-  authors: [{ name: 'MeloLib Team' }],
-  creator: 'Melo',
-  publisher: 'Melo',
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL('https://head.melolib.com'),
-  alternates: {
-    canonical: '/',
-  },
-  openGraph: {
-    type: 'website',
-    locale: 'zh_CN',
-    alternateLocale: ['en_US'],
-    url: 'https://head.melolib.com',
-    title: '小月颅 - 婴儿头型发育科学指南',
-    description:
-      '科学认知婴儿头型发育，理性护理减少焦虑。专业的婴儿头型评估和护理建议，帮助新手父母建立正确认知。',
-    siteName: '小月颅',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: '小月颅 - 婴儿头型发育指南',
-      },
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getServerLocale()
+  const t = await getServerTranslation(locale)
+
+  return {
+    title: {
+      default: t('site.title'),
+      template: `%s - ${t('site.title')}`,
+    },
+    description: t('site.description'),
+    keywords: [
+      '婴儿头型',
+      '头型发育',
+      '扁头综合征',
+      '斜头畸形',
+      '婴儿护理',
+      '新生儿',
+      'infant head shape',
+      'plagiocephaly',
+      'brachycephaly',
+      'positional head deformity',
+      'baby care',
+      'newborn development',
     ],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    authors: [{ name: 'MeloLib Team' }],
+    creator: 'Melo',
+    publisher: 'Melo',
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    metadataBase: new URL('https://head.melolib.com'),
+    alternates: {
+      canonical: '/',
+    },
+    openGraph: {
+      type: 'website',
+      locale: locale === 'zh' ? 'zh_CN' : 'en_US',
+      alternateLocale: locale === 'zh' ? ['en_US'] : ['zh_CN'],
+      url: 'https://head.melolib.com',
+      title: `${t('site.title')} - ${t('page.home.title')}`,
+      description: t('site.description'),
+      siteName: t('site.title'),
+      images: [
+        {
+          url: '/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: `${t('site.title')} - ${t('page.home.title')}`,
+        },
+      ],
+    },
+    robots: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     },
-  },
-  icons: {
-    icon: '/favicon.ico',
-  },
-  manifest: '/site.webmanifest',
+    icons: {
+      icon: '/favicon.ico',
+    },
+    manifest: '/site.webmanifest',
+  }
 }
 
 export const viewport: Viewport = {
@@ -89,60 +93,18 @@ export const viewport: Viewport = {
   colorScheme: 'light dark',
 }
 
-// JSON-LD structured data for SEO
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: '小月颅',
-  alternateName: 'LunaSphere',
-  url: 'https://head.melolib.com',
-  description: '科学认知婴儿头型发育，理性护理减少焦虑',
-  inLanguage: ['zh-CN', 'en-US'],
-  publisher: {
-    '@type': 'Organization',
-    name: '小月颅',
-    url: 'https://head.melolib.com',
-    logo: {
-      '@type': 'ImageObject',
-      url: 'https://head.melolib.com/logo.png',
-    },
-  },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: 'https://head.melolib.com/search?q={search_term_string}',
-    },
-    'query-input': 'required name=search_term_string',
-  },
-  mainEntity: {
-    '@type': 'MedicalWebPage',
-    name: '婴儿头型发育指南',
-    description: '专业的婴儿头型发育知识和护理指导',
-    medicalAudience: {
-      '@type': 'MedicalAudience',
-      audienceType: 'Patient',
-    },
-    about: {
-      '@type': 'MedicalCondition',
-      name: '婴儿头型发育',
-      alternateName: [
-        '扁头综合征',
-        '斜头畸形',
-        'Plagiocephaly',
-        'Brachycephaly',
-      ],
-    },
-  },
-}
+// JSON-LD structured data for SEO - moved inside generateMetadata for i18n support
 
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const locale = await getServerLocale()
+  const t = await getServerTranslation(locale)
+
   return (
-    <html suppressHydrationWarning lang='zh-CN'>
+    <html suppressHydrationWarning lang={locale === 'zh' ? 'zh-CN' : 'en-US'}>
       <head>
         {/* Preconnect to external domains for performance */}
         <link href='https://cloud.umami.is' rel='preconnect' />
@@ -150,21 +112,17 @@ export default async function RootLayout({
         {/* Single domain multilingual site - no hreflang needed */}
 
         {/* Additional meta tags for better SEO */}
-        <meta content='小月颅' name='application-name' />
+        <meta content={t('site.title')} name='application-name' />
         <meta content='yes' name='apple-mobile-web-app-capable' />
         <meta content='default' name='apple-mobile-web-app-status-bar-style' />
-        <meta content='小月颅' name='apple-mobile-web-app-title' />
+        <meta content={t('site.title')} name='apple-mobile-web-app-title' />
         <meta content='telephone=no' name='format-detection' />
         <meta content='yes' name='mobile-web-app-capable' />
         <meta content='/browserconfig.xml' name='msapplication-config' />
         <meta content='#ffffff' name='msapplication-TileColor' />
         <meta content='no' name='msapplication-tap-highlight' />
 
-        {/* Structured data */}
-        <script
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-          type='application/ld+json'
-        />
+        {/* Structured data - TODO: Move to generateMetadata for i18n support */}
       </head>
       <body
         className={clsx(

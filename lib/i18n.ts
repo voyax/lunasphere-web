@@ -36,6 +36,40 @@ export const translations: TranslationKeys = {
     en: 'Scientific understanding and rational care for infant head shape development',
   },
 
+  // Page titles
+  'page.home.title': {
+    zh: '婴儿头型发育科学指南',
+    en: 'Infant Head Shape Development Guide',
+  },
+  'page.home.description': {
+    zh: '科学认知婴儿头型发育，理性护理减少焦虑。专业的婴儿头型评估和护理建议，帮助新手父母建立正确认知。',
+    en: 'Scientific understanding and rational care for infant head shape development. Professional assessment and care guidance to help new parents build proper understanding.',
+  },
+  'page.detection.title': {
+    zh: '头型检测',
+    en: 'Head Shape Detection',
+  },
+  'page.detection.description': {
+    zh: '使用AI技术分析婴儿头型，提供科学的头颅指数和不对称指数测量',
+    en: 'AI-powered infant head shape analysis with scientific cephalic index and asymmetry measurements',
+  },
+  'page.faq.title': {
+    zh: '常见问题',
+    en: 'FAQ',
+  },
+  'page.faq.description': {
+    zh: '关于婴儿头型发育的常见疑问解答，帮助新手父母科学护理',
+    en: 'Common questions about infant head shape development, helping new parents with scientific care',
+  },
+  'page.profileMatch.title': {
+    zh: '轮廓匹配',
+    en: 'Profile Match',
+  },
+  'page.profileMatch.description': {
+    zh: '上传宝宝侧面照片，与标准轮廓进行精确对比分析',
+    en: 'Upload baby profile photos for precise comparison with standard contours',
+  },
+
   // Navigation
   'nav.home': {
     zh: '首页',
