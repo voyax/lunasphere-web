@@ -92,3 +92,6 @@ temp/
 
 # Trae AI specific
 .trae/
+
+# Documentation
+docs/

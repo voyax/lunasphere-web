@@ -1,15 +1,35 @@
-# Head Start - Infant Head Shape Education Platform
+# LunaSphere
 
-🍼 A comprehensive educational platform dedicated to infant head shape development, providing authoritative information and AI-powered detection tools for parents and healthcare professionals.
+> An infant head shape assessment platform designed to ease new parent anxiety, providing head shape education, online detection, and profile matching features to truly help parents who work hard for their children.
 
-## 🌟 Features
+🌐 **Live Demo**: [https://head.melolib.com](https://head.melolib.com)  
+🤖 **Model Training**: [https://github.com/voyax/lunasphere-segmentation](https://github.com/voyax/lunasphere-segmentation)
 
-- **📚 Educational Content**: Comprehensive information about infant head shape development
-- **🔍 AI Detection**: Advanced machine learning model for head shape analysis
-- **🌍 Multilingual Support**: Available in multiple languages
-- **📱 Responsive Design**: Optimized for desktop and mobile devices
-- **🎨 Modern UI**: Built with HeroUI for beautiful user experience
-- **♿ Accessibility**: WCAG compliant design
+📖 **Language**: [中文](README-zh.md) | English
+
+![](./docs/assets/screenshot_en.png)
+
+
+## 🚀 Core Features
+
+### AI Head Shape Analysis
+- **Local Processing**：AI inference happens right in your browser
+- **Privacy Protection**: No photos uploaded - all processing happens locally
+- **Measurement Tools**: Automated calculation of head shape indices (CI, CVAI)
+- **Visual Feedback**: Clear visual indicators and measurement results
+
+### Head Shape Education
+- **Scientific Information**: Evidence-based content about normal head shape development
+- **FAQ Section**: Comprehensive answers to common parent questions
+- **Development Guides**: Visual explanations of head shape changes over time
+- **Care Tips**: Practical advice for daily positioning and sleep practices
+
+## ✨ Platform Features
+
+- Mobile-first design
+- Universal accessibility
+- Multi-language support
+- Secure & private
 
 ## 🚀 Quick Start
 
@@ -20,110 +40,71 @@
 
 ### Installation
 
-1. Clone the repository:
 ```bash
-git clone https://github.com/voyax/baby-head-web.git
-cd baby-head-web
-```
-
-2. Install dependencies:
-```bash
+# Clone and setup
+git clone https://github.com/lunasphere-project/lunasphere-web.git
+cd lunasphere-web
 npm install
-# or
-yarn install
-# or
-pnpm install
-```
 
-3. Copy environment variables:
-```bash
+# Configure environment
 cp .env.example .env.local
-```
 
-4. Start the development server:
-```bash
+# Start development
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [Next.js 14](https://nextjs.org/) with App Router
-- **UI Library**: [HeroUI v2](https://heroui.com/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **AI/ML**: [ONNX Runtime](https://onnxruntime.ai/) for model inference
-- **Internationalization**: Custom i18n implementation
-- **Theme**: [next-themes](https://github.com/pacocoursey/next-themes)
+- Next.js 14
+- TypeScript
+- HeroUI
+- Tailwind CSS
+- ONNX Runtime
+- Framer Motion
 
-## 📁 Project Structure
+## 📁 Structure
 
 ```
-├── app/                    # Next.js app directory
-│   ├── (home)/            # Home page components
-│   ├── detection/         # AI detection feature
-│   └── faq/              # FAQ page
-├── components/            # Reusable UI components
-├── lib/                   # Utility functions and AI model
-├── public/               # Static assets
-│   ├── images/           # Image assets
-│   └── models/           # AI model files
-├── deployment/           # Docker and deployment configs
-└── types/                # TypeScript type definitions
+app/          # Next.js pages and layouts
+components/   # Reusable UI components
+lib/          # Utilities and AI models
+public/       # Static assets and models
+deployment/   # Docker configurations
 ```
 
-## 🌐 Deployment
+## 🚀 Deployment
 
-### Docker Deployment
-
-1. Build the Docker image:
 ```bash
+# Docker deployment
 ./deployment/build.sh v1.0.0
+cd deployment && docker-compose up -d
 ```
 
-2. Run with Docker Compose:
-```bash
-cd deployment
-docker-compose up -d
-```
-
-For detailed deployment instructions, see [deployment/README.md](deployment/README.md).
+See [deployment/README.md](deployment/README.md) for detailed instructions.
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+Welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md).
 
-### Development Guidelines
-
-- Follow React best practices
-- Use TypeScript for type safety
-- Write tests for new features
-- Ensure accessibility compliance
-- Maintain medical content accuracy
+**Development Guidelines:**
+- Follow React best practices and TypeScript standards
+- Ensure accessibility compliance (WCAG 2.1 AA)
+- Maintain medical content accuracy with proper citations
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GPL v3 License - see the [LICENSE](LICENSE) file for details.
 
 ## 🔒 Security
 
-For security concerns, please see our [Security Policy](SECURITY.md).
+For security issues, please see our [Security Policy](SECURITY.md).
 
-## 📞 Support
-
-- 📧 Email: hi@melolib.com
-- 🐛 Issues: [GitHub Issues](https://github.com/voyax/baby-head-web/issues)
-- 📖 Documentation: [Wiki](https://github.com/voyax/baby-head-web/wiki)
 
 ## ⚠️ Medical Disclaimer
 
-This platform is for educational purposes only and should not replace professional medical advice. Always consult with healthcare professionals for medical concerns.
+This platform is for educational purposes only and should not replace professional medical advice. Always consult healthcare professionals for medical concerns.
 
 ---
 
