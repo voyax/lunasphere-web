@@ -1,7 +1,6 @@
 # LunaSphere
 
 > A deep learning-based tool for assessing infant head shape. Our model extracts cranial contours from photos to compute CI & CVAI indices, aiding early screening.
-
 > Includes evidence-based educational resources from authoritative research—helping parents gain insights and reduce anxiety.
 
 🌐 **Live Demo**: [https://head.melolib.com](https://head.melolib.com)  

@@ -1,7 +1,7 @@
 {
   "name": "lunasphere-web",
-  "version": "1.0.0",
-  "description": "A comprehensive educational platform dedicated to infant head shape development with AI-powered detection tools",
+  "version": "1.1.0",
+  "description": "A deep learning-based tool for assessing infant head shape. Our model extracts cranial contours from photos to compute CI & CVAI indices, aiding early screening.",
   "keywords": [
     "infant",
     "head-shape",
