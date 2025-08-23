@@ -1,0 +1,92 @@
+# Caddy configuration for Next.js with Server Actions support
+# This configuration ensures proper header forwarding for CDN + origin setup
+
+# CDN/Accelerated domain configuration
+your-cdn-domain.com {
+    # Reverse proxy to your Next.js origin server
+    reverse_proxy your-origin-server.com:3000 {
+        # Preserve original headers for Server Actions
+        header_up Host {upstream_hostport}
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+        header_up X-Forwarded-Host {host}
+        
+        # Important: Preserve origin header for Next.js Server Actions
+        header_up Origin "https://your-cdn-domain.com"
+        
+        # Forward all other headers
+        header_up X-Forwarded-Port {server_port}
+    }
+    
+    # Enable compression
+    encode gzip
+    
+    # Security headers
+    header {
+        # Remove server info
+        -Server
+        
+        # Security headers
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        X-XSS-Protection "1; mode=block"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+    
+    # Logging
+    log {
+        output file /var/log/caddy/access.log
+        format json
+    }
+}
+
+# Origin server configuration (if Caddy is also used on origin)
+your-origin-server.com {
+    # Direct proxy to Next.js application
+    reverse_proxy localhost:3000 {
+        # Preserve headers from CDN
+        header_up Host {host}
+        header_up X-Real-IP {header.X-Real-IP}
+        header_up X-Forwarded-For {header.X-Forwarded-For}
+        header_up X-Forwarded-Proto {header.X-Forwarded-Proto}
+        header_up X-Forwarded-Host {header.X-Forwarded-Host}
+        header_up Origin {header.Origin}
+    }
+    
+    # Health check endpoint
+    handle /health {
+        respond "OK" 200
+    }
+    
+    # Logging
+    log {
+        output file /var/log/caddy/origin.log
+        format json
+    }
+}
+
+# Alternative: Single domain with CDN caching rules
+# Use this if you want to handle both CDN and origin on the same domain
+# your-domain.com {
+#     # Cache static assets
+#     @static {
+#         path /_next/static/* /favicon.ico /robots.txt /sitemap.xml
+#     }
+#     
+#     handle @static {
+#         header Cache-Control "public, max-age=31536000, immutable"
+#         reverse_proxy localhost:3000
+#     }
+#     
+#     # Handle Server Actions and dynamic content
+#     handle {
+#         reverse_proxy localhost:3000 {
+#             header_up Host {host}
+#             header_up X-Real-IP {remote_host}
+#             header_up X-Forwarded-For {remote_host}
+#             header_up X-Forwarded-Proto {scheme}
+#             header_up X-Forwarded-Host {host}
+#         }
+#     }
+# }
