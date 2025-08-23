@@ -49,6 +49,10 @@ npm install
 # Configure environment
 cp .env.example .env.local
 
+# Configure optional analytics (edit .env.local)
+# UMAMI_WEBSITE_ID=your-website-id
+# UMAMI_SCRIPT_URL=/path/to/your/script.js
+
 # Start development
 npm run dev
 ```

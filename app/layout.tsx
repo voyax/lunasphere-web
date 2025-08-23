@@ -106,9 +106,6 @@ export default async function RootLayout({
   return (
     <html suppressHydrationWarning lang={locale === 'zh' ? 'zh-CN' : 'en-US'}>
       <head>
-        {/* Preconnect to external domains for performance */}
-        <link href='https://cloud.umami.is' rel='preconnect' />
-
         {/* Single domain multilingual site - no hreflang needed */}
 
         {/* Additional meta tags for better SEO */}
@@ -121,8 +118,12 @@ export default async function RootLayout({
         <meta content='/browserconfig.xml' name='msapplication-config' />
         <meta content='#ffffff' name='msapplication-TileColor' />
         <meta content='no' name='msapplication-tap-highlight' />
-        <meta content='ca-pub-7872850129709956' name='google-adsense-account' />
-
+        {process.env.GOOGLE_ANALYTICS_ID && process.env.UMAMI_SCRIPT_URL && (
+          <meta
+            content={process.env.GOOGLE_ANALYTICS_ID}
+            name='google-adsense-account'
+          />
+        )}
         {/* Structured data - TODO: Move to generateMetadata for i18n support */}
       </head>
       <body
@@ -140,11 +141,13 @@ export default async function RootLayout({
         </Providers>
 
         {/* Analytics script */}
-        <script
-          defer
-          data-website-id='ca3cd041-c67b-4dc9-bce5-08188632f253'
-          src='/u/script.js'
-        />
+        {process.env.UMAMI_WEBSITE_ID && process.env.UMAMI_SCRIPT_URL && (
+          <script
+            defer
+            data-website-id={process.env.UMAMI_WEBSITE_ID}
+            src={process.env.UMAMI_SCRIPT_URL}
+          />
+        )}
       </body>
     </html>
   )
