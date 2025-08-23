@@ -96,7 +96,7 @@ jobs:
         NEXT_TELEMETRY_DISABLED: 1
     
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: build-files
         path: |
@@ -143,7 +143,7 @@ jobs:
           --tags wcag2a,wcag2aa
     
     - name: Upload accessibility report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: accessibility-report
