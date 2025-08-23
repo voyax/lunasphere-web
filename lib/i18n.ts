@@ -91,6 +91,10 @@ export const translations: TranslationKeys = {
     zh: '语言',
     en: 'Language',
   },
+  'nav.mobileMenu': {
+    zh: '移动端导航菜单',
+    en: 'Mobile navigation menu',
+  },
 
   // Hero section
   'hero.title': {

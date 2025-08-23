@@ -16,12 +16,14 @@ export const Footer = () => {
               isExternal
               className='text-default-600 hover:text-primary transition-colors'
               href='https://github.com/voyax/baby-head-web'
+              aria-label='Visit our GitHub repository'
             >
               <Github className='w-4 h-4' />
             </Link>
             <Link
               className='text-default-600 hover:text-primary transition-colors'
               href='mailto:hi@melolib.com'
+              aria-label='Send us an email'
             >
               <Mail className='w-4 h-4' />
             </Link>

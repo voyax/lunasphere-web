@@ -113,9 +113,9 @@ export function Navbar() {
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarMenu>
+      <NavbarMenu role="menu" aria-label={t('nav.mobileMenu')}>
         {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item.href}-${index}`}>
+          <NavbarMenuItem key={`${item.href}-${index}`} role="menuitem">
             <NextLink
               className={`w-full transition-colors ${
                 isActive(item.href)
