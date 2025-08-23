@@ -121,6 +121,7 @@ export default async function RootLayout({
         <meta content='/browserconfig.xml' name='msapplication-config' />
         <meta content='#ffffff' name='msapplication-TileColor' />
         <meta content='no' name='msapplication-tap-highlight' />
+        <meta content='ca-pub-7872850129709956' name='google-adsense-account' />
 
         {/* Structured data - TODO: Move to generateMetadata for i18n support */}
       </head>
