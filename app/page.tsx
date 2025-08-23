@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+
 import { HeroSection } from '@/app/(home)/components/hero-section'
 import { DevelopmentSection } from '@/app/(home)/components/development-section'
 import { ClassificationSection } from '@/app/(home)/components/classification-section'

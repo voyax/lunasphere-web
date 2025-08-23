@@ -1,6 +1,7 @@
 'use client'
 
 import ProfileViewComparison from './components/ProfileViewComparison'
+
 import { useLocale } from '@/contexts/LocaleContext'
 
 export default function ProfileMatchPage() {

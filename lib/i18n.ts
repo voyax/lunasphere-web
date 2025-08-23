@@ -1021,7 +1021,7 @@ export const translations: TranslationKeys = {
   },
   'detection.profileView.pageDescription': {
     zh: '手动比对宝宝侧面轮廓与标准轮廓，作为CI、CVAI测量补充，帮助家长直观理解宝宝头型发育特征',
-    en: 'Compare your baby\'s profile against standard contours to complement CI and CVAI measurements, giving parents clear insights into head shape development',
+    en: "Compare your baby's profile against standard contours to complement CI and CVAI measurements, giving parents clear insights into head shape development",
   },
   'detection.profileView.shootingTips.title': {
     zh: '拍摄要点',
@@ -1554,9 +1554,9 @@ export const translations: TranslationKeys = {
   },
   'detection.medicalDisclaimer': {
     zh: '我们基于权威医学论文的计算方法，采集了300张真实头型图片进行标注和模型训练，竭尽全力保证测量精度和计算的准确性。我们希望为父母提供便捷的科学参考，帮助缓解育儿焦虑。但本工具仅供教育和参考目的，不能替代专业医疗诊断。检测结果不应作为医疗决策的唯一依据。如果您对宝宝的头型发育有任何担忧，请及时咨询儿科医生或相关医疗专业人员。',
-    en: 'We employ calculation methods based on authoritative medical literature and have collected and annotated 300 real infant head shape images for model training, striving to ensure measurement precision and computational accuracy. Our goal is to provide parents with convenient scientific reference tools to help ease parenting concerns. However, this tool is intended for educational and reference purposes only and cannot substitute for professional medical diagnosis. Detection results should not serve as the sole basis for medical decisions. If you have any concerns about your baby\'s head shape development, please consult with a pediatrician or qualified healthcare professional promptly.',
-   },
-   'detection.references.title': {
+    en: "We employ calculation methods based on authoritative medical literature and have collected and annotated 300 real infant head shape images for model training, striving to ensure measurement precision and computational accuracy. Our goal is to provide parents with convenient scientific reference tools to help ease parenting concerns. However, this tool is intended for educational and reference purposes only and cannot substitute for professional medical diagnosis. Detection results should not serve as the sole basis for medical decisions. If you have any concerns about your baby's head shape development, please consult with a pediatrician or qualified healthcare professional promptly.",
+  },
+  'detection.references.title': {
     zh: '参考来源',
     en: 'References',
   },

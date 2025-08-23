@@ -110,8 +110,9 @@ export default function DetectionPage() {
                   {modelLoadError && (
                     <div className='mt-2 py-2'>
                       <p className='text-xs font-mono text-red-800 dark:text-red-200 break-all'>
-                         <strong>{t('detection.model.detailedError')}:</strong> {modelLoadError}
-                       </p>
+                        <strong>{t('detection.model.detailedError')}:</strong>{' '}
+                        {modelLoadError}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -166,25 +167,25 @@ export default function DetectionPage() {
               modelState={modelState}
               onAnalysisResultChange={setHasAnalysisResult}
             />
-            
+
             {/* Medical Disclaimer - only show when there's an analysis result */}
             {hasAnalysisResult && (
               <div className='max-w-7xl mx-auto lg:px-8'>
-                <MedicalDisclaimer 
+                <MedicalDisclaimer
                   className='mt-12 sm:mt-16 lg:mt-20'
-                  titleKey='detection.medicalDisclaimerTitle'
                   contentKey='detection.medicalDisclaimer'
+                  titleKey='detection.medicalDisclaimerTitle'
                 />
               </div>
             )}
-            
+
             {/* References - only show when there's an analysis result */}
             {hasAnalysisResult && (
               <div className='max-w-7xl mx-auto lg:px-8'>
-                <ReferenceSources 
+                <ReferenceSources
                   className='mt-8 sm:mt-10 lg:mt-12'
-                  titleKey='detection.references.title'
                   sourceKeyPrefix='detection.references'
+                  titleKey='detection.references.title'
                 />
               </div>
             )}

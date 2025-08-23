@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { Tooltip } from '@heroui/tooltip'
 import { Modal, ModalContent, ModalHeader, ModalBody } from '@heroui/modal'
-import { Button } from '@heroui/button'
 import { Info } from 'lucide-react'
 
 import { useIsMobile } from '@/hooks/useIsMobile'
@@ -79,19 +78,19 @@ const ShootingTipsDisplay = ({ t }: ShootingTipsDisplayProps) => {
     return (
       <>
         <button
-          onClick={() => setIsModalOpen(true)}
+          aria-label={t('detection.topView.shootingTips.title')}
           className='bg-transparent border-none p-0 cursor-pointer'
           type='button'
-          aria-label={t('detection.topView.shootingTips.title')}
+          onClick={() => setIsModalOpen(true)}
         >
           {triggerButton}
         </button>
         <Modal
           isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
           placement='center'
-          size='lg'
           scrollBehavior='inside'
+          size='lg'
+          onClose={() => setIsModalOpen(false)}
         >
           <ModalContent>
             <ModalHeader className='flex flex-col gap-1'>

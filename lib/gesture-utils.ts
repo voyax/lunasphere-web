@@ -61,6 +61,7 @@ export const getCenterMovement = (center1: Point, center2: Point): number => {
 export const normalizeRotationChange = (rotationChange: number): number => {
   if (rotationChange > 180) return rotationChange - 360
   if (rotationChange < -180) return rotationChange + 360
+
   return rotationChange
 }
 

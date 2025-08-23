@@ -200,7 +200,12 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                 <h3 className='font-medium text-blue-900 dark:text-blue-100 text-sm'>
                   {t('detection.profileView.shootingTips.title')}
                 </h3>
-                <Chip color='danger' size='sm' variant='flat' className='text-xs'>
+                <Chip
+                  className='text-xs'
+                  color='danger'
+                  size='sm'
+                  variant='flat'
+                >
                   {t('detection.profileView.shootingTips.safety')}
                 </Chip>
               </div>
@@ -210,7 +215,7 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
                 <ChevronDown className='w-4 h-4 text-blue-600 dark:text-blue-400' />
               )}
             </button>
-            
+
             {/* Mobile Expanded Content */}
             {isTipsExpanded && (
               <div className='px-3 pb-3'>
@@ -326,7 +331,9 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
               templateAltKey='detection.profileView.rightTemplateAlt'
               templateSrc='/images/detection/head_right.svg'
               onImageChange={newAttrs => updateImage('right', newAttrs)}
-              onImageSelect={() => setSelectedId(selectedId === 'right' ? null : 'right')}
+              onImageSelect={() =>
+                setSelectedId(selectedId === 'right' ? null : 'right')
+              }
               onImageUpload={file => handleFileUpload(file, 'right')}
             />
           </div>
@@ -362,7 +369,9 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
               templateAltKey='detection.profileView.leftTemplateAlt'
               templateSrc='/images/detection/head_left.svg'
               onImageChange={newAttrs => updateImage('left', newAttrs)}
-              onImageSelect={() => setSelectedId(selectedId === 'left' ? null : 'left')}
+              onImageSelect={() =>
+                setSelectedId(selectedId === 'left' ? null : 'left')
+              }
               onImageUpload={file => handleFileUpload(file, 'left')}
             />
           </div>

@@ -5,9 +5,9 @@ export type ImageType = 'top' | 'left' | 'right'
 // Model loading states
 export enum ModelState {
   NOT_LOADED = 'not_loaded',
-  LOADING = 'loading', 
+  LOADING = 'loading',
   LOADED = 'loaded',
-  ERROR = 'error'
+  ERROR = 'error',
 }
 
 // Analysis flow states
@@ -16,7 +16,7 @@ export enum AnalysisState {
   READY_TO_ANALYZE = 'ready_to_analyze',
   ANALYZING = 'analyzing',
   COMPLETED = 'completed',
-  ERROR = 'error'
+  ERROR = 'error',
 }
 
 export interface ImageUploadData {

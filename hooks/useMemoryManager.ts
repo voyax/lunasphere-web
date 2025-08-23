@@ -12,15 +12,19 @@ export const useMemoryManager = () => {
   const intervalsRef = useRef<Set<NodeJS.Timeout>>(new Set())
 
   // Timeout management
-  const createTimeout = useCallback((callback: () => void, delay: number): NodeJS.Timeout => {
-    const timeoutId = setTimeout(() => {
-      callback()
-      timeoutsRef.current.delete(timeoutId)
-    }, delay)
-    
-    timeoutsRef.current.add(timeoutId)
-    return timeoutId
-  }, [])
+  const createTimeout = useCallback(
+    (callback: () => void, delay: number): NodeJS.Timeout => {
+      const timeoutId = setTimeout(() => {
+        callback()
+        timeoutsRef.current.delete(timeoutId)
+      }, delay)
+
+      timeoutsRef.current.add(timeoutId)
+
+      return timeoutId
+    },
+    []
+  )
 
   const clearManagedTimeout = useCallback((timeoutId: NodeJS.Timeout) => {
     clearTimeout(timeoutId)
@@ -33,8 +37,9 @@ export const useMemoryManager = () => {
       callback()
       animationFramesRef.current.delete(frameId)
     })
-    
+
     animationFramesRef.current.add(frameId)
+
     return frameId
   }, [])
 
@@ -44,11 +49,16 @@ export const useMemoryManager = () => {
   }, [])
 
   // Interval management
-  const createInterval = useCallback((callback: () => void, delay: number): NodeJS.Timeout => {
-    const intervalId = setInterval(callback, delay)
-    intervalsRef.current.add(intervalId)
-    return intervalId
-  }, [])
+  const createInterval = useCallback(
+    (callback: () => void, delay: number): NodeJS.Timeout => {
+      const intervalId = setInterval(callback, delay)
+
+      intervalsRef.current.add(intervalId)
+
+      return intervalId
+    },
+    []
+  )
 
   const clearManagedInterval = useCallback((intervalId: NodeJS.Timeout) => {
     clearInterval(intervalId)
