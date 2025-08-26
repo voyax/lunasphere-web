@@ -118,7 +118,7 @@ export default async function RootLayout({
         <meta content='/browserconfig.xml' name='msapplication-config' />
         <meta content='#ffffff' name='msapplication-TileColor' />
         <meta content='no' name='msapplication-tap-highlight' />
-        {process.env.GOOGLE_ANALYTICS_ID && process.env.UMAMI_SCRIPT_URL && (
+        {process.env.GOOGLE_ANALYTICS_ID && (
           <meta
             content={process.env.GOOGLE_ANALYTICS_ID}
             name='google-adsense-account'
@@ -146,6 +146,15 @@ export default async function RootLayout({
             defer
             data-website-id={process.env.UMAMI_WEBSITE_ID}
             src={process.env.UMAMI_SCRIPT_URL}
+          />
+        )}
+
+        {/* Google Ads */}
+        {process.env.GOOGLE_ANALYTICS_ID && (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.GOOGLE_ANALYTICS_ID}`}
+            crossOrigin='anonymous'
           />
         )}
       </body>
