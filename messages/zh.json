@@ -1,0 +1,573 @@
+{
+  "site": {
+    "title": "小月颅",
+    "description": "科学认知婴儿头型发育，理性护理减少焦虑"
+  },
+  "page": {
+    "home": {
+      "title": "婴儿头型发育科学指南",
+      "description": "科学认知婴儿头型发育，理性护理减少焦虑。专业的婴儿头型评估和护理建议，帮助新手父母建立正确认知。"
+    },
+    "detection": {
+      "title": "头型检测",
+      "description": "使用AI技术分析婴儿头型，提供科学的头颅指数和不对称指数测量"
+    },
+    "faq": {
+      "title": "常见问题",
+      "description": "关于婴儿头型发育的常见疑问解答，帮助新手父母科学护理"
+    },
+    "profileMatch": {
+      "title": "轮廓匹配",
+      "description": "上传宝宝侧面照片，与标准轮廓进行精确对比分析"
+    }
+  },
+  "nav": {
+    "home": "首页",
+    "detection": "头型检测",
+    "profileMatch": "轮廓匹配",
+    "faq": "常见问题",
+    "language": "语言",
+    "mobileMenu": "移动端导航菜单"
+  },
+  "hero": {
+    "title": "婴儿头型发育指南",
+    "subtitle": "科学认知 · 理性护理",
+    "description": "大多数头型问题属于正常发育现象，通过科学的护理方法可以自然改善。我们帮助新手父母建立正确认知，减少不必要的焦虑。",
+    "cta": "头型自测",
+    "consultation": "如有疑虑，可尝试我们的AI头型分析，一张照片即可测出宝宝的头型指标"
+  },
+  "development": {
+    "title": "头型是如何发育的",
+    "subtitle": "宝宝的头型会随着发育自然变化，0–18 个月是关键观察期",
+    "structure": {
+      "name": "头骨结构",
+      "desc": "宝宝的头骨由多块骨板组成，通过\"颅缝\"连接，方便头部随着大脑发育而增长。"
+    },
+    "fontanelles": {
+      "name": "囟门闭合",
+      "desc": "后囟（头后的小软点）通常在2个月左右闭合，前囟（头顶中间的软点）一般在12–18个月闭合。",
+      "posterior": "后囟（头后的小软点）通常在",
+      "anterior": "，前囟（头顶中间的软点）一般在",
+      "closure": "闭合",
+      "around": "2个月左右闭合",
+      "period": "12–18个月闭合"
+    },
+    "growth": {
+      "name": "大脑发育",
+      "desc": "宝宝的大脑在出生到1岁期间增长最快，推动头围快速扩大。",
+      "period": "宝宝的大脑在出生到1岁期间增长最快",
+      "result": "，推动头围快速扩大。"
+    },
+    "plasticity": {
+      "name": "头型可塑性",
+      "desc": "因为头骨还未闭合，姿势对头型影响很大。",
+      "reason": "因为头骨还未闭合，姿势对头型影响很大"
+    },
+    "birth": {
+      "name": "出生恢复",
+      "desc": "出生时，婴儿头骨柔软可塑，可经分娩管道变形，一般产后3–5天内形状可自然恢复。",
+      "condition": "出生时，婴儿头骨柔软可塑，可经分娩管道变形，",
+      "recovery": "一般产后3–5天内形状可自然恢复"
+    },
+    "badge": {
+      "scientific": "科学",
+      "authoritative": "权威"
+    },
+    "timeline": {
+      "birth": {
+        "name": "出生",
+        "detail": "形状恢复"
+      },
+      "3_6months": {
+        "name": "3-6月",
+        "detail": "后囟闭合"
+      },
+      "12_18months": {
+        "name": "12-18月",
+        "detail": "前囟闭合"
+      }
+    }
+  },
+  "punctuation": {
+    "period": "。",
+    "comma": "，"
+  },
+  "reference": {
+    "source-link": "来源链接:"
+  },
+  "classification": {
+    "title": "常见头型变化",
+    "subtitle": "大多数头型变化都是正常发育现象，了解特征有助于科学护理",
+    "description_label": "特征描述",
+    "causes_label": "主要成因",
+    "correction_label": "纠正手段",
+    "reminder_title": "体位性头型变化是正常现象",
+    "reminder_content": "大多数头型变化属于体位性，通过调整睡姿、增加俯卧时间等方法可以自然改善，无需过度担心",
+    "reminder_note": "💡 建议：定期变换宝宝睡觉和玩耍的姿势，促进头型自然发育",
+    "medical_warning_title": "病理性头型需要医疗关注",
+    "medical_warning_content": "病理性头型（如舟状头）无法通过调整睡姿、使用矫正头盔等方式治疗。这类情况需要专业的医疗诊断和外科治疗，如发现头型异常严重、头围增长异常或伴有其他症状，必须及时咨询儿科医生或头颅外科专家进行专业评估。",
+    "severity": {
+      "common": "常见",
+      "moderate": "中等",
+      "rare": "少见"
+    },
+    "category": {
+      "normal": "正常",
+      "positional": "体位性",
+      "pathological": "病理性"
+    },
+    "normal": {
+      "name": "正常头型",
+      "image_placeholder": "正常头型示例图片",
+      "description": "头部呈现自然圆润的形状，前后、左右基本对称，符合正常发育标准。",
+      "causes": "正常的胎儿发育和出生后适当的体位变换，头骨在自然生长过程中形成理想形状。",
+      "correction": "无需特殊干预，继续保持良好的护理习惯，定期体位变换，确保健康发育。"
+    },
+    "brachycephaly": {
+      "name": "扁头",
+      "image_placeholder": "扁头示例图片",
+      "image_alt": "扁头畸形示例图片，显示后脑勺扁平的特征",
+      "description": "后脑勺出现扁平，这是婴儿期最常见的头型变化，通常在7-12周龄达到高峰。",
+      "causes": "主要由仰卧睡眠姿势引起。美国儿科学会推荐仰卧睡眠以降低婴儿猝死风险，但可能影响头型。",
+      "correction": "80%以上的宝宝在2岁前会自然改善。建议：清醒时多趴卧、交替睡姿、减少平躺时间。"
+    },
+    "plagiocephaly": {
+      "name": "偏头畸形",
+      "image_placeholder": "偏头畸形示例图片",
+      "image_alt": "偏头畸形示例图片，显示头部一侧扁平的不对称特征",
+      "description": "头部一侧相对扁平，呈不对称外观。这种情况在4个月时通常达到高峰，之后开始改善。",
+      "causes": "常见于偏向一侧睡眠、宫内体位限制。70%-95%的偏头宝宝伴有轻微斜颈，这是正常现象。",
+      "correction": "多数情况会自然改善。建议：鼓励向另一侧转头、增加趴卧时间、轻柔的颈部运动。"
+    },
+    "dolichocephaly": {
+      "name": "姿势性长头",
+      "image_placeholder": "姿势性长头示例图片",
+      "image_alt": "姿势性长头示例图片，显示头部前后较长、两侧较窄的特征",
+      "description": "头部前后较长、两侧相对较窄，但颅缝正常开放。多见于早产儿或长期侧卧的婴儿。",
+      "causes": "主要由长期侧卧体位引起，常见于NICU早产儿。与病理性舟状头不同，颅缝发育正常。",
+      "correction": "多数情况可通过体位调整自然改善。建议：减少侧卧时间、增加仰卧和俯卧时间、头部按摩。"
+    },
+    "scaphocephaly": {
+      "name": "舟状头",
+      "image_placeholder": "病理性舟状头示例图片",
+      "image_alt": "病理性舟状头示例图片，显示矢状缝早闭导致的船形头颅特征",
+      "description": "矢状缝早闭导致，顶上有一道自前向后隆起的骨脊，前后尖，头型如舟，是最常见的颅缝早闭类型。",
+      "causes": "矢状缝过早融合，阻止头颅横向生长而前后生长继续，形成狭长头型。男性发病率是女性的3倍。",
+      "correction": "病理性舟状头属于颅缝早闭，必须通过神经外科手术治疗，无法通过调整睡姿、物理治疗或矫正头盔等保守方式改善。手术通常需要切除融合的矢状缝并重塑头颅形状，早期诊断和手术治疗效果更佳，需要由专业的神经外科医生进行评估和治疗"
+    }
+  },
+  "sleep": {
+    "title": "帮助宝宝睡出好头型",
+    "subtitle": "看完我们整理的内容，多观察，循序渐进，宝宝就能轻松睡出漂亮圆头",
+    "principle1": {
+      "name": "安全第一，科学护理",
+      "desc": "始终遵循安全睡眠原则，仰睡可以降低婴儿猝死综合征（SIDS）的风险，避免俯睡，无论何时，都应该把安全放置在第一位"
+    },
+    "principle2": {
+      "name": "勤换睡姿，均匀受力",
+      "desc": "新生儿颅骨柔软可塑，长时间固定睡姿易致头型偏平。两个方向的侧睡、仰睡轮流进行，让头部各个部位均匀受力，促进头型自然圆润发育"
+    },
+    "principle3": {
+      "name": "床垫适度，稳固支撑",
+      "desc": "选用硬度适中的床垫，既能提供充分支撑，又不会过度下陷。过软的床垫会使宝宝的头部受力不均，某一侧长时间陷入，反而容易导致扁头或偏头等问题，且不利于婴儿脊椎发育"
+    },
+    "principle4": {
+      "name": "细心观察，及时调整",
+      "desc": "前6个月是头型塑造的黄金期，家长应密切关注宝宝头型变化。发现偏平或不对称时，及时调整护理方式。6个月后随着宝宝活动增加，头型会逐渐趋于圆润"
+    },
+    "newborn_title": "新生儿期护理",
+    "newborn_desc": "重点关注睡姿变换，避免长时间仰卧，每2小时调整一次头部位置",
+    "infant_title": "婴儿期护理",
+    "infant_desc": "增加趴卧时间，开始进行颈部运动，注意观察头型对称性",
+    "toddler_title": "幼儿期护理",
+    "toddler_desc": "鼓励多种睡姿，减少长时间固定姿势，关注头型最终定型",
+    "mobile_title": "活动期注意事项",
+    "mobile_desc": "宝宝开始翻身和坐立，头型基本定型，重点转向维护和预防不良习惯",
+    "technique1": {
+      "name": "趴卧时间练习",
+      "desc": "在宝宝清醒且有人看护时，从新生儿期开始每天进行3-5次趴卧练习，每次2-5分钟。趴卧能有效减轻后脑勺压力，促进颈背部肌肉发育，预防扁头综合征。注意选择硬实平整的表面，确保宝宝呼吸道畅通"
+    },
+    "technique2": {
+      "name": "多样化喂养姿势",
+      "desc": "采用多种喂养姿势，包括摇篮式、橄榄球式、侧卧式等，每次喂养交替使用左右手臂。避免长时间固定同一姿势，这样不仅能减少头部单侧受压，还能促进宝宝视觉和空间感知能力的全面发展"
+    },
+    "technique3": {
+      "name": "环境引导转头",
+      "desc": "合理布置婴儿床周围环境，定期更换玩具、音乐盒或彩色图案的位置，利用宝宝的好奇心引导其主动转头。每隔几天调换宝宝睡觉的方向（头脚位置对调），这样光线和环境刺激就会从不同方向吸引宝宝转头，简单有效地避免头部总是偏向同一侧"
+    },
+    "technique4": {
+      "name": "侧睡小妙招",
+      "desc": "让宝宝侧睡时要做到侧头侧身睡，避免只侧头不侧身的错误姿势。只侧头不侧身会让颈部承受过大压力，可能导致颈部不适或加重头型偏斜。可以在宝宝背后垫一个卷起来的小毛巾或小枕头，帮助其保持稳定的侧卧姿势，左右两侧要轮流进行"
+    },
+    "principles_title": "四个核心原则",
+    "principles_subtitle": "掌握这些基本原则，为宝宝创造最佳的头型发育环境",
+    "techniques_title": "实用护理技巧",
+    "techniques_subtitle": "日常生活中简单易行的头型护理方法",
+    "cta_title": "如果您仍有疑惑",
+    "cta_description": "欢迎尝试我们的在线头型测试，或者发送邮件给我们。我们会尽力为每一位家长提供帮助和解答，这些服务都是免费的。"
+  },
+  "examples": {
+    "title": "典型头型图片展示",
+    "subtitle": "通过真实图片了解不同头型的特征",
+    "normal": {
+      "3month": "正常头型 — 3个月",
+      "6month": "正常头型 — 6个月",
+      "9month": "正常头型 — 9个月"
+    },
+    "brachycephaly": {
+      "front_view": "扁头 - 正视",
+      "profile_view": "扁头 - 侧视",
+      "top_view": "扁头 - 俯视"
+    },
+    "plagiocephaly": {
+      "front_view": "斜头 - 正视",
+      "profile_view": "斜头 - 侧视",
+      "top_view": "斜头俯视"
+    },
+    "dolichocephaly": {
+      "front_view": "姿势性长头正视",
+      "profile_view": "姿势性长头侧视",
+      "top_view": "姿势性长头俯视"
+    },
+    "scaphocephaly": {
+      "3D_1": "舟状头 - 3D",
+      "3D_2": "舟状头 - 3D",
+      "3D_3": "舟状头 - 3D",
+      "medical_note": "舟状头 ≠ 体位性长头，必须经专业的医学判断。医学影像参考：https://radiopaedia.org/articles/scaphocephaly"
+    },
+    "image_placeholder": "图片占位符"
+  },
+  "button": {
+    "learn-more": "了解更多",
+    "contact": "发送邮件",
+    "test-now": "立即测试"
+  },
+  "detection": {
+    "hero": {
+      "title": "AI头型智能分析",
+      "subtitle": "深度学习 · 隐私安全 · 本地处理",
+      "description": "基于先进深度学习算法的专业头型评估系统，所有数据处理均在您的设备本地完成，无需上传任何照片，确保您和宝宝的隐私安全。",
+      "features": {
+        "ai": "深度学习算法",
+        "privacy": "本地处理，隐私安全"
+      }
+    },
+    "topView": {
+      "features": {
+        "medical": "专业医学标准",
+        "deepLearning": "深度学习算法",
+        "deepLearningDesc": "先进AI技术，精准识别头型轮廓",
+        "privacy": "本地处理，隐私安全",
+        "privacyDesc": "所有分析均在本地进行，数据不会离开您的设备",
+        "medicalDesc": "基于临床测量标准，提供可靠的分析结果"
+      },
+      "title": "婴儿头型测量",
+      "uploadTitle": "婴儿头型俯视图",
+      "subtitle": "俯视图上传",
+      "description": "上传宝宝头部俯视图，获得专业AI分析",
+      "tooltips": {
+        "analyzing": "AI正在分析图片，请稍候...",
+        "readyToAnalyze": "点击开始AI分析",
+        "reupload": "重新上传图片"
+      },
+      "shootingTips": {
+        "title": "拍摄要点",
+        "tip1": "微微透出鼻尖",
+        "tip2": "光线充足，避免阴影",
+        "tip3": "手机与头部平行",
+        "tip4": "避免头发遮挡",
+        "tip1Detail": "确保能看到一点鼻尖，但不要露出太多面部",
+        "tip2Detail": "保持手机与宝宝头部在同一水平线上",
+        "tip3Detail": "确保前额朝上，头部轮廓清晰可见",
+        "tip4Detail": "如头发较多，可用水润湿贴在头上，或洗澡后拍摄",
+        "safety": "所有拍摄请确保宝宝安全、健康！"
+      },
+      "annotations": {
+        "forehead": "前额",
+        "noseVisible": "刚刚漏出鼻子",
+        "occiput": "后枕"
+      },
+      "upload": {
+        "clickOrDrag": "点击或拖拽图片到此处",
+        "supportFormat": "支持 JPG、PNG 格式，最大 10MB",
+        "rotation": "旋转调整",
+        "rotationTip": "💡 调整图片角度，确保前额朝上",
+        "modelLoading": "模型加载中..."
+      },
+      "exampleImageAlt": "正确拍摄示例图片",
+      "originalImageAlt": "原始上传图片",
+      "analysisResult": "分析结果",
+      "analysisDescription": "基于识别的头型轮廓，计算头颅指数和不对称指数",
+      "buttons": {
+        "analyzing": "分析中...",
+        "startAnalysis": "开始分析",
+        "reupload": "重新上传",
+        "downloadResult": "下载结果"
+      },
+      "analysis": {
+        "startAnalysis": "开始分析",
+        "reupload": "重新上传",
+        "downloadResult": "下载结果",
+        "title": "分析结果",
+        "description": "根据识别的头型轮廓，计算 CI、CVAI",
+        "waitingUpload": "等待图片上传",
+        "waitingUploadDesc": "上传图片后开始AI智能分析",
+        "readyToAnalyze": "图片已上传，准备分析",
+        "readyToAnalyzeDesc": "点击分析按钮开始AI智能分析",
+        "analyzing": "AI正在分析中",
+        "analyzingDesc": "深度学习算法正在处理您的图片...",
+        "completed": "AI分析完成",
+        "completedDesc": "基于深度学习的头型识别",
+        "measurementAnnotations": "测量标注",
+        "bpd": "BPD (双顶径)",
+        "ofd": "OFD (枕额径)",
+        "diagonal": "对角线",
+        "detectionFailed": "检测失败"
+      }
+    },
+    "model": {
+      "loading": "AI模型加载中，请稍候...",
+      "notLoaded": "AI模型准备加载中",
+      "ready": "AI模型已就绪",
+      "loadingButton": "模型加载中...",
+      "notLoadedMessage": "AI模型准备加载中，请稍候",
+      "imageLoadFailed": "图片加载失败，请重新上传",
+      "loadingHint": "首次加载可能需要较长时间，请耐心等待",
+      "notLoadedHint": "请等待模型自动加载完成后再进行检测",
+      "readyHint": "现在可以上传图片进行头型检测分析",
+      "loadingTooltip": "模型正在加载中，请稍候...",
+      "notLoadedTooltip": "AI模型准备加载中，请稍候",
+      "loadFailed": "模型加载失败",
+      "loadFailedHint": "模型加载遇到问题，请尝试刷新页面。如问题持续存在，请联系技术支持",
+      "closeBanner": "关闭提示",
+      "detailedError": "详细错误信息"
+    },
+    "pageSubtitle": "基于深度学习的头型评估算法，所有计算在浏览器本地完成，照片不会上传到任何服务器，确保您和宝宝的隐私安全",
+    "profileView": {
+      "title": "侧面轮廓对比",
+      "description": "上传宝宝左右侧面照片，与标准轮廓进行精确对比",
+      "pageDescription": "手动比对宝宝侧面轮廓与标准轮廓，作为CI、CVAI测量补充，帮助家长直观理解宝宝头型发育特征",
+      "shootingTips": {
+        "title": "拍摄要点",
+        "tip1": "侧头侧身",
+        "tip1Desc": "确保宝宝侧面完全朝向镜头",
+        "tip2": "避免头发遮挡",
+        "tip2Desc": "如头发较多，可用水润湿贴在头上，或洗澡后拍摄",
+        "tip3": "保持自然姿态",
+        "tip3Desc": "让宝宝保持舒适放松的状态，避免强迫摆姿势",
+        "safety": "所有拍摄请确保宝宝安全、健康！",
+        "shootingTips": "拍摄要点"
+      },
+      "leftProfile": "左侧轮廓",
+      "rightProfile": "右侧轮廓",
+      "showTemplate": "显示模板",
+      "hideTemplate": "隐藏模板",
+      "resetImage": "重置图片",
+      "reuploadImage": "重新上传",
+      "scale": "缩放",
+      "rotation": "旋转",
+      "uploadPrompt": "点击或拖拽图片到此处",
+      "uploadHint": "支持 JPG、PNG 格式，最大 10MB",
+      "instructions": {
+        "title": "操作说明",
+        "clickToSelect": "点击图片选中后可进行操作",
+        "dragToMove": "拖拽图片可移动位置",
+        "dragToResize": "拖拽角落控制点可缩放图片",
+        "dragToRotate": "拖拽旋转控制点可旋转图片",
+        "clickToDeselect": "点击空白区域取消选中"
+      },
+      "leftTemplateAlt": "左侧轮廓模板",
+      "rightTemplateAlt": "右侧轮廓模板",
+      "clickOrDrag": "点击或拖拽图片到此处"
+    },
+    "analysis": {
+      "ci": {
+        "title": "头颅宽长比 (CI)",
+        "longHead": "长头",
+        "flatHead": "扁头"
+      },
+      "cvai": {
+        "title": "颅穹不对称指数 (CVAI)",
+        "diagonal1": "对角线1",
+        "diagonal2": "对角线2"
+      }
+    },
+    "modelManager": {
+      "title": "模型管理 (调试模式)",
+      "openDebugMode": "打开调试模式",
+      "closeDebugMode": "关闭调试模式",
+      "debugModeTitle": "调试模式 (快捷键: Ctrl+Shift+D)",
+      "loadModel": "加载模型",
+      "modelPathPlaceholder": "ONNX模型文件路径",
+      "confidenceThreshold": "置信度阈值",
+      "error": "错误",
+      "status": {
+        "loading": "加载中...",
+        "loaded": "模型已加载",
+        "notLoaded": "模型准备加载中",
+        "loadFailed": "加载失败"
+      },
+      "errors": {
+        "enterModelPath": "请输入模型路径",
+        "unknownError": "未知错误"
+      },
+      "tips": {
+        "defaultModel": "💡 提示：默认模型 model_weights_best.onnx 会自动加载，您也可以指定其他模型路径",
+        "confidenceThreshold": "🎯 置信度阈值：只保留高于此阈值的检测结果，建议值 0.7-0.8"
+      }
+    },
+    "errors": {
+      "noHeadDetected": "未检测到头型，请确保图像中包含清晰的头部轮廓",
+      "modelNotLoaded": "AI模型准备加载中，请稍候",
+      "analysisFailed": "分析失败",
+      "unknownError": "未知错误",
+      "imageLoadFailed": "图片加载失败，请重新上传",
+      "noImageUploaded": "请先上传图片",
+      "modelStillLoading": "模型正在加载中，请稍候再试"
+    },
+    "classification": {
+      "normal": "正常",
+      "brachycephaly": "短头型 (Brachycephaly)",
+      "dolichocephaly": "长头型 (Dolichocephaly)",
+      "plagiocephaly": "偏头型 (Plagiocephaly)",
+      "unknown": "未知",
+      "ci": {
+        "severeLong": "重度",
+        "moderateLong": "中度",
+        "mildLong": "轻度",
+        "normal": "正常",
+        "mildFlat": "轻度",
+        "moderateFlat": "中度",
+        "severeFlat": "重度"
+      },
+      "cvai": {
+        "normal": "正常",
+        "mildAsymmetric": "轻度斜头",
+        "moderateAsymmetric": "中度斜头",
+        "severeAsymmetric": "重度斜头"
+      }
+    },
+    "medicalDisclaimerTitle": "医疗免责声明",
+    "medicalDisclaimer": "我们基于权威医学论文的计算方法，采集了300张真实头型图片进行标注和模型训练，竭尽全力保证测量精度和计算的准确性。我们希望为父母提供便捷的科学参考，帮助缓解育儿焦虑。但本工具仅供教育和参考目的，不能替代专业医疗诊断。检测结果不应作为医疗决策的唯一依据。如果您对宝宝的头型发育有任何担忧，请及时咨询儿科医生或相关医疗专业人员。",
+    "references": {
+      "title": "参考来源",
+      "source1": {
+        "text": "Measuring for nonsynostotic head deformities in preterm infants during NICU management: A pilot study",
+        "url": "https://www.academia.edu/108273319/Measuring_for_nonsynostotic_head_deformities_in_preterm_infants_during_NICU_management_A_pilot_study"
+      },
+      "source2": {
+        "text": "Interrater and Intrarater Reliability of Cranial Anthropometric Measurements in Infants with Positional Plagiocephaly",
+        "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7766735/"
+      },
+      "source3": {
+        "text": "Cephalic Index in the First Three Years of Life: Study of Children with Normal Brain Development Based on Computed Tomography",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3933399/"
+      },
+      "source4": {
+        "text": "Significant Factors in Cranial Remolding Orthotic Treatment of Asymmetrical Brachycephaly",
+        "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7231243/"
+      },
+      "source5": {
+        "text": "Revisiting the Cephalic Index: The Origin, Adaptations, and Clinical Applications",
+        "url": "https://journals.lww.com/jpojournal/fulltext/2024/04000/revisiting_the_cephalic_index__the_origin,.10.aspx"
+      },
+      "source6": {
+        "text": "Cranial Anthropometric Measurements and Assessment Guidelines",
+        "url": "https://www.cappskids.org/cephalic-index-what-do-the-numbers-mean/"
+      }
+    }
+  },
+  "faq": {
+    "title": "常见问题",
+    "subtitle": "关于婴儿头型发育的常见疑问解答，帮助新手父母科学护理",
+    "commonQuestions": "常见问题解答",
+    "category": {
+      "basic_knowledge": "基础知识",
+      "daily_care": "日常护理",
+      "treatment_timeline": "治疗与时间"
+    },
+    "normalDevelopment": {
+      "question": "什么是正常的婴儿头型发育？",
+      "answer": "正常的婴儿头型发育是一个渐进的过程。新生儿的头骨由多块骨板组成，通过颅缝连接，这使得头部能够随着大脑的快速发育而增长。\n\n在出生后的前几个月，由于头骨的可塑性，宝宝的头型可能会因为睡姿、喂养姿势等因素而发生轻微变化。这些变化大多是暂时的，随着宝宝活动能力的增强和头骨的逐渐硬化，头型会趋于稳定。\n\n正常情况下，宝宝的头型应该是相对圆润和对称的，前后、左右基本平衡。"
+    },
+    "whenToWorry": {
+      "question": "什么时候需要担心宝宝的头型？",
+      "answer": "虽然大多数头型变化都是正常的，但以下情况需要引起注意：\n\n• 头型严重不对称，一侧明显扁平或突出\n• 头围增长过快或过慢\n• 囟门过早闭合或异常凸起\n• 伴有发育迟缓、喂养困难等其他症状\n• 6个月后头型仍无改善趋势\n\n如果出现这些情况，建议及时咨询儿科医生或头颅外科专家，进行专业评估。早期发现和干预可以获得更好的效果。"
+    },
+    "tummyTime": {
+      "question": "俯卧时间对头型发育有什么帮助？",
+      "answer": "俯卧时间对婴儿头型发育非常重要，具有多重益处：\n\n• 减轻后脑勺压力：让宝宝脱离仰卧姿势，减少对后脑勺的持续压迫\n• 促进颈部肌肉发育：增强颈部和背部肌肉力量\n• 鼓励头部活动：促使宝宝主动转动头部，锻炼颈部灵活性\n• 预防扁头综合征：有效预防位置性扁头的发生\n\n建议从新生儿期开始，每天进行多次短时间的俯卧练习。开始时每次2-3分钟，随着宝宝适应逐渐增加时间。务必在宝宝清醒且有成人监督的情况下进行。"
+    },
+    "improvementTime": {
+      "question": "头型改善需要多长时间？",
+      "answer": "头型改善的时间因个体差异而不同，一般遵循以下规律：\n\n• 轻度头型问题：通过体位调整，通常在2-4个月内看到明显改善\n• 中度头型问题：可能需要4-8个月的持续护理和观察\n• 重度头型问题：可能需要专业干预，改善时间较长\n\n影响改善速度的因素包括：\n• 宝宝的年龄（越小改善越快）\n• 头型问题的严重程度\n• 护理措施的执行情况\n• 个体的生长发育速度\n\n重要的是保持耐心和坚持，大多数头型问题都会随着时间逐渐改善。"
+    },
+    "prevention": {
+      "question": "如何预防婴儿头型问题？",
+      "answer": "预防婴儿头型问题的关键在于早期建立良好的护理习惯：\n\n• 多样化体位：避免宝宝长时间保持同一姿势\n• 规律俯卧时间：每天进行适当的俯卧练习\n• 交替喂养姿势：左右交替抱宝宝喂奶\n• 减少器械依赖：限制在汽车座椅、摇椅等设备中的时间\n• 鼓励活动：随着宝宝成长，鼓励更多的自主活动\n• 定期检查：关注宝宝头型变化，及时调整护理方式\n\n预防比治疗更重要，从新生儿期开始就要注意这些细节。"
+    },
+    "doctorConsultation": {
+      "question": "什么时候应该咨询医生？",
+      "answer": "以下情况建议及时咨询医生：\n\n• 头型严重不对称或持续恶化\n• 囟门异常（过早闭合、异常凸起或凹陷）\n• 头围增长异常（过快或过慢）\n• 伴有其他发育问题或神经症状\n• 6个月后头型仍无改善\n• 家长对头型发育有严重担忧\n\n建议咨询的医生类型：\n• 儿科医生：进行初步评估和常规检查\n• 神经外科医生：处理复杂的颅骨问题\n• 整形外科医生：提供头型矫正方案\n\n当任何疑惑、不安，咨询医生是最快捷、安全的解决方案。"
+    },
+    "brainDevelopment": {
+      "question": "头型问题是否影响大脑发育？",
+      "answer": "这是家长们最关心的问题之一。根据目前的医学研究：\n\n• 轻度到中度的体位性头型异常（如扁头、斜头）通常不会影响大脑发育和智力\n• 这类头型问题主要是外观上的变化，不会损害大脑容积或神经功能\n• 现有研究显示，头型异常与智力问题之间可能存在关联，但无法证明因果关系\n• 大多数研究认为，在排除疾病因素后，单纯的头型异常不会导致认知神经发育问题\n\n需要注意的是：\n• 病理性头型异常（如颅缝早闭）可能影响大脑发育，需要及时医疗干预\n• 如果头型异常伴有其他发育迟缓症状，应及时就医评估\n\n总的来说，家长不必过度担心轻度头型问题对智力的影响。"
+    },
+    "pillowEffect": {
+      "question": "枕头能改善头型吗？",
+      "answer": "新生宝宝是不需要枕头的。\n\n新生宝宝的脊椎骨，尤其是靠近颈椎的部位是直的，宝宝平躺时后背和后脑勺在同一个平面。\n\n给宝宝睡枕头会使头部高过身体，颈部形成弯曲，下巴更靠近胸口，这样会限制呼吸甚至造成呼吸道紧闭，还会影响宝宝骨骼、脊椎的生长发育。\n\n美国儿科学会建议一岁以上才给宝宝用枕头，如果可以的话延迟到18个月更好。\n\n市面上打着\"让宝宝头型更漂亮\"旗号的产品缺乏科学依据，具有\"定型\"、\"防偏头\"功能的婴儿枕头并不能让宝宝拥有更好的头型，这些产品反而会束缚宝宝，像\"紧箍咒\"一样限制宝宝的睡姿。任何声称能\"改善头型\"的婴儿枕头都存在安全风险。"
+    },
+    "sleepPosition": {
+      "question": "什么样的睡姿有助于改善宝宝的头型？",
+      "answer": "为了改善头型，建议经常变换宝宝的睡姿。虽然仰卧是最安全的睡姿，但可以在宝宝清醒时让他们侧卧或俯卧。睡觉时可以轮流让宝宝的头朝向不同方向，避免总是压迫同一个部位。使用适当的枕头和床垫也很重要。"
+    },
+    "helmetTreatment": {
+      "question": "什么时候需要考虑头盔治疗？",
+      "answer": "头盔治疗通常在以下情况下考虑：宝宝4-6个月大时头型仍然严重不对称、保守治疗（如改变睡姿、增加俯卧时间）效果不佳、医生评估认为有必要进行矫正。头盔治疗的最佳时机通常是4-12个月，因为这时宝宝的头骨还比较柔软，容易塑形。"
+    },
+    "medicalDisclaimer": "本页面提供的信息仅供教育和参考目的，不能替代专业医疗建议、诊断或治疗。如果您对宝宝的头型发育有任何担忧，请及时咨询合格的医疗专业人员。",
+    "references": {
+      "title": "参考来源",
+      "source1": {
+        "text": "美国儿科学会 (AAP) - 体位性头型异常",
+        "url": "https://www.healthychildren.org/English/health-issues/conditions/Cleft-Craniofacial/Pages/Positional-Skull-Deformities-and-Torticollis.aspx"
+      },
+      "source2": {
+        "text": "PMC - 体位性斜头畸形的诊断和治疗",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7206465/"
+      },
+      "source3": {
+        "text": "约翰霍普金斯医学院 - 变形性斜头畸形",
+        "url": "https://www.hopkinsmedicine.org/health/conditions-and-diseases/deformational-plagiocephaly"
+      },
+      "source4": {
+        "text": "约翰霍普金斯医学院 - 婴儿头盔治疗",
+        "url": "https://www.hopkinsmedicine.org/health/treatment-tests-and-therapies/helmet-therapy-for-your-baby"
+      },
+      "source5": {
+        "text": "梅奥诊所 - 婴儿头型不对称治疗",
+        "url": "https://newsnetwork.mayoclinic.org/discussion/mayo-clinic-expert-available-to-talk-about-treating-infants-with-head-shape-asymmetry/"
+      },
+      "source6": {
+        "text": "PMC - 体位性斜头畸形和短头畸形儿童的头型发育",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5832631/"
+      },
+      "source7": {
+        "text": "Columbia Asia - 枕头如何危害婴儿",
+        "url": "https://www.columbiaasia.com/malaysia/health-articles/how-pillows-endanger-babies/"
+      }
+    },
+    "searchPlaceholder": "搜索问题...",
+    "allQuestions": "全部问题",
+    "searchResults": {
+      "prefix": "找到",
+      "suffix": "个相关问题"
+    },
+    "noResults": {
+      "title": "未找到相关问题",
+      "description": "请尝试其他关键词或选择不同的分类"
+    },
+    "medicalDisclaimerTitle": "医疗免责声明"
+  }
+}

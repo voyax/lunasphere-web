@@ -8,12 +8,13 @@ import {
   DropdownItem,
 } from '@heroui/dropdown'
 import { useTransition } from 'react'
+import { useParams } from 'next/navigation'
 
-import { useLocale } from '@/contexts/LocaleContext'
-import { locales, localeNames, type Locale } from '@/lib/i18n'
+import { useRouter, usePathname } from '@/i18n/routing'
+import { locales, localeNames, type Locale } from '@/i18n/config'
 
 interface LanguageSwitcherProps {
-  currentLocale: Locale
+  currentLocale: string
   languageLabel: string
 }
 
@@ -22,14 +23,19 @@ export function LanguageSwitcher({
   languageLabel,
 }: LanguageSwitcherProps) {
   const [isPending, startTransition] = useTransition()
-  const { setLocale } = useLocale()
+  const router = useRouter()
+  const pathname = usePathname()
+  const params = useParams()
 
   const handleLanguageChange = (key: string) => {
     const newLocale = key as Locale
 
-    startTransition(async () => {
-      // Update client-side state immediately and sync with server
-      await setLocale(newLocale)
+    startTransition(() => {
+      router.replace(
+        // @ts-expect-error - pathname is typed correctly by next-intl
+        { pathname, params },
+        { locale: newLocale }
+      )
     })
   }
 
@@ -42,7 +48,7 @@ export function LanguageSwitcher({
           size='sm'
           variant='ghost'
         >
-          {localeNames[currentLocale]}
+          {localeNames[currentLocale as Locale]}
         </Button>
       </DropdownTrigger>
       <DropdownMenu

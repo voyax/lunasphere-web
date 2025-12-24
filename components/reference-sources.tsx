@@ -1,6 +1,6 @@
 'use client'
 
-import { useLocale } from '@/contexts/LocaleContext'
+import { useTranslations, useMessages } from 'next-intl'
 
 // Reference sources data structure
 interface ReferenceSource {
@@ -18,28 +18,42 @@ interface ReferenceSourcesProps {
  * Generate reference sources from i18n data dynamically
  */
 const generateReferenceSources = (
-  t: (key: string) => string,
+  messages: Record<string, unknown>,
   sourceKeyPrefix: string
 ): ReferenceSource[] => {
   const sources: ReferenceSource[] = []
-  let i = 1
-
-  // Dynamically detect available reference sources
-  while (true) {
-    const textKey = `${sourceKeyPrefix}.source${i}.text`
-    const urlKey = `${sourceKeyPrefix}.source${i}.url`
-
-    // Check if the translation key exists by comparing with the key itself
-    const text = t(textKey)
-    const url = t(urlKey)
-
-    // If translation returns the key itself, it means the key doesn't exist
-    if (text === textKey || url === urlKey) {
-      break
+  
+  // Parse the prefix to navigate the messages object
+  // e.g., 'faq.references' -> messages.faq.references
+  const prefixParts = sourceKeyPrefix.split('.')
+  let current: unknown = messages
+  
+  for (const part of prefixParts) {
+    if (current && typeof current === 'object' && part in current) {
+      current = (current as Record<string, unknown>)[part]
+    } else {
+      return sources
     }
-
-    sources.push({ text, url })
-    i++
+  }
+  
+  // Now current should be the references object
+  // Look for source1, source2, etc.
+  if (typeof current === 'object' && current !== null) {
+    let i = 1
+    while (true) {
+      const sourceKey = `source${i}`
+      const sourceObj = (current as Record<string, unknown>)[sourceKey]
+      
+      if (!sourceObj || typeof sourceObj !== 'object') {
+        break
+      }
+      
+      const source = sourceObj as { text?: string; url?: string }
+      if (source.text && source.url) {
+        sources.push({ text: source.text, url: source.url })
+      }
+      i++
+    }
   }
 
   return sources
@@ -54,8 +68,13 @@ export default function ReferenceSources({
   sourceKeyPrefix = 'faq.references',
   className = '',
 }: ReferenceSourcesProps) {
-  const { t } = useLocale()
-  const sources = generateReferenceSources(t, sourceKeyPrefix)
+  const messages = useMessages()
+  
+  // Parse namespace from the titleKey
+  const [titleNamespace, ...titleKeyParts] = titleKey.split('.')
+  const t = useTranslations(titleNamespace)
+  
+  const sources = generateReferenceSources(messages as Record<string, unknown>, sourceKeyPrefix)
 
   return (
     <div
@@ -64,7 +83,7 @@ export default function ReferenceSources({
       <div className='flex items-start gap-3 sm:gap-4 lg:gap-6'>
         <div className='flex-1'>
           <h3 className='text-lg sm:text-xl font-bold text-slate-900 mb-2 sm:mb-3'>
-            {t(titleKey)}
+            {t(titleKeyParts.join('.'))}
           </h3>
           <div className='text-slate-700 leading-relaxed text-sm sm:text-base lg:text-lg space-y-2 sm:space-y-4'>
             <ul className='space-y-1 sm:space-y-2'>

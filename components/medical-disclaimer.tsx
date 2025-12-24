@@ -1,6 +1,6 @@
 'use client'
 
-import { useLocale } from '@/contexts/LocaleContext'
+import { useTranslations } from 'next-intl'
 
 interface MedicalDisclaimerProps {
   titleKey?: string
@@ -11,13 +11,21 @@ interface MedicalDisclaimerProps {
 /**
  * Medical Disclaimer Component
  * Displays medical disclaimer information with customizable content
+ * 
+ * Note: This component uses dynamic translation keys.
+ * The keys are expected to be in the format 'namespace.key' (e.g., 'faq.medicalDisclaimer')
  */
 export default function MedicalDisclaimer({
   titleKey = 'faq.medicalDisclaimerTitle',
   contentKey = 'faq.medicalDisclaimer',
   className = '',
 }: MedicalDisclaimerProps) {
-  const { t } = useLocale()
+  // Parse namespace from the key (e.g., 'faq.medicalDisclaimer' -> namespace: 'faq', key: 'medicalDisclaimer')
+  const [titleNamespace, ...titleKeyParts] = titleKey.split('.')
+  const [contentNamespace, ...contentKeyParts] = contentKey.split('.')
+  
+  const tTitle = useTranslations(titleNamespace)
+  const tContent = useTranslations(contentNamespace)
 
   return (
     <div
@@ -26,10 +34,10 @@ export default function MedicalDisclaimer({
       <div className='flex items-start gap-3 sm:gap-4 lg:gap-6'>
         <div className='flex-1'>
           <h3 className='text-lg sm:text-xl font-bold text-amber-900 mb-2 sm:mb-3'>
-            {t(titleKey)}
+            {tTitle(titleKeyParts.join('.'))}
           </h3>
           <p className='text-amber-800 leading-relaxed text-sm sm:text-base lg:text-lg'>
-            {t(contentKey)}
+            {tContent(contentKeyParts.join('.'))}
           </p>
         </div>
       </div>

@@ -9,37 +9,38 @@ import {
   NavbarMenu,
   NavbarMenuItem,
 } from '@heroui/navbar'
-import NextLink from 'next/link'
-import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { Divider } from '@heroui/react'
 import Image from 'next/image'
+import { useTranslations, useLocale } from 'next-intl'
 
 import { ThemeSwitch } from '@/components/theme-switch'
 import { LanguageSwitcher } from '@/components/language-switcher'
-import { useLocale } from '@/contexts/LocaleContext'
+import { Link, usePathname } from '@/i18n/routing'
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
-  const { locale, t } = useLocale()
+  const locale = useLocale()
+  const t = useTranslations('nav')
+  const tSite = useTranslations('site')
 
   const menuItems = [
     {
-      label: t('nav.home'),
-      href: '/',
+      label: t('home'),
+      href: '/' as const,
     },
     {
-      label: t('nav.detection'),
-      href: '/detection',
+      label: t('detection'),
+      href: '/detection' as const,
     },
     {
-      label: t('nav.profileMatch'),
-      href: '/profile-match',
+      label: t('profileMatch'),
+      href: '/profile-match' as const,
     },
     {
-      label: t('nav.faq'),
-      href: '/faq',
+      label: t('faq'),
+      href: '/faq' as const,
     },
   ]
 
@@ -66,7 +67,7 @@ export function Navbar() {
       </NavbarContent>
       <NavbarContent justify='center'>
         <NavbarBrand>
-          <NextLink className='flex justify-start items-center gap-2' href='/'>
+          <Link className='flex justify-start items-center gap-2' href='/'>
             <Image
               alt='Logo'
               className='w-8 h-8'
@@ -75,9 +76,9 @@ export function Navbar() {
               width={32}
             />
             <p className='font-bold text-inherit text-sm md:text-base'>
-              {t('site.title')}
+              {tSite('title')}
             </p>
-          </NextLink>
+          </Link>
         </NavbarBrand>
 
         <div className='h-full py-4 hidden sm:block'>
@@ -89,7 +90,7 @@ export function Navbar() {
             className='hidden sm:flex'
             isActive={isActive(item.href)}
           >
-            <NextLink
+            <Link
               className={`transition-colors ${
                 isActive(item.href)
                   ? 'text-primary font-medium'
@@ -98,7 +99,7 @@ export function Navbar() {
               href={item.href}
             >
               {item.label}
-            </NextLink>
+            </Link>
           </NavbarItem>
         ))}
       </NavbarContent>
@@ -107,16 +108,16 @@ export function Navbar() {
         <NavbarItem className='flex gap-2'>
           <LanguageSwitcher
             currentLocale={locale}
-            languageLabel={t('nav.language')}
+            languageLabel={t('language')}
           />
           <ThemeSwitch />
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarMenu aria-label={t('nav.mobileMenu')} role='menu'>
+      <NavbarMenu aria-label={t('mobileMenu')} role='menu'>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item.href}-${index}`} role='menuitem'>
-            <NextLink
+            <Link
               className={`w-full transition-colors ${
                 isActive(item.href)
                   ? 'text-primary font-medium'
@@ -126,7 +127,7 @@ export function Navbar() {
               onClick={() => setIsMenuOpen(false)}
             >
               {item.label}
-            </NextLink>
+            </Link>
           </NavbarMenuItem>
         ))}
       </NavbarMenu>
