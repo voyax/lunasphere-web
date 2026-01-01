@@ -21,6 +21,111 @@
   }
 }
 
+/* ========================================
+   Design V2: Warm Organic Style System
+   ======================================== */
+
+/* Warm background theme - applies to specific pages/components */
+.theme-warm {
+  --warm-bg: #fffaf5;
+  --warm-text: #5d5146;
+  background-color: var(--warm-bg);
+  color: var(--warm-text);
+}
+
+.dark .theme-warm {
+  --warm-bg: #1a1614;
+  --warm-text: #e5ddd5;
+  background-color: var(--warm-bg);
+  color: var(--warm-text);
+}
+
+/* Subtle noise texture overlay for organic feel */
+.noise-overlay::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.04;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  z-index: 9999;
+}
+
+.dark .noise-overlay::before {
+  opacity: 0.02;
+}
+
+/* Organic decorative blob */
+.organic-blob {
+  position: fixed;
+  z-index: -1;
+  filter: blur(80px);
+  opacity: 0.6;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.dark .organic-blob {
+  opacity: 0.3;
+}
+
+/* Scan wave effect for analysis feedback */
+.scan-wave {
+  background: linear-gradient(180deg, transparent, rgba(251, 146, 60, 0.2), transparent);
+  height: 100px;
+  width: 100%;
+  position: absolute;
+  animation: scanWave 3s ease-in-out infinite;
+}
+
+.dark .scan-wave {
+  background: linear-gradient(180deg, transparent, rgba(251, 146, 60, 0.15), transparent);
+}
+
+@keyframes scanWave {
+  0% { top: -20%; opacity: 0; }
+  50% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Glassmorphism card style */
+.glass-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.dark .glass-card {
+  background: rgba(30, 30, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Soft shadow for cards */
+.shadow-soft {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.dark .shadow-soft {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Super rounded corners utility classes */
+.rounded-4xl {
+  border-radius: 2rem;
+}
+
+.rounded-5xl {
+  border-radius: 2.5rem;
+}
+
+.rounded-6xl {
+  border-radius: 3rem;
+}
+
 /* Custom scrollbar */
 @layer utilities {
   .scrollbar-hide {
