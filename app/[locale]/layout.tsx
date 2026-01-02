@@ -32,7 +32,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const messages = await getMessages({ locale })
-  
+
   // 类型安全地获取翻译
   const site = messages.site as { title: string; description: string }
   const page = messages.page as { home: { title: string; description: string } }
@@ -157,7 +157,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       </head>
       <body
         className={clsx(
-          'min-h-screen text-foreground bg-background font-sans antialiased',
+          'min-h-screen text-foreground font-sans antialiased',
           fontSans.variable
         )}
       >

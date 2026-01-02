@@ -1,12 +1,15 @@
 /**
  * CVAI (Cranial Vault Asymmetry Index) Classification Card Component
- * Displays CVAI classification results with specific visualization
+ * Design V2: Warm, organic style with glassmorphism
  */
+
+'use client'
 
 import {
   classifyCVAI,
   CVAI_CLASSIFICATION_CONFIG,
 } from './config/headShapeClassification'
+import LinearGauge from './LinearGauge'
 
 import { useTranslations } from 'next-intl'
 
@@ -19,154 +22,132 @@ interface CVAICardProps {
 }
 
 /**
- * Get color classes based on severity
+ * Get color classes based on severity - warm palette version
  */
 function getSeverityColors(severity: string) {
   switch (severity) {
     case 'normal':
       return {
         text: 'text-green-600 dark:text-green-400',
-        bg: 'bg-green-50 dark:bg-green-950/20 border-green-200 dark:border-green-700',
-        bar: 'bg-green-500',
+        bg: 'bg-green-50/80 dark:bg-green-950/30 border-green-200/50 dark:border-green-700/50',
+        dot: 'bg-green-400',
       }
     case 'mild':
       return {
         text: 'text-yellow-600 dark:text-yellow-400',
-        bg: 'bg-yellow-50 dark:bg-yellow-950/20 border-yellow-200 dark:border-yellow-700',
-        bar: 'bg-yellow-500',
+        bg: 'bg-yellow-50/80 dark:bg-yellow-950/30 border-yellow-200/50 dark:border-yellow-700/50',
+        dot: 'bg-yellow-400',
       }
     case 'moderate':
       return {
         text: 'text-orange-600 dark:text-orange-400',
-        bg: 'bg-orange-50 dark:bg-orange-950/20 border-orange-200 dark:border-orange-700',
-        bar: 'bg-orange-500',
+        bg: 'bg-orange-50/80 dark:bg-orange-950/30 border-orange-200/50 dark:border-orange-700/50',
+        dot: 'bg-orange-400',
       }
     case 'severe':
       return {
         text: 'text-red-600 dark:text-red-400',
-        bg: 'bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-700',
-        bar: 'bg-red-500',
+        bg: 'bg-red-50/80 dark:bg-red-950/30 border-red-200/50 dark:border-red-700/50',
+        dot: 'bg-red-500',
       }
     default:
       return {
         text: 'text-gray-600 dark:text-gray-400',
-        bg: 'bg-gray-50 dark:bg-gray-950/20 border-gray-200 dark:border-gray-700',
-        bar: 'bg-gray-500',
+        bg: 'bg-gray-50/80 dark:bg-gray-950/30 border-gray-200/50 dark:border-gray-700/50',
+        dot: 'bg-gray-400',
       }
   }
 }
 
-/**
- * Calculate position percentage for CVAI visualization based on config ranges
- */
-function calculateCVAIPosition(cvaiPercentage: number): number {
-  const ranges = CVAI_CLASSIFICATION_CONFIG.ranges
-  const totalRanges = ranges.length
-  const segmentWidth = 100 / totalRanges
-
-  // Find which range the value falls into
-  for (let i = 0; i < ranges.length; i++) {
-    const range = ranges[i]
-
-    if (
-      cvaiPercentage >= range.min &&
-      (cvaiPercentage < range.max || range.max === Infinity)
-    ) {
-      // Calculate position within this range
-      const rangeProgress =
-        range.max === Infinity
-          ? Math.min(1, (cvaiPercentage - range.min) / (range.min * 0.5)) // For infinity range, use reasonable scale
-          : (cvaiPercentage - range.min) / (range.max - range.min)
-
-      return Math.min(100, i * segmentWidth + rangeProgress * segmentWidth)
-    }
-  }
-
-  // Fallback: if value is outside all ranges
-  return cvaiPercentage < ranges[0].min ? 0 : 100
-}
+// CVAI gauge segments configuration
+const CVAI_GAUGE_SEGMENTS = [
+  {
+    label: '正常',
+    widthFlex: 3.5,
+    colorClass: 'bg-green-400 dark:bg-green-500/70',
+    textColorClass: 'text-green-500 dark:text-green-400',
+  },
+  {
+    label: '轻度',
+    widthFlex: 2.75,
+    colorClass: 'bg-yellow-300 dark:bg-yellow-500/70',
+    textColorClass: 'text-yellow-500 dark:text-yellow-400',
+  },
+  {
+    label: '中度',
+    widthFlex: 2.5,
+    colorClass: 'bg-orange-300 dark:bg-orange-500/70',
+    textColorClass: 'text-orange-400 dark:text-orange-300',
+  },
+  {
+    label: '重度',
+    widthFlex: 3.25,
+    colorClass: 'bg-red-400 dark:bg-red-500/70',
+    textColorClass: 'text-red-500 dark:text-red-400',
+  },
+]
 
 export default function CVAICard({ value, measurements }: CVAICardProps) {
   const t = useTranslations()
   const cvaiPercentage = value * 100
   const result = classifyCVAI(value)
   const colors = getSeverityColors(result.severity)
-  const position = calculateCVAIPosition(cvaiPercentage)
-  // Use translated labels from config
-  const categoryLabels = CVAI_CLASSIFICATION_CONFIG.ranges.map(range =>
-    t(range.labelKey)
-  )
 
   return (
-    <div className='bg-white dark:bg-gray-800 rounded-xl p-5 border border-gray-200 dark:border-gray-700 shadow-sm'>
-      <div className='flex items-center gap-2 mb-3'>
-        <div className='w-2 h-2 bg-primary rounded-full' />
-        <div className='text-sm font-medium text-gray-700 dark:text-gray-300'>
-          {t('detection.analysis.cvai.title')}
+    <div className='bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-[2.5rem] p-6 border border-white dark:border-gray-700/50 shadow-sm hover:shadow-md transition-all duration-300'>
+      {/* Header */}
+      <div className='flex justify-between items-start mb-2'>
+        <div>
+          <div className='flex items-center space-x-2 mb-1'>
+            <div className={`w-1.5 h-1.5 rounded-full ${colors.dot}`} />
+            <h3 className='text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider'>
+              {t('detection.analysis.cvai.title')}
+            </h3>
+          </div>
+          {/* Formula display */}
+          {measurements && (
+            <div className='text-[10px] text-gray-400 dark:text-gray-500 font-mono'>
+              = |D1 - D2| / D1 × 100
+            </div>
+          )}
+        </div>
+        <div className='text-right'>
+          <span className='block text-xl font-black text-gray-800 dark:text-gray-100'>
+            {cvaiPercentage.toFixed(1)}%
+          </span>
         </div>
       </div>
 
-      {/* Classification result and value */}
-      <div className='flex items-center justify-between mb-2'>
-        <div className={`text-xl font-bold ${colors.text}`}>
+      {/* Linear Gauge */}
+      <LinearGauge
+        formatValue={v => v.toFixed(1) + '%'}
+        max={12}
+        min={0}
+        segments={CVAI_GAUGE_SEGMENTS}
+        value={cvaiPercentage}
+      />
+
+      {/* Scale labels */}
+      <div className='flex justify-between text-[9px] text-gray-300 dark:text-gray-600 px-1 font-mono'>
+        <span>0</span>
+        <span className='pl-4'>3.5</span>
+        <span className='pl-2'>6.25</span>
+        <span className='pl-2'>8.75</span>
+        <span>12+</span>
+      </div>
+
+      {/* Classification result badge */}
+      <div className='mt-4 flex items-center justify-between'>
+        <div className={`text-sm font-bold ${colors.text}`}>
           {t(result.classification)}
         </div>
         <div
-          className={`px-3 py-1 rounded-full text-sm font-medium ${colors.bg} ${colors.text}`}
+          className={`px-3 py-1.5 rounded-2xl text-xs font-bold border ${colors.bg} ${colors.text}`}
         >
-          CVAI: {cvaiPercentage.toFixed(1)}%
+          {result.severity === 'normal'
+            ? '✓ ' + t('detection.analysis.status.symmetric')
+            : t('detection.analysis.status.asymmetric')}
         </div>
-      </div>
-
-      {/* Formula display */}
-      {measurements && (
-        <div className='text-sm text-gray-600 dark:text-gray-400 mb-3'>
-          = |{t('detection.analysis.cvai.diagonal1')}(
-          {measurements.diagonal1.toFixed(1)}) -{' '}
-          {t('detection.analysis.cvai.diagonal2')}(
-          {measurements.diagonal2.toFixed(1)})| /{' '}
-          {t('detection.analysis.cvai.diagonal1')}(
-          {measurements.diagonal1.toFixed(1)}) × 100
-        </div>
-      )}
-
-      {/* Scale labels */}
-      <div className='flex justify-between text-xs text-gray-400 mb-1'>
-        {CVAI_CLASSIFICATION_CONFIG.scaleLabels.map((label, index) => (
-          <span key={index}>{label}</span>
-        ))}
-      </div>
-
-      {/* Color bar */}
-      <div className='relative h-4 rounded-full overflow-hidden mb-3'>
-        <div className='absolute inset-0 flex'>
-          <div className='bg-green-500' style={{ width: '25%' }} />
-          <div className='bg-yellow-500' style={{ width: '25%' }} />
-          <div className='bg-orange-500' style={{ width: '25%' }} />
-          <div className='bg-red-500' style={{ width: '25%' }} />
-        </div>
-
-        {/* Current value marker */}
-        <div
-          className='absolute top-0 w-0.5 h-full bg-black dark:bg-white transform -translate-x-0.5'
-          style={{ left: `${position}%` }}
-        />
-        <div
-          className='absolute -top-1 w-2 h-2 bg-black dark:bg-white rounded-full transform -translate-x-1'
-          style={{ left: `${position}%` }}
-        />
-      </div>
-
-      {/* Category labels */}
-      <div className='grid grid-cols-4 gap-1 text-xs text-gray-600 text-center'>
-        {categoryLabels.map((label, index) => (
-          <span
-            key={index}
-            className={`font-medium ${index === 0 ? 'text-green-600' : ''}`}
-          >
-            {label}
-          </span>
-        ))}
       </div>
     </div>
   )

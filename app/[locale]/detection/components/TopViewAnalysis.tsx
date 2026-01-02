@@ -3,26 +3,31 @@
 import type { ImageUploadData, AnalysisResult } from '../types'
 
 import { useState, useRef, memo, useMemo, useCallback, useEffect } from 'react'
-import { Button } from '@heroui/button'
-import { Tooltip } from '@heroui/tooltip'
-import { Upload, Camera, CheckCircle } from 'lucide-react'
+import {
+  Heart,
+  Loader2,
+  RefreshCw,
+  Info,
+  Sparkles,
+  CheckCircle2,
+  UploadCloud,
+  ScanLine,
+} from 'lucide-react'
 import NextImage from 'next/image'
 
 import { ModelState, AnalysisState } from '../types'
-
-import RotationControl from './RotationControl'
+import SchematicHeadGuide from './SchematicHeadGuide'
+import CICard from './CICard'
+import CVAICard from './CVAICard'
+import IntegratedAssessment from './IntegratedAssessment'
 import {
   drawMeasurementAnnotations,
   downloadCanvasAsPNG,
   createDownloadableCanvas,
 } from './utils/canvasDrawing'
-import CICard from './CICard'
-import CVAICard from './CVAICard'
-import ShootingTipsDisplay from './ShootingTipsDisplay'
 
 import { getModelInstance, type ModelPrediction } from '@/lib/model-inference'
 import { useTranslations } from 'next-intl'
-import { useIsMobile } from '@/hooks/useIsMobile'
 
 interface TopViewAnalysisProps {
   modelPath: string
@@ -31,195 +36,76 @@ interface TopViewAnalysisProps {
   onAnalysisResultChange?: (hasResult: boolean) => void
 }
 
-// Component for upload state indicator
-interface UploadStateIndicatorProps {
-  modelState: ModelState
+// 分析中的加载文字序列
+const LOADING_TEXTS = [
+  '正在温柔地观察照片...',
+  '正在寻找宝宝的头型轮廓...',
+  '正在测量每一条可爱的弧度...',
+  '正在为您准备专家建议...',
+]
+
+// 分析前的引导面板
+interface GuidancePanelProps {
   t: (key: string) => string
 }
 
-const UploadStateIndicator = memo(
-  ({ modelState, t }: UploadStateIndicatorProps) => {
-    switch (modelState) {
-      case ModelState.LOADING:
-        return (
-          <>
-            <div className='w-12 h-12 bg-blue-50/80 dark:bg-blue-950/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/50 transition-all duration-200'>
-              <div className='w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
-            </div>
-            <div className='text-center'>
-              <p className='text-base font-medium text-blue-600 dark:text-blue-400 drop-shadow-sm'>
-                {t('detection.model.loading')}
-              </p>
-            </div>
-          </>
-        )
+const GuidancePanel = memo(({ t }: GuidancePanelProps) => (
+  <div className='bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-[3rem] p-8 md:p-10 border border-white dark:border-gray-700 shadow-sm h-full flex flex-col justify-center animate-fade-in'>
+    <div className='relative mb-8'>
+      <div className='absolute -left-4 top-0 w-1 h-12 bg-orange-300 dark:bg-orange-500 rounded-full' />
+      <h2 className='text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 leading-[1.1]'>
+        每张照片
+        <br />
+        <span className='text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-400'>
+          都是一次爱的对焦
+        </span>
+      </h2>
+    </div>
 
-      case ModelState.NOT_LOADED:
-        return (
-          <>
-            <div className='w-12 h-12 bg-gray-50/80 dark:bg-gray-800/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-gray-200/50 dark:border-gray-600/50 transition-all duration-200'>
-              <Upload className='w-5 h-5 text-gray-400 dark:text-gray-500' />
-            </div>
-            <div className='text-center'>
-              <p className='text-base font-medium text-gray-500 dark:text-gray-500 drop-shadow-sm'>
-                {t('detection.model.notLoadedMessage')}
-              </p>
-            </div>
-          </>
-        )
+    <div className='space-y-6'>
+      <div className='p-6 rounded-[2rem] bg-orange-50/50 dark:bg-orange-950/20 border border-orange-100/30 dark:border-orange-800/30'>
+        <h4 className='font-bold text-gray-700 dark:text-gray-300 text-sm mb-2 flex items-center'>
+          <Info className='w-4 h-4 mr-2 text-orange-400' />
+          小贴士：如何拍出完美照片？
+        </h4>
+        <p className='text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium'>
+          如左图所示，请尽量垂直于宝宝头顶拍摄。当宝宝熟睡时拍摄效果最佳，因为此时小脑袋不会晃动。
+        </p>
+      </div>
 
-      case ModelState.ERROR:
-        return (
-          <>
-            <div className='w-12 h-12 bg-red-50/80 dark:bg-red-950/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-red-200/50 dark:border-red-700/50 transition-all duration-200'>
-              <span className='text-red-500 text-lg font-bold'>✕</span>
-            </div>
-            <div className='text-center'>
-              <p className='text-base font-medium text-red-600 dark:text-red-400 drop-shadow-sm'>
-                {t('detection.model.loadFailed')}
-              </p>
-            </div>
-          </>
-        )
-
-      case ModelState.LOADED:
-      default:
-        return (
-          <>
-            <div className='w-12 h-12 bg-white/80 dark:bg-gray-700/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-white/50 dark:border-gray-600/50 transition-all duration-200 hover:scale-102'>
-              <Upload className='w-5 h-5 text-gray-600 dark:text-gray-400' />
-            </div>
-            <div className='text-center'>
-              <p className='text-base font-medium text-gray-700 dark:text-gray-300 drop-shadow-sm'>
-                {t('detection.topView.upload.clickOrDrag')}
-              </p>
-            </div>
-          </>
-        )
-    }
-  }
-)
-
-UploadStateIndicator.displayName = 'UploadStateIndicator'
-
-// Component for status information
-interface StatusInfoProps {
-  modelState: ModelState
-  t: (key: string) => string
-}
-
-const StatusInfo = memo(({ modelState, t }: StatusInfoProps) => {
-  switch (modelState) {
-    case ModelState.LOADING:
-      return (
-        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 shadow-sm bg-blue-50/80 dark:bg-blue-950/80'>
-          <span className='text-xs font-normal text-blue-600 dark:text-blue-400'>
-            {t('detection.model.loadingHint')}
+      <ul className='space-y-4 px-2'>
+        <li className='flex items-start space-x-3 text-xs text-gray-500 dark:text-gray-400 font-medium'>
+          <div className='w-5 h-5 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center flex-shrink-0 text-rose-500 dark:text-rose-400 font-bold'>
+            1
+          </div>
+          <span className='mt-0.5'>
+            寻找光线明亮的地方，避免头部产生浓重的阴影干扰分析。
           </span>
-        </div>
-      )
-
-    case ModelState.NOT_LOADED:
-      return (
-        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 shadow-sm bg-gray-50/80 dark:bg-gray-800/80'>
-          <span className='text-xs font-normal text-gray-500 dark:text-gray-500'>
-            {t('detection.model.notLoadedHint')}
+        </li>
+        <li className='flex items-start space-x-3 text-xs text-gray-500 dark:text-gray-400 font-medium'>
+          <div className='w-5 h-5 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center flex-shrink-0 text-orange-500 dark:text-orange-400 font-bold'>
+            2
+          </div>
+          <span className='mt-0.5'>
+            轻轻拨开头发，尽量露出头型的真实轮廓。
           </span>
-        </div>
-      )
-
-    case ModelState.ERROR:
-      return (
-        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 shadow-sm bg-red-50/80 dark:bg-red-950/80'>
-          <span className='text-xs font-normal text-red-600 dark:text-red-400'>
-            {t('detection.model.loadFailedHint')}
+        </li>
+        <li className='flex items-start space-x-3 text-xs text-gray-500 dark:text-gray-400 font-medium'>
+          <div className='w-5 h-5 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center flex-shrink-0 text-yellow-600 dark:text-yellow-400 font-bold'>
+            3
+          </div>
+          <span className='mt-0.5'>
+            确保鼻子刚好在视野上方露出，这是判断头型是否偏转的关键参照。
           </span>
-        </div>
-      )
+        </li>
+      </ul>
+    </div>
+  </div>
+))
 
-    case ModelState.LOADED:
-    default:
-      return (
-        <div className='inline-flex items-center gap-2 backdrop-blur-sm rounded-md px-3 py-2 shadow-sm bg-white/80 dark:bg-gray-800/80'>
-          <span className='text-xs font-normal text-gray-600 dark:text-gray-400'>
-            {t('detection.topView.upload.supportFormat')}
-          </span>
-        </div>
-      )
-  }
-})
+GuidancePanel.displayName = 'GuidancePanel'
 
-StatusInfo.displayName = 'StatusInfo'
-
-// Component for analysis state display
-interface AnalysisStateDisplayProps {
-  analysisState: AnalysisState
-  t: (key: string) => string
-}
-
-const AnalysisStateDisplay = memo(
-  ({ analysisState, t }: AnalysisStateDisplayProps) => {
-    switch (analysisState) {
-      case AnalysisState.WAITING_FOR_IMAGE:
-        return (
-          <>
-            <div className='w-16 h-16 md:w-20 md:h-20 mx-auto bg-white dark:bg-gray-700 rounded-2xl flex items-center justify-center shadow-lg'>
-              <Camera className='w-8 h-8 md:w-10 md:h-10 text-gray-400' />
-            </div>
-            <div className='text-center px-2'>
-              <p className='text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-1 md:mb-2'>
-                {t('detection.topView.analysis.waitingUpload')}
-              </p>
-              <p className='text-sm md:text-base text-gray-500 dark:text-gray-400'>
-                {t('detection.topView.analysis.waitingUploadDesc')}
-              </p>
-            </div>
-          </>
-        )
-
-      case AnalysisState.ANALYZING:
-        return (
-          <>
-            <div className='w-14 h-14 md:w-12 md:h-12 mx-auto bg-blue-50/80 dark:bg-blue-950/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/50'>
-              <div className='w-6 h-6 md:w-5 md:h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin' />
-            </div>
-            <div className='text-center px-2'>
-              <p className='text-base md:text-lg font-semibold text-blue-600 dark:text-blue-400 mb-1 md:mb-2'>
-                {t('detection.topView.analysis.analyzing')}
-              </p>
-              <p className='text-sm md:text-base text-gray-500 dark:text-gray-400'>
-                {t('detection.topView.analysis.analyzingDesc')}
-              </p>
-            </div>
-          </>
-        )
-
-      case AnalysisState.READY_TO_ANALYZE:
-        return (
-          <>
-            <div className='w-16 h-16 md:w-20 md:h-20 mx-auto bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center shadow-lg border border-green-200 dark:border-green-700'>
-              <CheckCircle className='w-8 h-8 md:w-10 md:h-10 text-green-600 dark:text-green-400' />
-            </div>
-            <div className='text-center px-2'>
-              <p className='text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-1 md:mb-2'>
-                {t('detection.topView.analysis.readyToAnalyze')}
-              </p>
-              <p className='text-sm md:text-base text-gray-500 dark:text-gray-400'>
-                {t('detection.topView.analysis.readyToAnalyzeDesc')}
-              </p>
-            </div>
-          </>
-        )
-
-      default:
-        return null
-    }
-  }
-)
-
-AnalysisStateDisplay.displayName = 'AnalysisStateDisplay'
-
-// Component for image visualization
+// 图片可视化组件
 interface ImageVisualizationProps {
   analysisResult: AnalysisResult | null
   t: (key: string) => string
@@ -230,17 +116,11 @@ const ImageVisualization = memo(
     const maskCanvasRef = useRef<HTMLCanvasElement>(null)
     const measurementCanvasRef = useRef<HTMLCanvasElement>(null)
 
-    // Memoize canvas drawing operations to prevent unnecessary redraws
     const drawMaskCanvas = useCallback(() => {
       const canvas = maskCanvasRef.current
-
       if (!canvas || !analysisResult?.mask) return
-
       const ctx = canvas.getContext('2d')
-
       if (!ctx) return
-
-      // Only redraw if dimensions changed
       if (
         canvas.width !== analysisResult.mask.width ||
         canvas.height !== analysisResult.mask.height
@@ -248,23 +128,16 @@ const ImageVisualization = memo(
         canvas.width = analysisResult.mask.width
         canvas.height = analysisResult.mask.height
       }
-
-      // Clear and draw mask
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       ctx.putImageData(analysisResult.mask, 0, 0)
     }, [analysisResult?.mask])
 
     const drawMeasurementCanvas = useCallback(() => {
       const canvas = measurementCanvasRef.current
-
       if (!canvas || !analysisResult?.mask || !analysisResult?.measurements)
         return
-
       const ctx = canvas.getContext('2d')
-
       if (!ctx) return
-
-      // Only redraw if dimensions changed
       if (
         canvas.width !== analysisResult.mask.width ||
         canvas.height !== analysisResult.mask.height
@@ -272,13 +145,10 @@ const ImageVisualization = memo(
         canvas.width = analysisResult.mask.width
         canvas.height = analysisResult.mask.height
       }
-
-      // Clear and draw measurements
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       drawMeasurementAnnotations(ctx, analysisResult.measurements)
     }, [analysisResult?.mask, analysisResult?.measurements])
 
-    // Effect to draw canvases when data changes
     useEffect(() => {
       drawMaskCanvas()
     }, [drawMaskCanvas])
@@ -287,64 +157,45 @@ const ImageVisualization = memo(
       drawMeasurementCanvas()
     }, [drawMeasurementCanvas])
 
-    // Cleanup canvas contexts on unmount
-    useEffect(() => {
-      return () => {
-        // Canvas contexts are automatically cleaned up when canvas elements are removed
-        // No explicit cleanup needed for 2D contexts
-      }
-    }, [])
-
     if (!analysisResult?.mask) {
-      return (
-        <div className='flex items-center justify-center h-full'>
-          <div className='text-center space-y-4'>
-            <div className='w-16 h-16 mx-auto bg-primary rounded-2xl flex items-center justify-center shadow-lg'>
-              <CheckCircle className='w-8 h-8 text-white' />
-            </div>
-            <div>
-              <p className='text-lg font-semibold text-gray-900 dark:text-white'>
-                {t('detection.topView.analysis.completed')}
-              </p>
-              <p className='text-sm text-gray-600 dark:text-gray-400'>
-                {t('detection.topView.analysis.completedDesc')}
-              </p>
-            </div>
-          </div>
-        </div>
-      )
+      return null
     }
 
     return (
-      <>
-        {/* Base mask visualization */}
-        <canvas ref={maskCanvasRef} className='w-full h-full object-contain' />
-
-        {/* Measurement lines overlay */}
-        {analysisResult.measurements && (
+      <div className='absolute inset-0 flex items-center justify-center'>
+        {/* Canvas container that fills the parent */}
+        <div className='relative w-full h-full'>
           <canvas
-            ref={measurementCanvasRef}
-            className='absolute inset-0 w-full h-full object-contain pointer-events-none'
+            ref={maskCanvasRef}
+            className='absolute inset-0 w-full h-full object-cover'
           />
-        )}
+          {analysisResult.measurements && (
+            <canvas
+              ref={measurementCanvasRef}
+              className='absolute inset-0 w-full h-full object-cover pointer-events-none'
+            />
+          )}
+        </div>
 
-        {/* Download button overlay */}
+        {/* Download button overlay - positioned relative to the container */}
         <button
-          className='absolute top-3 right-3 px-3 py-1 text-xs bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 rounded-full hover:bg-white dark:hover:bg-gray-800 transition-colors shadow-md backdrop-blur-sm'
+          className='absolute bottom-4 right-4 z-10 bg-white/90 dark:bg-gray-800/90 px-3 py-2 rounded-2xl shadow-md border border-orange-100 dark:border-orange-900/30 flex items-center space-x-2 hover:shadow-lg hover:scale-105 transition-all'
           onClick={() => {
             if (analysisResult?.mask) {
               const canvas = createDownloadableCanvas(
                 analysisResult.mask,
                 analysisResult.measurements
               )
-
               downloadCanvasAsPNG(canvas, 'head-analysis-result.png')
             }
           }}
         >
-          {t('detection.topView.buttons.downloadResult')}
+          <CheckCircle2 className='w-3.5 h-3.5 text-green-500' />
+          <span className='text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
+            {t('detection.topView.buttons.downloadResult')}
+          </span>
         </button>
-      </>
+      </div>
     )
   }
 )
@@ -358,7 +209,6 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
   onAnalysisResultChange,
 }: TopViewAnalysisProps) {
   const t = useTranslations()
-  const isMobile = useIsMobile()
 
   // Internal state management
   const [topImage, setTopImage] = useState<ImageUploadData | null>(null)
@@ -368,20 +218,29 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(
     null
   )
-
-  // State for drag and drop
-  const [isDragOver, setIsDragOver] = useState(false)
+  const [loadingText, setLoadingText] = useState(LOADING_TEXTS[0])
+  const [isHovering, setIsHovering] = useState(false)
 
   // Ref for file input
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // Cleanup URL objects to prevent memory leaks
+  // Loading text rotation effect
   useEffect(() => {
-    // Store the current URL for cleanup
-    const currentUrl = topImage?.url
+    let interval: NodeJS.Timeout
+    if (analysisState === AnalysisState.ANALYZING) {
+      let i = 0
+      interval = setInterval(() => {
+        i = (i + 1) % LOADING_TEXTS.length
+        setLoadingText(LOADING_TEXTS[i])
+      }, 800)
+    }
+    return () => clearInterval(interval)
+  }, [analysisState])
 
+  // Cleanup URL objects
+  useEffect(() => {
+    const currentUrl = topImage?.url
     return () => {
-      // Cleanup URL object when component unmounts or topImage changes
       if (currentUrl) {
         URL.revokeObjectURL(currentUrl)
       }
@@ -395,102 +254,9 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
     }
   }, [analysisResult, onAnalysisResultChange])
 
-  // Component for error display
-  const ErrorDisplay = () => {
-    if (analysisState !== AnalysisState.ERROR || !analysisResult?.error) {
-      return null
-    }
-
-    return (
-      <div className='bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4'>
-        <div className='flex items-start space-x-3'>
-          <div className='flex-shrink-0'>
-            <div className='w-8 h-8 bg-red-100 dark:bg-red-900/50 rounded-full flex items-center justify-center'>
-              <svg
-                className='w-4 h-4 text-red-600 dark:text-red-400'
-                fill='currentColor'
-                viewBox='0 0 20 20'
-              >
-                <path
-                  clipRule='evenodd'
-                  d='M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z'
-                  fillRule='evenodd'
-                />
-              </svg>
-            </div>
-          </div>
-          <div className='flex-1'>
-            <h3 className='text-sm font-medium text-red-800 dark:text-red-200'>
-              {t('detection.topView.analysis.error')}
-            </h3>
-            <p className='mt-1 text-sm text-red-700 dark:text-red-300'>
-              {analysisResult.error}
-            </p>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  // Component for analysis results cards
-  const AnalysisResultsCards = useMemo(() => {
-    if (!analysisResult) {
-      return null
-    }
-
-    const ciMeasurements = analysisResult.measurements
-      ? {
-          bpd: analysisResult.measurements.bpd,
-          ofd: analysisResult.measurements.ofd,
-        }
-      : undefined
-
-    const cvaiMeasurements = analysisResult.measurements
-      ? {
-          diagonal1: Math.sqrt(
-            Math.pow(
-              analysisResult.measurements.diagonal1.end.x -
-                analysisResult.measurements.diagonal1.start.x,
-              2
-            ) +
-              Math.pow(
-                analysisResult.measurements.diagonal1.end.y -
-                  analysisResult.measurements.diagonal1.start.y,
-                2
-              )
-          ),
-          diagonal2: Math.sqrt(
-            Math.pow(
-              analysisResult.measurements.diagonal2.end.x -
-                analysisResult.measurements.diagonal2.start.x,
-              2
-            ) +
-              Math.pow(
-                analysisResult.measurements.diagonal2.end.y -
-                  analysisResult.measurements.diagonal2.start.y,
-                2
-              )
-          ),
-        }
-      : undefined
-
-    return (
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4'>
-        {/* CI Index with Classification */}
-        <CICard measurements={ciMeasurements} value={analysisResult.ci || 0} />
-
-        {/* CVAI Index with Classification */}
-        <CVAICard
-          measurements={cvaiMeasurements}
-          value={analysisResult.cvai || 0}
-        />
-      </div>
-    )
-  }, [analysisResult])
-  const handleFileUpload = useCallback(
+  const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0]
-
       if (file) {
         const url = URL.createObjectURL(file)
         const imageData = {
@@ -499,554 +265,342 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
           rotation: 0,
           scale: 1,
         }
-
         setTopImage(imageData)
-        setAnalysisState(AnalysisState.READY_TO_ANALYZE)
-        setAnalysisResult(null) // Clear any previous results
+        // Auto start analysis
+        startAnalysis(imageData)
       }
     },
-    []
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [modelState, modelPath, confidenceThreshold]
   )
 
-  // Handle drag and drop events
-  const handleDragOver = useCallback(
-    (e: React.DragEvent) => {
-      e.preventDefault()
-      e.stopPropagation()
-      if (modelState === ModelState.LOADED) {
-        setIsDragOver(true)
+  const startAnalysis = useCallback(
+    async (imageData: ImageUploadData) => {
+      if (modelState !== ModelState.LOADED) {
+        setAnalysisResult({ error: t('detection.errors.modelNotLoaded') })
+        setAnalysisState(AnalysisState.ERROR)
+        return
       }
-    },
-    [modelState]
-  )
 
-  const handleDragLeave = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setIsDragOver(false)
-  }, [])
+      setAnalysisState(AnalysisState.ANALYZING)
+      setAnalysisResult(null)
 
-  const handleDrop = useCallback(
-    (e: React.DragEvent) => {
-      e.preventDefault()
-      e.stopPropagation()
-      setIsDragOver(false)
+      try {
+        const model = getModelInstance(modelPath, { confidenceThreshold })
+        const img = new Image()
 
-      if (modelState !== ModelState.LOADED) return
-
-      const files = e.dataTransfer.files
-      const file = files[0]
-
-      if (file && file.type.startsWith('image/')) {
-        const url = URL.createObjectURL(file)
-        const imageData = {
-          file,
-          url,
-          rotation: 0,
-          scale: 1,
+        img.onload = async () => {
+          try {
+            const prediction: ModelPrediction = await model.predict(
+              img,
+              imageData.rotation
+            )
+            setAnalysisResult({
+              ci: prediction.ci,
+              cvai: prediction.cvai,
+              headShape: prediction.headShape,
+              confidence: prediction.confidence,
+              mask: prediction.mask,
+              originalImage: prediction.originalImage,
+              measurements: prediction.measurements,
+            })
+            setAnalysisState(AnalysisState.COMPLETED)
+          } catch (error) {
+            setAnalysisResult({
+              error: `${t('detection.errors.analysisFailed')}: ${error instanceof Error ? error.message : t('detection.errors.unknownError')}`,
+            })
+            setAnalysisState(AnalysisState.ERROR)
+          }
         }
 
-        setTopImage(imageData)
-        setAnalysisState(AnalysisState.READY_TO_ANALYZE)
-        setAnalysisResult(null)
-      }
-    },
-    [modelState]
-  )
-
-  const setImageRotation = useCallback(
-    (rotation: number) => {
-      if (topImage) {
-        setTopImage({ ...topImage, rotation })
-      }
-    },
-    [topImage]
-  )
-
-  const analyzeTopView = useCallback(async () => {
-    if (!topImage) {
-      setAnalysisResult({ error: t('detection.errors.noImageUploaded') })
-
-      return
-    }
-
-    if (modelState !== ModelState.LOADED) {
-      let errorMessage: string
-
-      switch (modelState) {
-        case ModelState.LOADING:
-          errorMessage = t('detection.errors.modelStillLoading')
-          break
-        case ModelState.NOT_LOADED:
-        case ModelState.ERROR:
-        default:
-          errorMessage = t('detection.errors.modelNotLoaded')
-          break
-      }
-
-      setAnalysisResult({ error: errorMessage })
-
-      return
-    }
-
-    setAnalysisState(AnalysisState.ANALYZING)
-    // Set analysis state to analyzing to show the analyzing state in the UI
-    setAnalysisResult(null)
-
-    try {
-      const model = getModelInstance(modelPath, { confidenceThreshold })
-      const img = new Image()
-
-      img.onload = async () => {
-        try {
-          const prediction: ModelPrediction = await model.predict(
-            img,
-            topImage.rotation
-          )
-
-          setAnalysisResult({
-            ci: prediction.ci,
-            cvai: prediction.cvai,
-            headShape: prediction.headShape,
-            confidence: prediction.confidence,
-            mask: prediction.mask,
-            originalImage: prediction.originalImage,
-            measurements: prediction.measurements,
-          })
-          setAnalysisState(AnalysisState.COMPLETED)
-        } catch (error) {
-          // Analysis failed
-          setAnalysisResult({
-            error: `${t('detection.errors.analysisFailed')}: ${error instanceof Error ? error.message : t('detection.errors.unknownError')}`,
-          })
+        img.onerror = () => {
+          setAnalysisResult({ error: t('detection.errors.imageLoadFailed') })
           setAnalysisState(AnalysisState.ERROR)
         }
-      }
 
-      img.onerror = () => {
-        setAnalysisResult({ error: t('detection.errors.imageLoadFailed') })
+        img.src = imageData.url
+      } catch (error) {
+        setAnalysisResult({
+          error: `${t('detection.errors.analysisFailed')}: ${error instanceof Error ? error.message : t('detection.errors.unknownError')}`,
+        })
         setAnalysisState(AnalysisState.ERROR)
       }
+    },
+    [modelState, modelPath, confidenceThreshold, t]
+  )
 
-      img.src = topImage.url
-    } catch (error) {
-      // Analysis setup failed
-      setAnalysisResult({
-        error: `${t('detection.errors.analysisFailed')}: ${error instanceof Error ? error.message : t('detection.errors.unknownError')}`,
-      })
-      setAnalysisState(AnalysisState.ERROR)
-    } finally {
-      // Analysis state is already set in success/error cases above
+  const resetAnalysis = useCallback(() => {
+    setTopImage(null)
+    setAnalysisState(AnalysisState.WAITING_FOR_IMAGE)
+    setAnalysisResult(null)
+  }, [])
+
+  // CI/CVAI measurements for cards
+  const ciMeasurements = useMemo(() => {
+    if (!analysisResult?.measurements) return undefined
+    return {
+      bpd: analysisResult.measurements.bpd,
+      ofd: analysisResult.measurements.ofd,
     }
-  }, [topImage, modelState, modelPath, confidenceThreshold, t])
+  }, [analysisResult?.measurements])
+
+  const cvaiMeasurements = useMemo(() => {
+    if (!analysisResult?.measurements) return undefined
+    return {
+      diagonal1: Math.sqrt(
+        Math.pow(
+          analysisResult.measurements.diagonal1.end.x -
+          analysisResult.measurements.diagonal1.start.x,
+          2
+        ) +
+        Math.pow(
+          analysisResult.measurements.diagonal1.end.y -
+          analysisResult.measurements.diagonal1.start.y,
+          2
+        )
+      ),
+      diagonal2: Math.sqrt(
+        Math.pow(
+          analysisResult.measurements.diagonal2.end.x -
+          analysisResult.measurements.diagonal2.start.x,
+          2
+        ) +
+        Math.pow(
+          analysisResult.measurements.diagonal2.end.y -
+          analysisResult.measurements.diagonal2.start.y,
+          2
+        )
+      ),
+    }
+  }, [analysisResult?.measurements])
+
+  const isModelReady = modelState === ModelState.LOADED
 
   return (
-    <div className='max-w-7xl mx-auto space-y-4 md:space-y-6 lg:px-8'>
-      {/* Enhanced Hero Section integrated with Top View Analysis */}
-      <div className='text-center mb-6 md:mb-12'>
-        {/* Main Title */}
-        <h1 className='text-4xl md:text-5xl lg:text-6xl font-light mb-6 tracking-tight leading-tight'>
-          <span className='font-extralight text-gray-900 dark:text-white drop-shadow-sm'>
-            {t('detection.topView.title')}
-          </span>
-        </h1>
+    <div className='w-full max-w-6xl mx-auto px-4'>
+      <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start'>
+        {/* Left Area: The Interaction Frame */}
+        <div className='lg:col-span-6 flex flex-col items-center'>
+          <div className='relative group w-full max-w-[480px]'>
+            {/* Soft Shadow Layer */}
+            <div className='absolute -inset-2 bg-orange-200/20 dark:bg-orange-900/10 blur-2xl rounded-[4rem]' />
 
-        {/* Subtitle */}
-        <p className='text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed font-light mb-8'>
-          {t('detection.pageSubtitle')}
-        </p>
-
-        {/* Feature highlights */}
-        <div className='flex flex-wrap justify-center gap-2 md:gap-4 max-w-2xl mx-auto mb-6 md:mb-8 px-2'>
-          <div className='inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-blue-50 dark:bg-blue-950/20 rounded-full text-blue-600 dark:text-blue-400 text-xs md:text-sm font-medium border border-blue-200 dark:border-blue-800'>
-            <span className='text-sm md:text-base'>🧠</span>
-            <span className='hidden sm:inline'>
-              {t('detection.topView.features.deepLearning')}
-            </span>
-            <span className='sm:hidden'>
-              {t('detection.topView.features.deepLearning')}
-            </span>
-          </div>
-          <div className='inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-green-50 dark:bg-green-950/20 rounded-full text-green-600 dark:text-green-400 text-xs md:text-sm font-medium border border-green-200 dark:border-green-800'>
-            <span className='text-sm md:text-base'>🔒</span>
-            <span className='hidden sm:inline'>
-              {t('detection.topView.features.privacy')}
-            </span>
-            <span className='sm:hidden'>
-              {t('detection.topView.features.privacy')}
-            </span>
-          </div>
-          <div className='inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-purple-50 dark:bg-purple-950/20 rounded-full text-purple-600 dark:text-purple-400 text-xs md:text-sm font-medium border border-purple-200 dark:border-purple-800'>
-            <span className='text-sm md:text-base'>⚕️</span>
-            <span className='hidden sm:inline'>
-              {t('detection.topView.features.medical')}
-            </span>
-            <span className='sm:hidden'>
-              {t('detection.topView.features.medical')}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Analysis Interface */}
-      <div className='grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-8 lg:gap-12 xl:gap-16 py-4 md:py-8'>
-        {/* Upload Section */}
-        <div className='space-y-4 md:space-y-6'>
-          <div className='text-center xl:text-left px-2 md:px-0'>
-            <div className='flex items-center gap-2 justify-center xl:justify-start mb-2 flex-wrap'>
-              <h3 className='text-xl md:text-2xl font-bold text-gray-900 dark:text-white'>
-                {t('detection.topView.uploadTitle')}
-              </h3>
-              <ShootingTipsDisplay t={t} />
-            </div>
-            <p className='text-sm md:text-base text-gray-600 dark:text-gray-400'>
-              {t('detection.topView.description')}
-            </p>
-          </div>
-
-          {!topImage ? (
-            <div
-              className={`relative aspect-square border-2 border-dashed rounded-2xl overflow-hidden transition-all duration-300 touch-manipulation ${
-                modelState !== ModelState.LOADED
-                  ? 'border-gray-200 dark:border-gray-700 cursor-not-allowed opacity-60'
-                  : isDragOver
-                    ? 'border-primary bg-primary/5 scale-[1.02]'
-                    : 'border-gray-300 dark:border-gray-600 cursor-pointer hover:border-primary active:border-primary active:scale-[0.98] md:active:scale-100'
-              }`}
-              role='button'
-              tabIndex={modelState === ModelState.LOADED ? 0 : -1}
-              onClick={() => {
-                if (modelState === ModelState.LOADED) {
-                  fileInputRef.current?.click()
-                }
-              }}
-              onDragLeave={handleDragLeave}
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
-              onKeyDown={e => {
-                if (
-                  (e.key === 'Enter' || e.key === ' ') &&
-                  modelState === ModelState.LOADED
-                ) {
-                  e.preventDefault()
-                  fileInputRef.current?.click()
-                }
-              }}
-            >
-              {/* Background placeholder image with annotations */}
-              <div className='absolute inset-0'>
-                <NextImage
-                  fill
-                  alt={t('detection.topView.exampleImageAlt')}
-                  className='w-full h-full object-contain opacity-70 dark:opacity-60'
-                  sizes='(max-width: 768px) 100vw, 50vw'
-                  src='/images/detection/head_normal_top.jpg'
-                />
-                <div className='absolute inset-0 bg-white/30 dark:bg-gray-900/30' />
-
-                {/* Reference indicators */}
-                <div className='absolute inset-0'>
-                  {/* Vertical dashed line connecting frontal and occipital */}
-                  <div className='absolute left-1/2 top-8 bottom-8 w-0.5 border-l-2 border-dashed border-rose-500/70 transform -translate-x-1/2' />
-
-                  {/* Frontal label - top center */}
-                  <div className='absolute top-0 left-1/2 transform -translate-x-1/2 bg-rose-500/90 text-white text-xs px-2.5 py-1 rounded font-medium shadow-md backdrop-blur-sm'>
-                    {t('detection.topView.annotations.forehead')}
-                  </div>
-
-                  {/* Nose indicator - below frontal area */}
-                  <div className='absolute top-8 left-1/2 flex items-center'>
-                    {/* Horizontal dashed line pointing right */}
-                    <div className='w-16 sm:w-32 h-0.5 border-t-2 border-dashed border-rose-500/70' />
-                    {/* Label */}
-                    <div className='ml-1 sm:ml-2 bg-orange-100/90 text-orange-800 text-xs px-1.5 sm:px-2.5 py-1 rounded font-medium shadow-md backdrop-blur-sm whitespace-nowrap transform -translate-x-1/2 sm:translate-x-0'>
-                      {t('detection.topView.annotations.noseVisible')}
-                    </div>
-                  </div>
-
-                  {/* Occipital label - bottom center */}
-                  <div className='absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-rose-500/90 text-white text-xs px-2.5 py-1 rounded font-medium shadow-md backdrop-blur-sm'>
-                    {t('detection.topView.annotations.occiput')}
-                  </div>
-                </div>
-              </div>
-
-              {/* Upload content overlay */}
-              <div className='relative z-10 flex items-center justify-center h-full'>
-                <div className='text-center space-y-4 p-6'>
-                  {/* Centered upload prompt */}
-                  <div className='flex flex-col items-center justify-center gap-3'>
-                    <UploadStateIndicator modelState={modelState} t={t} />
-                  </div>
-                  {/* Status info with refined style */}
-                  <StatusInfo modelState={modelState} t={t} />
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className='space-y-4 md:space-y-6'>
-              <div className='relative aspect-square bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700'>
-                <NextImage
-                  fill
-                  alt={t('detection.topView.originalImageAlt')}
-                  className='w-full h-full object-contain'
-                  sizes='(max-width: 768px) 100vw, 50vw'
-                  src={topImage.url}
-                  style={{
-                    transform: `rotate(${topImage.rotation}deg) scale(${topImage.scale})`,
-                  }}
-                />
-
-                {/* Overlay annotations */}
-                <div className='absolute inset-0 pointer-events-none'>
-                  {/* Vertical dashed line connecting forehead and occipital */}
-                  <div className='absolute left-1/2 top-0 bottom-0 w-0.5 border-l-2 border-dashed border-rose-500/70 transform -translate-x-1/2' />
-
-                  {/* Forehead label - top center */}
-                  <div className='absolute top-0 left-1/2 transform -translate-x-1/2 bg-rose-500/90 text-white text-xs px-2.5 py-1 rounded font-medium shadow-md backdrop-blur-sm'>
-                    {t('detection.topView.annotations.forehead')}
-                  </div>
-
-                  {/* Occipital label - bottom center */}
-                  <div className='absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-rose-500/90 text-white text-xs px-2.5 py-1 rounded font-medium shadow-md backdrop-blur-sm'>
-                    {t('detection.topView.annotations.occiput')}
-                  </div>
-                </div>
-              </div>
-              <div className='space-y-3 md:space-y-4'>
-                {/* Rotation Control */}
-                <div
-                  className={
-                    isMobile
-                      ? 'space-y-2'
-                      : 'flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-2'
-                  }
-                >
-                  {!isMobile && (
-                    <div className='flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2'>
-                      <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
-                        {t('detection.topView.upload.rotation')}
-                      </span>
-                      <span className='text-xs text-gray-500 dark:text-gray-400'>
-                        {t('detection.topView.upload.rotationTip')}
-                      </span>
-                    </div>
-                  )}
-                  <div
-                    className={
-                      isMobile ? 'w-full' : 'flex justify-center sm:justify-end'
-                    }
-                  >
-                    <RotationControl
-                      rotation={topImage?.rotation || 0}
-                      onChange={rotation => setImageRotation(rotation)}
-                      showSlider={isMobile}
-                      isMobile={isMobile}
-                      className={isMobile ? 'w-full' : ''}
-                      t={t}
-                    />
-                  </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className='flex flex-col sm:flex-row gap-3 sm:gap-2'>
-                  <Tooltip
-                    showArrow
-                    content={
-                      modelState === ModelState.LOADING
-                        ? t('detection.model.loadingTooltip')
-                        : modelState !== ModelState.LOADED
-                          ? t('detection.model.notLoadedTooltip')
-                          : analysisState === AnalysisState.ANALYZING
-                            ? t('detection.topView.tooltips.analyzing')
-                            : t('detection.topView.tooltips.readyToAnalyze')
-                    }
-                    isDisabled={
-                      modelState === ModelState.LOADED &&
-                      analysisState !== AnalysisState.ANALYZING
-                    }
-                  >
-                    <Button
-                      className='w-full sm:flex-1 h-12 sm:h-10 touch-manipulation'
-                      color='primary'
-                      disabled={
-                        analysisState === AnalysisState.ANALYZING ||
-                        modelState !== ModelState.LOADED
-                      }
-                      size='lg'
-                      startContent={
-                        modelState === ModelState.LOADING ? (
-                          <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin' />
-                        ) : analysisState === AnalysisState.ANALYZING ? (
-                          <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin' />
-                        ) : (
-                          <CheckCircle className='w-4 h-4' />
-                        )
-                      }
-                      onClick={analyzeTopView}
-                    >
-                      {modelState === ModelState.LOADING
-                        ? t('detection.model.loadingButton')
-                        : analysisState === AnalysisState.ANALYZING
-                          ? t('detection.topView.buttons.analyzing')
-                          : t('detection.topView.buttons.startAnalysis')}
-                    </Button>
-                  </Tooltip>
-                  <Tooltip
-                    showArrow
-                    content={
-                      modelState === ModelState.LOADING
-                        ? t('detection.model.loadingTooltip')
-                        : modelState !== ModelState.LOADED
-                          ? t('detection.model.notLoadedTooltip')
-                          : t('detection.topView.tooltips.reupload')
-                    }
-                    isDisabled={modelState === ModelState.LOADED}
-                  >
-                    <Button
-                      className='w-full sm:w-auto h-12 sm:h-10 px-4 sm:px-3 touch-manipulation'
-                      color='primary'
-                      disabled={modelState !== ModelState.LOADED}
-                      size='lg'
-                      startContent={
-                        modelState === ModelState.LOADING ? (
-                          <div className='w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin' />
-                        ) : (
-                          <Upload className='w-4 h-4' />
-                        )
-                      }
-                      variant='bordered'
-                      onClick={() => {
-                        if (modelState === ModelState.LOADED) {
-                          fileInputRef.current?.click()
-                        }
+            <div className='relative bg-white dark:bg-gray-800 p-6 rounded-[3.5rem] shadow-xl border border-white dark:border-gray-700'>
+              {/* Main Display Area */}
+              <div
+                className='relative aspect-[4/5] rounded-[2.8rem] overflow-hidden bg-[#faf8f6] dark:bg-gray-900 border border-orange-100 dark:border-orange-900/30 flex flex-col items-center justify-center transition-all duration-500 group-hover:border-orange-200 dark:group-hover:border-orange-800/50'
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+              >
+                {/* UPLOAD STATE */}
+                {analysisState === AnalysisState.WAITING_FOR_IMAGE && (
+                  <>
+                    {/* Background grid texture */}
+                    <div
+                      className='absolute inset-0 opacity-30 dark:opacity-10 pointer-events-none'
+                      style={{
+                        backgroundImage:
+                          'radial-gradient(#e5e7eb 1px, transparent 1px)',
+                        backgroundSize: '20px 20px',
                       }}
+                    />
+
+                    {/* SVG Blueprint */}
+                    <SchematicHeadGuide />
+
+                    {/* Nose label - top */}
+                    <div className='absolute top-[52px] left-[60%] text-left pointer-events-none'>
+                      <span className='block text-[10px] text-orange-400 font-bold uppercase tracking-wider'>
+                        Nose Visible
+                      </span>
+                      <span className='block text-[10px] text-gray-400 dark:text-gray-500 font-medium'>
+                        刚刚露出鼻尖
+                      </span>
+                    </div>
+
+                    {/* Occipital label - bottom */}
+                    <div className='absolute bottom-[62px] right-[42%] text-right pointer-events-none'>
+                      <span className='block text-[10px] text-rose-300 font-bold uppercase tracking-wider'>
+                        Occipital
+                      </span>
+                      <span className='block text-[10px] text-gray-400 dark:text-gray-500 font-medium'>
+                        后枕区域
+                      </span>
+                    </div>
+
+                    {/* Central interaction area */}
+                    <div
+                      onClick={() =>
+                        isModelReady && fileInputRef.current?.click()
+                      }
+                      className='absolute inset-0 z-20 flex flex-col items-center justify-center cursor-pointer'
                     >
-                      {modelState === ModelState.LOADING
-                        ? t('detection.model.loadingButton')
-                        : t('detection.topView.buttons.reupload')}
-                    </Button>
-                  </Tooltip>
-                </div>
-              </div>
-            </div>
-          )}
-          <input
-            ref={fileInputRef}
-            accept='image/*'
-            className='hidden'
-            disabled={modelState !== ModelState.LOADED}
-            type='file'
-            onChange={e => handleFileUpload(e)}
-          />
-        </div>
-
-        {/* Results Section */}
-        <div className='space-y-4 md:space-y-6'>
-          <div className='text-center xl:text-left px-2 md:px-0'>
-            <h3 className='text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2'>
-              {t('detection.topView.analysisResult')}
-            </h3>
-            <p className='text-sm md:text-base text-gray-600 dark:text-gray-400'>
-              {t('detection.topView.analysisDescription')}
-            </p>
-          </div>
-
-          {analysisState !== AnalysisState.COMPLETED ? (
-            <div className='aspect-square flex items-center justify-center bg-gray-50/50 dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-gray-700'>
-              <div className='text-center space-y-6'>
-                <AnalysisStateDisplay analysisState={analysisState} t={t} />
-              </div>
-            </div>
-          ) : (
-            analysisResult && (
-              <div className='space-y-8'>
-                {/* Visualization */}
-                <div className='aspect-square bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl border border-primary/20 dark:border-primary/30 overflow-hidden relative'>
-                  <ImageVisualization analysisResult={analysisResult} t={t} />
-                </div>
-
-                {/* Legend - only show measurement annotations */}
-                {analysisResult?.measurements && (
-                  <div className='hidden md:block bg-gray-50 dark:bg-gray-800 rounded-lg p-6'>
-                    <h6 className='text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4'>
-                      {t('detection.topView.analysis.measurementAnnotations')}
-                    </h6>
-                    <div className='flex flex-wrap gap-6 text-sm'>
-                      <div className='flex items-center gap-3'>
-                        <div
-                          className='w-4 h-1 rounded-sm'
-                          style={{ backgroundColor: '#FFDC00' }}
-                        />
-                        <span className='text-gray-700 dark:text-gray-300 font-medium'>
-                          {t('detection.topView.analysis.bpd')}
-                        </span>
-                      </div>
-                      <div className='flex items-center gap-3'>
-                        <div
-                          className='w-1 h-4 rounded-sm'
-                          style={{ backgroundColor: '#F24C62' }}
-                        />
-                        <span className='text-gray-700 dark:text-gray-300 font-medium'>
-                          {t('detection.topView.analysis.ofd')}
-                        </span>
-                      </div>
-                      <div className='flex items-center gap-3'>
-                        <div
-                          className='w-4 h-1 rounded-sm'
-                          style={{
-                            background:
-                              'repeating-linear-gradient(to right, #6B7280 0, #6B7280 3px, transparent 3px, transparent 6px)',
-                          }}
-                        />
-                        <span className='text-gray-700 dark:text-gray-300 font-medium'>
-                          {t('detection.topView.analysis.diagonal')}
-                        </span>
+                      <div
+                        className={`
+                        relative px-8 py-5 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-3xl border border-white dark:border-gray-700 shadow-sm
+                        flex flex-col items-center space-y-3 transition-all duration-300
+                        ${isHovering && isModelReady ? 'scale-105 bg-white/80 dark:bg-gray-800/80 shadow-md' : 'scale-100'}
+                        ${!isModelReady ? 'opacity-60 cursor-not-allowed' : ''}
+                      `}
+                      >
+                        <div className='w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-100 to-rose-50 dark:from-orange-900/30 dark:to-rose-900/20 flex items-center justify-center text-orange-400 shadow-inner'>
+                          {modelState === ModelState.LOADING ? (
+                            <Loader2 className='w-6 h-6 animate-spin' />
+                          ) : (
+                            <UploadCloud className='w-6 h-6' />
+                          )}
+                        </div>
+                        <div className='text-center'>
+                          <span className='block text-sm font-bold text-gray-700 dark:text-gray-300'>
+                            {modelState === ModelState.LOADING
+                              ? t('detection.model.loading')
+                              : t('detection.topView.upload.clickOrDrag')}
+                          </span>
+                          <span className='block text-[10px] text-gray-400 dark:text-gray-500 mt-0.5'>
+                            自动识别 · 隐私保护
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+
+                    <input
+                      ref={fileInputRef}
+                      type='file'
+                      onChange={handleFileChange}
+                      className='hidden'
+                      accept='image/*'
+                      disabled={!isModelReady}
+                    />
+                  </>
                 )}
 
-                {/* Error Display */}
-                <ErrorDisplay />
+                {/* ANALYZING or RESULT STATE */}
+                {(analysisState === AnalysisState.ANALYZING ||
+                  analysisState === AnalysisState.COMPLETED ||
+                  analysisState === AnalysisState.ERROR) &&
+                  topImage && (
+                    <div className='relative w-full h-full'>
+                      {/* Show uploaded image during analysis */}
+                      {analysisState === AnalysisState.ANALYZING && (
+                        <>
+                          <NextImage
+                            fill
+                            src={topImage.url}
+                            alt='Analyzing'
+                            className='w-full h-full object-cover transition-opacity duration-700 opacity-60'
+                          />
+                          <div className='absolute inset-0 bg-white/20 dark:bg-black/20 backdrop-blur-[1px] flex flex-col items-center justify-center'>
+                            <div className='scan-wave' />
+                            <div className='bg-white/90 dark:bg-gray-800/90 backdrop-blur-md px-8 py-6 rounded-[2.5rem] shadow-2xl flex flex-col items-center border border-white dark:border-gray-700'>
+                              <Loader2 className='w-10 h-10 text-orange-400 animate-spin mb-4' />
+                              <p className='text-sm font-bold text-gray-600 dark:text-gray-300 transition-all duration-300'>
+                                {loadingText}
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      )}
+
+                      {/* Show result visualization */}
+                      {analysisState === AnalysisState.COMPLETED &&
+                        analysisResult &&
+                        !analysisResult.error && (
+                          <ImageVisualization
+                            analysisResult={analysisResult}
+                            t={t}
+                          />
+                        )}
+
+                      {/* Error state */}
+                      {analysisState === AnalysisState.ERROR &&
+                        analysisResult?.error && (
+                          <div className='absolute inset-0 flex items-center justify-center bg-red-50/80 dark:bg-red-950/50'>
+                            <div className='bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg text-center max-w-xs'>
+                              <div className='w-12 h-12 mx-auto mb-4 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center'>
+                                <span className='text-red-500 text-2xl'>✕</span>
+                              </div>
+                              <p className='text-sm text-red-600 dark:text-red-400 font-medium'>
+                                {analysisResult.error}
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                    </div>
+                  )}
               </div>
-            )
+
+              {/* Bottom Decoration - Scan Text (only show in upload state) */}
+              {analysisState === AnalysisState.WAITING_FOR_IMAGE && (
+                <div className='absolute bottom-6 left-0 right-0 text-center pointer-events-none'>
+                  <div className='inline-flex items-center space-x-1.5 opacity-40'>
+                    <ScanLine className='w-3 h-3 text-gray-400' />
+                    <span className='text-[9px] font-bold text-gray-400 tracking-[0.3em] uppercase'>
+                      AI Geometry Align
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Feature badges and reset button */}
+          <div className='mt-10 flex flex-wrap justify-center gap-6'>
+            <div className='flex items-center space-x-2 text-gray-400 dark:text-gray-500'>
+              <Heart className='w-4 h-4 text-rose-300' />
+              <span className='text-xs font-medium'>全本地隐私处理</span>
+            </div>
+            <div className='flex items-center space-x-2 text-gray-400 dark:text-gray-500'>
+              <Sparkles className='w-4 h-4 text-orange-300' />
+              <span className='text-xs font-medium'>AI 几何对准技术</span>
+            </div>
+            {analysisState === AnalysisState.COMPLETED && (
+              <button
+                onClick={resetAnalysis}
+                className='flex items-center space-x-2 text-xs font-bold text-orange-500 hover:text-orange-600 transition-all'
+              >
+                <RefreshCw className='w-3 h-3' />
+                <span>重新记录</span>
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Right Area: Results or Guidance */}
+        <div className='lg:col-span-6'>
+          {analysisState === AnalysisState.COMPLETED &&
+            analysisResult &&
+            !analysisResult.error ? (
+            <div className='space-y-6 animate-slide-in-right'>
+              {/* CI Card */}
+              <CICard
+                value={analysisResult.ci || 0}
+                measurements={ciMeasurements}
+              />
+
+              {/* CVAI Card */}
+              <CVAICard
+                value={analysisResult.cvai || 0}
+                measurements={cvaiMeasurements}
+              />
+
+              {/* Integrated Assessment */}
+              {analysisResult.ci !== undefined &&
+                analysisResult.cvai !== undefined && (
+                  <IntegratedAssessment
+                    ci={analysisResult.ci * 100}
+                    cvai={analysisResult.cvai * 100}
+                  />
+                )}
+
+              <p className='text-center text-[9px] font-bold text-gray-300 dark:text-gray-600 uppercase tracking-[0.4em]'>
+                Powered by LunaSphere AI Studio
+              </p>
+            </div>
+          ) : (
+            <GuidancePanel t={t} />
           )}
         </div>
       </div>
-
-      {/* Measurement Results Section */}
-      {analysisResult && (
-        <div>
-          {analysisResult.error ? (
-            <div className='bg-red-50 dark:bg-red-950/20 rounded-2xl p-6 border border-red-200 dark:border-red-700 shadow-lg max-w-2xl mx-auto'>
-              <div className='flex items-center gap-3 mb-3'>
-                <div className='w-5 h-5 bg-red-500 rounded-full flex items-center justify-center'>
-                  <svg
-                    className='w-3 h-3 text-white'
-                    fill='currentColor'
-                    viewBox='0 0 20 20'
-                  >
-                    <path
-                      clipRule='evenodd'
-                      d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z'
-                      fillRule='evenodd'
-                    />
-                  </svg>
-                </div>
-                <div className='text-lg font-semibold text-red-700 dark:text-red-400'>
-                  {t('detection.topView.analysis.detectionFailed')}
-                </div>
-              </div>
-              <div className='text-red-600 dark:text-red-400'>
-                {analysisResult.error}
-              </div>
-            </div>
-          ) : (
-            AnalysisResultsCards
-          )}
-        </div>
-      )}
     </div>
   )
 })

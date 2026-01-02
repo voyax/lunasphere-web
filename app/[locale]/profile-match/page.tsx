@@ -17,7 +17,7 @@ export default function ProfileMatchPage() {
       </div>
 
       <div className='relative z-10'>
-        <div className='container mx-auto px-6 py-8'>
+        <div className='container mx-auto px-6 pt-24 py-8'>
           {/* Page Header */}
           <div className='text-center mb-12'>
             <h1 className='text-4xl md:text-5xl font-light mb-6 tracking-tight leading-tight'>

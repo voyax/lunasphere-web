@@ -390,7 +390,34 @@
         "title": "颅穹不对称指数 (CVAI)",
         "diagonal1": "对角线1",
         "diagonal2": "对角线2"
+      },
+      "status": {
+        "healthy": "健康",
+        "attention": "需关注",
+        "symmetric": "对称",
+        "asymmetric": "不对称"
       }
+    },
+    "assessment": {
+      "whisper": "小月颅的悄悄话",
+      "headlines": {
+        "perfect": "形态完美",
+        "mildAttention": "轻度关注",
+        "moderateRisk": "中度风险",
+        "severeAttention": "需专业关注"
+      },
+      "advice": {
+        "perfect": "非常棒！您的宝宝头型各项数据均在完美的医学参考范围内。请继续保持当前的多样化睡姿和护理方式。",
+        "mildCvai": "头型轻微偏斜，建议增加白天趴着玩的时间，引导宝宝向另一侧转头。",
+        "moderateCvai": "头部不对称程度中等。请在医生指导下积极调整睡姿，并增加白天的俯卧时间。",
+        "severeCvai": "检测到明显的斜头特征。建议您尽快咨询专业医生，可能需要佩戴矫正头盔或进行物理治疗。",
+        "mildFlat": "有轻微扁头趋势。建议多引导宝宝转头活动，减少后脑勺受力。",
+        "severeFlat": "扁头程度较明显。请注意减少仰卧时间，多让宝宝趴着玩，避免头部后方持续受压。",
+        "longHead": "长头形态多见于早产儿或习惯侧睡宝宝。请注意观察，保持均衡的头部活动方向。"
+      },
+      "disclaimer": "本分析仅供参考，不作为医疗诊断依据。如有疑虑，请咨询专业儿科医生。",
+      "saveReport": "保存完整评估报告",
+      "poweredBy": "Powered by AI Studio"
     },
     "modelManager": {
       "title": "模型管理 (调试模式)",

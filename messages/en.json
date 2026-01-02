@@ -390,7 +390,34 @@
         "title": "Cranial Vault Asymmetry Index (CVAI)",
         "diagonal1": "Diagonal 1",
         "diagonal2": "Diagonal 2"
+      },
+      "status": {
+        "healthy": "Healthy",
+        "attention": "Attention",
+        "symmetric": "Symmetric",
+        "asymmetric": "Asymmetric"
       }
+    },
+    "assessment": {
+      "whisper": "A Note for Parents",
+      "headlines": {
+        "perfect": "Perfect Shape",
+        "mildAttention": "Mild Concern",
+        "moderateRisk": "Moderate Risk",
+        "severeAttention": "Professional Attention Needed"
+      },
+      "advice": {
+        "perfect": "Excellent! Your baby's head shape measurements are all within the ideal medical reference range. Continue with your current varied sleeping positions and care routine.",
+        "mildCvai": "Slight head asymmetry detected. Consider increasing tummy time during the day and encourage your baby to turn toward the less-favored side.",
+        "moderateCvai": "Moderate head asymmetry detected. Work with your pediatrician to actively adjust sleeping positions and increase daily tummy time.",
+        "severeCvai": "Significant asymmetry detected. We recommend consulting a specialist promptly, as cranial molding therapy or physical therapy may be beneficial.",
+        "mildFlat": "Mild flattening trend detected. Encourage head-turning activities and reduce pressure on the back of the head.",
+        "severeFlat": "Notable flattening detected. Focus on reducing back-lying time, increasing tummy time, and preventing continued pressure on the back of the head.",
+        "longHead": "Elongated head shape is common in preterm infants or babies who prefer side-sleeping. Monitor progress and maintain balanced head positioning."
+      },
+      "disclaimer": "This analysis is for reference only and should not replace medical diagnosis. Consult a pediatrician if you have concerns.",
+      "saveReport": "Save Full Report",
+      "poweredBy": "Powered by AI Studio"
     },
     "modelManager": {
       "title": "Model Management (Debug Mode)",

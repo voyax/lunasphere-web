@@ -160,7 +160,7 @@ export default function FAQPage() {
               }}
             />
           </div>
-          <div className='relative mx-auto max-w-7xl px-4 py-12 sm:py-16 md:py-20 sm:px-6 lg:px-8'>
+          <div className='relative mx-auto max-w-7xl px-4 pt-20 py-12 sm:py-16 md:py-20 sm:px-6 lg:px-8'>
             <div className='text-center'>
               <h1 className='text-3xl font-normal tracking-tight text-default-700 sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6'>
                 {t('title')}
@@ -192,20 +192,18 @@ export default function FAQPage() {
           <div className='mb-8 sm:mb-12 hidden sm:block'>
             <div className='flex flex-wrap gap-3 justify-center'>
               <button
-                className={`group px-6 py-3 rounded-2xl font-medium transition-all duration-300 transform hover:scale-105 ${
-                  selectedCategory === null
+                className={`group px-6 py-3 rounded-2xl font-medium transition-all duration-300 transform hover:scale-105 ${selectedCategory === null
                     ? 'bg-gradient-to-r from-gray-800 to-gray-900 text-white shadow-lg shadow-gray-500/25'
                     : 'bg-white text-gray-700 border border-gray-200 hover:border-gray-300 hover:shadow-md'
-                }`}
+                  }`}
                 onClick={() => setSelectedCategory(null)}
               >
                 <span className='flex items-center gap-2'>
                   <span className='text-lg'>📋</span>
                   {t('allQuestions')}
                   <span
-                    className={`text-xs px-2 py-1 rounded-full ${
-                      selectedCategory === null ? 'bg-white/20' : 'bg-gray-100'
-                    }`}
+                    className={`text-xs px-2 py-1 rounded-full ${selectedCategory === null ? 'bg-white/20' : 'bg-gray-100'
+                      }`}
                   >
                     {faqItems.length}
                   </span>
@@ -220,22 +218,20 @@ export default function FAQPage() {
                 return (
                   <button
                     key={category}
-                    className={`group px-6 py-3 rounded-2xl font-medium transition-all duration-300 transform hover:scale-105 ${
-                      selectedCategory === category
+                    className={`group px-6 py-3 rounded-2xl font-medium transition-all duration-300 transform hover:scale-105 ${selectedCategory === category
                         ? `bg-gradient-to-r ${config.gradient} text-white shadow-lg shadow-${config.color}-500/25`
                         : 'bg-white text-gray-700 border border-gray-200 hover:border-gray-300 hover:shadow-md'
-                    }`}
+                      }`}
                     onClick={() => setSelectedCategory(category)}
                   >
                     <span className='flex items-center gap-2'>
                       <span className='text-lg'>{config.icon}</span>
                       {t(`category.${category}`)}
                       <span
-                        className={`text-xs px-2 py-1 rounded-full ${
-                          selectedCategory === category
+                        className={`text-xs px-2 py-1 rounded-full ${selectedCategory === category
                             ? 'bg-white/20'
                             : 'bg-gray-100'
-                        }`}
+                          }`}
                       >
                         {count}
                       </span>
@@ -297,11 +293,10 @@ export default function FAQPage() {
                         </div>
                       </div>
                       <ChevronDown
-                        className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-400 transition-all duration-300 group-hover:text-gray-600 flex-shrink-0 ml-2 ${
-                          openItems.has(item.id)
+                        className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-400 transition-all duration-300 group-hover:text-gray-600 flex-shrink-0 ml-2 ${openItems.has(item.id)
                             ? 'rotate-180 text-blue-500'
                             : ''
-                        }`}
+                          }`}
                       />
                     </button>
                     {openItems.has(item.id) && (
