@@ -146,12 +146,12 @@ export default function CICard({ value, measurements }: CICardProps) {
         value={ciPercentage}
       />
 
-      {/* Scale labels */}
-      <div className='flex justify-between text-[9px] text-gray-300 dark:text-gray-600 px-1 font-mono'>
-        <span>65</span>
-        <span className='ml-8'>75</span>
-        <span className='mr-8'>85</span>
-        <span>105</span>
+      {/* Scale labels - positioned to match gauge segments */}
+      <div className='relative h-4 text-[9px] text-gray-300 dark:text-gray-600 font-mono mt-1'>
+        <span className='absolute left-0'>65</span>
+        <span className='absolute' style={{ left: '11.8%' }}>75</span>
+        <span className='absolute' style={{ left: '58.8%' }}>85</span>
+        <span className='absolute right-0'>105</span>
       </div>
 
       {/* Classification result badge */}

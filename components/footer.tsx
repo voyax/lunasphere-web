@@ -14,8 +14,8 @@ export const Footer = () => {
           <h2 className='text-xl font-bold text-gray-800 dark:text-gray-100'>
             {tSite('title')}
           </h2>
-          <p className='text-[10px] text-gray-300 dark:text-gray-600 font-bold tracking-[0.3em] uppercase mt-2'>
-            Love & Tech For Infants
+          <p className='text-xs text-gray-400 dark:text-gray-500 mt-2'>
+            让科技拥抱新生命
           </p>
         </div>
 

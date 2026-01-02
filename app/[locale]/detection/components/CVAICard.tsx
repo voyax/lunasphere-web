@@ -127,13 +127,13 @@ export default function CVAICard({ value, measurements }: CVAICardProps) {
         value={cvaiPercentage}
       />
 
-      {/* Scale labels */}
-      <div className='flex justify-between text-[9px] text-gray-300 dark:text-gray-600 px-1 font-mono'>
-        <span>0</span>
-        <span className='pl-4'>3.5</span>
-        <span className='pl-2'>6.25</span>
-        <span className='pl-2'>8.75</span>
-        <span>12+</span>
+      {/* Scale labels - positioned to match gauge segments */}
+      <div className='relative h-4 text-[9px] text-gray-300 dark:text-gray-600 font-mono mt-1'>
+        <span className='absolute left-0'>0</span>
+        <span className='absolute' style={{ left: '29.2%' }}>3.5</span>
+        <span className='absolute' style={{ left: '52.1%' }}>6.25</span>
+        <span className='absolute' style={{ left: '72.9%' }}>8.75</span>
+        <span className='absolute right-0'>12+</span>
       </div>
 
       {/* Classification result badge */}

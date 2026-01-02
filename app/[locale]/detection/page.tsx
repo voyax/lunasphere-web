@@ -57,14 +57,7 @@ export default function DetectionPage() {
 
       <div className='relative z-10'>
         {/* Hero Section */}
-        <section className='text-center px-6 pt-32 mb-16 relative animate-fade-in'>
-          {/* Badge */}
-          <div className='inline-flex items-center space-x-2 px-5 py-2 rounded-full bg-white/60 dark:bg-gray-800/60 border border-orange-100 dark:border-orange-900/30 shadow-sm mb-10 transform -rotate-1 hover:rotate-0 transition-transform cursor-default'>
-            <div className='w-2 h-2 rounded-full bg-orange-400 animate-pulse' />
-            <span className='text-[11px] font-bold tracking-[0.2em] text-orange-500 dark:text-orange-400 uppercase'>
-              让科技拥抱新生命
-            </span>
-          </div>
+        <section className='text-center px-6 pt-40 mb-16 relative animate-fade-in'>
 
           {/* Title */}
           <h1 className='text-5xl md:text-7xl font-bold text-gray-800 dark:text-gray-100 tracking-tighter leading-[0.9] mb-8'>

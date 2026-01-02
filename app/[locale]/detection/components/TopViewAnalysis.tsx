@@ -11,7 +11,6 @@ import {
   Sparkles,
   CheckCircle2,
   UploadCloud,
-  ScanLine,
   RotateCcw,
   RotateCw,
   Play,
@@ -497,17 +496,6 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                       </div>
                     </div>
 
-
-
-                    {/* Bottom Decoration - Scan Text (only show in upload state) */}
-                    <div className='absolute bottom-6 left-0 right-0 text-center pointer-events-none'>
-                      <div className='inline-flex items-center space-x-1.5 opacity-40'>
-                        <ScanLine className='w-3 h-3 text-gray-400' />
-                        <span className='text-[9px] font-bold text-gray-400 tracking-[0.3em] uppercase'>
-                          AI Geometry Align
-                        </span>
-                      </div>
-                    </div>
                   </>
                 )}
 

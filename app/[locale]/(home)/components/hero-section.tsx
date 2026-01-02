@@ -31,13 +31,6 @@ export async function HeroSection() {
           {/* Left content */}
           <HeroAnimations>
             <div className='space-y-10 text-center lg:text-left'>
-              {/* Badge */}
-              <div className='inline-flex items-center space-x-2 px-5 py-2 rounded-full bg-white/60 dark:bg-gray-800/60 border border-orange-100 dark:border-orange-900/30 shadow-sm transform -rotate-1 hover:rotate-0 transition-transform cursor-default'>
-                <div className='w-2 h-2 rounded-full bg-orange-400 animate-pulse' />
-                <span className='text-[11px] font-bold tracking-[0.2em] text-orange-500 dark:text-orange-400 uppercase'>
-                  让科技拥抱新生命
-                </span>
-              </div>
 
               {/* Main heading */}
               <div className='space-y-4'>
