@@ -48,4 +48,5 @@ export interface AnalysisResult {
     }
   }
   error?: string
+  rotation?: number
 }

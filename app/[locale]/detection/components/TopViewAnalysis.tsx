@@ -12,6 +12,11 @@ import {
   CheckCircle2,
   UploadCloud,
   ScanLine,
+  RotateCcw,
+  RotateCw,
+  Play,
+  Pencil,
+  Undo2,
 } from 'lucide-react'
 import NextImage from 'next/image'
 
@@ -184,7 +189,8 @@ const ImageVisualization = memo(
             if (analysisResult?.mask) {
               const canvas = createDownloadableCanvas(
                 analysisResult.mask,
-                analysisResult.measurements
+                analysisResult.measurements,
+                analysisResult.rotation // Pass rotation from analysis result
               )
               downloadCanvasAsPNG(canvas, 'head-analysis-result.png')
             }
@@ -220,6 +226,9 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
   )
   const [loadingText, setLoadingText] = useState(LOADING_TEXTS[0])
   const [isHovering, setIsHovering] = useState(false)
+
+  // Rotation state
+  const [rotation, setRotation] = useState(0)
 
   // Ref for file input
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -266,8 +275,9 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
           scale: 1,
         }
         setTopImage(imageData)
-        // Auto start analysis
-        startAnalysis(imageData)
+        setRotation(0) // Reset rotation
+        setAnalysisState(AnalysisState.READY_TO_ANALYZE) // Go to preview/edit state
+        // Do NOT auto restart analysis
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -303,6 +313,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
               mask: prediction.mask,
               originalImage: prediction.originalImage,
               measurements: prediction.measurements,
+              rotation: imageData.rotation, // Store the rotation used for analysis
             })
             setAnalysisState(AnalysisState.COMPLETED)
           } catch (error) {
@@ -329,9 +340,22 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
     [modelState, modelPath, confidenceThreshold, t]
   )
 
+  const handleStartAnalysis = useCallback(() => {
+    if (topImage) {
+      const dataWithRotation = { ...topImage, rotation }
+      startAnalysis(dataWithRotation)
+    }
+  }, [topImage, rotation, startAnalysis]) // Added handleStartAnalysis dependency
+
   const resetAnalysis = useCallback(() => {
     setTopImage(null)
+    setRotation(0)
     setAnalysisState(AnalysisState.WAITING_FOR_IMAGE)
+    setAnalysisResult(null)
+  }, [])
+
+  const enterEditMode = useCallback(() => {
+    setAnalysisState(AnalysisState.READY_TO_ANALYZE)
     setAnalysisResult(null)
   }, [])
 
@@ -386,6 +410,16 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
             <div className='absolute -inset-2 bg-orange-200/20 dark:bg-orange-900/10 blur-2xl rounded-[4rem]' />
 
             <div className='relative bg-white dark:bg-gray-800 p-6 rounded-[3.5rem] shadow-xl border border-white dark:border-gray-700'>
+              {/* Hidden file input - always in DOM for reuse */}
+              <input
+                ref={fileInputRef}
+                type='file'
+                onChange={handleFileChange}
+                className='hidden'
+                accept='image/*'
+                disabled={!isModelReady}
+              />
+
               {/* Main Display Area */}
               <div
                 className='relative aspect-[4/5] rounded-[2.8rem] overflow-hidden bg-[#faf8f6] dark:bg-gray-900 border border-orange-100 dark:border-orange-900/30 flex flex-col items-center justify-center transition-all duration-500 group-hover:border-orange-200 dark:group-hover:border-orange-800/50'
@@ -463,15 +497,94 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                       </div>
                     </div>
 
-                    <input
-                      ref={fileInputRef}
-                      type='file'
-                      onChange={handleFileChange}
-                      className='hidden'
-                      accept='image/*'
-                      disabled={!isModelReady}
-                    />
+
+
+                    {/* Bottom Decoration - Scan Text (only show in upload state) */}
+                    <div className='absolute bottom-6 left-0 right-0 text-center pointer-events-none'>
+                      <div className='inline-flex items-center space-x-1.5 opacity-40'>
+                        <ScanLine className='w-3 h-3 text-gray-400' />
+                        <span className='text-[9px] font-bold text-gray-400 tracking-[0.3em] uppercase'>
+                          AI Geometry Align
+                        </span>
+                      </div>
+                    </div>
                   </>
+                )}
+
+                {/* PREVIEW & ROTATE STATE */}
+                {analysisState === AnalysisState.READY_TO_ANALYZE && topImage && (
+                  <div className='relative w-full h-full flex flex-col'>
+                    {/* Image Preview Area */}
+                    <div className='relative flex-1 bg-black/5 dark:bg-black/20 overflow-hidden'>
+                      <NextImage
+                        fill
+                        src={topImage.url}
+                        alt='Preview'
+                        className='object-contain'
+                        style={{ transform: `rotate(${rotation}deg)` }}
+                      />
+
+                      {/* Grid Line Overlay for Alignment */}
+                      <div className='absolute inset-0 pointer-events-none opacity-30'>
+                        <div className='absolute left-1/2 top-0 bottom-0 w-px bg-orange-400/50 border-r border-dashed' />
+                        <div className='absolute top-1/2 left-0 right-0 h-px bg-orange-400/50 border-b border-dashed' />
+                      </div>
+                    </div>
+
+                    {/* Action Bar */}
+                    <div className='p-5 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border-t border-orange-100 dark:border-orange-900/30'>
+                      <div className='flex items-center justify-between mb-4'>
+                        <button
+                          onClick={() => setRotation(r => Math.max(-180, r - 90))}
+                          className='p-2 rounded-xl hover:bg-orange-50 dark:hover:bg-gray-700 text-gray-500 hover:text-orange-500 transition-colors'
+                          aria-label='Rotate Left'
+                        >
+                          <RotateCcw className='w-5 h-5' />
+                        </button>
+
+                        <div className='flex-1 mx-4'>
+                          <input
+                            type="range"
+                            min="-180"
+                            max="180"
+                            step="1"
+                            value={rotation}
+                            onChange={(e) => setRotation(parseInt(e.target.value))}
+                            className="w-full h-2 bg-gradient-to-r from-orange-100 via-orange-200 to-orange-100 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-br [&::-webkit-slider-thumb]:from-orange-400 [&::-webkit-slider-thumb]:to-rose-400 [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-grab [&::-webkit-slider-thumb]:active:cursor-grabbing [&::-webkit-slider-thumb]:transition-transform [&::-webkit-slider-thumb]:hover:scale-110"
+                          />
+                          <div className='flex justify-between items-center mt-2 px-1'>
+                            <span className='text-[9px] text-gray-300 dark:text-gray-600'>-180°</span>
+                            <span className='text-xs text-orange-500 font-bold font-mono'>{rotation}°</span>
+                            <span className='text-[9px] text-gray-300 dark:text-gray-600'>180°</span>
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => setRotation(r => Math.min(180, r + 90))}
+                          className='p-2 rounded-xl hover:bg-orange-50 dark:hover:bg-gray-700 text-gray-500 hover:text-orange-500 transition-colors'
+                          aria-label='Rotate Right'
+                        >
+                          <RotateCw className='w-5 h-5' />
+                        </button>
+                      </div>
+
+                      <div className='flex space-x-3'>
+                        <button
+                          onClick={() => fileInputRef.current?.click()}
+                          className='flex-1 py-3 rounded-2xl border border-gray-200 dark:border-gray-700 text-gray-500 text-xs font-bold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors'
+                        >
+                          重选图片
+                        </button>
+                        <button
+                          onClick={handleStartAnalysis}
+                          className='flex-[2] py-3 rounded-2xl bg-gradient-to-r from-orange-400 to-rose-400 text-white text-xs font-bold shadow-lg shadow-orange-200/50 dark:shadow-none hover:opacity-90 transition-opacity flex items-center justify-center space-x-2'
+                        >
+                          <Play className='w-3.5 h-3.5 fill-current' />
+                          <span>开始智能分析</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 )}
 
                 {/* ANALYZING or RESULT STATE */}
@@ -488,6 +601,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                             src={topImage.url}
                             alt='Analyzing'
                             className='w-full h-full object-cover transition-opacity duration-700 opacity-60'
+                            style={{ transform: `rotate(${rotation}deg)` }}
                           />
                           <div className='absolute inset-0 bg-white/20 dark:bg-black/20 backdrop-blur-[1px] flex flex-col items-center justify-center'>
                             <div className='scan-wave' />
@@ -522,45 +636,52 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                               <p className='text-sm text-red-600 dark:text-red-400 font-medium'>
                                 {analysisResult.error}
                               </p>
+
+                              <button
+                                onClick={enterEditMode}
+                                className='mt-4 text-xs font-bold text-red-500 hover:text-red-700 underline'
+                              >
+                                返回调整图片
+                              </button>
                             </div>
                           </div>
                         )}
                     </div>
                   )}
               </div>
-
-              {/* Bottom Decoration - Scan Text (only show in upload state) */}
-              {analysisState === AnalysisState.WAITING_FOR_IMAGE && (
-                <div className='absolute bottom-6 left-0 right-0 text-center pointer-events-none'>
-                  <div className='inline-flex items-center space-x-1.5 opacity-40'>
-                    <ScanLine className='w-3 h-3 text-gray-400' />
-                    <span className='text-[9px] font-bold text-gray-400 tracking-[0.3em] uppercase'>
-                      AI Geometry Align
-                    </span>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
 
-          {/* Feature badges and reset button */}
+          {/* Feature badges / Action buttons */}
           <div className='mt-10 flex flex-wrap justify-center gap-6'>
-            <div className='flex items-center space-x-2 text-gray-400 dark:text-gray-500'>
-              <Heart className='w-4 h-4 text-rose-300' />
-              <span className='text-xs font-medium'>全本地隐私处理</span>
-            </div>
-            <div className='flex items-center space-x-2 text-gray-400 dark:text-gray-500'>
-              <Sparkles className='w-4 h-4 text-orange-300' />
-              <span className='text-xs font-medium'>AI 几何对准技术</span>
-            </div>
-            {analysisState === AnalysisState.COMPLETED && (
-              <button
-                onClick={resetAnalysis}
-                className='flex items-center space-x-2 text-xs font-bold text-orange-500 hover:text-orange-600 transition-all'
-              >
-                <RefreshCw className='w-3 h-3' />
-                <span>重新记录</span>
-              </button>
+            {analysisState === AnalysisState.COMPLETED ? (
+              <>
+                <button
+                  onClick={enterEditMode}
+                  className='flex items-center space-x-2 text-xs font-bold text-gray-500 hover:text-orange-500 transition-all bg-white dark:bg-gray-800 px-4 py-2 rounded-full shadow-sm border border-gray-100 dark:border-gray-700'
+                >
+                  <Undo2 className='w-3.5 h-3.5' />
+                  <span>调整图片</span>
+                </button>
+                <button
+                  onClick={resetAnalysis}
+                  className='flex items-center space-x-2 text-xs font-bold text-orange-500 hover:text-orange-600 transition-all bg-white dark:bg-gray-800 px-4 py-2 rounded-full shadow-sm border border-gray-100 dark:border-gray-700'
+                >
+                  <RefreshCw className='w-3.5 h-3.5' />
+                  <span>重新开始</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <div className='flex items-center space-x-2 text-gray-400 dark:text-gray-500'>
+                  <Heart className='w-4 h-4 text-rose-300' />
+                  <span className='text-xs font-medium'>全本地隐私处理</span>
+                </div>
+                <div className='flex items-center space-x-2 text-gray-400 dark:text-gray-500'>
+                  <Sparkles className='w-4 h-4 text-orange-300' />
+                  <span className='text-xs font-medium'>AI 几何对准技术</span>
+                </div>
+              </>
             )}
           </div>
         </div>

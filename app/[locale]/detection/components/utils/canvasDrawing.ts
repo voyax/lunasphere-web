@@ -290,7 +290,8 @@ export function drawMeasurementAnnotations(
  */
 export function createDownloadableCanvas(
   mask: ImageData,
-  measurements?: Measurements
+  measurements?: Measurements,
+  rotation?: number
 ): HTMLCanvasElement {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
