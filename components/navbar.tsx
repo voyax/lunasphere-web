@@ -31,8 +31,8 @@ export function Navbar() {
       href: '/' as const,
     },
     {
-      label: t('detection'),
-      href: '/detection' as const,
+      label: t('learn'),
+      href: '/learn' as const,
     },
     {
       label: t('profileMatch'),
@@ -80,8 +80,8 @@ export function Navbar() {
               <Link
                 key={item.href}
                 className={`px-4 py-2 rounded-2xl text-sm font-bold transition-all duration-300 ${isActive(item.href)
-                    ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 shadow-inner'
-                    : 'text-gray-500 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 hover:bg-white/50 dark:hover:bg-gray-800/50'
+                  ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 shadow-inner'
+                  : 'text-gray-500 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 hover:bg-white/50 dark:hover:bg-gray-800/50'
                   }`}
                 href={item.href}
               >
@@ -138,8 +138,8 @@ export function Navbar() {
                 <Link
                   key={`${item.href}-${index}`}
                   className={`block px-6 py-3 text-sm font-medium transition-colors ${isActive(item.href)
-                      ? 'bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+                    ? 'bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400'
+                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
                     }`}
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}

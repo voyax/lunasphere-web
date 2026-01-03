@@ -10,8 +10,41 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-sans)"],
-        mono: ["var(--font-mono)"],
+        // Directly use system font stack instead of CSS variables to avoid loading issues
+        sans: [
+          '"Inter"',
+          '"SF Pro Display"',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif',
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ],
+        mono: [
+          '"Fira Code"',
+          'ui-monospace',
+          'SFMono-Regular',
+          'Menlo',
+          'Monaco',
+          'Consolas',
+          '"Liberation Mono"',
+          '"Courier New"',
+          'monospace',
+        ],
+        // Define a nice system serif stack for headers that strictly request serif
+        serif: [
+          '"Charter"',
+          '"Bitstream Charter"',
+          '"Sitka Text"',
+          '"Cambria"',
+          '"Georgia"',
+          'serif'
+        ]
       },
       colors: {
         'baby-pink': {

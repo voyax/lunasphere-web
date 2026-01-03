@@ -26,11 +26,16 @@
     "profileMatch": {
       "title": "Profile Match",
       "description": "Upload baby profile photos for precise comparison with standard contours"
+    },
+    "learn": {
+      "title": "Parent Academy",
+      "description": "Scientific understanding of infant head shape development. Professional guidance for new parents."
     }
   },
   "nav": {
     "home": "Home",
     "detection": "Head Shape Detection",
+    "learn": "Learn",
     "profileMatch": "Profile Match",
     "faq": "FAQ",
     "language": "Language",
@@ -660,5 +665,202 @@
       "description": "Please try other keywords or select a different category"
     },
     "medicalDisclaimerTitle": "Medical Disclaimer"
+  },
+  "learn": {
+    "hero": {
+      "title": "Decoding Baby's\nHead Shape Journey",
+      "subtitle": "Replace anxiety with scientific wisdom. The best care begins with understanding.",
+      "start_course": "Start Course",
+      "trusted_by": "Trusted by 10,000+ Families",
+      "ageQuestion": "How old is your baby?",
+      "ageSelected": "Showing content relevant for {age} months",
+      "ageGroups": {
+        "0to3": "0-3 mo",
+        "3to6": "3-6 mo",
+        "6to12": "6-12 mo",
+        "12plus": "12+ mo"
+      }
+    },
+    "chapter": {
+      "intro": "Intro",
+      "development": "Growth",
+      "skull": "Anatomy",
+      "types": "Types",
+      "care": "Actions"
+    },
+    "nav": {
+      "development": "Development",
+      "care": "Care Guide",
+      "consult": "When to Consult"
+    },
+    "timeline": {
+      "title": "Head Shape Development Journey",
+      "subtitle": "Click the timeline to learn about each stage's characteristics and care tips",
+      "months": "mo",
+      "highlightsLabel": "Key Developments",
+      "tipsLabel": "Care Tips",
+      "stage1": {
+        "title": "Newborn Stage (0-3 months)",
+        "highlights": "Skull is very soft with open sutures. Birth-related head molding typically resolves within days. The posterior fontanelle begins to close during this stage.",
+        "tips": "This is the key time to establish good habits. Start tummy time within days of birth—just 5-10 minutes daily is enough. Alternate your baby's head position during sleep."
+      },
+      "stage2": {
+        "title": "Golden Window (3-6 months)",
+        "highlights": "Posterior fontanelle gradually closes. Baby starts lifting their head as neck muscles strengthen. This is the prime window for head shape correction—most positional issues can significantly improve.",
+        "tips": "Increase tummy time to 30+ minutes daily. Encourage your baby to look toward the less-preferred side. Rotate the crib regularly. Consult a doctor if asymmetry is pronounced."
+      },
+      "stage3": {
+        "title": "Rapid Growth (6-12 months)",
+        "highlights": "Skull gradually hardens but still has some plasticity. Baby starts sitting and crawling, reducing time on their back. Head shape issues often improve naturally.",
+        "tips": "Ensure plenty of active play time. Avoid prolonged time in car seats or swings. If no improvement by 6 months, consider consulting a specialist."
+      },
+      "stage4": {
+        "title": "Shaping Complete (12-18 months)",
+        "highlights": "Anterior fontanelle closes during this stage. Skull shape becomes largely fixed. Most mild asymmetries become less noticeable as hair grows.",
+        "tips": "Maintain healthy activity habits. If significant asymmetry persists, consult a doctor about whether further evaluation or intervention is needed."
+      }
+    },
+    "care": {
+      "title": "Daily Care Guide",
+      "subtitle": "Simple, practical care methods to help your baby thrive",
+      "tummyTime": {
+        "title": "Tummy Time",
+        "subtitle": "Prevents flat spots, strengthens neck",
+        "imageCaption": "Baby during tummy time",
+        "tip1": "Start within days of birth, building up gradually",
+        "tip2": "Aim for 30+ minutes daily, split into short sessions",
+        "tip3": "Use toys or mirrors to engage your baby",
+        "tip4": "Always supervise—safety first!",
+        "proTip": "Talk and sing to your baby during tummy time to make it fun!"
+      },
+      "sleep": {
+        "title": "Sleep Positioning",
+        "subtitle": "Safe sleep, balanced head shape",
+        "imageCaption": "Alternating sleep positions",
+        "tip1": "Back to sleep is safest (SIDS prevention)",
+        "tip2": "Alternate head direction nightly (left/right)",
+        "tip3": "Rotate crib orientation periodically",
+        "tip4": "Limit time in car seats and bouncers",
+        "warning": "Avoid shaping pillows! Most pediatric associations advise against pillows for infants due to suffocation risk."
+      }
+    },
+    "consult": {
+      "title": "When to See a Doctor",
+      "subtitle": "Know when to monitor, consult, or seek urgent care",
+      "normalSigns": {
+        "title": "Normal Signs",
+        "action": "Continue monitoring",
+        "sign1": "Mild asymmetry improving with increased activity",
+        "sign2": "Birth molding that resolves within days",
+        "sign3": "Slight unevenness hidden by hair",
+        "sign4": "Baby developing and moving normally"
+      },
+      "warningSigns": {
+        "title": "Worth Consulting",
+        "action": "Schedule a pediatrician visit",
+        "sign1": "No improvement in head shape by 4-6 months",
+        "sign2": "Noticeable ear misalignment",
+        "sign3": "Baby consistently favors turning to one side",
+        "sign4": "Visible facial asymmetry developing"
+      },
+      "urgentSigns": {
+        "title": "Seek Care Promptly",
+        "action": "Schedule a specialist soon",
+        "sign1": "Bulging or sunken fontanelle",
+        "sign2": "Raised ridge palpable on skull",
+        "sign3": "Abnormal head growth (too fast or stalled)"
+      },
+      "ctaText": "Unsure if your baby's head shape is normal? Try our AI analysis",
+      "ctaButton": "Start Analysis",
+      "disclaimer": "This content is for informational purposes only and does not replace professional medical advice. Consult your pediatrician for any health concerns."
+    },
+    "skull": {
+      "title": "Understanding Baby's Skull",
+      "subtitle": "The skull's structure explains why head shape can be adjusted and when is the best window",
+      "imageAlt": "Infant skull development diagram",
+      "funFact": "At birth, baby's brain is only 25% of adult size—by age 1, it grows to 75%! That's why the skull needs to stay soft and moldable.",
+      "structure": {
+        "title": "Skull Structure",
+        "desc": "A baby's skull is made of multiple bone plates connected by fibrous tissue called \"sutures\". This design allows the skull to expand as the brain rapidly develops."
+      },
+      "fontanelles": {
+        "title": "Fontanelles (Soft Spots)",
+        "desc": "Fontanelles are soft areas where sutures meet. The posterior fontanelle usually closes around 2 months, while the anterior fontanelle (the larger soft spot on top) closes between 12-18 months. They're important health indicators.",
+        "posterior": "Posterior: ~2 months",
+        "anterior": "Anterior: 12-18 months"
+      },
+      "growth": {
+        "title": "Brain Growth",
+        "desc": "The brain grows fastest during the first year, driving rapid head circumference expansion. The skull needs to remain pliable to accommodate this growth."
+      },
+      "plasticity": {
+        "title": "Head Shape Plasticity",
+        "desc": "Since the skull isn't fully ossified, external pressure (like sleep position) can affect head shape. This is both why positional issues occur and why we can improve head shape through positioning."
+      },
+      "recovery": {
+        "title": "Birth Recovery",
+        "desc": "During delivery, baby's skull molds to pass through the birth canal. This molding typically resolves within 3-5 days—no need to worry."
+      }
+    },
+    "headTypes": {
+      "title": "Types of Head Shapes",
+      "subtitle": "Learn to identify different head shape characteristics to better assess your baby",
+      "viewDiagram": "Head shape diagram",
+      "characteristics": "Key Characteristics",
+      "views": {
+        "top": "Top View",
+        "front": "Front View",
+        "profile": "Side View"
+      },
+      "labels": {
+        "description": "Description",
+        "causes": "Causes",
+        "correction": "How to Address"
+      },
+      "severity": {
+        "normal": "Normal",
+        "mild": "Monitor",
+        "warning": "Evaluate"
+      },
+      "normal": {
+        "name": "Normal Head Shape",
+        "desc": "From above, the head appears as a symmetrical oval with balanced proportions front-to-back and side-to-side. Most babies fall within normal range.",
+        "feature": "Symmetrical oval, balanced proportions",
+        "char1": "Symmetrical oval shape from above",
+        "char2": "Ears are evenly positioned",
+        "char3": "Forehead and occiput evenly rounded"
+      },
+      "plagiocephaly": {
+        "name": "Plagiocephaly",
+        "desc": "Flattening on one side of the back of the head, creating a parallelogram shape from above. Often accompanied by the ear on the flat side shifting forward. The most common positional head shape issue.",
+        "feature": "One-sided flattening, parallelogram shape",
+        "char1": "One side of the back of head is flatter",
+        "char2": "Ear on flat side may shift forward",
+        "char3": "Asymmetric shape when viewed from above"
+      },
+      "brachycephaly": {
+        "name": "Brachycephaly",
+        "desc": "Uniform flattening across the entire back of the head, making the head appear wide and short. Common in babies who spend a lot of time on their backs. Improves with tummy time and positioning.",
+        "feature": "Flat back, wide-short appearance",
+        "char1": "Entire back of head is flat",
+        "char2": "Head is wider than it is long",
+        "char3": "Flat profile when viewed from side"
+      },
+      "scaphocephaly": {
+        "name": "Scaphocephaly",
+        "desc": "Long and narrow head shape, with length significantly greater than width. Common in preemies or side-sleepers. Needs to be distinguished from craniosynostosis.",
+        "feature": "Long, narrow head shape",
+        "char1": "Head appears elongated",
+        "char2": "Narrow when viewed from above",
+        "char3": "Forehead or occiput may protrude"
+      },
+      "craniosynostosis": {
+        "title": "⚠️ Craniosynostosis",
+        "desc": "A rare condition where skull sutures close prematurely, causing abnormal head shape. Unlike positional issues, craniosynostosis requires medical evaluation and potentially surgical intervention.",
+        "sign1": "Raised ridge along suture",
+        "sign2": "Fontanelle closes too early",
+        "sign3": "Abnormal head growth pattern"
+      }
+    }
   }
 }
