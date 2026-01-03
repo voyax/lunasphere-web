@@ -503,7 +503,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                 {analysisState === AnalysisState.READY_TO_ANALYZE && topImage && (
                   <div className='relative w-full h-full flex flex-col'>
                     {/* Image Preview Area */}
-                    <div className='relative flex-1 bg-black/5 dark:bg-black/20 overflow-hidden'>
+                    <div className='relative flex-1 bg-white/95 dark:bg-gray-800/95 overflow-hidden'>
                       <NextImage
                         fill
                         src={topImage.url}
@@ -520,7 +520,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                     </div>
 
                     {/* Action Bar */}
-                    <div className='p-5 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border-t border-orange-100 dark:border-orange-900/30'>
+                    <div className='p-5 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md'>
                       <div className='flex items-center justify-between mb-4'>
                         <button
                           onClick={() => setRotation(r => Math.max(-180, r - 90))}
