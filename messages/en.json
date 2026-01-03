@@ -119,6 +119,7 @@
     "medical_warning_title": "Pathological Head Shapes Require Medical Attention",
     "medical_warning_content": "Pathological head shapes (such as scaphocephaly) cannot be treated through sleep position adjustments or corrective helmets. These conditions require professional medical diagnosis and surgical treatment. If severe head shape abnormalities, abnormal head circumference growth, or other symptoms are observed, immediate consultation with a pediatrician or cranial specialist for professional evaluation is essential.",
     "severity": {
+      "normal": "Normal",
       "common": "Common",
       "moderate": "Moderate",
       "rare": "Rare"
@@ -742,6 +743,27 @@
         "tip3": "Rotate crib orientation periodically",
         "tip4": "Limit time in car seats and bouncers",
         "warning": "Avoid shaping pillows! Most pediatric associations advise against pillows for infants due to suffocation risk."
+      },
+      "feeding": {
+        "title": "Varied Feeding Positions",
+        "subtitle": "Switch Sides for Balanced Growth",
+        "tip1": "Use multiple positions like cradle, football hold",
+        "tip2": "Alternate arms with every feeding session",
+        "tip3": "Reduces pressure on one side & aids visual development"
+      },
+      "environment": {
+        "title": "Environmental Cues",
+        "subtitle": "Use Curiosity to Turn Heads",
+        "tip1": "Regularly move crib toys or mobiles",
+        "tip2": "Alternate head-to-foot sleeping direction every few days",
+        "tip3": "Use light and sound to encourage active head turning"
+      },
+      "mattress": {
+        "title": "Mattress Selection",
+        "subtitle": "Firm Support, Even Pressure",
+        "tip1": "Choose a firm mattress to prevent sinking",
+        "tip2": "Soft surfaces cause uneven pressure and flat spots",
+        "tip3": "Firm support is crucial for spinal development"
       }
     },
     "consult": {
