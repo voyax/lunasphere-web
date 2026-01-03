@@ -70,7 +70,7 @@ export function DevelopmentTimeline() {
             </div>
 
             {/* Main Container */}
-            <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-start">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-12 xl:gap-24 items-start">
 
                 {/* Left: Navigation */}
                 <div className="w-full lg:w-1/3 relative">

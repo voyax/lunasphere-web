@@ -25,7 +25,7 @@ export function CareGuide() {
         <div className="w-full space-y-24">
 
             {/* 1. Tummy Time Section */}
-            <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-12 xl:gap-24 items-center">
                 <div className="w-full lg:w-1/2 order-2 lg:order-1">
                     {/* Cute Line Art Container */}
                     <div className="relative aspect-[4/3] flex items-center justify-center p-4">
@@ -69,7 +69,7 @@ export function CareGuide() {
             </div>
 
             {/* 2. Sleep Positioning Section */}
-            <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-12 xl:gap-24 items-center">
                 <div className="w-full lg:w-1/2 space-y-8">
                     <div className="space-y-3">
                         <h2 className="text-3xl md:text-5xl font-serif font-medium text-gray-900 dark:text-gray-100">

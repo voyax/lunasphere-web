@@ -27,7 +27,7 @@ export function SkullKnowledgeSection() {
 
     return (
         <div className="w-full">
-            <div className="flex flex-col md:flex-row gap-12 lg:gap-24 items-center">
+            <div className="flex flex-col md:flex-row gap-12 lg:gap-12 xl:gap-24 items-center">
 
                 {/* Left: Interactive Image */}
                 <div className="w-full md:w-1/2 relative bg-white dark:bg-gray-800 rounded-[3rem] p-8 lg:p-12 shadow-xl shadow-gray-200/50 dark:shadow-none">

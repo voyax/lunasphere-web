@@ -11,7 +11,7 @@ import { motion } from 'framer-motion'
 // 统一的章节容器
 function SectionContainer({ id, children, className = '' }: { id: string, children: React.ReactNode, className?: string }) {
     return (
-        <section id={id} className={`py-24 md:py-32 px-4 md:px-8 max-w-7xl mx-auto ${className}`}>
+        <section id={id} className={`py-24 md:py-32 px-6 md:px-12 max-w-7xl mx-auto ${className}`}>
             {children}
         </section>
     )

@@ -153,9 +153,6 @@ export function CourseHero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }} // 缩短动画时间感觉更跟手
                 >
-                    <span className="inline-block px-4 py-1.5 rounded-full border border-orange-200 dark:border-orange-800 bg-orange-50/80 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 text-sm font-medium tracking-wide mb-6">
-                        LUNASPHERE PARENT ACADEMY
-                    </span>
                     <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-medium text-gray-900 dark:text-gray-50 tracking-tight leading-[1.1] mb-6">
                         {t('title')}
                     </h1>
