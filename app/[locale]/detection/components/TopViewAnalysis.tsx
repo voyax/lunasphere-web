@@ -91,7 +91,7 @@ const GuidancePanel = memo(({ t }: GuidancePanelProps) => (
             2
           </div>
           <span className='mt-0.5'>
-            轻轻拨开头发，尽量露出头型的真实轮廓。
+            尽量露出真实头型轮廓，头发较多时可用温水轻轻润湿服帖。
           </span>
         </li>
         <li className='flex items-start space-x-3 text-xs text-gray-500 dark:text-gray-400 font-medium'>
@@ -99,7 +99,7 @@ const GuidancePanel = memo(({ t }: GuidancePanelProps) => (
             3
           </div>
           <span className='mt-0.5'>
-            确保鼻子刚好在视野上方露出，这是判断头型是否偏转的关键参照。
+            让鼻尖微微入镜即可，不必露出过多面部。鼻尖是定位头颅中轴线的关键参照。
           </span>
         </li>
       </ul>
