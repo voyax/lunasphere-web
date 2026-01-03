@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 export const Footer = () => {
   const currentYear = new Date().getFullYear()
   const tSite = useTranslations('site')
+  const tFooter = useTranslations('footer')
 
   return (
     <footer className='border-t border-orange-100/50 dark:border-gray-800/50 pt-20 pb-12'>
@@ -15,7 +16,7 @@ export const Footer = () => {
             {tSite('title')}
           </h2>
           <p className='text-xs text-gray-400 dark:text-gray-500 mt-2'>
-            让科技拥抱新生命
+            {tFooter('slogan')}
           </p>
         </div>
 
@@ -27,7 +28,7 @@ export const Footer = () => {
               className='text-gray-400 dark:text-gray-500 hover:text-orange-400 dark:hover:text-orange-400 transition-colors cursor-pointer'
               href='/faq'
             >
-              隐私安全
+              {tFooter('privacy')}
             </a>
             <a
               className='text-gray-400 dark:text-gray-500 hover:text-orange-400 dark:hover:text-orange-400 transition-colors cursor-pointer'
@@ -35,19 +36,19 @@ export const Footer = () => {
               rel='noopener noreferrer'
               target='_blank'
             >
-              科研合作
+              {tFooter('research')}
             </a>
             <a
               className='text-gray-400 dark:text-gray-500 hover:text-orange-400 dark:hover:text-orange-400 transition-colors cursor-pointer'
               href='mailto:hi@melolib.com'
             >
-              联系我们
+              {tFooter('contact')}
             </a>
           </div>
 
           {/* Copyright */}
           <p className='text-[9px] text-gray-300 dark:text-gray-600 font-medium'>
-            © {currentYear} LUNASPHERE STUDIO • 守护每一份纯净笑容
+            © {currentYear} LUNASPHERE STUDIO • {tFooter('copyright')}
           </p>
         </div>
       </div>

@@ -3,6 +3,13 @@
     "title": "LunaSphere",
     "description": "Scientific understanding and rational care for infant head shape development"
   },
+  "footer": {
+    "slogan": "Technology Embracing New Life",
+    "privacy": "Privacy & Security",
+    "research": "Research Collaboration",
+    "contact": "Contact Us",
+    "copyright": "Protecting Every Precious Smile"
+  },
   "page": {
     "home": {
       "title": "Infant Head Shape Development Guide",
@@ -157,8 +164,8 @@
     }
   },
   "sleep": {
-    "title": "Helping Your Baby Develop a Beautiful Head Shape",
-    "subtitle": "With careful observation and gradual implementation of these guidelines, your baby can naturally develop a beautifully rounded head shape",
+    "title": "Sleep & Tummy Time Guide",
+    "subtitle": "Scientifically guiding baby's posture to prevent and improve positional head shape issues",
     "principle1": {
       "name": "Safety First, Scientific Care",
       "desc": "Always follow safe sleep guidelines. Back sleeping significantly reduces SIDS risk. Never place babies on their stomach to sleep - safety must always come first."
@@ -249,8 +256,56 @@
       "description": "Professional head shape assessment system based on advanced deep learning algorithms. All data processing is completed locally on your device without uploading any photos, ensuring your and your baby's privacy and security.",
       "features": {
         "ai": "Deep Learning Algorithm",
-        "privacy": "Local Processing, Privacy Secure"
+        "privacy": "Local Processing, Privacy First"
       }
+    },
+    "page": {
+      "title1": "A Perfect Start,",
+      "title2": "Shaped with Love",
+      "subtitle": "Powered by deep learning segmentation and 100% on-device processing, we deliver the most private and caring head shape analysis for your little one.",
+      "subtitle2": "Every moment matters. We're here for the journey.",
+      "featureSection": {
+        "title": "How We Help",
+        "card1": {
+          "title": "Beyond the Numbers",
+          "desc": "We translate medical metrics into clear, actionable guidance—no more confusion over complex indexes."
+        },
+        "card2": {
+          "title": "Absolute Privacy",
+          "desc": "Photos never leave your browser and are deleted immediately after analysis. Every image of your baby is treated with the utmost care."
+        },
+        "card3": {
+          "title": "Science-Backed Support",
+          "desc": "Evidence-based guidance on tummy time and sleep positioning, drawn from pediatric clinical consensus.",
+          "link": "View References"
+        }
+      }
+    },
+    "guidance": {
+      "title1": "Every Photo",
+      "title2": "Is a Moment of Love",
+      "tipTitle": "Tips for the Perfect Shot",
+      "tipDesc": "As shown in the guide, aim to shoot directly above your baby's head. Best results come when baby is peacefully asleep—no wiggly heads!",
+      "step1": "Find good lighting to avoid harsh shadows on the head.",
+      "step2": "Reveal the true head shape. For thick hair, dampen it gently with warm water.",
+      "step3": "Include just the tip of the nose in the frame. The nose tip anchors the cranial midline."
+    },
+    "loading": {
+      "text1": "Gently examining the photo...",
+      "text2": "Tracing your baby's head contour...",
+      "text3": "Measuring every precious curve...",
+      "text4": "Preparing your personalized insights..."
+    },
+    "actions": {
+      "reselectImage": "Choose Different",
+      "startAnalysis": "Start Analysis",
+      "adjustImage": "Adjust Image",
+      "restart": "Start Over",
+      "backToAdjust": "Back to Adjust"
+    },
+    "features": {
+      "localPrivacy": "100% Local & Private",
+      "aiGeometry": "AI Geometry Alignment"
     },
     "topView": {
       "features": {
@@ -262,7 +317,7 @@
         "medicalDesc": "Based on clinical measurement standards, providing reliable results"
       },
       "title": "Baby Head Shape Measurement",
-      "uploadTitle": "Baby Head Shape Top View",
+      "uploadTitle": "Top-View Head Photo",
       "subtitle": "Top View Upload",
       "description": "Upload your baby's top view photo for professional AI analysis",
       "tooltips": {
@@ -284,15 +339,16 @@
       },
       "annotations": {
         "forehead": "Forehead",
-        "noseVisible": "Just showing nose",
-        "occiput": "Occiput"
+        "noseVisible": "Nose Tip Visible",
+        "occiput": "Occipital Region"
       },
       "upload": {
         "clickOrDrag": "Click or drag image here",
         "supportFormat": "Supports JPG, PNG formats, max 10MB",
         "rotation": "Rotation",
         "rotationTip": "💡 Rotate image so forehead points upward",
-        "modelLoading": "Model loading..."
+        "modelLoading": "Model loading...",
+        "autoPrivacy": "Auto-Detect · Privacy First"
       },
       "exampleImageAlt": "Correct shooting example image",
       "originalImageAlt": "Original uploaded image",
@@ -390,6 +446,14 @@
         "title": "Cranial Vault Asymmetry Index (CVAI)",
         "diagonal1": "Diagonal 1",
         "diagonal2": "Diagonal 2"
+      },
+      "gauge": {
+        "normal": "Normal",
+        "mild": "Mild",
+        "moderate": "Moderate",
+        "severe": "Severe",
+        "longHead": "Long",
+        "flatHead": "Flat"
       },
       "status": {
         "healthy": "Healthy",

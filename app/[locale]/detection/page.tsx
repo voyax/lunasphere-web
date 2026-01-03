@@ -61,18 +61,18 @@ export default function DetectionPage() {
 
           {/* Title */}
           <h1 className='text-5xl md:text-7xl font-bold text-gray-800 dark:text-gray-100 tracking-tighter leading-[0.9] mb-8'>
-            从头开始，
+            {t('page.title1')}
             <br />
             <span className='text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-400'>
-              予你圆满
+              {t('page.title2')}
             </span>
           </h1>
 
           {/* Subtitle */}
           <p className='max-w-md mx-auto text-gray-400 dark:text-gray-500 text-sm md:text-base leading-relaxed font-medium'>
-            基于深度几何算法与纯本地计算，我们为您提供最私密、最温暖的婴儿头型分析服务。
+            {t('page.subtitle')}
             <br />
-            守护宝宝的每一个瞬间，我们与您同行。
+            {t('page.subtitle2')}
           </p>
         </section>
 
@@ -185,7 +185,7 @@ export default function DetectionPage() {
         <div className='mt-32 max-w-5xl mx-auto px-6'>
           <div className='text-center mb-16'>
             <h3 className='text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4 tracking-tight'>
-              我们想为您分担的
+              {t('page.featureSection.title')}
             </h3>
             <div className='w-12 h-1.5 bg-orange-200 dark:bg-orange-700 mx-auto rounded-full' />
           </div>
@@ -193,34 +193,34 @@ export default function DetectionPage() {
           <div className='grid grid-cols-1 md:grid-cols-3 gap-10'>
             <div className='p-10 rounded-[2.8rem] bg-orange-50 dark:bg-orange-950/30 border border-white dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow'>
               <h4 className='text-lg font-bold text-gray-800 dark:text-gray-100 mb-4'>
-                不仅是数据
+                {t('page.featureSection.card1.title')}
               </h4>
               <p className='text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium'>
-                我们将医学指标转化为通俗易懂的家长建议，让您不再为各种指数感到迷茫。
+                {t('page.featureSection.card1.desc')}
               </p>
             </div>
 
             <div className='p-10 rounded-[2.8rem] bg-rose-50 dark:bg-rose-950/30 border border-white dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow'>
               <h4 className='text-lg font-bold text-gray-800 dark:text-gray-100 mb-4'>
-                绝对的尊重
+                {t('page.featureSection.card2.title')}
               </h4>
               <p className='text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium'>
-                照片仅在您的浏览器中存在，解析完成即销毁。宝宝的每一张照片，我们都倍加珍惜。
+                {t('page.featureSection.card2.desc')}
               </p>
             </div>
 
             <div className='p-10 rounded-[2.8rem] bg-purple-50 dark:bg-purple-950/30 border border-white dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow group'>
               <h4 className='text-lg font-bold text-gray-800 dark:text-gray-100 mb-4'>
-                科学的陪伴
+                {t('page.featureSection.card3.title')}
               </h4>
               <p className='text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium mb-4'>
-                基于儿科临床共识，提供关于 Tummy Time 和睡姿引导的专业知识库。
+                {t('page.featureSection.card3.desc')}
               </p>
               <a
                 className='inline-flex items-center text-[10px] font-bold text-purple-400 dark:text-purple-300 hover:text-purple-600 dark:hover:text-purple-200 transition-colors'
                 href='/faq#references'
               >
-                查看参考文献
+                {t('page.featureSection.card3.link')}
                 <span className='ml-1 opacity-0 group-hover:opacity-100 transition-opacity'>
                   →
                 </span>

@@ -59,51 +59,55 @@ function getSeverityColors(severity: string) {
   }
 }
 
-// CI gauge segments configuration
-const CI_GAUGE_SEGMENTS = [
-  {
-    label: '长头',
-    widthFlex: 2,
-    colorClass: 'bg-red-300 dark:bg-red-500/70',
-    textColorClass: 'text-red-400 dark:text-red-300',
-  },
-  {
-    label: '中度',
-    widthFlex: 2,
-    colorClass: 'bg-orange-300 dark:bg-orange-500/70',
-    textColorClass: 'text-orange-400 dark:text-orange-300',
-  },
-  {
-    label: '轻度',
-    widthFlex: 2,
-    colorClass: 'bg-yellow-300 dark:bg-yellow-500/70',
-    textColorClass: 'text-yellow-400 dark:text-yellow-300',
-  },
-  {
-    label: '正常',
-    widthFlex: 4,
-    colorClass: 'bg-green-400 dark:bg-green-500/70',
-    textColorClass: 'text-green-500 dark:text-green-400',
-  },
-  {
-    label: '轻度',
-    widthFlex: 2,
-    colorClass: 'bg-yellow-300 dark:bg-yellow-500/70',
-    textColorClass: 'text-yellow-400 dark:text-yellow-300',
-  },
-  {
-    label: '中度',
-    widthFlex: 2,
-    colorClass: 'bg-orange-300 dark:bg-orange-500/70',
-    textColorClass: 'text-orange-400 dark:text-orange-300',
-  },
-  {
-    label: '扁头',
-    widthFlex: 3,
-    colorClass: 'bg-red-400 dark:bg-red-500/70',
-    textColorClass: 'text-red-500 dark:text-red-400',
-  },
-]
+// CI gauge segments configuration - labels use translation keys
+type TranslateFn = (key: string) => string
+
+function getCIGaugeSegments(t: TranslateFn) {
+  return [
+    {
+      label: t('detection.analysis.gauge.longHead'),
+      widthFlex: 2,
+      colorClass: 'bg-red-300 dark:bg-red-500/70',
+      textColorClass: 'text-red-400 dark:text-red-300',
+    },
+    {
+      label: t('detection.analysis.gauge.moderate'),
+      widthFlex: 2,
+      colorClass: 'bg-orange-300 dark:bg-orange-500/70',
+      textColorClass: 'text-orange-400 dark:text-orange-300',
+    },
+    {
+      label: t('detection.analysis.gauge.mild'),
+      widthFlex: 2,
+      colorClass: 'bg-yellow-300 dark:bg-yellow-500/70',
+      textColorClass: 'text-yellow-400 dark:text-yellow-300',
+    },
+    {
+      label: t('detection.analysis.gauge.normal'),
+      widthFlex: 4,
+      colorClass: 'bg-green-400 dark:bg-green-500/70',
+      textColorClass: 'text-green-500 dark:text-green-400',
+    },
+    {
+      label: t('detection.analysis.gauge.mild'),
+      widthFlex: 2,
+      colorClass: 'bg-yellow-300 dark:bg-yellow-500/70',
+      textColorClass: 'text-yellow-400 dark:text-yellow-300',
+    },
+    {
+      label: t('detection.analysis.gauge.moderate'),
+      widthFlex: 2,
+      colorClass: 'bg-orange-300 dark:bg-orange-500/70',
+      textColorClass: 'text-orange-400 dark:text-orange-300',
+    },
+    {
+      label: t('detection.analysis.gauge.flatHead'),
+      widthFlex: 3,
+      colorClass: 'bg-red-400 dark:bg-red-500/70',
+      textColorClass: 'text-red-500 dark:text-red-400',
+    },
+  ]
+}
 
 export default function CICard({ value, measurements }: CICardProps) {
   const t = useTranslations()
@@ -142,7 +146,7 @@ export default function CICard({ value, measurements }: CICardProps) {
         formatValue={v => v.toFixed(1)}
         max={105}
         min={65}
-        segments={CI_GAUGE_SEGMENTS}
+        segments={getCIGaugeSegments(t)}
         value={ciPercentage}
       />
 

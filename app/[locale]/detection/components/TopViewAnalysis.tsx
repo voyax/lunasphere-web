@@ -40,13 +40,7 @@ interface TopViewAnalysisProps {
   onAnalysisResultChange?: (hasResult: boolean) => void
 }
 
-// 分析中的加载文字序列
-const LOADING_TEXTS = [
-  '正在温柔地观察照片...',
-  '正在寻找宝宝的头型轮廓...',
-  '正在测量每一条可爱的弧度...',
-  '正在为您准备专家建议...',
-]
+// Loading texts will be fetched from i18n
 
 // 分析前的引导面板
 interface GuidancePanelProps {
@@ -58,10 +52,10 @@ const GuidancePanel = memo(({ t }: GuidancePanelProps) => (
     <div className='relative mb-8'>
       <div className='absolute -left-4 top-0 w-1 h-12 bg-orange-300 dark:bg-orange-500 rounded-full' />
       <h2 className='text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 leading-[1.1]'>
-        每张照片
+        {t('detection.guidance.title1')}
         <br />
         <span className='text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-400'>
-          都是一次爱的对焦
+          {t('detection.guidance.title2')}
         </span>
       </h2>
     </div>
@@ -70,10 +64,10 @@ const GuidancePanel = memo(({ t }: GuidancePanelProps) => (
       <div className='p-6 rounded-[2rem] bg-orange-50/50 dark:bg-orange-950/20 border border-orange-100/30 dark:border-orange-800/30'>
         <h4 className='font-bold text-gray-700 dark:text-gray-300 text-sm mb-2 flex items-center'>
           <Info className='w-4 h-4 mr-2 text-orange-400' />
-          小贴士：如何拍出完美照片？
+          {t('detection.guidance.tipTitle')}
         </h4>
         <p className='text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium'>
-          如左图所示，请尽量垂直于宝宝头顶拍摄。当宝宝熟睡时拍摄效果最佳，因为此时小脑袋不会晃动。
+          {t('detection.guidance.tipDesc')}
         </p>
       </div>
 
@@ -83,7 +77,7 @@ const GuidancePanel = memo(({ t }: GuidancePanelProps) => (
             1
           </div>
           <span className='mt-0.5'>
-            寻找光线明亮的地方，避免头部产生浓重的阴影干扰分析。
+            {t('detection.guidance.step1')}
           </span>
         </li>
         <li className='flex items-start space-x-3 text-xs text-gray-500 dark:text-gray-400 font-medium'>
@@ -91,7 +85,7 @@ const GuidancePanel = memo(({ t }: GuidancePanelProps) => (
             2
           </div>
           <span className='mt-0.5'>
-            尽量露出真实头型轮廓，头发较多时可用温水轻轻润湿服帖。
+            {t('detection.guidance.step2')}
           </span>
         </li>
         <li className='flex items-start space-x-3 text-xs text-gray-500 dark:text-gray-400 font-medium'>
@@ -99,7 +93,7 @@ const GuidancePanel = memo(({ t }: GuidancePanelProps) => (
             3
           </div>
           <span className='mt-0.5'>
-            让鼻尖微微入镜即可，不必露出过多面部。鼻尖是定位头颅中轴线的关键参照。
+            {t('detection.guidance.step3')}
           </span>
         </li>
       </ul>
@@ -215,6 +209,14 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
 }: TopViewAnalysisProps) {
   const t = useTranslations()
 
+  // Get loading texts from i18n
+  const loadingTexts = useMemo(() => [
+    t('detection.loading.text1'),
+    t('detection.loading.text2'),
+    t('detection.loading.text3'),
+    t('detection.loading.text4'),
+  ], [t])
+
   // Internal state management
   const [topImage, setTopImage] = useState<ImageUploadData | null>(null)
   const [analysisState, setAnalysisState] = useState(
@@ -223,7 +225,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(
     null
   )
-  const [loadingText, setLoadingText] = useState(LOADING_TEXTS[0])
+  const [loadingText, setLoadingText] = useState('')
   const [isHovering, setIsHovering] = useState(false)
 
   // Rotation state
@@ -236,14 +238,15 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
   useEffect(() => {
     let interval: NodeJS.Timeout
     if (analysisState === AnalysisState.ANALYZING) {
+      setLoadingText(loadingTexts[0])
       let i = 0
       interval = setInterval(() => {
-        i = (i + 1) % LOADING_TEXTS.length
-        setLoadingText(LOADING_TEXTS[i])
+        i = (i + 1) % loadingTexts.length
+        setLoadingText(loadingTexts[i])
       }, 800)
     }
     return () => clearInterval(interval)
-  }, [analysisState])
+  }, [analysisState, loadingTexts])
 
   // Cleanup URL objects
   useEffect(() => {
@@ -447,7 +450,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                         Nose Visible
                       </span>
                       <span className='block text-[10px] text-gray-400 dark:text-gray-500 font-medium'>
-                        刚刚露出鼻尖
+                        {t('detection.topView.annotations.noseVisible')}
                       </span>
                     </div>
 
@@ -457,7 +460,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                         Occipital
                       </span>
                       <span className='block text-[10px] text-gray-400 dark:text-gray-500 font-medium'>
-                        后枕区域
+                        {t('detection.topView.annotations.occiput')}
                       </span>
                     </div>
 
@@ -490,7 +493,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                               : t('detection.topView.upload.clickOrDrag')}
                           </span>
                           <span className='block text-[10px] text-gray-400 dark:text-gray-500 mt-0.5'>
-                            自动识别 · 隐私保护
+                            {t('detection.topView.upload.autoPrivacy')}
                           </span>
                         </div>
                       </div>
@@ -561,14 +564,14 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                           onClick={() => fileInputRef.current?.click()}
                           className='flex-1 py-3 rounded-2xl border border-gray-200 dark:border-gray-700 text-gray-500 text-xs font-bold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors'
                         >
-                          重选图片
+                          {t('detection.actions.reselectImage')}
                         </button>
                         <button
                           onClick={handleStartAnalysis}
                           className='flex-[2] py-3 rounded-2xl bg-gradient-to-r from-orange-400 to-rose-400 text-white text-xs font-bold shadow-lg shadow-orange-200/50 dark:shadow-none hover:opacity-90 transition-opacity flex items-center justify-center space-x-2'
                         >
                           <Play className='w-3.5 h-3.5 fill-current' />
-                          <span>开始智能分析</span>
+                          <span>{t('detection.actions.startAnalysis')}</span>
                         </button>
                       </div>
                     </div>
@@ -629,7 +632,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                                 onClick={enterEditMode}
                                 className='mt-4 text-xs font-bold text-red-500 hover:text-red-700 underline'
                               >
-                                返回调整图片
+                                {t('detection.actions.backToAdjust')}
                               </button>
                             </div>
                           </div>
@@ -649,25 +652,25 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                   className='flex items-center space-x-2 text-xs font-bold text-gray-500 hover:text-orange-500 transition-all bg-white dark:bg-gray-800 px-4 py-2 rounded-full shadow-sm border border-gray-100 dark:border-gray-700'
                 >
                   <Undo2 className='w-3.5 h-3.5' />
-                  <span>调整图片</span>
+                  <span>{t('detection.actions.adjustImage')}</span>
                 </button>
                 <button
                   onClick={resetAnalysis}
                   className='flex items-center space-x-2 text-xs font-bold text-orange-500 hover:text-orange-600 transition-all bg-white dark:bg-gray-800 px-4 py-2 rounded-full shadow-sm border border-gray-100 dark:border-gray-700'
                 >
                   <RefreshCw className='w-3.5 h-3.5' />
-                  <span>重新开始</span>
+                  <span>{t('detection.actions.restart')}</span>
                 </button>
               </>
             ) : (
               <>
                 <div className='flex items-center space-x-2 text-gray-400 dark:text-gray-500'>
                   <Heart className='w-4 h-4 text-rose-300' />
-                  <span className='text-xs font-medium'>全本地隐私处理</span>
+                  <span className='text-xs font-medium'>{t('detection.features.localPrivacy')}</span>
                 </div>
                 <div className='flex items-center space-x-2 text-gray-400 dark:text-gray-500'>
                   <Sparkles className='w-4 h-4 text-orange-300' />
-                  <span className='text-xs font-medium'>AI 几何对准技术</span>
+                  <span className='text-xs font-medium'>{t('detection.features.aiGeometry')}</span>
                 </div>
               </>
             )}

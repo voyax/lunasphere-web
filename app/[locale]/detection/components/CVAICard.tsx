@@ -59,33 +59,37 @@ function getSeverityColors(severity: string) {
   }
 }
 
-// CVAI gauge segments configuration
-const CVAI_GAUGE_SEGMENTS = [
-  {
-    label: '正常',
-    widthFlex: 3.5,
-    colorClass: 'bg-green-400 dark:bg-green-500/70',
-    textColorClass: 'text-green-500 dark:text-green-400',
-  },
-  {
-    label: '轻度',
-    widthFlex: 2.75,
-    colorClass: 'bg-yellow-300 dark:bg-yellow-500/70',
-    textColorClass: 'text-yellow-500 dark:text-yellow-400',
-  },
-  {
-    label: '中度',
-    widthFlex: 2.5,
-    colorClass: 'bg-orange-300 dark:bg-orange-500/70',
-    textColorClass: 'text-orange-400 dark:text-orange-300',
-  },
-  {
-    label: '重度',
-    widthFlex: 3.25,
-    colorClass: 'bg-red-400 dark:bg-red-500/70',
-    textColorClass: 'text-red-500 dark:text-red-400',
-  },
-]
+// CVAI gauge segments configuration - labels use translation keys
+type TranslateFn = (key: string) => string
+
+function getCVAIGaugeSegments(t: TranslateFn) {
+  return [
+    {
+      label: t('detection.analysis.gauge.normal'),
+      widthFlex: 3.5,
+      colorClass: 'bg-green-400 dark:bg-green-500/70',
+      textColorClass: 'text-green-500 dark:text-green-400',
+    },
+    {
+      label: t('detection.analysis.gauge.mild'),
+      widthFlex: 2.75,
+      colorClass: 'bg-yellow-300 dark:bg-yellow-500/70',
+      textColorClass: 'text-yellow-500 dark:text-yellow-400',
+    },
+    {
+      label: t('detection.analysis.gauge.moderate'),
+      widthFlex: 2.5,
+      colorClass: 'bg-orange-300 dark:bg-orange-500/70',
+      textColorClass: 'text-orange-400 dark:text-orange-300',
+    },
+    {
+      label: t('detection.analysis.gauge.severe'),
+      widthFlex: 3.25,
+      colorClass: 'bg-red-400 dark:bg-red-500/70',
+      textColorClass: 'text-red-500 dark:text-red-400',
+    },
+  ]
+}
 
 export default function CVAICard({ value, measurements }: CVAICardProps) {
   const t = useTranslations()
@@ -123,7 +127,7 @@ export default function CVAICard({ value, measurements }: CVAICardProps) {
         formatValue={v => v.toFixed(1) + '%'}
         max={12}
         min={0}
-        segments={CVAI_GAUGE_SEGMENTS}
+        segments={getCVAIGaugeSegments(t)}
         value={cvaiPercentage}
       />
 

@@ -3,6 +3,13 @@
     "title": "小月颅",
     "description": "科学认知婴儿头型发育，理性护理减少焦虑"
   },
+  "footer": {
+    "slogan": "让科技拥抱新生命",
+    "privacy": "隐私安全",
+    "research": "科研合作",
+    "contact": "联系我们",
+    "copyright": "守护每一份纯净笑容"
+  },
   "page": {
     "home": {
       "title": "婴儿头型发育科学指南",
@@ -252,6 +259,54 @@
         "privacy": "本地处理，隐私安全"
       }
     },
+    "page": {
+      "title1": "从头开始，",
+      "title2": "予你圆满",
+      "subtitle": "采用深度学习分割算法与纯本地计算，我们为您提供最私密、最温暖的婴儿头型分析服务。",
+      "subtitle2": "守护宝宝的每一个瞬间，我们与您同行。",
+      "featureSection": {
+        "title": "我们想为您分担的",
+        "card1": {
+          "title": "不仅是数据",
+          "desc": "我们将医学指标转化为通俗易懂的家长建议，让您不再为各种指数感到迷茫。"
+        },
+        "card2": {
+          "title": "绝对的尊重",
+          "desc": "照片仅在您的浏览器中存在，解析完成即销毁。宝宝的每一张照片，我们都倍加珍惜。"
+        },
+        "card3": {
+          "title": "科学的陪伴",
+          "desc": "基于儿科临床共识，提供关于 Tummy Time 和睡姿引导的专业知识库。",
+          "link": "查看参考文献"
+        }
+      }
+    },
+    "guidance": {
+      "title1": "每张照片",
+      "title2": "都是一次爱的对焦",
+      "tipTitle": "小贴士：如何拍出完美照片？",
+      "tipDesc": "如左图所示，请尽量垂直于宝宝头顶拍摄。当宝宝熟睡时拍摄效果最佳，因为此时小脑袋不会晃动。",
+      "step1": "寻找光线明亮的地方，避免头部产生浓重的阴影干扰分析。",
+      "step2": "尽量露出真实头型轮廓，头发较多时可用温水轻轻润湿服帖。",
+      "step3": "让鼻尖微微入镜即可，不必露出过多面部。鼻尖是定位头颅中轴线的关键参照。"
+    },
+    "loading": {
+      "text1": "正在温柔地观察照片...",
+      "text2": "正在寻找宝宝的头型轮廓...",
+      "text3": "正在测量每一条可爱的弧度...",
+      "text4": "正在为您准备专家建议..."
+    },
+    "actions": {
+      "reselectImage": "重选图片",
+      "startAnalysis": "开始智能分析",
+      "adjustImage": "调整图片",
+      "restart": "重新开始",
+      "backToAdjust": "返回调整图片"
+    },
+    "features": {
+      "localPrivacy": "全本地隐私处理",
+      "aiGeometry": "AI 几何对准技术"
+    },
     "topView": {
       "features": {
         "medical": "专业医学标准",
@@ -284,15 +339,16 @@
       },
       "annotations": {
         "forehead": "前额",
-        "noseVisible": "刚刚漏出鼻子",
-        "occiput": "后枕"
+        "noseVisible": "刚刚露出鼻尖",
+        "occiput": "后枕区域"
       },
       "upload": {
         "clickOrDrag": "点击或拖拽图片到此处",
         "supportFormat": "支持 JPG、PNG 格式，最大 10MB",
         "rotation": "旋转调整",
         "rotationTip": "💡 调整图片角度，确保前额朝上",
-        "modelLoading": "模型加载中..."
+        "modelLoading": "模型加载中...",
+        "autoPrivacy": "自动识别 · 隐私保护"
       },
       "exampleImageAlt": "正确拍摄示例图片",
       "originalImageAlt": "原始上传图片",
@@ -390,6 +446,14 @@
         "title": "颅穹不对称指数 (CVAI)",
         "diagonal1": "对角线1",
         "diagonal2": "对角线2"
+      },
+      "gauge": {
+        "normal": "正常",
+        "mild": "轻度",
+        "moderate": "中度",
+        "severe": "重度",
+        "longHead": "长头",
+        "flatHead": "扁头"
       },
       "status": {
         "healthy": "健康",
