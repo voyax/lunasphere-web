@@ -11,8 +11,7 @@ import {
   Sparkles,
   CheckCircle2,
   UploadCloud,
-  RotateCcw,
-  RotateCw,
+
   Play,
   Pencil,
   Undo2,
@@ -24,6 +23,8 @@ import SchematicHeadGuide from './SchematicHeadGuide'
 import CICard from './CICard'
 import CVAICard from './CVAICard'
 import IntegratedAssessment from './IntegratedAssessment'
+import RotationControl from '@/components/RotationControl'
+import { useIsMobile } from '@/hooks/useIsMobile'
 import {
   drawMeasurementAnnotations,
   downloadCanvasAsPNG,
@@ -208,6 +209,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
   onAnalysisResultChange,
 }: TopViewAnalysisProps) {
   const t = useTranslations()
+  const isMobile = useIsMobile()
 
   // Get loading texts from i18n
   const loadingTexts = useMemo(() => [
@@ -524,39 +526,12 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
 
                     {/* Action Bar */}
                     <div className='p-5 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md'>
-                      <div className='flex items-center justify-between mb-4'>
-                        <button
-                          onClick={() => setRotation(r => Math.max(-180, r - 90))}
-                          className='p-2 rounded-xl hover:bg-orange-50 dark:hover:bg-gray-700 text-gray-500 hover:text-orange-500 transition-colors'
-                          aria-label='Rotate Left'
-                        >
-                          <RotateCcw className='w-5 h-5' />
-                        </button>
-
-                        <div className='flex-1 mx-4'>
-                          <input
-                            type="range"
-                            min="-180"
-                            max="180"
-                            step="1"
-                            value={rotation}
-                            onChange={(e) => setRotation(parseInt(e.target.value))}
-                            className="w-full h-2 bg-gradient-to-r from-orange-100 via-orange-200 to-orange-100 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gradient-to-br [&::-webkit-slider-thumb]:from-orange-400 [&::-webkit-slider-thumb]:to-rose-400 [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:cursor-grab [&::-webkit-slider-thumb]:active:cursor-grabbing [&::-webkit-slider-thumb]:transition-transform [&::-webkit-slider-thumb]:hover:scale-110"
-                          />
-                          <div className='flex justify-between items-center mt-2 px-1'>
-                            <span className='text-[9px] text-gray-300 dark:text-gray-600'>-180°</span>
-                            <span className='text-xs text-orange-500 font-bold font-mono'>{rotation}°</span>
-                            <span className='text-[9px] text-gray-300 dark:text-gray-600'>180°</span>
-                          </div>
-                        </div>
-
-                        <button
-                          onClick={() => setRotation(r => Math.min(180, r + 90))}
-                          className='p-2 rounded-xl hover:bg-orange-50 dark:hover:bg-gray-700 text-gray-500 hover:text-orange-500 transition-colors'
-                          aria-label='Rotate Right'
-                        >
-                          <RotateCw className='w-5 h-5' />
-                        </button>
+                      <div className='mb-4'>
+                        <RotationControl
+                          value={rotation}
+                          onChange={setRotation}
+                          className="w-full"
+                        />
                       </div>
 
                       <div className='flex space-x-3'>

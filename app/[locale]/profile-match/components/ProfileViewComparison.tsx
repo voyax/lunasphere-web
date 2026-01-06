@@ -2,8 +2,16 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { Button } from '@heroui/button'
-import { Chip } from '@heroui/chip'
-import { Upload, ChevronDown, ChevronUp } from 'lucide-react'
+import {
+  Upload,
+  ChevronDown,
+  ChevronUp,
+  Camera,
+  Lightbulb,
+  Shield,
+  Sparkles,
+  ArrowRight,
+} from 'lucide-react'
 
 import { ProfileUploadArea } from './ProfileUploadArea'
 
@@ -25,7 +33,7 @@ interface UploadedImage {
   height: number
 }
 
-export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
+export default function ProfileViewComparison({ }: ProfileViewComparisonProps) {
   const t = useTranslations()
   const [leftImage, setLeftImage] = useState<UploadedImage | null>(null)
   const [rightImage, setRightImage] = useState<UploadedImage | null>(null)
@@ -182,145 +190,94 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
     [leftImage, rightImage]
   )
 
+  const tips = [
+    {
+      icon: Camera,
+      title: t('detection.profileView.shootingTips.tip1'),
+      desc: t('detection.profileView.shootingTips.tip1Desc'),
+      bgColor: 'bg-orange-50 dark:bg-orange-950/30',
+      iconBgColor: 'bg-orange-100 dark:bg-orange-900/50',
+      iconColor: 'text-orange-500 dark:text-orange-400',
+    },
+    {
+      icon: Lightbulb,
+      title: t('detection.profileView.shootingTips.tip2'),
+      desc: t('detection.profileView.shootingTips.tip2Desc'),
+      bgColor: 'bg-rose-50 dark:bg-rose-950/30',
+      iconBgColor: 'bg-rose-100 dark:bg-rose-900/50',
+      iconColor: 'text-rose-500 dark:text-rose-400',
+    },
+    {
+      icon: Sparkles,
+      title: t('detection.profileView.shootingTips.tip3'),
+      desc: t('detection.profileView.shootingTips.tip3Desc'),
+      bgColor: 'bg-purple-50 dark:bg-purple-950/30',
+      iconBgColor: 'bg-purple-100 dark:bg-purple-900/50',
+      iconColor: 'text-purple-500 dark:text-purple-400',
+    },
+  ]
+
   return (
-    <div className='w-full max-w-6xl mx-auto'>
-      <div className='space-y-4 sm:space-y-8'>
-        {/* Shooting Tips Banner - Mobile Optimized */}
-        <div className='bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 rounded-xl border border-blue-200/50 dark:border-blue-700/50'>
-          {/* Mobile Compact Header */}
-          <div className='sm:hidden'>
-            <button
-              className='w-full p-3 flex items-center justify-between text-left'
-              onClick={() => setIsTipsExpanded(!isTipsExpanded)}
-            >
-              <div className='flex items-center gap-2'>
-                <div className='w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center text-white text-xs flex-shrink-0'>
-                  📸
-                </div>
-                <h3 className='font-medium text-blue-900 dark:text-blue-100 text-sm'>
-                  {t('detection.profileView.shootingTips.title')}
-                </h3>
-                <Chip
-                  className='text-xs'
-                  color='danger'
-                  size='sm'
-                  variant='flat'
-                >
-                  {t('detection.profileView.shootingTips.safety')}
-                </Chip>
-              </div>
-              {isTipsExpanded ? (
-                <ChevronUp className='w-4 h-4 text-blue-600 dark:text-blue-400' />
-              ) : (
-                <ChevronDown className='w-4 h-4 text-blue-600 dark:text-blue-400' />
-              )}
-            </button>
-
-            {/* Mobile Expanded Content */}
-            {isTipsExpanded && (
-              <div className='px-3 pb-3'>
-                <div className='space-y-2 text-xs'>
-                  <div className='bg-white/60 dark:bg-gray-800/60 rounded-lg p-2 border border-blue-200/30 dark:border-blue-700/30'>
-                    <p className='font-medium text-green-800 dark:text-green-200 mb-1'>
-                      {t('detection.profileView.shootingTips.tip1')}
-                    </p>
-                    <p className='text-green-700 dark:text-green-300 leading-relaxed'>
-                      {t('detection.profileView.shootingTips.tip1Desc')}
-                    </p>
-                  </div>
-                  <div className='bg-white/60 dark:bg-gray-800/60 rounded-lg p-2 border border-green-200/30 dark:border-green-700/30'>
-                    <p className='font-medium text-green-800 dark:text-green-200 mb-1'>
-                      {t('detection.profileView.shootingTips.tip2')}
-                    </p>
-                    <p className='text-green-700 dark:text-green-300 leading-relaxed'>
-                      {t('detection.profileView.shootingTips.tip2Desc')}
-                    </p>
-                  </div>
-                  <div className='bg-white/60 dark:bg-gray-800/60 rounded-lg p-2 border border-orange-200/30 dark:border-orange-700/30'>
-                    <p className='font-medium text-green-800 dark:text-green-200 mb-1'>
-                      {t('detection.profileView.shootingTips.tip3')}
-                    </p>
-                    <p className='text-green-700 dark:text-green-300 leading-relaxed'>
-                      {t('detection.profileView.shootingTips.tip3Desc')}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
+    <div className='w-full'>
+      <div className='space-y-6'>
+        {/* Shooting Tips - Compact Inline Style */}
+        <div className='flex flex-wrap items-center gap-3 px-4 py-3 rounded-2xl bg-orange-50/50 dark:bg-orange-950/20 border border-orange-100 dark:border-orange-800/30'>
+          <div className='flex items-center gap-2'>
+            <Camera className='w-4 h-4 text-orange-500 dark:text-orange-400' />
+            <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
+              {t('detection.profileView.shootingTips.title')}:
+            </span>
           </div>
 
-          {/* Desktop Full Display */}
-          <div className='hidden sm:block p-4'>
-            <div className='flex items-start gap-3'>
-              <div className='w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-white text-sm flex-shrink-0'>
-                📸
+          <div className='flex flex-wrap items-center gap-2'>
+            {tips.map((tip, index) => (
+              <div
+                key={index}
+                className='flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm'
+              >
+                <tip.icon className={`w-3.5 h-3.5 ${tip.iconColor}`} />
+                <span className='text-xs font-medium text-gray-600 dark:text-gray-400'>
+                  {tip.title}
+                </span>
               </div>
-              <div className='flex-1 min-w-0'>
-                <div className='mb-3'>
-                  <div className='flex flex-col sm:flex-row sm:items-center gap-3 mb-2'>
-                    <h3 className='font-semibold text-blue-900 dark:text-blue-100 text-base'>
-                      {t('detection.profileView.shootingTips.title')}
-                    </h3>
-                    <Chip color='danger' size='sm' variant='flat'>
-                      {t('detection.profileView.shootingTips.safety')}
-                    </Chip>
-                  </div>
-                </div>
-                <div className='grid grid-cols-1 lg:grid-cols-3 gap-3 text-xs'>
-                  <div className='bg-white/60 dark:bg-gray-800/60 rounded-lg p-3 border border-blue-200/30 dark:border-blue-700/30'>
-                    <p className='font-medium text-green-800 dark:text-green-200 mb-1'>
-                      {t('detection.profileView.shootingTips.tip1')}
-                    </p>
-                    <p className='text-green-700 dark:text-green-300 leading-relaxed'>
-                      {t('detection.profileView.shootingTips.tip1Desc')}
-                    </p>
-                  </div>
-                  <div className='bg-white/60 dark:bg-gray-800/60 rounded-lg p-3 border border-green-200/30 dark:border-green-700/30'>
-                    <p className='font-medium text-green-800 dark:text-green-200 mb-1'>
-                      {t('detection.profileView.shootingTips.tip2')}
-                    </p>
-                    <p className='text-green-700 dark:text-green-300 leading-relaxed'>
-                      {t('detection.profileView.shootingTips.tip2Desc')}
-                    </p>
-                  </div>
-                  <div className='bg-white/60 dark:bg-gray-800/60 rounded-lg p-3 border border-orange-200/30 dark:border-orange-700/30'>
-                    <p className='font-medium text-green-800 dark:text-green-200 mb-1'>
-                      {t('detection.profileView.shootingTips.tip3')}
-                    </p>
-                    <p className='text-green-700 dark:text-green-300 leading-relaxed'>
-                      {t('detection.profileView.shootingTips.tip3Desc')}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
+
+          <span className='ml-auto px-2.5 py-1 text-xs font-medium rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center gap-1'>
+            <Shield className='w-3 h-3' />
+            {t('detection.profileView.shootingTips.safety')}
+          </span>
         </div>
 
-        {/* Main Content */}
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 py-4 sm:py-8'>
+        {/* Main Upload Area */}
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8'>
           {/* Right Side */}
-          <div ref={rightContainerRef} className='space-y-3 sm:space-y-6'>
-            <div className='flex items-center justify-between relative h-10'>
+          <div ref={rightContainerRef} className='space-y-4'>
+            <div className='flex items-center justify-between'>
               <div className='flex items-center gap-3'>
-                <div className='w-1 h-6 bg-gradient-to-b from-purple-400 to-blue-500 rounded-full' />
-                <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
-                  {t('detection.profileView.rightProfile')}
-                </h3>
+                <div className='w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-900/50 flex items-center justify-center'>
+                  <span className='text-orange-600 dark:text-orange-400 text-sm font-bold'>R</span>
+                </div>
+                <div>
+                  <h3 className='text-lg font-bold text-gray-800 dark:text-gray-100'>
+                    {t('detection.profileView.rightProfile')}
+                  </h3>
+                  <p className='text-xs text-gray-400 dark:text-gray-500'>
+                    上传宝宝右侧轮廓照片
+                  </p>
+                </div>
               </div>
-              <div className='flex items-center gap-2 h-full'>
-                {rightImage && (
-                  <Button
-                    color='primary'
-                    size='sm'
-                    startContent={<Upload className='w-4 h-4' />}
-                    variant='ghost'
-                    onPress={() => reuploadImage('right')}
-                  >
-                    {t('detection.profileView.reuploadImage')}
-                  </Button>
-                )}
-              </div>
+
+              {rightImage && (
+                <Button
+                  className='bg-orange-500 hover:bg-orange-600 text-white shadow-sm'
+                  size='sm'
+                  startContent={<Upload className='w-4 h-4' />}
+                  onPress={() => reuploadImage('right')}
+                >
+                  {t('detection.profileView.reuploadImage')}
+                </Button>
+              )}
             </div>
 
             <ProfileUploadArea
@@ -330,6 +287,7 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
               stageSize={rightStageSize}
               templateAltKey='detection.profileView.rightTemplateAlt'
               templateSrc='/images/detection/head_right.svg'
+              accentColor='orange'
               onImageChange={newAttrs => updateImage('right', newAttrs)}
               onImageSelect={() =>
                 setSelectedId(selectedId === 'right' ? null : 'right')
@@ -337,28 +295,34 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
               onImageUpload={file => handleFileUpload(file, 'right')}
             />
           </div>
+
           {/* Left Side */}
-          <div ref={leftContainerRef} className='space-y-3 sm:space-y-6'>
-            <div className='flex items-center justify-between relative h-10'>
+          <div ref={leftContainerRef} className='space-y-4'>
+            <div className='flex items-center justify-between'>
               <div className='flex items-center gap-3'>
-                <div className='w-1 h-6 bg-gradient-to-b from-purple-400 to-blue-500 rounded-full' />
-                <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
-                  {t('detection.profileView.leftProfile')}
-                </h3>
+                <div className='w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-900/50 flex items-center justify-center'>
+                  <span className='text-orange-600 dark:text-orange-400 text-sm font-bold'>L</span>
+                </div>
+                <div>
+                  <h3 className='text-lg font-bold text-gray-800 dark:text-gray-100'>
+                    {t('detection.profileView.leftProfile')}
+                  </h3>
+                  <p className='text-xs text-gray-400 dark:text-gray-500'>
+                    上传宝宝左侧轮廓照片
+                  </p>
+                </div>
               </div>
-              <div className='flex items-center gap-2 h-full'>
-                {leftImage && (
-                  <Button
-                    color='primary'
-                    size='sm'
-                    startContent={<Upload className='w-4 h-4' />}
-                    variant='ghost'
-                    onPress={() => reuploadImage('left')}
-                  >
-                    {t('detection.profileView.reuploadImage')}
-                  </Button>
-                )}
-              </div>
+
+              {leftImage && (
+                <Button
+                  className='bg-orange-500 hover:bg-orange-600 text-white shadow-sm'
+                  size='sm'
+                  startContent={<Upload className='w-4 h-4' />}
+                  onPress={() => reuploadImage('left')}
+                >
+                  {t('detection.profileView.reuploadImage')}
+                </Button>
+              )}
             </div>
 
             <ProfileUploadArea
@@ -368,6 +332,7 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
               stageSize={leftStageSize}
               templateAltKey='detection.profileView.leftTemplateAlt'
               templateSrc='/images/detection/head_left.svg'
+              accentColor='orange'
               onImageChange={newAttrs => updateImage('left', newAttrs)}
               onImageSelect={() =>
                 setSelectedId(selectedId === 'left' ? null : 'left')
@@ -377,82 +342,82 @@ export default function ProfileViewComparison({}: ProfileViewComparisonProps) {
           </div>
         </div>
 
-        {/* Instructions - Desktop Only */}
+        {/* Instructions Panel - Premium Compact Style */}
         {(leftImage || rightImage) && (
-          <div className='hidden sm:block bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 rounded-2xl p-6 border border-blue-200/50 dark:border-blue-700/50'>
-            <h4 className='font-semibold text-blue-900 dark:text-blue-100 mb-4 flex items-center gap-2'>
-              <span className='w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center text-white text-sm'>
-                💡
-              </span>
-              {t('detection.profileView.instructions.title')}
-            </h4>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-4 text-sm'>
-              <div className='space-y-2'>
-                <div className='flex items-start gap-2'>
-                  <span className='text-blue-500 font-bold text-xs mt-0.5'>
-                    •
-                  </span>
-                  <p className='text-blue-800 dark:text-blue-200'>
-                    {t('detection.profileView.instructions.clickToSelect')}
-                  </p>
+          <div className='p-5 md:p-6 rounded-2xl bg-gradient-to-r from-amber-50/80 via-orange-50/50 to-rose-50/80 dark:from-gray-800/80 dark:via-gray-850/50 dark:to-gray-800/80 border border-amber-100/50 dark:border-gray-700/50 backdrop-blur-sm'>
+            <div className='flex flex-col sm:flex-row sm:items-center gap-4'>
+              {/* Title Section */}
+              <div className='flex items-center gap-3 flex-shrink-0'>
+                <div className='w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-orange-400 flex items-center justify-center shadow-sm'>
+                  <Lightbulb className='w-4.5 h-4.5 text-white' />
                 </div>
-                <div className='flex items-start gap-2'>
-                  <span className='text-blue-500 font-bold text-xs mt-0.5'>
-                    •
-                  </span>
-                  <p className='text-blue-800 dark:text-blue-200'>
-                    {t('detection.profileView.instructions.dragToMove')}
-                  </p>
-                </div>
-                <div className='flex items-start gap-2'>
-                  <span className='text-blue-500 font-bold text-xs mt-0.5'>
-                    •
-                  </span>
-                  <p className='text-blue-800 dark:text-blue-200'>
-                    {t('detection.profileView.instructions.dragToResize')}
-                  </p>
-                </div>
+                <span className='font-bold text-gray-700 dark:text-gray-200 text-sm'>
+                  {t('detection.profileView.instructions.title')}
+                </span>
               </div>
-              <div className='space-y-2'>
-                <div className='flex items-start gap-2'>
-                  <span className='text-blue-500 font-bold text-xs mt-0.5'>
-                    •
-                  </span>
-                  <p className='text-blue-800 dark:text-blue-200'>
-                    {t('detection.profileView.instructions.dragToRotate')}
-                  </p>
-                </div>
 
-                <div className='flex items-start gap-2'>
-                  <span className='text-blue-500 font-bold text-xs mt-0.5'>
-                    •
-                  </span>
-                  <p className='text-blue-800 dark:text-blue-200'>
-                    {t('detection.profileView.instructions.clickToDeselect')}
-                  </p>
-                </div>
+              {/* Instruction Pills - Horizontal Flow */}
+              <div className='flex flex-wrap items-center gap-2 sm:gap-3'>
+                {[
+                  { num: '1', text: t('detection.profileView.instructions.clickToSelect'), color: 'from-orange-400 to-amber-400' },
+                  { num: '2', text: t('detection.profileView.instructions.dragToMove'), color: 'from-rose-400 to-pink-400' },
+                  { num: '3', text: t('detection.profileView.instructions.dragToResize'), color: 'from-violet-400 to-purple-400' },
+                  { num: '4', text: t('detection.profileView.instructions.dragToRotate'), color: 'from-cyan-400 to-blue-400' },
+                ].map((instruction, index) => (
+                  <div
+                    key={index}
+                    className='inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 dark:bg-gray-800/90 border border-white/50 dark:border-gray-600/50 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-200'
+                  >
+                    <span className={`w-5 h-5 rounded-full bg-gradient-to-br ${instruction.color} flex items-center justify-center text-[10px] font-bold text-white shadow-sm`}>
+                      {instruction.num}
+                    </span>
+                    <span className='text-xs font-medium text-gray-600 dark:text-gray-300 whitespace-nowrap'>
+                      {instruction.text}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         )}
 
-        {/* Mobile Gesture Hints */}
+        {/* Mobile Gesture Hints - Warm Style */}
         {(leftImage || rightImage) && (
-          <div className='sm:hidden bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950/30 dark:to-blue-950/30 rounded-xl p-3 border border-green-200/50 dark:border-green-700/50'>
-            <div className='flex items-center gap-2 mb-2'>
-              <span className='text-lg'>👆</span>
-              <h4 className='font-medium text-green-900 dark:text-green-100 text-sm'>
+          <div className='sm:hidden p-5 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-800/30'>
+            <div className='flex items-center gap-2 mb-3'>
+              <span className='text-xl'>👆</span>
+              <h4 className='font-medium text-gray-800 dark:text-gray-100 text-sm'>
                 手势操作提示
               </h4>
             </div>
-            <div className='text-xs text-green-800 dark:text-green-200 space-y-1'>
-              <p>• 拖动移动图片位置</p>
-              <p>• 双指缩放调整大小</p>
-              <p>• 双指旋转调整角度，或使用下方滑块精确控制</p>
+            <div className='space-y-2'>
+              {[
+                { icon: '👆', text: '拖动移动图片位置' },
+                { icon: '👌', text: '双指缩放调整大小' },
+                { icon: '🔄', text: '双指旋转调整角度，或使用下方滑块精确控制' },
+              ].map((item, index) => (
+                <div key={index} className='flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400'>
+                  <span>{item.icon}</span>
+                  <span>{item.text}</span>
+                </div>
+              ))}
             </div>
           </div>
         )}
+
+        {/* Action Button - Only when both images are uploaded */}
+        {leftImage && rightImage && (
+          <div className='flex justify-center pt-4'>
+            <Button
+              className='px-8 py-6 text-lg font-bold bg-gradient-to-r from-orange-400 to-rose-400 text-white shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 rounded-2xl'
+              size='lg'
+              endContent={<ArrowRight className='w-5 h-5' />}
+            >
+              开始对比分析
+            </Button>
+          </div>
+        )}
       </div>
-    </div>
+    </div >
   )
 }

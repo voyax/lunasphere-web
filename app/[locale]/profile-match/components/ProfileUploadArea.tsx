@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Upload, RotateCw, ZoomIn } from 'lucide-react'
+import { Upload, ZoomIn, ImagePlus, Sparkles, RotateCw, RotateCcw } from 'lucide-react'
 import Image from 'next/image'
 import { useRef, useEffect, useCallback, useState, useMemo } from 'react'
 import { Stage, Layer, Image as KonvaImage, Transformer } from 'react-konva'
@@ -12,6 +12,8 @@ import { RefObject } from 'react'
 import { Slider, Input } from '@heroui/react'
 
 import { GestureVisualFeedback } from './GestureVisualFeedback'
+import RotationControl from '@/components/RotationControl'
+import GradientSlider from '@/components/GradientSlider'
 
 import { useTranslations } from 'next-intl'
 import { useIsMobile } from '@/hooks/useIsMobile'
@@ -155,7 +157,7 @@ const TransformableImage: React.FC<{
             if (
               !isMultiTouch &&
               Date.now() - gestureStartTime.current <
-                GESTURE_CONFIG.GESTURE_TIMEOUT
+              GESTURE_CONFIG.GESTURE_TIMEOUT
             ) {
               onSelect()
             }
@@ -424,6 +426,34 @@ const StandardTemplateImage: React.FC<{
 
 StandardTemplateImage.displayName = 'StandardTemplateImage'
 
+// Accent color configurations - Warm organic style matching homepage
+const accentColors = {
+  orange: {
+    gradient: 'from-orange-400 to-amber-400',
+    gradientHover: 'group-hover:from-orange-300 group-hover:to-amber-300',
+    border: 'border-orange-200/60 dark:border-orange-700/40',
+    borderHover: 'hover:border-orange-300 dark:hover:border-orange-600',
+    bg: 'from-orange-50 via-amber-50/50 to-orange-50 dark:from-orange-950/30 dark:via-amber-950/20 dark:to-orange-950/30',
+    iconBg: 'bg-orange-100 dark:bg-orange-900/50',
+    iconColor: 'text-orange-500 dark:text-orange-400',
+    shadow: 'shadow-orange-500/15',
+    ring: 'ring-orange-400/30',
+    sliderColor: 'warning' as const,
+  },
+  rose: {
+    gradient: 'from-rose-400 to-pink-400',
+    gradientHover: 'group-hover:from-rose-300 group-hover:to-pink-300',
+    border: 'border-rose-200/60 dark:border-rose-700/40',
+    borderHover: 'hover:border-rose-300 dark:hover:border-rose-600',
+    bg: 'from-rose-50 via-pink-50/50 to-rose-50 dark:from-rose-950/30 dark:via-pink-950/20 dark:to-rose-950/30',
+    iconBg: 'bg-rose-100 dark:bg-rose-900/50',
+    iconColor: 'text-rose-500 dark:text-rose-400',
+    shadow: 'shadow-rose-500/15',
+    ring: 'ring-rose-400/30',
+    sliderColor: 'danger' as const,
+  },
+}
+
 interface ProfileUploadAreaProps {
   // Image data
   image: UploadedImage | null
@@ -439,6 +469,9 @@ interface ProfileUploadAreaProps {
   // Stage configuration
   stageSize?: { width: number; height: number }
 
+  // Accent color
+  accentColor?: 'orange' | 'rose'
+
   // Event handlers
   onImageUpload: (file: File) => void
   onImageChange?: (newAttrs: Partial<UploadedImage>) => void
@@ -452,6 +485,7 @@ export function ProfileUploadArea({
   templateAltKey,
   fileInputRef,
   stageSize = { width: 400, height: 400 },
+  accentColor = 'orange',
   onImageUpload,
   onImageChange,
   onImageSelect,
@@ -460,6 +494,9 @@ export function ProfileUploadArea({
   const isMobile = useIsMobile()
   const memoryManager = useMemoryManager()
   const [showGestureHint, setShowGestureHint] = useState(false)
+  const [isDragOver, setIsDragOver] = useState(false)
+
+  const colors = accentColors[accentColor]
 
   // Visual feedback state for gestures
   const [gestureVisualFeedback, setGestureVisualFeedback] = useState<{
@@ -524,7 +561,12 @@ export function ProfileUploadArea({
   }, [image?.scaleX])
 
   const currentRotationValue = useMemo(() => {
-    return image ? Math.round(image.rotation) : 0
+    if (!image) return 0
+    // Normalize rotation to -180 to 180 range for the slider
+    let rotation = image.rotation % 360
+    if (rotation > 180) rotation -= 360
+    if (rotation < -180) rotation += 360
+    return Math.round(rotation)
   }, [image?.rotation])
 
   // Scale and rotation handlers
@@ -574,52 +616,19 @@ export function ProfileUploadArea({
     [image, onImageChange, memoryManager]
   )
 
-  const handleRotationChange = useCallback(
-    (value: number | number[]) => {
-      if (!image || !onImageChange) return
-      const rotationValue = Array.isArray(value) ? value[0] : value
-
-      onImageChange({
-        rotation: rotationValue,
-      })
-    },
-    [image, onImageChange, memoryManager]
-  )
-
-  const handleRotationInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (!image || !onImageChange) return
-      const value = e.target.value
-
-      // Allow empty input for editing
-      if (value === '') {
-        return
-      }
-
-      const rotationValue = parseFloat(value)
-
-      if (
-        !isNaN(rotationValue) &&
-        rotationValue >= -360 &&
-        rotationValue <= 360
-      ) {
-        // Debounce the change for better performance using memory manager
-        memoryManager.createTimeout(() => {
-          onImageChange({
-            rotation: rotationValue,
-          })
-        }, GESTURE_CONFIG.DEBOUNCE_DELAY)
-      }
-    },
-    [image, onImageChange]
-  )
-
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
+    setIsDragOver(true)
+  }
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOver(false)
   }
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
+    setIsDragOver(false)
     const files = e.dataTransfer.files
 
     if (files.length > 0) {
@@ -652,18 +661,26 @@ export function ProfileUploadArea({
   return (
     <div className='relative'>
       {!image ? (
+        // Empty State - Upload Area (Warm Organic Style)
         <div
-          className='relative aspect-square border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl overflow-hidden cursor-pointer hover:border-primary transition-all duration-300'
+          className={`relative aspect-square rounded-[2rem] overflow-hidden cursor-pointer transition-all duration-300
+            ${isDragOver
+              ? `border-2 border-dashed ${colors.border} bg-gradient-to-br ${colors.bg} scale-[1.01]`
+              : `border-2 border-dashed border-gray-200 dark:border-gray-700 ${colors.borderHover} bg-white dark:bg-gray-900/50`
+            }
+            shadow-soft hover:shadow-md
+          `}
           role='button'
           tabIndex={0}
           onClick={handleFileInputClick}
+          onDragLeave={handleDragLeave}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
           onKeyDown={handleKeyDown}
         >
           {/* Background template image */}
           <div className='absolute inset-0 flex items-center justify-center'>
-            <div className='w-4/5 h-4/5 relative'>
+            <div className='w-4/5 h-4/5 relative opacity-60 group-hover:opacity-80 transition-opacity duration-300'>
               <Image
                 fill
                 alt={t(templateAltKey)}
@@ -672,36 +689,56 @@ export function ProfileUploadArea({
                 src={templateSrc}
               />
             </div>
-            <div className='absolute inset-0 bg-white/20 dark:bg-gray-900/20' />
+            <div className='absolute inset-0 bg-gradient-to-t from-white/80 via-transparent to-white/40 dark:from-gray-900/80 dark:via-transparent dark:to-gray-900/40' />
           </div>
 
           {/* Upload content overlay */}
           <div className='relative z-10 flex items-center justify-center h-full'>
             <div className='text-center space-y-4 p-6'>
-              <div className='flex flex-col items-center justify-center gap-3'>
-                <div className='w-12 h-12 bg-white/80 dark:bg-gray-700/80 rounded-xl flex items-center justify-center shadow-md backdrop-blur-sm border border-white/50 dark:border-gray-600/50 transition-all duration-200 hover:scale-102'>
-                  <Upload className='w-5 h-5 text-gray-600 dark:text-gray-400' />
-                </div>
-                <div className='text-center'>
-                  <p className='text-base font-medium text-gray-700 dark:text-gray-300 drop-shadow-sm'>
-                    {t('detection.profileView.uploadPrompt')}
-                  </p>
+              {/* Icon */}
+              <div className='relative inline-flex'>
+                <div className={`w-16 h-16 ${colors.iconBg} rounded-2xl flex items-center justify-center shadow-soft group-hover:scale-105 transition-transform duration-300`}>
+                  <ImagePlus className={`w-7 h-7 ${colors.iconColor}`} />
                 </div>
               </div>
-              <div className='inline-flex items-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-md px-3 py-2 border border-white/60 dark:border-gray-600/60 shadow-sm'>
-                <div className='w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full' />
-                <span className='text-xs font-normal text-gray-600 dark:text-gray-400'>
-                  {t('detection.profileView.uploadHint')}
-                </span>
+
+              {/* Text */}
+              <div className='space-y-2'>
+                <p className='text-base font-semibold text-gray-800 dark:text-gray-200'>
+                  {t('detection.profileView.uploadPrompt')}
+                </p>
+                <div className='flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400'>
+                  <Upload className='w-4 h-4' />
+                  <span>{t('detection.profileView.uploadHint')}</span>
+                </div>
+              </div>
+
+              {/* Supported formats */}
+              <div className='flex items-center justify-center gap-2'>
+                {['JPG', 'PNG', 'HEIC'].map((format, index) => (
+                  <span
+                    key={index}
+                    className='px-2 py-0.5 text-xs font-medium rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700'
+                  >
+                    {format}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
+
+          {/* Corner Decorations */}
+          <div className={`absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 ${isDragOver ? colors.border : 'border-gray-200 dark:border-gray-700'} rounded-tl-lg transition-colors duration-300`} />
+          <div className={`absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 ${isDragOver ? colors.border : 'border-gray-200 dark:border-gray-700'} rounded-tr-lg transition-colors duration-300`} />
+          <div className={`absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 ${isDragOver ? colors.border : 'border-gray-200 dark:border-gray-700'} rounded-bl-lg transition-colors duration-300`} />
+          <div className={`absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 ${isDragOver ? colors.border : 'border-gray-200 dark:border-gray-700'} rounded-br-lg transition-colors duration-300`} />
         </div>
       ) : (
+        // Image Uploaded State (Warm Organic Style)
         <div className='space-y-4'>
-          {/* Decorative background */}
+          {/* Canvas Area */}
           <div className='relative'>
-            <div className='relative aspect-square bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 dark:from-gray-800 dark:via-gray-750 dark:to-gray-800 rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60'>
+            <div className={`relative aspect-square bg-white dark:bg-gray-900/50 rounded-[2rem] overflow-hidden shadow-soft border border-white dark:border-gray-700 ring-1 ${colors.ring}`}>
               <Stage
                 height={stageSize.height}
                 style={{ width: '100%', height: '100%', touchAction: 'none' }}
@@ -712,13 +749,13 @@ export function ProfileUploadArea({
                 <Layer>
                   {/* User uploaded image */}
                   <TransformableImage
-                    image={image}
+                    image={image!}
                     isSelected={isSelected}
                     opacity={0.8}
-                    onChange={onImageChange || (() => {})}
+                    onChange={onImageChange || (() => { })}
                     onHideGestureHint={hideGestureHint}
                     onHideGestureVisualFeedback={hideGestureVisualFeedback}
-                    onSelect={onImageSelect || (() => {})}
+                    onSelect={onImageSelect || (() => { })}
                     onShowGestureHint={showGestureHintMessage}
                     onShowGestureVisualFeedback={showGestureVisualFeedback}
                   />
@@ -741,83 +778,81 @@ export function ProfileUploadArea({
                 scaleValue={gestureVisualFeedback.scaleValue}
                 stageSize={stageSize}
               />
+
+              {/* Status Badge */}
+              <div className='absolute top-3 left-3'>
+                <div className='flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-white/50 dark:border-gray-700/50 shadow-sm'>
+                  <Sparkles className='w-3 h-3 text-amber-500' />
+                  <span className='text-xs font-medium text-gray-700 dark:text-gray-300'>
+                    已上传
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Image Controls */}
-          <div className='p-3 sm:p-4 space-y-3 sm:space-y-4'>
+          {/* Image Controls - Warm Organic Style */}
+          <div className='p-4 rounded-2xl bg-white dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 shadow-soft space-y-4'>
             {/* Scale Control - Hidden on mobile */}
             {!isMobile && (
-              <div className='space-y-2'>
-                <div className='flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300'>
-                  <ZoomIn className='w-4 h-4' />
-                  <span>{t('detection.profileView.scale')}</span>
+              <div className='flex items-center gap-3'>
+                <div className={`w-8 h-8 rounded-lg ${colors.iconBg} flex items-center justify-center flex-shrink-0`} title={t('detection.profileView.scale')}>
+                  <ZoomIn className={`w-4 h-4 ${colors.iconColor}`} />
                 </div>
-                <div className='flex items-center gap-3'>
-                  <Slider
-                    className='flex-1'
-                    color='primary'
-                    maxValue={300}
-                    minValue={0}
-                    step={1}
+                <div className='flex-1'>
+                  <GradientSlider
                     value={currentScalePercentage}
-                    onChange={handleScaleChange}
-                  />
-                  <Input
-                    className='w-20'
-                    endContent={
-                      <span className='text-xs text-gray-500'>%</span>
-                    }
-                    max={300}
+                    onChange={(val) => handleScaleChange(val)}
                     min={0}
-                    size='sm'
+                    max={300}
                     step={1}
-                    type='number'
-                    value={currentScalePercentage.toString()}
-                    onChange={handleScaleInputChange}
+                    trackGradient={accentColor === 'orange' ? undefined : 'from-rose-100 via-rose-200 to-rose-100 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700'}
                   />
                 </div>
-              </div>
-            )}
-
-            {/* Rotation Control - Enhanced for mobile */}
-            <div className='space-y-2'>
-              <div className='flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300'>
-                <RotateCw className='w-4 h-4' />
-                <span>{t('detection.profileView.rotation')}</span>
-                {isMobile && (
-                  <span className='text-xs text-gray-500 ml-auto'>
-                    精确控制
-                  </span>
-                )}
-              </div>
-              <div className='flex items-center gap-2 sm:gap-3'>
-                <Slider
-                  className='flex-1'
-                  color='primary'
-                  maxValue={360}
-                  minValue={-360}
-                  size={isMobile ? 'md' : 'sm'}
-                  step={1}
-                  value={currentRotationValue}
-                  onChange={handleRotationChange}
-                />
                 <Input
-                  className={isMobile ? 'w-16' : 'w-20'}
-                  endContent={<span className='text-xs text-gray-500'>°</span>}
-                  max={360}
-                  min={-360}
+                  className='w-20'
+                  endContent={
+                    <span className='text-xs text-gray-500'>%</span>
+                  }
+                  max={300}
+                  min={0}
                   size='sm'
                   step={1}
                   type='number'
-                  value={currentRotationValue.toString()}
-                  onChange={handleRotationInputChange}
+                  value={currentScalePercentage.toString()}
+                  onChange={handleScaleInputChange}
+                />
+              </div>
+            )}
+
+            {/* Rotation Control - Integrated Style */}
+            <div className='flex items-center gap-3'>
+              {/* No outer icon - we use the buttons themselves as the visual anchors */}
+              <div className='flex-1'>
+                <RotationControl
+                  value={currentRotationValue}
+                  onChange={(newRotation) => {
+                    if (onImageChange) {
+                      onImageChange({ rotation: newRotation })
+                    }
+                  }}
+                  min={-180}
+                  max={180}
+                  step={1}
+                  buttonStep={15}
+                  // Style the left button to look like the "Unified Icon Box"
+                  leftButtonClassName={`w-8 h-8 rounded-lg ${colors.iconBg} flex items-center justify-center flex-shrink-0 transition-transform active:scale-95 hover:bg-opacity-80`}
+                  leftIcon={<RotateCcw className={`w-4 h-4 ${colors.iconColor}`} />}
+                  // Style the right button similarly for symmetry, or slightly different
+                  rightButtonClassName={`w-8 h-8 rounded-lg ${colors.iconBg} flex items-center justify-center flex-shrink-0 transition-transform active:scale-95 hover:bg-opacity-80`}
+                  rightIcon={<RotateCw className={`w-4 h-4 ${colors.iconColor}`} />}
                 />
               </div>
             </div>
           </div>
         </div>
-      )}
+      )
+      }
 
       <input
         ref={fileInputRef}
@@ -826,6 +861,6 @@ export function ProfileUploadArea({
         type='file'
         onChange={handleFileInputChange}
       />
-    </div>
+    </div >
   )
 }

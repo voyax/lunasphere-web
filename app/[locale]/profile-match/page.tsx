@@ -3,37 +3,41 @@
 import ProfileViewComparison from './components/ProfileViewComparison'
 
 import { useTranslations } from 'next-intl'
+import { Heart } from 'lucide-react'
 
 export default function ProfileMatchPage() {
   const t = useTranslations()
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-950 dark:via-gray-900 dark:to-blue-950/20'>
-      {/* Background Pattern */}
-      <div className='absolute inset-0'>
-        <div className='absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.05),transparent_50%)]' />
-        <div className='absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.04),transparent_50%)]' />
-        <div className='absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-200/50 to-transparent' />
+    <div className='min-h-screen pb-24 selection:bg-orange-100 dark:selection:bg-orange-900/30 relative bg-[#fffaf5] dark:bg-gray-950'>
+      {/* Noise texture overlay */}
+      <div className='noise-overlay' />
+
+      {/* Decorative floating elements */}
+      <div className='absolute top-1/4 right-1/4 opacity-10 dark:opacity-5 animate-float-soft pointer-events-none'>
+        <Heart className='w-12 h-12 text-orange-400' />
       </div>
 
       <div className='relative z-10'>
-        <div className='container mx-auto px-6 pt-24 py-8'>
-          {/* Page Header */}
-          <div className='text-center mb-12'>
-            <h1 className='text-4xl md:text-5xl font-light mb-6 tracking-tight leading-tight'>
-              <span className='font-medium text-gray-900 dark:text-white'>
-                {t('nav.profileMatch')}
-              </span>
-            </h1>
-            <p className='text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed font-light'>
-              {t('detection.profileView.pageDescription')}
-            </p>
-          </div>
+        {/* Hero Section */}
+        <section className='text-center px-6 pt-32 mb-12 relative animate-fade-in'>
+          {/* Title */}
+          <h1 className='text-4xl md:text-6xl font-bold text-gray-800 dark:text-gray-100 tracking-tighter leading-[0.9] mb-6'>
+            {t('nav.profileMatch')}
+          </h1>
 
-          {/* Main Content */}
-          <div className='w-full'>
-            <ProfileViewComparison />
-          </div>
+          {/* Subtitle */}
+          <p className='max-w-lg mx-auto text-gray-400 dark:text-gray-500 text-sm md:text-base leading-relaxed font-medium mb-6'>
+            {t('detection.profileView.pageDescription')}
+          </p>
+
+          {/* Decorative line */}
+          <div className='w-12 h-1.5 bg-orange-200 dark:bg-orange-700 mx-auto rounded-full' />
+        </section>
+
+        {/* Main Content */}
+        <div className='max-w-6xl mx-auto px-4 sm:px-6'>
+          <ProfileViewComparison />
         </div>
       </div>
     </div>
