@@ -97,15 +97,8 @@ export default function ReferenceSources({
       </div>
 
       <div className='relative z-10'>
-        {/* Badge */}
-        <div className='inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-orange-50/80 dark:bg-orange-950/50 border border-orange-100 dark:border-orange-800/30 mb-4'>
-          <div className='w-1.5 h-1.5 rounded-full bg-orange-400' />
-          <span className='text-[10px] font-bold tracking-[0.15em] text-orange-500 dark:text-orange-400 uppercase'>
-            参考文献
-          </span>
-        </div>
-
-        <h3 className='text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-100 mb-4 tracking-tight'>
+        <h3 className='text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-100 mb-4 tracking-tight flex items-center gap-2'>
+          <BookOpen className='w-5 h-5 text-orange-400' />
           {t(titleKeyParts.join('.'))}
         </h3>
 

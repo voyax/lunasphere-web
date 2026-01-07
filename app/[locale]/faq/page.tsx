@@ -1,10 +1,9 @@
 'use client'
 
-import { ChevronDown, Search } from 'lucide-react'
+import { ChevronDown, Search, Brain, Baby, Clock, Sparkles, HelpCircle } from 'lucide-react'
 import { useState, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 
-import MedicalDisclaimer from '@/components/medical-disclaimer'
 import ReferenceSources from '@/components/reference-sources'
 
 interface FAQItem {
@@ -16,22 +15,25 @@ interface FAQItem {
 
 const categoryConfig = {
   basic_knowledge: {
-    gradient: 'from-blue-500 to-cyan-500',
-    bgGradient: 'from-blue-50 to-cyan-50',
-    icon: '🧠',
-    color: 'blue',
+    gradient: 'from-orange-400 to-amber-400',
+    bgGradient: 'from-orange-50 to-amber-50 dark:from-orange-950/30 dark:to-amber-950/30',
+    borderColor: 'border-orange-200 dark:border-orange-800/30',
+    Icon: Brain,
+    color: 'orange',
   },
   daily_care: {
-    gradient: 'from-green-500 to-emerald-500',
-    bgGradient: 'from-green-50 to-emerald-50',
-    icon: '👶',
-    color: 'green',
+    gradient: 'from-rose-400 to-pink-400',
+    bgGradient: 'from-rose-50 to-pink-50 dark:from-rose-950/30 dark:to-pink-950/30',
+    borderColor: 'border-rose-200 dark:border-rose-800/30',
+    Icon: Baby,
+    color: 'rose',
   },
   treatment_timeline: {
-    gradient: 'from-purple-500 to-pink-500',
-    bgGradient: 'from-purple-50 to-pink-50',
-    icon: '⏰',
-    color: 'purple',
+    gradient: 'from-violet-400 to-purple-400',
+    bgGradient: 'from-violet-50 to-purple-50 dark:from-violet-950/30 dark:to-purple-950/30',
+    borderColor: 'border-violet-200 dark:border-violet-800/30',
+    Icon: Clock,
+    color: 'violet',
   },
 }
 
@@ -140,190 +142,211 @@ export default function FAQPage() {
   const categories = Array.from(new Set(faqItems.map(item => item.category)))
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-white via-yellow-50/20 to-amber-50/30 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800'>
+    <div className='min-h-screen bg-[#fffaf5] dark:bg-gray-950 selection:bg-orange-100 dark:selection:bg-orange-900/30'>
+      {/* Noise texture overlay */}
+      <div className='noise-overlay' />
+
       {/* Background Pattern */}
-      <div className='absolute inset-0'>
-        <div className='absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(251,191,36,0.015),transparent_50%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(156,163,175,0.02),transparent_50%)]' />
-        <div className='absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(245,158,11,0.01),transparent_50%)] dark:bg-[radial-gradient(circle_at_70%_80%,rgba(107,114,128,0.015),transparent_50%)]' />
-        <div className='absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-yellow-200/20 to-transparent dark:via-gray-600/20' />
+      <div className='absolute inset-0 pointer-events-none'>
+        <div className='absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(251,191,36,0.03),transparent_50%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(156,163,175,0.02),transparent_50%)]' />
+        <div className='absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(245,158,11,0.02),transparent_50%)] dark:bg-[radial-gradient(circle_at_70%_80%,rgba(107,114,128,0.015),transparent_50%)]' />
       </div>
 
       <div className='relative z-10'>
-        {/* Hero Section */}
-        <div className='relative overflow-hidden'>
-          <div className='absolute inset-0 bg-gradient-to-br from-yellow-200 via-amber-200 to-orange-300 dark:from-yellow-900/40 dark:via-amber-900/40 dark:to-orange-900/40' />
-          <div className='absolute inset-0 opacity-20'>
-            <div
-              className='w-full h-full'
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-              }}
-            />
+        {/* Hero Section - Warm Organic Style */}
+        <section className='text-center px-6 pt-32 pb-12 sm:pb-16 relative animate-fade-in'>
+          {/* Decorative elements */}
+          <div className='absolute top-20 left-1/4 opacity-10 dark:opacity-5 animate-float-soft pointer-events-none'>
+            <Sparkles className='w-8 h-8 text-orange-400' />
           </div>
-          <div className='relative mx-auto max-w-7xl px-4 pt-20 py-12 sm:py-16 md:py-20 sm:px-6 lg:px-8'>
-            <div className='text-center'>
-              <h1 className='text-3xl font-normal tracking-tight text-default-700 sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6'>
-                {t('title')}
-              </h1>
-              <p className='mx-auto max-w-2xl text-lg sm:text-xl font-extralight text-default-700 mb-6 sm:mb-8 leading-relaxed'>
-                {t('subtitle')}
-              </p>
+          <div className='absolute top-32 right-1/3 opacity-10 dark:opacity-5 animate-float-soft pointer-events-none' style={{ animationDelay: '1s' }}>
+            <HelpCircle className='w-6 h-6 text-rose-400' />
+          </div>
 
-              {/* Search Bar */}
-              <div className='mx-auto max-w-md'>
-                <div className='relative'>
-                  <Search className='absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400' />
-                  <input
-                    className='w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm sm:text-base bg-white/90 backdrop-blur-sm rounded-xl sm:rounded-2xl border-0 focus:ring-2 focus:ring-white/50 focus:bg-white transition-all duration-200 placeholder-gray-500'
-                    placeholder={t('searchPlaceholder')}
-                    type='text'
-                    value={searchQuery}
-                    onChange={e => setSearchQuery(e.target.value)}
-                  />
-                </div>
+          {/* Title */}
+          <h1 className='text-4xl md:text-6xl font-bold text-gray-800 dark:text-gray-100 tracking-tighter leading-[0.9] mb-6'>
+            {t('title')}
+          </h1>
+
+          {/* Subtitle */}
+          <p className='max-w-lg mx-auto text-gray-400 dark:text-gray-500 text-sm md:text-base leading-relaxed font-medium mb-8'>
+            {t('subtitle')}
+          </p>
+
+          {/* Search Bar - Premium Style */}
+          <div className='mx-auto max-w-md mb-6'>
+            <div className='relative group'>
+              <div className='absolute -inset-1 bg-gradient-to-r from-orange-200 via-rose-200 to-amber-200 dark:from-orange-900/30 dark:via-rose-900/30 dark:to-amber-900/30 rounded-2xl blur opacity-40 group-hover:opacity-60 transition-opacity duration-300' />
+              <div className='relative'>
+                <Search className='absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400' />
+                <input
+                  className='w-full pl-12 pr-4 py-3.5 text-sm bg-white dark:bg-gray-900 rounded-xl border border-gray-200/60 dark:border-gray-700/60 focus:ring-2 focus:ring-orange-300/50 dark:focus:ring-orange-700/50 focus:border-orange-300 dark:focus:border-orange-700 transition-all duration-200 placeholder-gray-400 shadow-soft'
+                  placeholder={t('searchPlaceholder')}
+                  type='text'
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                />
               </div>
             </div>
           </div>
-          <div className='absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent dark:from-gray-950 dark:to-transparent' />
+
+          {/* Decorative line */}
+          <div className='w-12 h-1.5 bg-orange-200 dark:bg-orange-700 mx-auto rounded-full' />
+        </section>
+      </div>
+
+      <div className='mx-auto max-w-7xl px-4 py-8 sm:py-12 lg:py-16 sm:px-6 lg:px-8'>
+        {/* Category Filter - Premium Pill Style */}
+        <div className='mb-8 sm:mb-12'>
+          <div className='flex flex-wrap gap-2 sm:gap-3 justify-center'>
+            <button
+              className={`group inline-flex items-center gap-2.5 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full font-medium text-sm transition-all duration-300 ${selectedCategory === null
+                ? 'bg-gradient-to-r from-gray-800 to-gray-900 text-white shadow-lg shadow-gray-500/20'
+                : 'bg-white/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 border border-gray-200/60 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-md backdrop-blur-sm'
+                }`}
+              onClick={() => setSelectedCategory(null)}
+            >
+              <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${selectedCategory === null
+                ? 'bg-white/20'
+                : 'bg-gray-100 dark:bg-gray-700'
+                }`}>
+                <HelpCircle className={`w-4 h-4 ${selectedCategory === null ? 'text-white' : 'text-gray-500 dark:text-gray-400'}`} />
+              </div>
+              <span className='hidden sm:inline'>{t('allQuestions')}</span>
+              <span className={`text-xs px-2 py-0.5 rounded-full ${selectedCategory === null ? 'bg-white/20 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'}`}>
+                {faqItems.length}
+              </span>
+            </button>
+            {categories.map(category => {
+              const config = categoryConfig[category]
+              const IconComponent = config.Icon
+              const count = faqItems.filter(
+                item => item.category === category
+              ).length
+
+              return (
+                <button
+                  key={category}
+                  className={`group inline-flex items-center gap-2.5 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full font-medium text-sm transition-all duration-300 ${selectedCategory === category
+                    ? `bg-gradient-to-r ${config.gradient} text-white shadow-lg`
+                    : 'bg-white/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 border border-gray-200/60 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-md backdrop-blur-sm'
+                    }`}
+                  onClick={() => setSelectedCategory(category)}
+                >
+                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${selectedCategory === category
+                    ? 'bg-white/20'
+                    : `bg-gradient-to-br ${config.gradient} bg-opacity-10`
+                    }`}>
+                    <IconComponent className={`w-4 h-4 ${selectedCategory === category ? 'text-white' : 'text-white'}`} />
+                  </div>
+                  <span className='hidden sm:inline'>{t(`category.${category}`)}</span>
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${selectedCategory === category ? 'bg-white/20 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'}`}>
+                    {count}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
         </div>
 
-        <div className='mx-auto max-w-7xl px-4 py-8 sm:py-12 lg:py-16 sm:px-6 lg:px-8'>
-          {/* Category Filter */}
-          <div className='mb-8 sm:mb-12 hidden sm:block'>
-            <div className='flex flex-wrap gap-3 justify-center'>
-              <button
-                className={`group px-6 py-3 rounded-2xl font-medium transition-all duration-300 transform hover:scale-105 ${selectedCategory === null
-                    ? 'bg-gradient-to-r from-gray-800 to-gray-900 text-white shadow-lg shadow-gray-500/25'
-                    : 'bg-white text-gray-700 border border-gray-200 hover:border-gray-300 hover:shadow-md'
-                  }`}
-                onClick={() => setSelectedCategory(null)}
-              >
-                <span className='flex items-center gap-2'>
-                  <span className='text-lg'>📋</span>
-                  {t('allQuestions')}
-                  <span
-                    className={`text-xs px-2 py-1 rounded-full ${selectedCategory === null ? 'bg-white/20' : 'bg-gray-100'
-                      }`}
-                  >
-                    {faqItems.length}
-                  </span>
-                </span>
-              </button>
-              {categories.map(category => {
-                const config = categoryConfig[category]
-                const count = faqItems.filter(
-                  item => item.category === category
-                ).length
-
-                return (
-                  <button
-                    key={category}
-                    className={`group px-6 py-3 rounded-2xl font-medium transition-all duration-300 transform hover:scale-105 ${selectedCategory === category
-                        ? `bg-gradient-to-r ${config.gradient} text-white shadow-lg shadow-${config.color}-500/25`
-                        : 'bg-white text-gray-700 border border-gray-200 hover:border-gray-300 hover:shadow-md'
-                      }`}
-                    onClick={() => setSelectedCategory(category)}
-                  >
-                    <span className='flex items-center gap-2'>
-                      <span className='text-lg'>{config.icon}</span>
-                      {t(`category.${category}`)}
-                      <span
-                        className={`text-xs px-2 py-1 rounded-full ${selectedCategory === category
-                            ? 'bg-white/20'
-                            : 'bg-gray-100'
-                          }`}
-                      >
-                        {count}
-                      </span>
-                    </span>
-                  </button>
-                )
-              })}
-            </div>
+        {/* Results Count */}
+        {(searchQuery || selectedCategory) && (
+          <div className='mb-6 sm:mb-8 text-center'>
+            <p className='text-sm sm:text-base text-gray-600'>
+              {t('searchResults.prefix')}{' '}
+              <span className='font-semibold text-gray-900'>
+                {filteredItems.length}
+              </span>{' '}
+              {t('searchResults.suffix')}
+            </p>
           </div>
+        )}
 
-          {/* Results Count */}
-          {(searchQuery || selectedCategory) && (
-            <div className='mb-6 sm:mb-8 text-center'>
-              <p className='text-sm sm:text-base text-gray-600'>
-                {t('searchResults.prefix')}{' '}
-                <span className='font-semibold text-gray-900'>
-                  {filteredItems.length}
-                </span>{' '}
-                {t('searchResults.suffix')}
+        {/* FAQ Items - Premium Card Design */}
+        <div className='space-y-3'>
+          {filteredItems.length === 0 ? (
+            <div className='text-center py-16 sm:py-20'>
+              <div className='w-16 h-16 mx-auto mb-4 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center'>
+                <Search className='w-7 h-7 text-gray-400' />
+              </div>
+              <h3 className='text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-200 mb-2'>
+                {t('noResults.title')}
+              </h3>
+              <p className='text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto leading-relaxed'>
+                {t('noResults.description')}
               </p>
             </div>
-          )}
+          ) : (
+            filteredItems.map((item, index) => {
+              const config = categoryConfig[item.category]
+              const IconComponent = config.Icon
+              const isOpen = openItems.has(item.id)
 
-          {/* FAQ Items */}
-          <div className='space-y-4'>
-            {filteredItems.length === 0 ? (
-              <div className='text-center py-12 sm:py-16'>
-                <div className='text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-4'>
-                  🔍
-                </div>
-                <h3 className='text-lg sm:text-xl font-semibold text-gray-900 mb-2'>
-                  {t('noResults.title')}
-                </h3>
-                <p className='text-sm sm:text-base text-gray-600 max-w-md mx-auto leading-relaxed'>
-                  {t('noResults.description')}
-                </p>
-              </div>
-            ) : (
-              filteredItems.map((item, index) => {
-                const config = categoryConfig[item.category]
+              return (
+                <div
+                  key={item.id}
+                  className={`group relative bg-white dark:bg-gray-900/50 rounded-2xl border transition-all duration-300 overflow-hidden ${isOpen
+                    ? `${config.borderColor} shadow-lg`
+                    : 'border-gray-100 dark:border-gray-800 hover:border-gray-200 dark:hover:border-gray-700 hover:shadow-md'
+                    }`}
+                  style={{
+                    animationDelay: `${index * 30}ms`,
+                  }}
+                >
+                  {/* Colored accent bar */}
+                  <div className={`absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b ${config.gradient} transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'}`} />
 
-                return (
-                  <div
-                    key={item.id}
-                    className='group bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-gray-200 transition-all duration-300 overflow-hidden'
-                    style={{
-                      animationDelay: `${index * 50}ms`,
-                    }}
+                  <button
+                    className='w-full pl-5 pr-4 sm:pl-6 sm:pr-5 py-4 sm:py-5 text-left flex items-center gap-4 transition-all duration-200'
+                    onClick={() => toggleItem(item.id)}
                   >
-                    <button
-                      className='w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-5 lg:py-6 text-left flex items-center justify-between hover:bg-gray-50/50 transition-all duration-200 active:bg-gray-100/50'
-                      onClick={() => toggleItem(item.id)}
-                    >
-                      <div className='flex items-center gap-4 flex-1'>
-                        <div className='flex-1'>
-                          <h3 className='text-base sm:text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-200 leading-relaxed'>
-                            {item.question}
-                          </h3>
-                        </div>
-                      </div>
+                    {/* Category Icon */}
+                    <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${config.gradient} flex items-center justify-center flex-shrink-0 shadow-sm`}>
+                      <IconComponent className='w-5 h-5 text-white' />
+                    </div>
+
+                    {/* Question Text */}
+                    <div className='flex-1 min-w-0'>
+                      <h3 className={`text-base sm:text-lg font-semibold leading-snug transition-colors duration-200 ${isOpen
+                        ? `text-${config.color}-600 dark:text-${config.color}-400`
+                        : 'text-gray-800 dark:text-gray-200'
+                        }`}>
+                        {item.question}
+                      </h3>
+                    </div>
+
+                    {/* Chevron */}
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 ${isOpen
+                      ? `bg-gradient-to-br ${config.gradient}`
+                      : 'bg-gray-100 dark:bg-gray-800 group-hover:bg-gray-200 dark:group-hover:bg-gray-700'
+                      }`}>
                       <ChevronDown
-                        className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-400 transition-all duration-300 group-hover:text-gray-600 flex-shrink-0 ml-2 ${openItems.has(item.id)
-                            ? 'rotate-180 text-blue-500'
-                            : ''
+                        className={`w-4 h-4 transition-all duration-300 ${isOpen
+                          ? 'rotate-180 text-white'
+                          : 'text-gray-500 dark:text-gray-400'
                           }`}
                       />
-                    </button>
-                    {openItems.has(item.id) && (
-                      <div className='border-t border-gray-100'>
-                        <div className='px-4 sm:px-6 lg:px-8 py-4 sm:py-5 lg:py-6'>
-                          <div
-                            className={`p-4 sm:p-5 lg:p-6 rounded-lg sm:rounded-xl bg-gradient-to-r ${config.bgGradient}`}
-                          >
-                            <div className='text-sm sm:text-base text-gray-700 leading-relaxed whitespace-pre-line'>
-                              {item.answer}
-                            </div>
-                          </div>
+                    </div>
+                  </button>
+
+                  {/* Answer Panel */}
+                  {isOpen && (
+                    <div className='px-5 sm:px-6 pb-5 sm:pb-6'>
+                      <div className={`p-4 sm:p-5 rounded-xl bg-gradient-to-r ${config.bgGradient} border ${config.borderColor}`}>
+                        <div className='text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line'>
+                          {item.answer}
                         </div>
                       </div>
-                    )}
-                  </div>
-                )
-              })
-            )}
-          </div>
-
-          {/* Medical Disclaimer */}
-          <MedicalDisclaimer className='mt-12 sm:mt-16 lg:mt-20' />
-
-          {/* References */}
-          <ReferenceSources className='mt-8 sm:mt-10 lg:mt-12' />
+                    </div>
+                  )}
+                </div>
+              )
+            })
+          )}
         </div>
+
+        {/* References */}
+        <ReferenceSources className='mt-8 sm:mt-10 lg:mt-12' />
       </div>
     </div>
   )
