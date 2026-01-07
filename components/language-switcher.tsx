@@ -43,7 +43,7 @@ export function LanguageSwitcher({
     <Dropdown>
       <DropdownTrigger>
         <Button
-          className='text-sm font-medium'
+          className='text-xs sm:text-sm font-medium min-w-[44px] min-h-[44px] touch-manipulation'
           isLoading={isPending}
           size='sm'
           variant='ghost'
@@ -53,12 +53,13 @@ export function LanguageSwitcher({
       </DropdownTrigger>
       <DropdownMenu
         aria-label={languageLabel}
+        className='min-w-[120px]'
         onAction={key => handleLanguageChange(key as string)}
       >
         {locales.map(lang => (
           <DropdownItem
             key={lang}
-            className={currentLocale === lang ? 'bg-primary/10' : ''}
+            className={`min-h-[44px] text-sm ${currentLocale === lang ? 'bg-primary/10' : ''}`}
           >
             {localeNames[lang]}
           </DropdownItem>

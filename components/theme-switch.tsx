@@ -42,7 +42,10 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
     <Component
       {...getBaseProps({
         className: clsx(
-          'px-px transition-opacity hover:opacity-80 cursor-pointer',
+          // Minimum 44px touch target for mobile accessibility
+          'min-w-[44px] min-h-[44px] flex items-center justify-center',
+          'transition-opacity hover:opacity-80 active:opacity-60 cursor-pointer touch-manipulation',
+          'rounded-xl hover:bg-white/50 dark:hover:bg-gray-800/50',
           className,
           classNames?.base
         ),

@@ -7,6 +7,9 @@
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    /* Prevent font size adjustment on orientation change */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
@@ -17,6 +20,8 @@
     /* Solid warm cream background matching design2 */
     background-color: #fffaf5;
     min-height: 100vh;
+    /* Prevent pull-to-refresh on mobile */
+    overscroll-behavior-y: contain;
   }
 
   .dark body,
@@ -27,6 +32,15 @@
 
   * {
     box-sizing: border-box;
+    /* Improve touch responsiveness */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Improve button/link touch behavior */
+  button,
+  a,
+  [role="button"] {
+    touch-action: manipulation;
   }
 }
 
@@ -217,6 +231,69 @@
 
   .dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     background: rgb(107 114 128);
+  }
+
+  /* ========================================
+     Mobile-First Utilities
+     ======================================== */
+
+  /* Safe area padding for iPhone X+ and devices with notches */
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .pl-safe {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .pr-safe {
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .px-safe {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .py-safe {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Touch manipulation - disables double-tap zoom for better UX */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  /* Prevent text selection on interactive elements */
+  .select-none-touch {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  /* Mobile-friendly minimum touch target */
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Hide on touch devices only */
+  @media (hover: none) and (pointer: coarse) {
+    .hover-only {
+      display: none !important;
+    }
+  }
+
+  /* Show only on touch devices */
+  @media (hover: hover) and (pointer: fine) {
+    .touch-only {
+      display: none !important;
+    }
   }
 }
 
