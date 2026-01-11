@@ -10,6 +10,7 @@ import { Providers } from '../providers'
 import { fontSans } from '@/config/fonts'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
+import { MobileBottomNav } from '@/components/mobile-bottom-nav'
 import { routing } from '@/i18n/routing'
 import { Locale } from '@/i18n/config'
 
@@ -167,6 +168,7 @@ export default async function LocaleLayout({ children, params }: Props) {
               <Navbar />
               <main className='flex-grow w-full max-w-full'>{children}</main>
               <Footer />
+              <MobileBottomNav />
             </div>
           </Providers>
         </NextIntlClientProvider>
