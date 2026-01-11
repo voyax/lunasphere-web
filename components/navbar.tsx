@@ -41,25 +41,20 @@ export function Navbar() {
   }
 
   return (
-    <header className='fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 md:px-6 py-2 sm:py-3'>
+    <header className='fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 md:px-6 pt-2 sm:pt-3'>
       <div className='max-w-6xl mx-auto'>
-        <nav className='flex justify-between items-center bg-white/40 dark:bg-gray-900/40 backdrop-blur-md rounded-2xl sm:rounded-3xl px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 border border-white/60 dark:border-gray-700/50 shadow-sm transition-all duration-300 hover:shadow-md'>
+        <nav className='flex justify-between items-center bg-white/60 dark:bg-gray-900/60 backdrop-blur-md rounded-2xl sm:rounded-2xl px-3 sm:px-5 md:px-6 h-12 sm:h-14 border border-white/60 dark:border-gray-700/50 shadow-sm'>
           {/* Logo & Brand */}
           <Link
-            className='flex items-center space-x-2 sm:space-x-3 group min-h-[44px]'
+            className='flex items-center space-x-2 sm:space-x-2.5 group'
             href='/'
           >
-            <div className='bg-orange-200 dark:bg-orange-900/50 p-1.5 sm:p-2 rounded-xl sm:rounded-2xl group-hover:scale-105 transition-transform'>
-              <Baby className='w-4 h-4 sm:w-5 sm:h-5 text-orange-600 dark:text-orange-400' />
+            <div className='bg-orange-100 dark:bg-orange-900/50 p-1.5 sm:p-2 rounded-xl group-hover:scale-105 transition-transform'>
+              <Baby className='w-4 h-4 sm:w-5 sm:h-5 text-orange-500 dark:text-orange-400' />
             </div>
-            <div>
-              <h1 className='text-base sm:text-lg font-bold text-gray-800 dark:text-gray-100 leading-tight group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors'>
-                {tSite('title')}
-              </h1>
-              <p className='text-[9px] sm:text-[10px] text-orange-500 dark:text-orange-400 font-bold tracking-widest uppercase hidden sm:block'>
-                LunaCare Studio
-              </p>
-            </div>
+            <h1 className='text-sm sm:text-base font-bold text-gray-800 dark:text-gray-100 group-hover:text-orange-500 transition-colors'>
+              {tSite('title')}
+            </h1>
           </Link>
 
           {/* Desktop Navigation */}
@@ -79,14 +74,12 @@ export function Navbar() {
           </div>
 
           {/* Right Actions */}
-          <div className='flex items-center space-x-1 sm:space-x-2'>
+          <div className='flex items-center space-x-0.5 sm:space-x-2'>
             <LanguageSwitcher
               currentLocale={locale}
               languageLabel={t('language')}
             />
             <ThemeSwitch />
-
-            {/* Mobile Menu Toggle - Hidden since we use bottom nav on mobile */}
           </div>
         </nav>
 

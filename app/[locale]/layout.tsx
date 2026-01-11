@@ -11,6 +11,8 @@ import { fontSans } from '@/config/fonts'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { MobileBottomNav } from '@/components/mobile-bottom-nav'
+import { LayoutWrapper } from '@/components/layout-wrapper'
+import { NetworkStatus } from '@/components/network-status'
 import { routing } from '@/i18n/routing'
 import { Locale } from '@/i18n/config'
 
@@ -111,13 +113,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' },
+    { media: '(prefers-color-scheme: light)', color: '#fffaf5' },
+    { media: '(prefers-color-scheme: dark)', color: '#1a1a1a' },
   ],
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  viewportFit: 'cover',
   colorScheme: 'light dark',
 }
 
@@ -139,16 +142,58 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html suppressHydrationWarning lang={locale === 'zh' ? 'zh-CN' : 'en-US'}>
       <head>
-        {/* Additional meta tags for better SEO */}
+        {/* PWA & Mobile App Meta Tags */}
         <meta content={site.title} name='application-name' />
         <meta content='yes' name='apple-mobile-web-app-capable' />
-        <meta content='default' name='apple-mobile-web-app-status-bar-style' />
+        <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style' />
         <meta content={site.title} name='apple-mobile-web-app-title' />
         <meta content='telephone=no' name='format-detection' />
         <meta content='yes' name='mobile-web-app-capable' />
+        
+        {/* iOS Splash Screens - iPhone SE to iPhone 15 Pro Max */}
+        <link
+          rel='apple-touch-startup-image'
+          href='/splash/apple-splash-2048-2732.png'
+          media='(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
+        />
+        <link
+          rel='apple-touch-startup-image'
+          href='/splash/apple-splash-1170-2532.png'
+          media='(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
+        />
+        <link
+          rel='apple-touch-startup-image'
+          href='/splash/apple-splash-1179-2556.png'
+          media='(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
+        />
+        <link
+          rel='apple-touch-startup-image'
+          href='/splash/apple-splash-1290-2796.png'
+          media='(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
+        />
+        <link
+          rel='apple-touch-startup-image'
+          href='/splash/apple-splash-1284-2778.png'
+          media='(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)'
+        />
+        <link
+          rel='apple-touch-startup-image'
+          href='/splash/apple-splash-750-1334.png'
+          media='(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)'
+        />
+        
+        {/* iOS Touch Icon */}
+        <link rel='apple-touch-icon' href='/logo_with_bg.png' />
+        <link rel='apple-touch-icon' sizes='180x180' href='/logo_with_bg.png' />
+        
+        {/* Microsoft Tiles */}
         <meta content='/browserconfig.xml' name='msapplication-config' />
-        <meta content='#ffffff' name='msapplication-TileColor' />
+        <meta content='#fffaf5' name='msapplication-TileColor' />
         <meta content='no' name='msapplication-tap-highlight' />
+        
+        {/* Prevent zoom on input focus (iOS Safari) */}
+        <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover' />
+        
         {process.env.GOOGLE_ANALYTICS_ID && (
           <meta
             content={process.env.GOOGLE_ANALYTICS_ID}
@@ -166,9 +211,12 @@ export default async function LocaleLayout({ children, params }: Props) {
           <Providers themeProps={{ attribute: 'class', defaultTheme: 'light' }}>
             <div className='relative flex flex-col min-h-screen w-full max-w-full overflow-x-hidden'>
               <Navbar />
-              <main className='flex-grow w-full max-w-full'>{children}</main>
+              <main className='flex-grow w-full max-w-full'>
+                <LayoutWrapper>{children}</LayoutWrapper>
+              </main>
               <Footer />
               <MobileBottomNav />
+              <NetworkStatus />
             </div>
           </Providers>
         </NextIntlClientProvider>

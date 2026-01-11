@@ -116,7 +116,7 @@ export default function CICard({ value, measurements }: CICardProps) {
   const colors = getSeverityColors(result.severity)
 
   return (
-    <div className='bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-[2.5rem] p-6 border border-white dark:border-gray-700/50 shadow-sm hover:shadow-md transition-all duration-300'>
+    <div className='bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-[1.5rem] md:rounded-[2.5rem] p-4 md:p-6 border border-white dark:border-gray-700/50 shadow-sm hover:shadow-md transition-all duration-300'>
       {/* Header */}
       <div className='flex justify-between items-start mb-2'>
         <div>

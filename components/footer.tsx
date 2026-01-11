@@ -8,7 +8,7 @@ export const Footer = () => {
   const tFooter = useTranslations('footer')
 
   return (
-    <footer className='border-t border-orange-100/50 dark:border-gray-800/50 pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 md:pb-12 pb-safe'>
+    <footer className='hidden md:block border-t border-orange-100/50 dark:border-gray-800/50 pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 md:pb-12'>
       <div className='max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0'>
         {/* Brand */}
         <div className='text-center md:text-left'>
@@ -22,16 +22,16 @@ export const Footer = () => {
 
         {/* Links & Copyright */}
         <div className='flex flex-col items-center md:items-end space-y-3 sm:space-y-4'>
-          {/* Navigation Links - larger touch targets on mobile */}
-          <nav className='flex flex-wrap justify-center gap-x-4 sm:gap-x-8 gap-y-2 text-xs sm:text-[11px] font-bold'>
+          {/* Navigation Links */}
+          <nav className='flex flex-wrap justify-center gap-x-8 gap-y-2 text-[11px] font-bold'>
             <a
-              className='min-h-[44px] sm:min-h-0 flex items-center text-gray-400 dark:text-gray-500 hover:text-orange-400 dark:hover:text-orange-400 active:text-orange-500 transition-colors cursor-pointer touch-manipulation px-2 sm:px-0'
+              className='text-gray-400 dark:text-gray-500 hover:text-orange-400 dark:hover:text-orange-400 transition-colors cursor-pointer'
               href='/faq'
             >
               {tFooter('privacy')}
             </a>
             <a
-              className='min-h-[44px] sm:min-h-0 flex items-center text-gray-400 dark:text-gray-500 hover:text-orange-400 dark:hover:text-orange-400 active:text-orange-500 transition-colors cursor-pointer touch-manipulation px-2 sm:px-0'
+              className='text-gray-400 dark:text-gray-500 hover:text-orange-400 dark:hover:text-orange-400 transition-colors cursor-pointer'
               href='https://github.com/voyax/baby-head-web'
               rel='noopener noreferrer'
               target='_blank'
@@ -39,7 +39,7 @@ export const Footer = () => {
               {tFooter('research')}
             </a>
             <a
-              className='min-h-[44px] sm:min-h-0 flex items-center text-gray-400 dark:text-gray-500 hover:text-orange-400 dark:hover:text-orange-400 active:text-orange-500 transition-colors cursor-pointer touch-manipulation px-2 sm:px-0'
+              className='text-gray-400 dark:text-gray-500 hover:text-orange-400 dark:hover:text-orange-400 transition-colors cursor-pointer'
               href='mailto:hi@melolib.com'
             >
               {tFooter('contact')}
@@ -47,7 +47,7 @@ export const Footer = () => {
           </nav>
 
           {/* Copyright */}
-          <p className='text-[9px] sm:text-[10px] text-gray-300 dark:text-gray-600 font-medium text-center'>
+          <p className='text-[10px] text-gray-300 dark:text-gray-600 font-medium text-center'>
             © {currentYear} LUNASPHERE STUDIO • {tFooter('copyright')}
           </p>
         </div>

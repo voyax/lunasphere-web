@@ -42,8 +42,8 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
     <Component
       {...getBaseProps({
         className: clsx(
-          // Minimum 44px touch target for mobile accessibility
-          'min-w-[44px] min-h-[44px] flex items-center justify-center',
+          // Standard touch target for navbar (36px mobile, 40px desktop)
+          'w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center',
           'transition-opacity hover:opacity-80 active:opacity-60 cursor-pointer touch-manipulation',
           'rounded-xl hover:bg-white/50 dark:hover:bg-gray-800/50',
           className,
@@ -74,9 +74,9 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
         })}
       >
         {!isSelected || isSSR ? (
-          <SunFilledIcon size={22} />
+          <SunFilledIcon size={20} />
         ) : (
-          <MoonFilledIcon size={22} />
+          <MoonFilledIcon size={20} />
         )}
       </div>
     </Component>

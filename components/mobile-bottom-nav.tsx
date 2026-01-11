@@ -1,21 +1,9 @@
 'use client'
 
-import { useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { Home, BookOpen, Scan, HelpCircle } from 'lucide-react'
 import { Link, usePathname } from '@/i18n/routing'
-
-// Haptic feedback utility
-const triggerHaptic = (style: 'light' | 'medium' | 'heavy' = 'light') => {
-  if (typeof window !== 'undefined' && 'vibrate' in navigator) {
-    const patterns = {
-      light: 10,
-      medium: 20,
-      heavy: 30,
-    }
-    navigator.vibrate(patterns[style])
-  }
-}
+import { useHapticFeedback } from '@/hooks/useHapticFeedback'
 
 interface NavItemProps {
   href: '/' | '/learn' | '/profile-match' | '/faq'
@@ -25,14 +13,12 @@ interface NavItemProps {
 }
 
 const NavItem = ({ href, icon, label, isActive }: NavItemProps) => {
-  const handleClick = useCallback(() => {
-    triggerHaptic('light')
-  }, [])
+  const { hapticLight } = useHapticFeedback()
 
   return (
     <Link
       href={href}
-      onClick={handleClick}
+      onClick={hapticLight}
       className={`
         relative flex flex-col items-center justify-center flex-1 py-2 min-h-[56px]
         transition-all duration-200 ease-out

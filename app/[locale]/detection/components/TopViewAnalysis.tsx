@@ -49,55 +49,61 @@ interface GuidancePanelProps {
 }
 
 const GuidancePanel = memo(({ t }: GuidancePanelProps) => (
-  <div className='bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-[3rem] p-8 md:p-10 border border-white dark:border-gray-700 shadow-sm h-full flex flex-col justify-center animate-fade-in'>
-    <div className='relative mb-8'>
-      <div className='absolute -left-4 top-0 w-1 h-12 bg-orange-300 dark:bg-orange-500 rounded-full' />
-      <h2 className='text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 leading-[1.1]'>
+  <div className='bg-white/40 dark:bg-gray-800/40 backdrop-blur-sm rounded-2xl md:rounded-[2.5rem] p-4 md:p-8 border border-white/60 dark:border-gray-700 shadow-sm animate-fade-in'>
+    {/* Title - compact on mobile */}
+    <div className='mb-4 md:mb-6'>
+      <h2 className='text-lg md:text-3xl font-bold text-gray-800 dark:text-gray-100 leading-snug'>
         {t('detection.guidance.title1')}
-        <br />
         <span className='text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-400'>
           {t('detection.guidance.title2')}
         </span>
       </h2>
     </div>
 
-    <div className='space-y-6'>
-      <div className='p-6 rounded-[2rem] bg-orange-50/50 dark:bg-orange-950/20 border border-orange-100/30 dark:border-orange-800/30'>
-        <h4 className='font-bold text-gray-700 dark:text-gray-300 text-sm mb-2 flex items-center'>
-          <Info className='w-4 h-4 mr-2 text-orange-400' />
-          {t('detection.guidance.tipTitle')}
-        </h4>
-        <p className='text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium'>
-          {t('detection.guidance.tipDesc')}
-        </p>
+    {/* Tip - warm background, compact */}
+    <div className='bg-orange-50/80 dark:bg-orange-950/30 rounded-xl md:rounded-2xl p-3 md:p-4 mb-4 md:mb-6'>
+      <div className='flex items-start space-x-0 md:space-x-2.5'>
+        <Info className='hidden md:block w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0' />
+        <div>
+          <span className='text-xs md:text-sm font-medium text-gray-700 dark:text-gray-300'>
+            {t('detection.guidance.tipTitle')}
+          </span>
+          <p className='text-[11px] md:text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed'>
+            {t('detection.guidance.tipDesc')}
+          </p>
+        </div>
       </div>
+    </div>
 
-      <ul className='space-y-4 px-2'>
-        <li className='flex items-start space-x-3 text-xs text-gray-500 dark:text-gray-400 font-medium'>
-          <div className='w-5 h-5 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center flex-shrink-0 text-rose-500 dark:text-rose-400 font-bold'>
-            1
-          </div>
-          <span className='mt-0.5'>
-            {t('detection.guidance.step1')}
-          </span>
-        </li>
-        <li className='flex items-start space-x-3 text-xs text-gray-500 dark:text-gray-400 font-medium'>
-          <div className='w-5 h-5 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center flex-shrink-0 text-orange-500 dark:text-orange-400 font-bold'>
-            2
-          </div>
-          <span className='mt-0.5'>
-            {t('detection.guidance.step2')}
-          </span>
-        </li>
-        <li className='flex items-start space-x-3 text-xs text-gray-500 dark:text-gray-400 font-medium'>
-          <div className='w-5 h-5 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center flex-shrink-0 text-yellow-600 dark:text-yellow-400 font-bold'>
-            3
-          </div>
-          <span className='mt-0.5'>
-            {t('detection.guidance.step3')}
-          </span>
-        </li>
-      </ul>
+    {/* Steps - compact list with warm dividers */}
+    <div className='space-y-0 bg-white/60 dark:bg-gray-800/60 rounded-xl md:rounded-2xl overflow-hidden'>
+      {/* Step 1 */}
+      <div className='px-3 md:px-4 py-2.5 md:py-3 flex items-center space-x-3 border-b border-orange-100/50 dark:border-gray-700/30'>
+        <span className='w-5 h-5 md:w-6 md:h-6 rounded-full bg-rose-100 dark:bg-rose-900/40 flex items-center justify-center text-rose-500 dark:text-rose-400 text-[10px] md:text-xs font-bold flex-shrink-0'>
+          1
+        </span>
+        <span className='text-xs md:text-sm text-gray-600 dark:text-gray-400'>
+          {t('detection.guidance.step1')}
+        </span>
+      </div>
+      {/* Step 2 */}
+      <div className='px-3 md:px-4 py-2.5 md:py-3 flex items-center space-x-3 border-b border-orange-100/50 dark:border-gray-700/30'>
+        <span className='w-5 h-5 md:w-6 md:h-6 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center text-orange-500 dark:text-orange-400 text-[10px] md:text-xs font-bold flex-shrink-0'>
+          2
+        </span>
+        <span className='text-xs md:text-sm text-gray-600 dark:text-gray-400'>
+          {t('detection.guidance.step2')}
+        </span>
+      </div>
+      {/* Step 3 */}
+      <div className='px-3 md:px-4 py-2.5 md:py-3 flex items-center space-x-3'>
+        <span className='w-5 h-5 md:w-6 md:h-6 rounded-full bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center text-amber-600 dark:text-amber-400 text-[10px] md:text-xs font-bold flex-shrink-0'>
+          3
+        </span>
+        <span className='text-xs md:text-sm text-gray-600 dark:text-gray-400'>
+          {t('detection.guidance.step3')}
+        </span>
+      </div>
     </div>
   </div>
 ))
@@ -405,15 +411,15 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
   const isModelReady = modelState === ModelState.LOADED
 
   return (
-    <div className='w-full max-w-6xl mx-auto px-4'>
-      <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start'>
+    <div className='w-full max-w-6xl mx-auto px-3 sm:px-4'>
+      <div className='grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start'>
         {/* Left Area: The Interaction Frame */}
         <div className='lg:col-span-6 flex flex-col items-center'>
           <div className='relative group w-full max-w-[480px]'>
             {/* Soft Shadow Layer */}
             <div className='absolute -inset-2 bg-orange-200/20 dark:bg-orange-900/10 blur-2xl rounded-[4rem]' />
 
-            <div className='relative bg-white dark:bg-gray-800 p-6 rounded-[3.5rem] shadow-xl border border-white dark:border-gray-700'>
+            <div className='relative bg-white dark:bg-gray-800 p-4 md:p-6 rounded-[2rem] md:rounded-[3.5rem] shadow-xl border border-white dark:border-gray-700'>
               {/* Hidden file input - always in DOM for reuse */}
               <input
                 ref={fileInputRef}
@@ -426,7 +432,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
 
               {/* Main Display Area */}
               <div
-                className='relative aspect-[4/5] rounded-[2.8rem] overflow-hidden bg-[#faf8f6] dark:bg-gray-900 border border-orange-100 dark:border-orange-900/30 flex flex-col items-center justify-center transition-all duration-500 group-hover:border-orange-200 dark:group-hover:border-orange-800/50'
+                className='relative aspect-[4/5] rounded-[1.5rem] md:rounded-[2.8rem] overflow-hidden bg-[#faf8f6] dark:bg-gray-900 border border-orange-100 dark:border-orange-900/30 flex flex-col items-center justify-center transition-all duration-500 group-hover:border-orange-200 dark:group-hover:border-orange-800/50'
                 onMouseEnter={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
               >

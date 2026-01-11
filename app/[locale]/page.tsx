@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
-import { Heart } from 'lucide-react'
+import { Heart, BarChart3, Shield, BookOpen } from 'lucide-react'
 
 import { ModelState } from './detection/types'
 import ModelManager from './detection/components/ModelManager'
@@ -46,7 +46,7 @@ export default function HomePage() {
   }, [])
 
   return (
-    <div className='min-h-screen pb-24 selection:bg-orange-100 dark:selection:bg-orange-900/30 relative bg-[#fffaf5] dark:bg-gray-950'>
+    <div className='min-h-screen pb-28 md:pb-24 selection:bg-orange-100 dark:selection:bg-orange-900/30 relative bg-[#fffaf5] dark:bg-gray-950'>
       {/* Noise texture overlay */}
       <div className='noise-overlay' />
 
@@ -57,10 +57,10 @@ export default function HomePage() {
 
       <div className='relative z-10'>
         {/* Hero Section */}
-        <section className='text-center px-6 pt-40 mb-16 relative animate-fade-in'>
+        <section className='text-center px-4 sm:px-6 pt-24 md:pt-40 mb-8 md:mb-16 relative animate-fade-in'>
 
           {/* Title */}
-          <h1 className='text-5xl md:text-7xl font-bold text-gray-800 dark:text-gray-100 tracking-tighter leading-[0.9] mb-8'>
+          <h1 className='text-4xl sm:text-5xl md:text-7xl font-bold text-gray-800 dark:text-gray-100 tracking-tighter leading-[0.9] mb-6 md:mb-8'>
             {t('page.title1')}
             <br />
             <span className='text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-400'>
@@ -182,49 +182,72 @@ export default function HomePage() {
         />
 
         {/* Parent Education Feature Cards - Always visible */}
-        <div className='mt-32 max-w-5xl mx-auto px-6'>
-          <div className='text-center mb-16'>
-            <h3 className='text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4 tracking-tight'>
+        <div className='mt-16 md:mt-32 max-w-5xl mx-auto'>
+          <div className='text-center mb-6 md:mb-16 px-4 sm:px-6'>
+            <h3 className='text-xl md:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-3 md:mb-4 tracking-tight'>
               {t('page.featureSection.title')}
             </h3>
-            <div className='w-12 h-1.5 bg-orange-200 dark:bg-orange-700 mx-auto rounded-full' />
+            <div className='w-10 md:w-12 h-1 md:h-1.5 bg-orange-200 dark:bg-orange-700 mx-auto rounded-full' />
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-10'>
-            <div className='p-10 rounded-[2.8rem] bg-orange-50 dark:bg-orange-950/30 border border-white dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow'>
-              <h4 className='text-lg font-bold text-gray-800 dark:text-gray-100 mb-4'>
-                {t('page.featureSection.card1.title')}
-              </h4>
-              <p className='text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium'>
-                {t('page.featureSection.card1.desc')}
-              </p>
+          {/* Mobile: Horizontal scroll | Desktop: Grid */}
+          <div className='md:px-6'>
+            {/* Mobile horizontal scroll container */}
+            <div className='flex md:grid md:grid-cols-3 gap-3 md:gap-10 overflow-x-auto md:overflow-visible px-4 md:px-0 pb-4 md:pb-0 snap-x snap-mandatory scrollbar-hide'>
+              {/* Card 1 */}
+              <div className='flex-shrink-0 w-[280px] md:w-auto snap-center p-5 md:p-10 rounded-2xl md:rounded-[2.8rem] bg-gradient-to-br from-orange-50 to-amber-50/50 dark:from-orange-950/30 dark:to-amber-950/20 border border-orange-100/50 dark:border-gray-700 shadow-sm hover:shadow-md transition-all active:scale-[0.98] touch-manipulation'>
+                <div className='w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-gradient-to-br from-orange-400 to-amber-400 flex items-center justify-center mb-3 md:mb-4 shadow-lg shadow-orange-200/50 dark:shadow-none'>
+                  <BarChart3 className='w-5 h-5 md:w-6 md:h-6 text-white' />
+                </div>
+                <h4 className='text-sm md:text-lg font-bold text-gray-800 dark:text-gray-100 mb-2 md:mb-4'>
+                  {t('page.featureSection.card1.title')}
+                </h4>
+                <p className='text-[11px] md:text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium line-clamp-3 md:line-clamp-none'>
+                  {t('page.featureSection.card1.desc')}
+                </p>
+              </div>
+
+              {/* Card 2 */}
+              <div className='flex-shrink-0 w-[280px] md:w-auto snap-center p-5 md:p-10 rounded-2xl md:rounded-[2.8rem] bg-gradient-to-br from-rose-50 to-pink-50/50 dark:from-rose-950/30 dark:to-pink-950/20 border border-rose-100/50 dark:border-gray-700 shadow-sm hover:shadow-md transition-all active:scale-[0.98] touch-manipulation'>
+                <div className='w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-gradient-to-br from-rose-400 to-pink-400 flex items-center justify-center mb-3 md:mb-4 shadow-lg shadow-rose-200/50 dark:shadow-none'>
+                  <Shield className='w-5 h-5 md:w-6 md:h-6 text-white' />
+                </div>
+                <h4 className='text-sm md:text-lg font-bold text-gray-800 dark:text-gray-100 mb-2 md:mb-4'>
+                  {t('page.featureSection.card2.title')}
+                </h4>
+                <p className='text-[11px] md:text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium line-clamp-3 md:line-clamp-none'>
+                  {t('page.featureSection.card2.desc')}
+                </p>
+              </div>
+
+              {/* Card 3 */}
+              <div className='flex-shrink-0 w-[280px] md:w-auto snap-center p-5 md:p-10 rounded-2xl md:rounded-[2.8rem] bg-gradient-to-br from-purple-50 to-violet-50/50 dark:from-purple-950/30 dark:to-violet-950/20 border border-purple-100/50 dark:border-gray-700 shadow-sm hover:shadow-md transition-all group active:scale-[0.98] touch-manipulation'>
+                <div className='w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-gradient-to-br from-purple-400 to-violet-400 flex items-center justify-center mb-3 md:mb-4 shadow-lg shadow-purple-200/50 dark:shadow-none'>
+                  <BookOpen className='w-5 h-5 md:w-6 md:h-6 text-white' />
+                </div>
+                <h4 className='text-sm md:text-lg font-bold text-gray-800 dark:text-gray-100 mb-2 md:mb-4'>
+                  {t('page.featureSection.card3.title')}
+                </h4>
+                <p className='text-[11px] md:text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium line-clamp-3 md:line-clamp-none mb-2 md:mb-4'>
+                  {t('page.featureSection.card3.desc')}
+                </p>
+                <a
+                  className='inline-flex items-center text-[10px] font-bold text-purple-400 dark:text-purple-300 hover:text-purple-600 dark:hover:text-purple-200 transition-colors'
+                  href='/learn'
+                >
+                  {t('page.featureSection.card3.link')}
+                  <span className='ml-1 group-hover:translate-x-1 transition-transform'>
+                    →
+                  </span>
+                </a>
+              </div>
             </div>
 
-            <div className='p-10 rounded-[2.8rem] bg-rose-50 dark:bg-rose-950/30 border border-white dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow'>
-              <h4 className='text-lg font-bold text-gray-800 dark:text-gray-100 mb-4'>
-                {t('page.featureSection.card2.title')}
-              </h4>
-              <p className='text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium'>
-                {t('page.featureSection.card2.desc')}
-              </p>
-            </div>
-
-            <div className='p-10 rounded-[2.8rem] bg-purple-50 dark:bg-purple-950/30 border border-white dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow group'>
-              <h4 className='text-lg font-bold text-gray-800 dark:text-gray-100 mb-4'>
-                {t('page.featureSection.card3.title')}
-              </h4>
-              <p className='text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium mb-4'>
-                {t('page.featureSection.card3.desc')}
-              </p>
-              <a
-                className='inline-flex items-center text-[10px] font-bold text-purple-400 dark:text-purple-300 hover:text-purple-600 dark:hover:text-purple-200 transition-colors'
-                href='/learn'
-              >
-                {t('page.featureSection.card3.link')}
-                <span className='ml-1 opacity-0 group-hover:opacity-100 transition-opacity'>
-                  →
-                </span>
-              </a>
+            {/* Mobile scroll hint */}
+            <div className='flex md:hidden justify-center mt-3 gap-1.5'>
+              <div className='w-6 h-1 rounded-full bg-orange-300/60' />
+              <div className='w-1.5 h-1 rounded-full bg-gray-300/60' />
+              <div className='w-1.5 h-1 rounded-full bg-gray-300/60' />
             </div>
           </div>
         </div>

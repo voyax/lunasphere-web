@@ -121,7 +121,7 @@ export default function ModelManager({
   return (
     <>
       {/* Debug Trigger - Industry Standard Approach */}
-      <div className='fixed bottom-4 right-4 z-50'>
+      <div className='fixed bottom-20 md:bottom-4 right-4 z-50'>
         <Button
           isIconOnly
           aria-label={t('detection.modelManager.openDebugMode')}

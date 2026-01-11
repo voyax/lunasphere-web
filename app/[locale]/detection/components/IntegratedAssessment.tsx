@@ -85,12 +85,12 @@ export default function IntegratedAssessment({
     const adviceKey = getAdviceKey(ci, cvai)
 
     return (
-        <div className='relative overflow-hidden bg-gradient-to-br from-[#ff9a8b] to-[#ff6a88] dark:from-[#8b4a5a] dark:to-[#5a3a48] rounded-[2.8rem] p-8 text-white shadow-2xl shadow-rose-200/40 dark:shadow-rose-900/20 animate-slide-in-bottom'>
+        <div className='relative overflow-hidden bg-gradient-to-br from-[#ff9a8b] to-[#ff6a88] dark:from-[#8b4a5a] dark:to-[#5a3a48] rounded-[1.5rem] md:rounded-[2.8rem] p-5 md:p-8 text-white shadow-2xl shadow-rose-200/40 dark:shadow-rose-900/20 animate-slide-in-bottom'>
             {/* Decorative blur circle */}
             <div className='absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl' />
 
             {/* Header: Emotional Anchor */}
-            <div className='flex items-center space-x-3 mb-6 relative z-10 opacity-90'>
+            <div className='flex items-center space-x-3 mb-4 md:mb-6 relative z-10 opacity-90'>
                 <MessageCircleHeart className='w-5 h-5 text-white' />
                 <span className='text-sm font-bold tracking-wider'>
                     {t('detection.assessment.whisper')}
@@ -98,10 +98,10 @@ export default function IntegratedAssessment({
             </div>
 
             {/* Content Flow */}
-            <div className='relative z-10 space-y-6'>
+            <div className='relative z-10 space-y-4 md:space-y-6'>
                 {/* 1. Clinical Status Headline */}
                 <div>
-                    <h2 className='text-3xl font-bold tracking-tight mb-2'>
+                    <h2 className='text-2xl md:text-3xl font-bold tracking-tight mb-2'>
                         {t(status.headline)}
                     </h2>
                     {/* 2. Clinical Advice */}
@@ -123,15 +123,15 @@ export default function IntegratedAssessment({
             </div>
 
             {/* Save Report Button */}
-            <div className='mt-8 flex justify-end relative z-10'>
-                <button className='flex items-center space-x-2 px-5 py-2.5 bg-white text-rose-500 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all text-xs font-bold'>
+            <div className='mt-5 md:mt-8 flex justify-end relative z-10'>
+                <button className='flex items-center space-x-2 px-4 md:px-5 py-2 md:py-2.5 bg-white text-rose-500 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all text-xs font-bold touch-manipulation'>
                     <Share2 className='w-3.5 h-3.5' />
                     <span>{t('detection.assessment.saveReport')}</span>
                 </button>
             </div>
 
             {/* Footer branding */}
-            <p className='mt-6 text-center text-[9px] font-bold text-white/50 uppercase tracking-[0.4em]'>
+            <p className='mt-4 md:mt-6 text-center text-[9px] font-bold text-white/50 uppercase tracking-[0.4em]'>
                 {t('detection.assessment.poweredBy')}
             </p>
         </div>

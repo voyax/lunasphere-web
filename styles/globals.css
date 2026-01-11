@@ -22,6 +22,18 @@
     min-height: 100vh;
     /* Prevent pull-to-refresh on mobile */
     overscroll-behavior-y: contain;
+    /* iOS momentum scrolling for native feel */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Enable momentum scrolling for all scrollable elements */
+  [class*="overflow-auto"],
+  [class*="overflow-scroll"],
+  [class*="overflow-y-auto"],
+  [class*="overflow-y-scroll"],
+  [class*="overflow-x-auto"],
+  [class*="overflow-x-scroll"] {
+    -webkit-overflow-scrolling: touch;
   }
 
   .dark body,
@@ -159,6 +171,55 @@
   border-radius: 3rem;
 }
 
+/* ========================================
+   Mobile-Optimized Border Radius
+   Smaller radii for native-like feel
+   ======================================== */
+
+/* Responsive rounded corners - smaller on mobile for native feel */
+.rounded-adaptive {
+  border-radius: 1rem;
+}
+
+.rounded-adaptive-lg {
+  border-radius: 1.25rem;
+}
+
+.rounded-adaptive-xl {
+  border-radius: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .rounded-adaptive {
+    border-radius: 1.5rem;
+  }
+
+  .rounded-adaptive-lg {
+    border-radius: 2rem;
+  }
+
+  .rounded-adaptive-xl {
+    border-radius: 2.5rem;
+  }
+}
+
+/* Card-specific responsive rounding */
+.card-radius {
+  border-radius: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .card-radius {
+    border-radius: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-radius {
+    border-radius: 2.5rem;
+  }
+}
+
 /* Custom scrollbar */
 @layer utilities {
   .scrollbar-hide {
@@ -282,6 +343,49 @@
     min-height: 44px;
   }
 
+  /* ========================================
+     Mobile Button Press Feedback
+     Native-like tactile press animation
+     ======================================== */
+
+  /* Default press feedback for all interactive elements */
+  .press-feedback {
+    transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+  }
+
+  .press-feedback:active {
+    transform: scale(0.97);
+    opacity: 0.9;
+  }
+
+  /* Subtle press for small buttons/icons */
+  .press-subtle:active {
+    transform: scale(0.95);
+  }
+
+  /* Strong press for primary CTAs */
+  .press-strong:active {
+    transform: scale(0.92);
+  }
+
+  /* Apply press feedback to common interactive elements on touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    button:not([disabled]),
+    [role="button"]:not([disabled]),
+    .btn,
+    a.touch-manipulation {
+      transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+    }
+
+    button:not([disabled]):active,
+    [role="button"]:not([disabled]):active,
+    .btn:active,
+    a.touch-manipulation:active {
+      transform: scale(0.97);
+      opacity: 0.9;
+    }
+  }
+
   /* Hide on touch devices only */
   @media (hover: none) and (pointer: coarse) {
     .hover-only {
@@ -343,5 +447,15 @@
 
   50% {
     transform: translateY(-10px);
+  }
+}
+
+/* Skeleton shimmer animation for loading states */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
   }
 }
