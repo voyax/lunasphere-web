@@ -148,7 +148,7 @@ function SectionLayout({
                     <span className={clsx("inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest", colors.labelBg, colors.labelText)}>
                         {label}
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-serif font-medium text-gray-900 dark:text-gray-100 leading-tight">
+                    <h2 className="text-3xl md:text-5xl font-serif font-medium text-gray-900 dark:text-gray-100 leading-tight">
                         {title}
                     </h2>
                     <p className="text-lg text-gray-500 dark:text-gray-400 font-light leading-relaxed">

@@ -66,9 +66,11 @@ export function SkullKnowledgeSection() {
 
                 {/* Right: Clean Accordion (No Icons) */}
                 <div className="w-full md:w-1/2 space-y-8">
-                    <div className="space-y-2">
-                        <span className="text-orange-500 font-bold tracking-wider text-sm uppercase">{t('subtitle')}</span>
-                        <h2 className="text-3xl md:text-5xl font-serif font-medium text-gray-900 dark:text-gray-100">
+                    <div className="space-y-3">
+                        <span className="inline-block py-1 px-3 rounded-full bg-orange-100/50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 font-bold tracking-widest text-[10px] uppercase">
+                            {t('subtitle')}
+                        </span>
+                        <h2 className="text-3xl md:text-5xl font-serif font-medium text-gray-900 dark:text-white leading-tight">
                             {t('title')}
                         </h2>
                     </div>
@@ -82,23 +84,22 @@ export function SkullKnowledgeSection() {
                                     layout
                                     key={item.id}
                                     initial={false}
-                                    animate={{
-                                        backgroundColor: isOpen ? (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'rgba(31, 41, 55, 1)' : 'rgba(255, 255, 255, 1)') : 'rgba(0,0,0,0)',
-                                        borderColor: isOpen ? (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'rgba(255, 255, 255, 1)' : 'rgba(17, 24, 39, 1)') : 'transparent'
-                                    }}
                                     className={`
-                     w-full rounded-2xl border-l-4 overflow-hidden relative
-                     ${isOpen ? 'shadow-lg z-10' : 'z-0 hover:bg-gray-50 dark:hover:bg-gray-800/30'}
+                     w-full rounded-2xl border overflow-hidden relative transition-colors duration-300
+                     ${isOpen 
+                        ? 'bg-white dark:bg-gray-800 border-orange-200 dark:border-gray-700 shadow-xl shadow-orange-50/50 dark:shadow-none z-10' 
+                        : 'bg-transparent border-transparent hover:bg-gray-50 dark:hover:bg-gray-800/50 z-0'
+                     }
                    `}
                                     transition={{ layout: { type: "spring", stiffness: 90, damping: 14 } }}
                                 >
                                     <motion.button
                                         layout="position"
                                         onClick={() => setActiveItem(isOpen ? null : item.id)}
-                                        className="w-full text-left p-6 block group"
-                                        whileTap={{ scale: 0.98 }}
+                                        className="w-full text-left p-6 flex items-center justify-between group"
+                                        whileTap={{ scale: 0.995 }}
                                     >
-                                        <span className={`text-lg font-bold transition-colors duration-300 ${isOpen ? 'text-gray-900 dark:text-white' : 'text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-300'}`}>
+                                        <span className={`text-lg font-bold transition-colors duration-300 ${isOpen ? 'text-orange-600 dark:text-orange-400' : 'text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200'}`}>
                                             {t(item.titleKey)}
                                         </span>
                                     </motion.button>

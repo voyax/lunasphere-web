@@ -3,6 +3,7 @@
 import { motion, useScroll, useSpring } from 'framer-motion'
 import { ChevronRight } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import Image from 'next/image'
 
 export function LearnPageLayout({ children }: { children: React.ReactNode }) {
     const { scrollYProgress } = useScroll()
@@ -48,7 +49,7 @@ export function CourseHero() {
                     <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-medium text-gray-900 dark:text-gray-50 tracking-tight leading-[1.1] mb-6">
                         {t('title')}
                     </h1>
-                    <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed font-light">
+                    <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed font-normal opacity-90">
                         {t('subtitle')}
                     </p>
                 </motion.div>
@@ -57,18 +58,25 @@ export function CourseHero() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3, duration: 0.6 }} // 减少 delay，加快响应
-                    className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8"
+                    className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8"
                 >
                     <button
                         onClick={() => document.getElementById('development')?.scrollIntoView({ behavior: 'smooth' })}
-                        className="px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full font-medium active:scale-95 transition-transform duration-200 flex items-center gap-2 shadow-lg"
+                        className="px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-full font-medium text-lg active:scale-95 transition-all duration-200 flex items-center gap-2 shadow-xl shadow-orange-200 dark:shadow-none"
                     >
-                        {t('start_course')} <ChevronRight className="w-4 h-4" />
+                        {t('start_course')} <ChevronRight className="w-5 h-5" />
                     </button>
-                    <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 px-6 py-4">
-                        <span className="flex -space-x-2">
+                    <div className="flex items-center gap-3 text-sm font-medium text-gray-600 dark:text-gray-400 px-4 py-2 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-full border border-gray-100 dark:border-gray-700">
+                        <span className="flex -space-x-3">
                             {[1, 2, 3].map(i => (
-                                <div key={i} className="w-8 h-8 rounded-full border-2 border-white dark:border-gray-900 bg-gray-200 dark:bg-gray-700" />
+                                <div key={i} className="relative w-8 h-8 rounded-full border-2 border-white dark:border-gray-900 overflow-hidden bg-gray-200">
+                                    <Image
+                                        src={`/images/avatars/user${i}.png`}
+                                        alt={`User ${i}`}
+                                        fill
+                                        className="object-cover"
+                                    />
+                                </div>
                             ))}
                         </span>
                         <span>{t('trusted_by')}</span>
