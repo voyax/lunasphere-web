@@ -7,7 +7,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from '@heroui/dropdown'
-import { useTransition } from 'react'
+import { useTransition, useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 
 import { useRouter, usePathname } from '@/i18n/routing'
@@ -22,7 +22,12 @@ export function LanguageSwitcher({
   currentLocale,
   languageLabel,
 }: LanguageSwitcherProps) {
+  const [mounted, setMounted] = useState(false)
   const [isPending, startTransition] = useTransition()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
   const router = useRouter()
   const pathname = usePathname()
   const params = useParams()
@@ -37,6 +42,19 @@ export function LanguageSwitcher({
         { locale: newLocale }
       )
     })
+  }
+
+  // Avoid hydration mismatch by rendering placeholder until mounted
+  if (!mounted) {
+    return (
+      <Button
+        className='text-xs sm:text-sm font-medium min-w-[40px] h-9 sm:h-10 px-2.5 sm:px-3 touch-manipulation'
+        size='sm'
+        variant='ghost'
+      >
+        {localeNames[currentLocale as Locale]}
+      </Button>
+    )
   }
 
   return (

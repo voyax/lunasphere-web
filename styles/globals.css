@@ -13,15 +13,12 @@
   }
 
   body {
-    scroll-behavior: smooth;
     overflow-x: hidden;
     width: 100%;
     max-width: 100vw;
     /* Solid warm cream background matching design2 */
     background-color: #fffaf5;
     min-height: 100vh;
-    /* Prevent pull-to-refresh on mobile */
-    overscroll-behavior-y: contain;
     /* iOS momentum scrolling for native feel */
     -webkit-overflow-scrolling: touch;
   }

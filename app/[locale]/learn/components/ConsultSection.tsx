@@ -8,9 +8,9 @@ export function ConsultSection() {
     const t = useTranslations('learn.consult')
 
     // Normal: Green
-    const normalSigns = ['normalSigns.sign1', 'normalSigns.sign2', 'normalSigns.sign3', 'normalSigns.sign4']
+    const normalSigns = ['normalSigns.sign1', 'normalSigns.sign2', 'normalSigns.sign3']
     // Warning: Amber
-    const warningSigns = ['warningSigns.sign1', 'warningSigns.sign2', 'warningSigns.sign3', 'warningSigns.sign4']
+    const warningSigns = ['warningSigns.sign1', 'warningSigns.sign2', 'warningSigns.sign3']
     // Urgent: Red
     const urgentSigns = ['urgentSigns.sign1', 'urgentSigns.sign2', 'urgentSigns.sign3']
 
@@ -41,6 +41,11 @@ export function ConsultSection() {
                             </li>
                         ))}
                     </ul>
+                    <div className="mt-6 pt-4 border-t border-emerald-100 dark:border-emerald-800/30">
+                        <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                            {t('normalSigns.measurement')}
+                        </p>
+                    </div>
                 </div>
 
                 {/* 2. Warning - Check In */}
@@ -59,6 +64,11 @@ export function ConsultSection() {
                             </li>
                         ))}
                     </ul>
+                    <div className="mt-6 pt-4 border-t border-amber-100 dark:border-amber-800/30">
+                        <p className="text-xs text-amber-600 dark:text-amber-400 font-medium">
+                            {t('warningSigns.measurement')}
+                        </p>
+                    </div>
                 </div>
 
                 {/* 3. Urgent - Act Now */}
@@ -76,6 +86,11 @@ export function ConsultSection() {
                             </li>
                         ))}
                     </ul>
+                    <div className="mt-6 pt-4 border-t border-rose-200 dark:border-rose-800/30">
+                        <p className="text-xs text-rose-600 dark:text-rose-400 font-medium">
+                            {t('urgentSigns.measurement')}
+                        </p>
+                    </div>
                 </div>
             </div>
 

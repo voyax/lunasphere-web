@@ -4,13 +4,14 @@ import { useState, useRef, useCallback, useEffect } from 'react'
 import { Button } from '@heroui/button'
 import {
   Upload,
-  ChevronDown,
-  ChevronUp,
+  ArrowRight,
+  Move,
+  ZoomIn,
+  RotateCcw,
   Camera,
   Lightbulb,
-  Shield,
   Sparkles,
-  ArrowRight,
+  Shield,
 } from 'lucide-react'
 
 import { ProfileUploadArea } from './ProfileUploadArea'
@@ -251,51 +252,6 @@ export default function ProfileViewComparison({ }: ProfileViewComparisonProps) {
 
         {/* Main Upload Area */}
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8'>
-          {/* Right Side */}
-          <div ref={rightContainerRef} className='space-y-4'>
-            <div className='flex items-center justify-between'>
-              <div className='flex items-center gap-3'>
-                <div className='w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-900/50 flex items-center justify-center'>
-                  <span className='text-orange-600 dark:text-orange-400 text-sm font-bold'>R</span>
-                </div>
-                <div>
-                  <h3 className='text-lg font-bold text-gray-800 dark:text-gray-100'>
-                    {t('detection.profileView.rightProfile')}
-                  </h3>
-                  <p className='text-xs text-gray-400 dark:text-gray-500'>
-                    上传宝宝右侧轮廓照片
-                  </p>
-                </div>
-              </div>
-
-              {rightImage && (
-                <Button
-                  className='bg-orange-500 hover:bg-orange-600 text-white shadow-sm'
-                  size='sm'
-                  startContent={<Upload className='w-4 h-4' />}
-                  onPress={() => reuploadImage('right')}
-                >
-                  {t('detection.profileView.reuploadImage')}
-                </Button>
-              )}
-            </div>
-
-            <ProfileUploadArea
-              fileInputRef={rightFileInputRef}
-              image={rightImage}
-              isSelected={selectedId === 'right'}
-              stageSize={rightStageSize}
-              templateAltKey='detection.profileView.rightTemplateAlt'
-              templateSrc='/images/detection/head_right.svg'
-              accentColor='orange'
-              onImageChange={newAttrs => updateImage('right', newAttrs)}
-              onImageSelect={() =>
-                setSelectedId(selectedId === 'right' ? null : 'right')
-              }
-              onImageUpload={file => handleFileUpload(file, 'right')}
-            />
-          </div>
-
           {/* Left Side */}
           <div ref={leftContainerRef} className='space-y-4'>
             <div className='flex items-center justify-between'>
@@ -308,7 +264,7 @@ export default function ProfileViewComparison({ }: ProfileViewComparisonProps) {
                     {t('detection.profileView.leftProfile')}
                   </h3>
                   <p className='text-xs text-gray-400 dark:text-gray-500'>
-                    上传宝宝左侧轮廓照片
+                    {t('detection.profileView.leftProfileDesc')}
                   </p>
                 </div>
               </div>
@@ -338,6 +294,51 @@ export default function ProfileViewComparison({ }: ProfileViewComparisonProps) {
                 setSelectedId(selectedId === 'left' ? null : 'left')
               }
               onImageUpload={file => handleFileUpload(file, 'left')}
+            />
+          </div>
+
+          {/* Right Side */}
+          <div ref={rightContainerRef} className='space-y-4'>
+            <div className='flex items-center justify-between'>
+              <div className='flex items-center gap-3'>
+                <div className='w-10 h-10 rounded-xl bg-rose-100 dark:bg-rose-900/50 flex items-center justify-center'>
+                  <span className='text-rose-600 dark:text-rose-400 text-sm font-bold'>R</span>
+                </div>
+                <div>
+                  <h3 className='text-lg font-bold text-gray-800 dark:text-gray-100'>
+                    {t('detection.profileView.rightProfile')}
+                  </h3>
+                  <p className='text-xs text-gray-400 dark:text-gray-500'>
+                    {t('detection.profileView.rightProfileDesc')}
+                  </p>
+                </div>
+              </div>
+
+              {rightImage && (
+                <Button
+                  className='bg-rose-500 hover:bg-rose-600 text-white shadow-sm'
+                  size='sm'
+                  startContent={<Upload className='w-4 h-4' />}
+                  onPress={() => reuploadImage('right')}
+                >
+                  {t('detection.profileView.reuploadImage')}
+                </Button>
+              )}
+            </div>
+
+            <ProfileUploadArea
+              fileInputRef={rightFileInputRef}
+              image={rightImage}
+              isSelected={selectedId === 'right'}
+              stageSize={rightStageSize}
+              templateAltKey='detection.profileView.rightTemplateAlt'
+              templateSrc='/images/detection/head_right.svg'
+              accentColor='rose'
+              onImageChange={newAttrs => updateImage('right', newAttrs)}
+              onImageSelect={() =>
+                setSelectedId(selectedId === 'right' ? null : 'right')
+              }
+              onImageUpload={file => handleFileUpload(file, 'right')}
             />
           </div>
         </div>
@@ -385,19 +386,19 @@ export default function ProfileViewComparison({ }: ProfileViewComparisonProps) {
         {(leftImage || rightImage) && (
           <div className='sm:hidden p-5 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-800/30'>
             <div className='flex items-center gap-2 mb-3'>
-              <span className='text-xl'>👆</span>
+              <Move className='w-4 h-4 text-amber-600 dark:text-amber-400' />
               <h4 className='font-medium text-gray-800 dark:text-gray-100 text-sm'>
-                手势操作提示
+                {t('detection.profileView.gestureHints.title')}
               </h4>
             </div>
             <div className='space-y-2'>
               {[
-                { icon: '👆', text: '拖动移动图片位置' },
-                { icon: '👌', text: '双指缩放调整大小' },
-                { icon: '🔄', text: '双指旋转调整角度，或使用下方滑块精确控制' },
+                { icon: Move, text: t('detection.profileView.gestureHints.drag') },
+                { icon: ZoomIn, text: t('detection.profileView.gestureHints.pinch') },
+                { icon: RotateCcw, text: t('detection.profileView.gestureHints.rotate') },
               ].map((item, index) => (
                 <div key={index} className='flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400'>
-                  <span>{item.icon}</span>
+                  <item.icon className='w-3.5 h-3.5 text-amber-500 dark:text-amber-400 shrink-0' />
                   <span>{item.text}</span>
                 </div>
               ))}
@@ -413,7 +414,7 @@ export default function ProfileViewComparison({ }: ProfileViewComparisonProps) {
               size='lg'
               endContent={<ArrowRight className='w-5 h-5' />}
             >
-              开始对比分析
+              {t('detection.profileView.startComparison')}
             </Button>
           </div>
         )}

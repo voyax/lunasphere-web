@@ -1,10 +1,9 @@
 'use client'
 
-import { FC } from 'react'
+import { FC, useState, useEffect } from 'react'
 import { VisuallyHidden } from '@react-aria/visually-hidden'
 import { SwitchProps, useSwitch } from '@heroui/switch'
 import { useTheme } from 'next-themes'
-import { useIsSSR } from '@react-aria/ssr'
 import clsx from 'clsx'
 
 import { SunFilledIcon, MoonFilledIcon } from '@/components/icons'
@@ -18,8 +17,12 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
   className,
   classNames,
 }) => {
+  const [mounted, setMounted] = useState(false)
   const { theme, setTheme } = useTheme()
-  const isSSR = useIsSSR()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const onChange = () => {
     theme === 'light' ? setTheme('dark') : setTheme('light')
@@ -33,10 +36,26 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
     getInputProps,
     getWrapperProps,
   } = useSwitch({
-    isSelected: theme === 'light' || isSSR,
-    'aria-label': `Switch to ${theme === 'light' || isSSR ? 'dark' : 'light'} mode`,
+    isSelected: theme === 'light' || !mounted,
+    'aria-label': `Switch to ${theme === 'light' || !mounted ? 'dark' : 'light'} mode`,
     onChange,
   })
+
+  // Avoid hydration mismatch by rendering placeholder until mounted
+  if (!mounted) {
+    return (
+      <div
+        className={clsx(
+          'w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center',
+          'rounded-xl',
+          className,
+          classNames?.base
+        )}
+      >
+        <SunFilledIcon size={20} className="text-default-500" />
+      </div>
+    )
+  }
 
   return (
     <Component
@@ -73,7 +92,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
           ),
         })}
       >
-        {!isSelected || isSSR ? (
+        {!isSelected ? (
           <SunFilledIcon size={20} />
         ) : (
           <MoonFilledIcon size={20} />

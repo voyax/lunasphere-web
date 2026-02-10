@@ -784,7 +784,7 @@ export function ProfileUploadArea({
                 <div className='flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-white/50 dark:border-gray-700/50 shadow-sm'>
                   <Sparkles className='w-3 h-3 text-amber-500' />
                   <span className='text-xs font-medium text-gray-700 dark:text-gray-300'>
-                    已上传
+                    {t('detection.profileView.uploaded')}
                   </span>
                 </div>
               </div>

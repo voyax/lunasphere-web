@@ -26,15 +26,13 @@ export const Footer = () => {
           <nav className='flex flex-wrap justify-center gap-x-8 gap-y-2 text-[11px] font-bold'>
             <a
               className='text-gray-400 dark:text-gray-500 hover:text-orange-400 dark:hover:text-orange-400 transition-colors cursor-pointer'
-              href='/faq'
+              href='/privacy'
             >
               {tFooter('privacy')}
             </a>
             <a
               className='text-gray-400 dark:text-gray-500 hover:text-orange-400 dark:hover:text-orange-400 transition-colors cursor-pointer'
-              href='https://github.com/voyax/baby-head-web'
-              rel='noopener noreferrer'
-              target='_blank'
+              href='/research'
             >
               {tFooter('research')}
             </a>
