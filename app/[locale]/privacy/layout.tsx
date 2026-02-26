@@ -7,35 +7,31 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'page.profileMatch' })
+  const t = await getTranslations({ locale, namespace: 'page.privacy' })
   const tSite = await getTranslations({ locale, namespace: 'site' })
 
   return {
     title: t('title'),
     description: t('description'),
     keywords: [
-      '轮廓匹配',
-      '侧面轮廓对比',
-      '头型轮廓分析',
-      '婴儿侧面照',
-      '头型对比',
-      'profile matching',
-      'head shape profile',
-      'contour comparison',
-      'side view analysis',
+      '隐私保护',
+      '数据安全',
+      '婴儿数据隐私',
+      '本地处理',
+      'privacy policy',
+      'data security',
+      'baby data privacy',
+      'local processing',
+      'GDPR compliance',
     ],
     openGraph: {
       title: `${t('title')} - ${tSite('title')}`,
       description: t('description'),
-      url: `${locale === 'zh' ? '' : '/en'}/profile-match`,
+      url: `${locale === 'zh' ? '' : '/en'}/privacy`,
     },
   }
 }
 
-export default function ProfileMatchLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function PrivacyLayout({ children }: { children: React.ReactNode }) {
   return children
 }

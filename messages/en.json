@@ -30,6 +30,14 @@
     "learn": {
       "title": "Parent Academy",
       "description": "Scientific understanding of infant head shape development. Professional guidance for new parents."
+    },
+    "research": {
+      "title": "Research Collaboration",
+      "description": "Partnering with medical professionals to advance infant head shape assessment research"
+    },
+    "privacy": {
+      "title": "Privacy & Security",
+      "description": "Learn how LunaSphere protects your and your baby's privacy and data security"
     }
   },
   "nav": {

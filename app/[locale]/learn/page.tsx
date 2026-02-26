@@ -13,8 +13,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const tSite = await getTranslations({ locale, namespace: 'site' })
 
     return {
-        title: `${t('title')} - ${tSite('title')}`,
+        title: t('title'),
         description: t('description'),
+        keywords: [
+            '婴儿头型知识',
+            '头型发育',
+            '护理指南',
+            '俯趴时间',
+            '睡姿调整',
+            'infant head shape guide',
+            'baby head development',
+            'tummy time',
+            'sleep positioning',
+            'plagiocephaly care',
+        ],
+        openGraph: {
+            title: `${t('title')} - ${tSite('title')}`,
+            description: t('description'),
+            url: `${locale === 'zh' ? '' : '/en'}/learn`,
+        },
     }
 }
 

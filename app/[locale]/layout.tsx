@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 
 import { Providers } from '../providers'
+import { JsonLd } from '@/components/json-ld'
 
 import { fontSans } from '@/config/fonts'
 import { Navbar } from '@/components/navbar'
@@ -70,9 +71,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     metadataBase: new URL('https://head.melolib.com'),
     alternates: {
-      canonical: '/',
+      canonical: locale === 'zh' ? '/' : '/en',
       languages: {
-        'zh-CN': '/zh',
+        'zh-CN': '/',
         'en-US': '/en',
       },
     },
@@ -80,18 +81,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'website',
       locale: locale === 'zh' ? 'zh_CN' : 'en_US',
       alternateLocale: locale === 'zh' ? ['en_US'] : ['zh_CN'],
-      url: 'https://head.melolib.com',
+      url: `https://head.melolib.com${locale === 'zh' ? '' : '/en'}`,
       title: `${site.title} - ${page.home.title}`,
       description: site.description,
       siteName: site.title,
       images: [
         {
-          url: '/og-image.jpg',
+          url: locale === 'zh' ? '/og-image.jpg' : '/og-image-en.jpg',
           width: 1200,
           height: 630,
           alt: `${site.title} - ${page.home.title}`,
         },
       ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${site.title} - ${page.home.title}`,
+      description: site.description,
+      images: [locale === 'zh' ? '/og-image.jpg' : '/og-image-en.jpg'],
     },
     robots: {
       index: true,
@@ -137,11 +144,32 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   // 获取翻译消息
   const messages = await getMessages()
-  const site = messages.site as { title: string }
+  const site = messages.site as { title: string; description: string }
 
   return (
     <html suppressHydrationWarning lang={locale === 'zh' ? 'zh-CN' : 'en-US'}>
       <head>
+        {/* JSON-LD Structured Data */}
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: site.title,
+            url: 'https://head.melolib.com',
+            logo: 'https://head.melolib.com/logo_with_bg.png',
+            description: site.description,
+            sameAs: ['https://github.com/voyax/lunasphere-web'],
+          }}
+        />
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: site.title,
+            url: 'https://head.melolib.com',
+            inLanguage: locale === 'zh' ? 'zh-CN' : 'en-US',
+          }}
+        />
         {/* PWA & Mobile App Meta Tags */}
         <meta content={site.title} name='application-name' />
         <meta content='yes' name='apple-mobile-web-app-capable' />
