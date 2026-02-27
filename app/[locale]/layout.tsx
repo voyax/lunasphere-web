@@ -112,7 +112,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     icons: {
-      icon: '/favicon.ico',
+      icon: [
+        { url: '/favicon.svg', type: 'image/svg+xml' },
+        { url: '/favicon.png', type: 'image/png' },
+      ],
+      apple: '/logo_with_bg.png',
     },
     manifest: '/site.webmanifest',
   }

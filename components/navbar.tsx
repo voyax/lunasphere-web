@@ -1,7 +1,6 @@
 'use client'
 
 import { useTranslations, useLocale } from 'next-intl'
-import { Baby } from 'lucide-react'
 
 import { ThemeSwitch } from '@/components/theme-switch'
 import { LanguageSwitcher } from '@/components/language-switcher'
@@ -46,13 +45,22 @@ export function Navbar() {
         <nav className='flex justify-between items-center bg-white/60 dark:bg-gray-900/60 backdrop-blur-md rounded-2xl sm:rounded-2xl px-3 sm:px-5 md:px-6 h-12 sm:h-14 border border-white/60 dark:border-gray-700/50 shadow-sm'>
           {/* Logo & Brand */}
           <Link
-            className='flex items-center space-x-2 sm:space-x-2.5 group'
+            className='flex items-center space-x-1.5 sm:space-x-2 group'
             href='/'
           >
-            <div className='bg-orange-100 dark:bg-orange-900/50 p-1.5 sm:p-2 rounded-xl group-hover:scale-105 transition-transform'>
-              <Baby className='w-4 h-4 sm:w-5 sm:h-5 text-orange-500 dark:text-orange-400' />
+            <div className='group-hover:scale-110 transition-transform duration-300 relative flex items-center justify-center' style={{ width: '32px', height: '32px' }}>
+              <img 
+                src="/logo_color.svg" 
+                alt="LunaSphere Logo" 
+                className="w-full h-full object-contain block dark:hidden origin-center" 
+              />
+              <img
+                src="/logo_black.svg"
+                alt="LunaSphere Logo"
+                className="w-full h-full object-contain hidden dark:block origin-center"
+              />
             </div>
-            <h1 className='text-sm sm:text-base font-bold text-gray-800 dark:text-gray-100 group-hover:text-orange-500 transition-colors'>
+            <h1 className='text-sm sm:text-[15px] font-bold text-gray-800 dark:text-gray-100 group-hover:text-orange-500 transition-colors tracking-tight'>
               {tSite('title')}
             </h1>
           </Link>
