@@ -1,45 +1,33 @@
 'use client'
 
-import {
-  Navbar as HeroUINavbar,
-  NavbarContent,
-  NavbarBrand,
-  NavbarItem,
-  NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
-} from '@heroui/navbar'
-import NextLink from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useState } from 'react'
-import { Divider } from '@heroui/react'
-import Image from 'next/image'
+import { useTranslations, useLocale } from 'next-intl'
 
 import { ThemeSwitch } from '@/components/theme-switch'
 import { LanguageSwitcher } from '@/components/language-switcher'
-import { useLocale } from '@/contexts/LocaleContext'
+import { Link, usePathname } from '@/i18n/routing'
 
 export function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
-  const { locale, t } = useLocale()
+  const locale = useLocale()
+  const t = useTranslations('nav')
+  const tSite = useTranslations('site')
 
   const menuItems = [
     {
-      label: t('nav.home'),
-      href: '/',
+      label: t('home'),
+      href: '/' as const,
     },
     {
-      label: t('nav.detection'),
-      href: '/detection',
+      label: t('learn'),
+      href: '/learn' as const,
     },
     {
-      label: t('nav.profileMatch'),
-      href: '/profile-match',
+      label: t('profileMatch'),
+      href: '/profile-match' as const,
     },
     {
-      label: t('nav.faq'),
-      href: '/faq',
+      label: t('faq'),
+      href: '/faq' as const,
     },
   ]
 
@@ -52,84 +40,59 @@ export function Navbar() {
   }
 
   return (
-    <HeroUINavbar
-      className='bg-background/70 backdrop-blur-md'
-      isMenuOpen={isMenuOpen}
-      maxWidth='xl'
-      position='sticky'
-      onMenuOpenChange={setIsMenuOpen}
-    >
-      <NavbarContent className='sm:hidden' justify='center'>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-        />
-      </NavbarContent>
-      <NavbarContent justify='center'>
-        <NavbarBrand>
-          <NextLink className='flex justify-start items-center gap-2' href='/'>
-            <Image
-              alt='Logo'
-              className='w-8 h-8'
-              height={32}
-              src='/logo_with_bg.png'
-              width={32}
-            />
-            <p className='font-bold text-inherit text-sm md:text-base'>
-              {t('site.title')}
-            </p>
-          </NextLink>
-        </NavbarBrand>
-
-        <div className='h-full py-4 hidden sm:block'>
-          <Divider orientation='vertical' />
-        </div>
-        {menuItems.map(item => (
-          <NavbarItem
-            key={item.href}
-            className='hidden sm:flex'
-            isActive={isActive(item.href)}
+    <header className='fixed top-0 left-0 right-0 z-50 px-3 sm:px-4 md:px-6 pt-2 sm:pt-3'>
+      <div className='max-w-6xl mx-auto'>
+        <nav className='flex justify-between items-center bg-white/60 dark:bg-gray-900/60 backdrop-blur-md rounded-2xl sm:rounded-2xl px-3 sm:px-5 md:px-6 h-12 sm:h-14 border border-white/60 dark:border-gray-700/50 shadow-sm'>
+          {/* Logo & Brand */}
+          <Link
+            className='flex items-center space-x-1.5 sm:space-x-2 group'
+            href='/'
           >
-            <NextLink
-              className={`transition-colors ${
-                isActive(item.href)
-                  ? 'text-primary font-medium'
-                  : 'text-foreground hover:text-primary'
-              }`}
-              href={item.href}
-            >
-              {item.label}
-            </NextLink>
-          </NavbarItem>
-        ))}
-      </NavbarContent>
+            <div className='group-hover:scale-110 transition-transform duration-300 relative flex items-center justify-center' style={{ width: '32px', height: '32px' }}>
+              <img 
+                src="/logo_color.svg" 
+                alt="LunaSphere Logo" 
+                className="w-full h-full object-contain block dark:hidden origin-center" 
+              />
+              <img
+                src="/logo_black.svg"
+                alt="LunaSphere Logo"
+                className="w-full h-full object-contain hidden dark:block origin-center"
+              />
+            </div>
+            <h1 className='text-sm sm:text-[15px] font-bold text-gray-800 dark:text-gray-100 group-hover:text-orange-500 transition-colors tracking-tight'>
+              {tSite('title')}
+            </h1>
+          </Link>
 
-      <NavbarContent justify='end'>
-        <NavbarItem className='flex gap-2'>
-          <LanguageSwitcher
-            currentLocale={locale}
-            languageLabel={t('nav.language')}
-          />
-          <ThemeSwitch />
-        </NavbarItem>
-      </NavbarContent>
+          {/* Desktop Navigation */}
+          <div className='hidden md:flex space-x-1'>
+            {menuItems.map(item => (
+              <Link
+                key={item.href}
+                className={`px-4 py-2 rounded-2xl text-sm font-bold transition-all duration-300 ${isActive(item.href)
+                  ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 shadow-inner'
+                  : 'text-gray-500 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 hover:bg-white/50 dark:hover:bg-gray-800/50'
+                  }`}
+                href={item.href}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
 
-      <NavbarMenu aria-label={t('nav.mobileMenu')} role='menu'>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item.href}-${index}`} role='menuitem'>
-            <NextLink
-              className={`w-full transition-colors ${
-                isActive(item.href)
-                  ? 'text-primary font-medium'
-                  : 'text-foreground hover:text-primary'
-              }`}
-              href={item.href}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {item.label}
-            </NextLink>
-          </NavbarMenuItem>
-        ))}
-      </NavbarMenu>
-    </HeroUINavbar>
+          {/* Right Actions */}
+          <div className='flex items-center space-x-0.5 sm:space-x-2'>
+            <LanguageSwitcher
+              currentLocale={locale}
+              languageLabel={t('language')}
+            />
+            <ThemeSwitch />
+          </div>
+        </nav>
+
+        {/* Mobile menu removed - using bottom navigation instead */}
+      </div>
+    </header>
   )
 }

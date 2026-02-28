@@ -2,24 +2,30 @@
 
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-
-import { useLocale } from '@/contexts/LocaleContext'
+import { useTranslations } from 'next-intl'
 
 interface NavSection {
   id: string
-  labelKey: string
+  namespace: string
+  key: string
   icon: React.ReactNode
 }
 
 export function ScrollNavigation() {
-  const { t } = useLocale()
+  const tNav = useTranslations('nav')
+  const tDevelopment = useTranslations('development')
+  const tClassification = useTranslations('classification')
+  const tExamples = useTranslations('examples')
+  const tSleep = useTranslations('sleep')
+
   const [activeSection, setActiveSection] = useState('hero')
   const [isVisible, setIsVisible] = useState(false)
 
   const sections: NavSection[] = [
     {
       id: 'hero',
-      labelKey: 'nav.home',
+      namespace: 'nav',
+      key: 'home',
       icon: (
         <svg
           className='w-5 h-5'
@@ -38,7 +44,8 @@ export function ScrollNavigation() {
     },
     {
       id: 'development',
-      labelKey: 'development.title',
+      namespace: 'development',
+      key: 'title',
       icon: (
         <svg
           className='w-5 h-5'
@@ -57,7 +64,8 @@ export function ScrollNavigation() {
     },
     {
       id: 'classification',
-      labelKey: 'classification.title',
+      namespace: 'classification',
+      key: 'title',
       icon: (
         <svg
           className='w-5 h-5'
@@ -76,7 +84,8 @@ export function ScrollNavigation() {
     },
     {
       id: 'head-shapes',
-      labelKey: 'examples.title',
+      namespace: 'examples',
+      key: 'title',
       icon: (
         <svg
           className='w-5 h-5'
@@ -95,7 +104,8 @@ export function ScrollNavigation() {
     },
     {
       id: 'sleep-tips',
-      labelKey: 'sleep.title',
+      namespace: 'sleep',
+      key: 'title',
       icon: (
         <svg
           className='w-5 h-5'
@@ -113,6 +123,24 @@ export function ScrollNavigation() {
       ),
     },
   ]
+
+  // Get translation based on namespace
+  const getTranslation = (namespace: string, key: string) => {
+    switch (namespace) {
+      case 'nav':
+        return tNav(key)
+      case 'development':
+        return tDevelopment(key)
+      case 'classification':
+        return tClassification(key)
+      case 'examples':
+        return tExamples(key)
+      case 'sleep':
+        return tSleep(key)
+      default:
+        return key
+    }
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -184,7 +212,7 @@ export function ScrollNavigation() {
                   {/* Label tooltip */}
                   <div className='absolute right-full mr-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none'>
                     <div className='bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-3 py-1 rounded-lg text-sm font-medium whitespace-nowrap'>
-                      {t(section.labelKey)}
+                      {getTranslation(section.namespace, section.key)}
                       <div className='absolute left-full top-1/2 transform -translate-y-1/2 w-0 h-0 border-l-4 border-r-0 border-t-4 border-b-4 border-l-gray-900 dark:border-l-gray-100 border-t-transparent border-b-transparent' />
                     </div>
                   </div>

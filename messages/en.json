@@ -1,0 +1,1091 @@
+{
+  "site": {
+    "title": "LunaSphere",
+    "description": "Scientific understanding and rational care for infant head shape development"
+  },
+  "footer": {
+    "slogan": "Technology Embracing New Life",
+    "privacy": "Privacy & Security",
+    "research": "Research Collaboration",
+    "contact": "Contact Us",
+    "copyright": "Protecting Every Precious Smile"
+  },
+  "page": {
+    "home": {
+      "title": "Infant Head Shape Development Guide",
+      "description": "Scientific understanding and rational care for infant head shape development. Professional assessment and care guidance to help new parents build proper understanding."
+    },
+    "detection": {
+      "title": "Head Shape Detection",
+      "description": "AI-powered infant head shape analysis with scientific cephalic index and asymmetry measurements"
+    },
+    "faq": {
+      "title": "FAQ",
+      "description": "Common questions about using LunaSphere, our free baby head shape assessment tool"
+    },
+    "profileMatch": {
+      "title": "Profile Match",
+      "description": "Overlay your baby's profile on standard head shapes to spot asymmetry at a glance"
+    },
+    "learn": {
+      "title": "Parent Academy",
+      "description": "Scientific understanding of infant head shape development. Professional guidance for new parents."
+    },
+    "research": {
+      "title": "Research Collaboration",
+      "description": "Partnering with medical professionals to advance infant head shape assessment research"
+    },
+    "privacy": {
+      "title": "Privacy & Security",
+      "description": "Learn how LunaSphere protects your and your baby's privacy and data security"
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "detection": "Head Shape Detection",
+    "learn": "Learn",
+    "profileMatch": "Profile Match",
+    "faq": "FAQ",
+    "language": "Language",
+    "mobileMenu": "Mobile navigation menu"
+  },
+  "hero": {
+    "title": "Infant Head Shape Development Guide",
+    "subtitle": "Scientific Understanding · Rational Care",
+    "description": "Most head shape concerns are part of normal development and improve naturally with proper care. We help new parents understand what's normal and reduce unnecessary worry.",
+    "cta": "Head Shape Assessment",
+    "consultation": "If you have any concerns, try our AI head shape analysis. Simply upload one photo to get professional insights"
+  },
+  "development": {
+    "title": "How Head Shape Develops",
+    "subtitle": "Baby's head shape changes naturally during development, with 0-18 months being the key observation period",
+    "structure": {
+      "name": "Skull Structure",
+      "desc": "Baby's skull consists of multiple bone plates connected by \"cranial sutures\", allowing the head to grow with brain development."
+    },
+    "fontanelles": {
+      "name": "Fontanelle Closure",
+      "desc": "The posterior fontanelle (small soft spot at the back) usually closes around 2 months, while the anterior fontanelle (soft spot at the top) typically closes at 12-18 months.",
+      "posterior": "The posterior fontanelle (small soft spot at the back) usually closes around",
+      "anterior": ", while the anterior fontanelle (soft spot at the top) typically closes at",
+      "closure": " months",
+      "around": "2 months",
+      "period": "12-18 months"
+    },
+    "growth": {
+      "name": "Brain Development",
+      "desc": "Baby's brain grows most rapidly from birth to 1 year old, driving rapid head circumference expansion.",
+      "period": "Baby's brain grows most rapidly from birth to 1 year old",
+      "result": ", driving rapid head circumference expansion."
+    },
+    "plasticity": {
+      "name": "Head Shape Plasticity",
+      "desc": "Since the skull hasn't closed yet, posture greatly affects head shape.",
+      "reason": "Since the skull hasn't closed yet, posture greatly affects head shape"
+    },
+    "birth": {
+      "name": "Birth Recovery",
+      "desc": "At birth, the infant skull is soft and malleable, can deform through the birth canal, and typically returns to normal shape within 3-5 days postpartum.",
+      "condition": "At birth, the infant skull is soft and malleable, can deform through the birth canal, and typically",
+      "recovery": "returns to normal shape within 3-5 days postpartum"
+    },
+    "badge": {
+      "scientific": "Scientific",
+      "authoritative": "Authoritative"
+    },
+    "timeline": {
+      "birth": {
+        "name": "Birth",
+        "detail": "Shape Recovery"
+      },
+      "3_6months": {
+        "name": "3-6 months",
+        "detail": "Posterior Fontanelle Closure"
+      },
+      "12_18months": {
+        "name": "12-18 months",
+        "detail": "Anterior Fontanelle Closure"
+      }
+    }
+  },
+  "punctuation": {
+    "period": ".",
+    "comma": ", "
+  },
+  "reference": {
+    "source-link": "Source Link:"
+  },
+  "classification": {
+    "title": "Common Head Shape Variations",
+    "subtitle": "Most head shape variations are normal developmental changes. Understanding their characteristics helps with proper care",
+    "description_label": "Description",
+    "causes_label": "Main Causes",
+    "correction_label": "Correction Methods",
+    "reminder_title": "Positional Head Shape Changes Are Normal",
+    "reminder_content": "Most head shape changes are positional and improve naturally by adjusting sleep positions, increasing tummy time, and other simple methods - no need to worry excessively",
+    "reminder_note": "💡 Tip: Regularly vary baby's sleeping and play positions to encourage natural head shape development",
+    "medical_warning_title": "Pathological Head Shapes Require Medical Attention",
+    "medical_warning_content": "Pathological head shapes (such as scaphocephaly) cannot be treated through sleep position adjustments or corrective helmets. These conditions require professional medical diagnosis and surgical treatment. If severe head shape abnormalities, abnormal head circumference growth, or other symptoms are observed, immediate consultation with a pediatrician or cranial specialist for professional evaluation is essential.",
+    "severity": {
+      "normal": "Normal",
+      "common": "Common",
+      "moderate": "Moderate",
+      "rare": "Rare"
+    },
+    "category": {
+      "normal": "Normal",
+      "positional": "Positional",
+      "pathological": "Pathological"
+    },
+    "normal": {
+      "name": "Normal Head Shape",
+      "image_placeholder": "Normal Head Shape Example",
+      "description": "Head shows natural rounded shape with basic symmetry front-to-back and left-to-right, meeting normal developmental standards.",
+      "causes": "Normal fetal development and appropriate position changes after birth, with skull forming ideal shape during natural growth process.",
+      "correction": "No special intervention needed, continue good care habits, regular position changes, ensure healthy development."
+    },
+    "brachycephaly": {
+      "name": "Brachycephaly",
+      "image_placeholder": "Brachycephaly Example",
+      "image_alt": "Brachycephaly example image showing flattened back of head characteristics",
+      "description": "Flattening of the back of the head, the most common head shape variation in infancy, typically peaking at 7-12 weeks of age.",
+      "causes": "Primarily caused by supine sleeping position. The AAP recommends back sleeping to reduce SIDS risk, but it may affect head shape.",
+      "correction": "Over 80% of babies naturally improve by age 2. Recommendations: more tummy time when awake, alternate sleep positions, reduce lying flat time."
+    },
+    "plagiocephaly": {
+      "name": "Plagiocephaly",
+      "image_placeholder": "Plagiocephaly Example",
+      "image_alt": "Plagiocephaly example image showing asymmetrical head shape with one side flattened",
+      "description": "One side of the head is relatively flat, showing asymmetrical appearance. This condition typically peaks at 4 months and then begins to improve.",
+      "causes": "Common with preferential side sleeping and intrauterine position restrictions. 70%-95% of babies with asymmetrical heads have mild torticollis, which is normal.",
+      "correction": "Most cases improve naturally. Recommendations: encourage turning to the other side, increase tummy time, gentle neck exercises."
+    },
+    "dolichocephaly": {
+      "name": "Dolichocephaly",
+      "image_placeholder": "Dolichocephaly Example",
+      "image_alt": "Dolichocephaly example image showing elongated head shape that is longer front-to-back and narrower on sides",
+      "description": "Head is longer front-to-back and relatively narrower on the sides, but with normal open sutures. Common in premature infants or babies who lie on their sides for extended periods.",
+      "causes": "Primarily caused by prolonged side-lying position, common in NICU premature infants. Unlike pathological scaphocephaly, suture development is normal.",
+      "correction": "Most cases can improve naturally with position adjustments. Recommendations: reduce side-lying time, increase supine and prone time, head massage."
+    },
+    "scaphocephaly": {
+      "name": "Scaphocephaly",
+      "image_placeholder": "Pathological Scaphocephaly Example",
+      "image_alt": "Pathological scaphocephaly example image showing boat-shaped skull caused by premature sagittal suture closure",
+      "description": "Caused by premature sagittal suture closure, characterized by a prominent bony ridge running from front to back on top of the head, with pointed front and back, resembling a boat shape, the most common type of craniosynostosis.",
+      "causes": "Premature fusion of sagittal suture prevents lateral skull growth while anteroposterior growth continues, forming an elongated narrow head. Male incidence is 3 times higher than female.",
+      "correction": "Pathological scaphocephaly is a form of craniosynostosis that must be treated through neurosurgical intervention and cannot be improved through conservative methods such as sleep position adjustments, physical therapy, or corrective helmets. Surgery typically involves removal of the fused sagittal suture and skull reshaping, with better outcomes from early diagnosis and surgical treatment, requiring evaluation and treatment by specialized neurosurgeons"
+    }
+  },
+  "sleep": {
+    "title": "Sleep & Tummy Time Guide",
+    "subtitle": "Scientifically guiding baby's posture to prevent and improve positional head shape issues",
+    "principle1": {
+      "name": "Safety First, Scientific Care",
+      "desc": "Always follow safe sleep guidelines. Back sleeping significantly reduces SIDS risk. Never place babies on their stomach to sleep - safety must always come first."
+    },
+    "principle2": {
+      "name": "Frequent Position Changes, Even Pressure Distribution",
+      "desc": "Newborn skulls are soft and moldable, making them susceptible to flattening from prolonged fixed positions. Rotate between left side, right side, and back sleeping to distribute pressure evenly and encourage natural head rounding."
+    },
+    "principle3": {
+      "name": "Appropriate Mattress, Stable Support",
+      "desc": "Select a firm mattress that provides proper support without excessive sinking. Soft mattresses can create uneven pressure on your baby's head, causing one side to sink in and potentially leading to flat spots or asymmetry, while also hindering healthy spinal development."
+    },
+    "principle4": {
+      "name": "Careful Observation, Timely Adjustment",
+      "desc": "The first 6 months are crucial for head shape development. Monitor your baby's head shape closely and adjust care practices immediately if you notice flattening or asymmetry. After 6 months, increased mobility naturally helps round out the head shape."
+    },
+    "newborn_title": "Newborn Care",
+    "newborn_desc": "Focus on sleep position changes, avoid prolonged supine position, adjust head position every 2 hours",
+    "infant_title": "Infant Care",
+    "infant_desc": "Increase tummy time, start neck exercises, pay attention to head shape symmetry",
+    "toddler_title": "Toddler Care",
+    "toddler_desc": "Encourage various sleep positions, reduce prolonged fixed postures, focus on final head shape formation",
+    "mobile_title": "Mobile Period Considerations",
+    "mobile_desc": "Babies begin to roll over and sit up, head shape is basically set, focus shifts to maintenance and prevention of bad habits",
+    "technique1": {
+      "name": "Tummy Time Practice",
+      "desc": "Start from the newborn period with 3-5 supervised tummy time sessions daily, 2-5 minutes each. This relieves pressure on the back of the head, strengthens neck muscles, and prevents flat head syndrome. Always use a firm, flat surface and ensure clear breathing"
+    },
+    "technique2": {
+      "name": "Varied Feeding Positions",
+      "desc": "Alternate between cradle hold, football hold, and side-lying positions. Switch arms with each feeding to prevent prolonged pressure on one side of the head while promoting visual and spatial development"
+    },
+    "technique3": {
+      "name": "Environmental Encouragement",
+      "desc": "Strategically arrange your baby's environment by regularly moving toys, music boxes, or colorful patterns around the crib to encourage natural head turning. Every few days, alternate which end of the crib your baby's head faces, so light and visual stimuli naturally draw their attention in different directions."
+    },
+    "technique4": {
+      "name": "Side Sleeping Tips",
+      "desc": "When positioning your baby on their side, ensure both head and body face the same direction—never just turn the head while keeping the body straight. This misalignment strains the neck and can worsen head asymmetry. Use a rolled towel or small pillow behind your baby's back for support, and remember to alternate between left and right sides."
+    },
+    "principles_title": "Four Core Principles",
+    "principles_subtitle": "Master these essential principles to create the ideal environment for healthy head shape development",
+    "techniques_title": "Practical Care Techniques",
+    "techniques_subtitle": "Simple, effective techniques you can easily incorporate into daily care",
+    "cta_title": "Still Have Questions?",
+    "cta_description": "Try our free online head shape assessment or reach out via email. We're here to support every parent with personalized guidance and answers."
+  },
+  "examples": {
+    "title": "Typical Head Shape Examples",
+    "subtitle": "Learn to recognize different head shape characteristics through real examples",
+    "normal": {
+      "3month": "Normal head shape — 3 months old",
+      "6month": "Normal head shape — 6 months old",
+      "9month": "Normal head shape — 9 months old"
+    },
+    "brachycephaly": {
+      "front_view": "Brachycephaly - Front view",
+      "profile_view": "Brachycephaly - Profile view",
+      "top_view": "Brachycephaly - Top view"
+    },
+    "plagiocephaly": {
+      "front_view": "Plagiocephaly - Front view",
+      "profile_view": "Plagiocephaly - Profile view",
+      "top_view": "Plagiocephaly - Top view"
+    },
+    "dolichocephaly": {
+      "front_view": "Dolichocephaly - Front view",
+      "profile_view": "Dolichocephaly - Profile view",
+      "top_view": "Dolichocephaly - Top view"
+    },
+    "scaphocephaly": {
+      "3D_1": "Scaphocephaly - 3D",
+      "3D_2": "Scaphocephaly - 3D",
+      "3D_3": "Scaphocephaly - 3D",
+      "medical_note": "Scaphocephaly ≠ positional dolichocephaly, requires medical assessment. Medical imaging ref: https://radiopaedia.org/articles/scaphocephaly "
+    },
+    "image_placeholder": "Image Placeholder"
+  },
+  "button": {
+    "learn-more": "Learn More",
+    "contact": "Contact Us",
+    "test-now": "Get Started"
+  },
+  "detection": {
+    "hero": {
+      "title": "AI Head Shape Analysis",
+      "subtitle": "Deep Learning · Privacy Secure · Local Processing",
+      "description": "Professional head shape assessment system based on advanced deep learning algorithms. All data processing is completed locally on your device without uploading any photos, ensuring your and your baby's privacy and security.",
+      "features": {
+        "ai": "Deep Learning Algorithm",
+        "privacy": "Local Processing, Privacy First"
+      }
+    },
+    "page": {
+      "title1": "A Perfect Start,",
+      "title2": "Shaped with Love",
+      "subtitle": "Powered by deep learning segmentation and 100% on-device processing, we deliver the most private and caring head shape analysis for your little one.",
+      "subtitle2": "Every moment matters. We're here for the journey.",
+      "featureSection": {
+        "title": "How We Help",
+        "card1": {
+          "title": "Beyond the Numbers",
+          "desc": "We translate medical metrics into clear, actionable guidance—no more confusion over complex indexes."
+        },
+        "card2": {
+          "title": "Absolute Privacy",
+          "desc": "Photos never leave your browser and are deleted immediately after analysis. Every image of your baby is treated with the utmost care."
+        },
+        "card3": {
+          "title": "Science-Backed Support",
+          "desc": "Evidence-based guidance on tummy time and sleep positioning, drawn from pediatric clinical consensus.",
+          "link": "View References"
+        }
+      }
+    },
+    "guidance": {
+      "title1": "Every Photo",
+      "title2": "Is a Moment of Love",
+      "tipTitle": "Tips for the Perfect Shot",
+      "tipDesc": "As shown in the guide, aim to shoot directly above your baby's head. Best results come when baby is peacefully asleep—no wiggly heads!",
+      "step1": "Find good lighting to avoid harsh shadows on the head.",
+      "step2": "Reveal the true head shape. For thick hair, dampen it gently with warm water.",
+      "step3": "Include just the tip of the nose in the frame. The nose tip anchors the cranial midline."
+    },
+    "loading": {
+      "text1": "Gently examining the photo...",
+      "text2": "Tracing your baby's head contour...",
+      "text3": "Measuring every precious curve...",
+      "text4": "Preparing your personalized insights..."
+    },
+    "actions": {
+      "reselectImage": "Choose Different",
+      "startAnalysis": "Start Analysis",
+      "adjustImage": "Adjust Image",
+      "restart": "Start Over",
+      "backToAdjust": "Back to Adjust"
+    },
+    "features": {
+      "localPrivacy": "100% Local & Private",
+      "aiGeometry": "AI Geometry Alignment"
+    },
+    "topView": {
+      "features": {
+        "medical": "Clinical-Grade Standards",
+        "deepLearning": "Advanced AI Technology",
+        "deepLearningDesc": "Advanced AI technology for precise head shape recognition",
+        "privacy": "Complete Privacy Protection",
+        "privacyDesc": "All analysis performed locally, your data never leaves your device",
+        "medicalDesc": "Based on clinical measurement standards, providing reliable results"
+      },
+      "title": "Baby Head Shape Measurement",
+      "uploadTitle": "Top-View Head Photo",
+      "subtitle": "Top View Upload",
+      "description": "Upload your baby's top view photo for professional AI analysis",
+      "tooltips": {
+        "analyzing": "AI is analyzing the image, please wait...",
+        "readyToAnalyze": "Click to start AI analysis",
+        "reupload": "Re-upload image"
+      },
+      "shootingTips": {
+        "title": "Photo guidelines",
+        "tip1": "Nose tip should be barely visible",
+        "tip2": "Good lighting, avoid shadows",
+        "tip3": "Keep phone level with head",
+        "tip4": "Avoid hair covering",
+        "tip1Detail": "Ensure nose tip is barely visible, but don't show too much face",
+        "tip2Detail": "Keep phone level with baby's head",
+        "tip3Detail": "Ensure forehead points upward with clear head contour",
+        "tip4Detail": "If hair is thick, wet it to stick to the head, or take photos after bathing",
+        "safety": "Ensure baby safety and health during all photography!"
+      },
+      "annotations": {
+        "forehead": "Forehead",
+        "noseVisible": "Nose Tip Visible",
+        "occiput": "Occipital Region"
+      },
+      "upload": {
+        "clickOrDrag": "Click or drag image here",
+        "supportFormat": "Supports JPG, PNG formats, max 10MB",
+        "rotation": "Rotation",
+        "rotationTip": "💡 Rotate image so forehead points upward",
+        "modelLoading": "Model loading...",
+        "autoPrivacy": "Auto-Detect · Privacy First"
+      },
+      "exampleImageAlt": "Correct shooting example image",
+      "originalImageAlt": "Original uploaded image",
+      "analysisResult": "Analysis Results",
+      "analysisDescription": "Calculate CI and CVAI based on identified head contour",
+      "buttons": {
+        "analyzing": "Analyzing...",
+        "startAnalysis": "Analyze Now",
+        "reupload": "Upload New Photo",
+        "downloadResult": "Download Result"
+      },
+      "analysis": {
+        "startAnalysis": "Analyze Now",
+        "reupload": "Upload New Photo",
+        "downloadResult": "Save Results",
+        "title": "Analysis Results",
+        "description": "Calculate CI, CVAI based on identified head shape contour",
+        "waitingUpload": "Waiting for image upload",
+        "waitingUploadDesc": "Start AI intelligent analysis after uploading image",
+        "readyToAnalyze": "Image uploaded, ready to analyze",
+        "readyToAnalyzeDesc": "Click the analyze button to start AI intelligent analysis",
+        "analyzing": "AI is analyzing",
+        "analyzingDesc": "Deep learning algorithm is processing your image...",
+        "completed": "AI analysis completed",
+        "completedDesc": "Based on deep learning head shape recognition",
+        "measurementAnnotations": "Measurement Annotations",
+        "bpd": "BPD (Biparietal Diameter)",
+        "ofd": "OFD (Occipitofrontal Diameter)",
+        "diagonal": "Diagonal",
+        "detectionFailed": "Detection Failed"
+      }
+    },
+    "model": {
+      "loading": "AI model loading, please wait...",
+      "notLoaded": "AI model initializing",
+      "ready": "AI model ready",
+      "loadingButton": "Model loading...",
+      "notLoadedMessage": "AI model is initializing, please wait a moment",
+      "imageLoadFailed": "Image loading failed, please re-upload",
+      "loadingHint": "First-time loading may take longer, please be patient",
+      "notLoadedHint": "Please wait for the model to load automatically before detection",
+      "readyHint": "You can now upload images for head shape detection analysis",
+      "loadingTooltip": "Model is loading, please wait...",
+      "notLoadedTooltip": "AI model is initializing, please wait",
+      "loadFailed": "Model Loading Failed",
+      "loadFailedHint": "Model loading encountered an issue. Please try refreshing the page. If the problem persists, please contact technical support",
+      "closeBanner": "Close banner",
+      "detailedError": "Detailed Error Information"
+    },
+    "pageSubtitle": "Powered by advanced AI technology, all analysis happens right in your browser. Your photos stay private and secure - nothing is ever uploaded to our servers.",
+    "profileView": {
+      "title": "Profile Contour Comparison",
+      "description": "Upload left and right profile photos of your baby for precise comparison with standard head contours",
+      "pageDescription": "Medical metrics like CI and CVAI are measured from above—but there's no standard number for the side view. Doctors assess it visually. Now you can too: upload left and right profiles, and compare them with a standard contour.",
+      "shootingTips": {
+        "title": "Photo guidelines",
+        "tip1": "Side head and body",
+        "tip1Desc": "Ensure baby's profile completely faces the camera",
+        "tip2": "Avoid hair covering",
+        "tip2Desc": "If hair is thick, wet it to stick to the head, or take photos after bathing",
+        "tip3": "Maintain natural posture",
+        "tip3Desc": "Keep baby comfortable and relaxed, avoid forcing poses",
+        "safety": "Ensure baby safety and health during all photography!",
+        "shootingTips": "Shooting Tips"
+      },
+      "leftProfile": "Left Profile",
+      "rightProfile": "Right Profile",
+      "showTemplate": "Show Template",
+      "hideTemplate": "Hide Template",
+      "resetImage": "Reset Image",
+      "reuploadImage": "Re-upload",
+      "uploaded": "Uploaded",
+      "scale": "Scale",
+      "rotation": "Rotation",
+      "uploadPrompt": "Click or drag image here",
+      "uploadHint": "Support JPG, PNG format, max 10MB",
+      "instructions": {
+        "title": "Instructions",
+        "clickToSelect": "Click image to select for operations",
+        "dragToMove": "Drag image to move position",
+        "dragToResize": "Drag corner control points to resize image",
+        "dragToRotate": "Drag rotation control point to rotate image",
+        "clickToDeselect": "Click empty area to deselect"
+      },
+      "leftTemplateAlt": "Left Profile Template",
+      "rightTemplateAlt": "Right Profile Template",
+      "clickOrDrag": "Click or drag image here",
+      "leftProfileDesc": "Upload baby's left profile photo",
+      "rightProfileDesc": "Upload baby's right profile photo",
+      "startComparison": "Start Comparison",
+      "gestureHints": {
+        "title": "Gesture Tips",
+        "drag": "Drag to move image",
+        "pinch": "Pinch to zoom",
+        "rotate": "Two-finger rotate, or use slider below"
+      }
+    },
+    "analysis": {
+      "ci": {
+        "title": "Cephalic Index (CI)",
+        "longHead": "Dolichocephaly",
+        "flatHead": "Brachycephaly"
+      },
+      "cvai": {
+        "title": "Cranial Vault Asymmetry Index (CVAI)",
+        "diagonal1": "Diagonal 1",
+        "diagonal2": "Diagonal 2"
+      },
+      "gauge": {
+        "normal": "Normal",
+        "mild": "Mild",
+        "moderate": "Moderate",
+        "severe": "Severe",
+        "longHead": "Long",
+        "flatHead": "Flat"
+      },
+      "status": {
+        "healthy": "Healthy",
+        "attention": "Attention",
+        "symmetric": "Symmetric",
+        "asymmetric": "Asymmetric"
+      }
+    },
+    "assessment": {
+      "whisper": "A Note for Parents",
+      "headlines": {
+        "perfect": "Perfect Shape",
+        "mildAttention": "Mild Concern",
+        "moderateRisk": "Moderate Risk",
+        "severeAttention": "Professional Attention Needed"
+      },
+      "advice": {
+        "perfect": "Excellent! Your baby's head shape measurements are all within the ideal medical reference range. Continue with your current varied sleeping positions and care routine.",
+        "mildCvai": "Slight head asymmetry detected. Consider increasing tummy time during the day and encourage your baby to turn toward the less-favored side.",
+        "moderateCvai": "Moderate head asymmetry detected. Work with your pediatrician to actively adjust sleeping positions and increase daily tummy time.",
+        "severeCvai": "Significant asymmetry detected. We recommend consulting a specialist promptly, as cranial molding therapy or physical therapy may be beneficial.",
+        "mildFlat": "Mild flattening trend detected. Encourage head-turning activities and reduce pressure on the back of the head.",
+        "severeFlat": "Notable flattening detected. Focus on reducing back-lying time, increasing tummy time, and preventing continued pressure on the back of the head.",
+        "longHead": "Elongated head shape is common in preterm infants or babies who prefer side-sleeping. Monitor progress and maintain balanced head positioning."
+      },
+      "disclaimer": "This analysis is for reference only and should not replace medical diagnosis. Consult a pediatrician if you have concerns.",
+      "saveReport": "Save Full Report",
+      "poweredBy": "Powered by AI Studio"
+    },
+    "modelManager": {
+      "title": "Model Management (Debug Mode)",
+      "openDebugMode": "Open Debug Mode",
+      "closeDebugMode": "Close Debug Mode",
+      "debugModeTitle": "Debug Mode (Shortcut: Ctrl+Shift+D)",
+      "loadModel": "Load Model",
+      "modelPathPlaceholder": "ONNX model file path",
+      "confidenceThreshold": "Confidence Threshold",
+      "error": "Error",
+      "status": {
+        "loading": "Loading...",
+        "loaded": "Model Loaded",
+        "notLoaded": "Initializing",
+        "loadFailed": "Load Failed"
+      },
+      "errors": {
+        "enterModelPath": "Please enter model path",
+        "unknownError": "Unknown error"
+      },
+      "tips": {
+        "defaultModel": "💡 Tip: Default model model_weights_best.onnx will load automatically, or you can specify another model path",
+        "confidenceThreshold": "🎯 Confidence Threshold: Only keep detection results above this threshold, recommended value 0.7-0.8"
+      }
+    },
+    "errors": {
+      "noHeadDetected": "No head shape detected, please ensure the image contains a clear head contour",
+      "modelNotLoaded": "AI model is still initializing, please wait",
+      "analysisFailed": "Analysis failed",
+      "unknownError": "Unknown error",
+      "imageLoadFailed": "Image loading failed, please re-upload",
+      "noImageUploaded": "Please upload an image first",
+      "modelStillLoading": "Model is still loading, please try again later"
+    },
+    "classification": {
+      "normal": "Normal",
+      "brachycephaly": "Brachycephaly",
+      "dolichocephaly": "Dolichocephaly",
+      "plagiocephaly": "Plagiocephaly",
+      "unknown": "Unknown",
+      "ci": {
+        "severeLong": "Severe",
+        "moderateLong": "Moderate",
+        "mildLong": "Mild",
+        "normal": "Normal",
+        "mildFlat": "Mild",
+        "moderateFlat": "Moderate",
+        "severeFlat": "Severe"
+      },
+      "cvai": {
+        "normal": "Normal",
+        "mildAsymmetric": "Mild Plagiocephaly",
+        "moderateAsymmetric": "Moderate Plagiocephaly",
+        "severeAsymmetric": "Severe Plagiocephaly"
+      }
+    },
+    "medicalDisclaimerTitle": "Medical Disclaimer",
+    "medicalDisclaimer": "We employ calculation methods based on authoritative medical literature and have collected and annotated 300 real infant head shape images for model training, striving to ensure measurement precision and computational accuracy. Our goal is to provide parents with convenient scientific reference tools to help ease parenting concerns. However, this tool is intended for educational and reference purposes only and cannot substitute for professional medical diagnosis. Detection results should not serve as the sole basis for medical decisions. If you have any concerns about your baby's head shape development, please consult with a pediatrician or qualified healthcare professional promptly.",
+    "references": {
+      "title": "References",
+      "source1": {
+        "text": "Measuring for nonsynostotic head deformities in preterm infants during NICU management: A pilot study",
+        "url": "https://www.academia.edu/108273319/Measuring_for_nonsynostotic_head_deformities_in_preterm_infants_during_NICU_management_A_pilot_study"
+      },
+      "source2": {
+        "text": "Interrater and Intrarater Reliability of Cranial Anthropometric Measurements in Infants with Positional Plagiocephaly",
+        "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7766735/"
+      },
+      "source3": {
+        "text": "Cephalic Index in the First Three Years of Life: Study of Children with Normal Brain Development Based on Computed Tomography",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3933399/"
+      },
+      "source4": {
+        "text": "Significant Factors in Cranial Remolding Orthotic Treatment of Asymmetrical Brachycephaly",
+        "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7231243/"
+      },
+      "source5": {
+        "text": "Revisiting the Cephalic Index: The Origin, Adaptations, and Clinical Applications",
+        "url": "https://journals.lww.com/jpojournal/fulltext/2024/04000/revisiting_the_cephalic_index__the_origin,.10.aspx"
+      },
+      "source6": {
+        "text": "Cranial Anthropometric Measurements and Assessment Guidelines",
+        "url": "https://www.cappskids.org/cephalic-index-what-do-the-numbers-mean/"
+      }
+    }
+  },
+  "faq": {
+    "title": "FAQ",
+    "subtitle": "Common questions about using LunaSphere",
+    "category": {
+      "about": "About LunaSphere",
+      "howTo": "How to Detect",
+      "results": "Results & Advice"
+    },
+    "about": {
+      "question": "What is LunaSphere?",
+      "answer": "LunaSphere is a free tool for checking your baby's head shape at home.\n\nThe Cephalic Index (CI) and Cranial Vault Asymmetry Index (CVAI) are standard clinical measurements used worldwide to assess infant head shape—CI for flatness/elongation, CVAI for left-right symmetry. We want to bring this expertise to every family—just snap a photo at home, and feel confident knowing how your little one is developing."
+    },
+    "notMedical": {
+      "question": "Is this a medical diagnosis?",
+      "answer": "LunaSphere is a home screening tool that helps you understand your baby's head shape—but it's not a substitute for a doctor's diagnosis.\n\n• Hospital assessment: Professional equipment, doctor diagnosis, official reports\n• LunaSphere: Free, convenient, great for tracking changes over time\n\nWe're here to help ease unnecessary worry, and give you confidence when it's time to seek professional advice."
+    },
+    "privacy": {
+      "question": "Are my photos uploaded?",
+      "answer": "No. All photo analysis happens locally on your device—nothing is uploaded to any server.\n\nPhotos are cleared from memory immediately after analysis. We take your baby's privacy seriously."
+    },
+    "photoTips": {
+      "question": "How do I take a good photo?",
+      "answer": "Good photos lead to accurate results:\n\n• Angle: Shoot straight down from above, camera parallel to baby's head\n• Lighting: Soft and even, avoid harsh shadows\n• Hair: Best results right after bath when hair is wet and flat\n• Background: Simple and clean\n• Position: Baby lying relaxed, head natural"
+    },
+    "detectionFailed": {
+      "question": "What if detection fails?",
+      "answer": "No worries—it's usually just a photo issue. A quick adjustment should help:\n\n• Make sure the full head outline is visible\n• Check that lighting is bright and even\n• Shoot straight down, not from the side\n• Use a plain background\n\nIf it still doesn't work after a few tries, the \"Profile Match\" feature is a great visual alternative."
+    },
+    "whatIsCICVAI": {
+      "question": "What are CI and CVAI?",
+      "answer": "Two head shape measurements:\n\n**CI (Cephalic Index)**\nHead width ÷ length—shows if the head is flat or long. Normal range: 76-90%. Below 76% is elongated, above 90% is flat.\n\n**CVAI (Cranial Vault Asymmetry Index)**\nDifference between diagonal measurements—shows symmetry. < 3.5% normal, 3.5-7% mild, 7-12% moderate, > 12% severe asymmetry."
+    },
+    "abnormalResult": {
+      "question": "What if results seem abnormal?",
+      "answer": "Don't panic—most head shape issues can improve with proper care.\n\nMild cases usually just need consistent daily care; moderate cases need closer attention and a doctor visit if no improvement; severe cases should see a pediatrician soon.\n\nThe first 6 months are the best window for improvement. Visit [Parent Academy](/learn) for detailed guidance and care tips—we're here to help you through this journey."
+    },
+    "howOften": {
+      "question": "How often should I measure?",
+      "answer": "Every 2-4 weeks to track trends.\n\n• 0-6 months: Changes fast—every 2 weeks\n• 6-12 months: Slowing down—monthly\n• After 12 months: Mostly stable—as needed\n\nWe know you want to keep a close eye on your little one, but head shape changes gradually. Measuring too often can add stress over tiny variations. Take it easy—focus on the trend."
+    },
+    "deviceSupport": {
+      "question": "What devices work?",
+      "answer": "LunaSphere is a web app—phones, tablets, and computers all work with any modern browser.\n\nWe recommend using your phone for the easiest photo-taking experience. No download needed."
+    },
+    "searchPlaceholder": "Search questions...",
+    "allQuestions": "All Questions",
+    "searchResults": {
+      "prefix": "Found",
+      "suffix": "related questions"
+    },
+    "noResults": {
+      "title": "No questions found",
+      "description": "Try different keywords or browse by category"
+    },
+    "learnMore": "Want to learn more about head shape?",
+    "goToLearn": "Visit Parent Academy",
+    "contactUs": "Still have questions?",
+    "contactUsDesc": "Send us an email",
+    "disclaimer": "LunaSphere provides information for reference only and is not a substitute for professional medical advice. If you have health concerns, please consult a doctor."
+  },
+  "learn": {
+    "hero": {
+      "title": "Your Guide to\nBaby's Head Shape",
+      "subtitle": "We reviewed AAP guidelines and pediatric research to answer the questions parents ask most—in plain language, so you won't over-worry or miss what really matters.",
+      "start_course": "Get Started",
+      "trusted_by": "Read by 10,000+ parents",
+      "ageQuestion": "How old is your baby?",
+      "ageSelected": "Showing tips for {age} months",
+      "ageGroups": {
+        "0to3": "0-3 mo",
+        "3to6": "3-6 mo",
+        "6to12": "6-12 mo",
+        "12plus": "12+ mo"
+      }
+    },
+    "chapter": {
+      "intro": "Intro",
+      "development": "Growth",
+      "skull": "Anatomy",
+      "types": "Types",
+      "care": "What to Do"
+    },
+    "nav": {
+      "development": "Development",
+      "care": "Care Guide",
+      "consult": "When to Ask"
+    },
+    "ui": {
+      "viewSource": "Learn more",
+      "careTips": "Tips: ",
+      "min": "min"
+    },
+    "categories": {
+      "development": "Development",
+      "basics": "The Basics",
+      "coreIntervention": "Essential",
+      "dailyCare": "Daily Care",
+      "supplementary": "Helpful Tips",
+      "medical": "Medical"
+    },
+    "sections": {
+      "foundation": {
+        "title": "Understanding the Basics",
+        "description": "Learn how head shape develops naturally and what you can do about it"
+      },
+      "care": {
+        "title": "Daily Care",
+        "description": "Practical, evidence-based techniques to support healthy head development"
+      },
+      "action": {
+        "title": "When to Act",
+        "description": "Know the signs and when to seek professional guidance"
+      }
+    },
+    "references": {
+      "aapTummyTime": "The AAP recommends starting tummy time right after coming home, working up to 15-30 minutes daily by 7 weeks.",
+      "aapSafeSleep": "Back sleeping is the safest way to prevent SIDS. Keep the sleep area free of pillows and soft items.",
+      "aapNoPillow": "Soft items like pillows can block a baby's airway—they're the leading cause of accidental suffocation in infants.",
+      "fontanelleClosure": "The back soft spot typically closes by 6-8 weeks; the top one closes between 12-18 months.",
+      "plagiocephalyTiming": "Flat spots usually look worst around 4-5 months. If there's no improvement by 4 months, it's time to see a specialist.",
+      "helmetTherapy": "Helmet therapy works best when started at 5-6 months. It's effective up to 12 months, but results drop off significantly after that.",
+      "cranialGrowth": "85% of skull growth happens in the first year—that's why early intervention matters.",
+      "feedingPositions": "Switching up feeding positions and arms helps even out pressure on baby's head and builds balanced neck muscles.",
+      "repositioning": "Use your baby's natural curiosity: place toys on the rounder side and position the crib so they turn toward interesting things.",
+      "deviceTime": "Limit time in car seats, bouncers, and carriers. Holding baby upright or tummy-down on your arm gives their head a break."
+    },
+    "timeline": {
+      "title": "Your Baby's Head Shape Journey",
+      "subtitle": "What to expect at each stage and how you can help",
+      "months": "mo",
+      "highlightsLabel": "What's Happening",
+      "tipsLabel": "What You Can Do",
+      "stage1": {
+        "title": "Newborn",
+        "highlights": "Baby's skull is very soft with flexible joints between the bones. Any odd shape from birth usually rounds out within days. The back soft spot starts closing.",
+        "tips": "Now's the time to build good habits. Start tummy time within days of birth—even 5-10 minutes a day helps. Switch which way baby's head faces during sleep."
+      },
+      "stage2": {
+        "title": "Prime Window",
+        "highlights": "The back soft spot closes. Baby starts holding their head up as neck muscles get stronger. This is your best chance to improve head shape—most flat spots can get much better now.",
+        "tips": "Aim for 30-40 minutes of tummy time daily. Encourage baby to look toward their less-favorite side. Flat spots often look worst around 4 months—if you're not seeing improvement, talk to your doctor. Helmet therapy works best when started at 5-6 months."
+      },
+      "stage3": {
+        "title": "Active Phase",
+        "highlights": "The skull is firming up but still has some flexibility. As baby sits and crawls, they spend less time on their back, and head shape often improves on its own. Most skull growth (85%) is done by 12 months.",
+        "tips": "Keep baby active and moving. Cut back on time in car seats and bouncers. Helmets still work before 12 months, but earlier is better. After the first birthday, results drop off significantly."
+      },
+      "stage4": {
+        "title": "Settling In",
+        "highlights": "The top soft spot closes. Head shape is now mostly set. Most minor asymmetries become less obvious as hair grows in.",
+        "tips": "Keep up healthy activity habits. If you're still concerned about asymmetry, ask your doctor whether any further steps make sense."
+      }
+    },
+    "care": {
+      "title": "Daily Care Guide",
+      "subtitle": "Simple, practical ways to support healthy head development",
+      "tummyTime": {
+        "title": "Tummy Time",
+        "subtitle": "Builds strength, prevents flat spots",
+        "imageCaption": "Baby during tummy time",
+        "tip1": "Start right after coming home: 3-5 minutes at a time, 2-3 times a day",
+        "tip2": "Work up to 15-30 min daily by 7 weeks, then 30-40 min by 3 months",
+        "tip3": "Use toys or a mirror to encourage lifting and looking around",
+        "tip4": "Always supervise—baby must be awake",
+        "proTip": "Chat and sing to your baby during tummy time—it makes the whole thing more fun!"
+      },
+      "sleep": {
+        "title": "Sleep Position",
+        "subtitle": "Safe sleep, balanced shape",
+        "imageCaption": "Alternating head position",
+        "tip1": "Always on their back—it's the safest way to sleep (prevents SIDS)",
+        "tip2": "Switch which way baby's head faces each night",
+        "tip3": "Rotate the crib in the room from time to time",
+        "tip4": "Don't let baby spend too long in car seats or bouncers",
+        "warning": "Skip the shaping pillows! Pediatric groups warn against any pillows for infants—they're a suffocation risk."
+      },
+      "feeding": {
+        "title": "Mix Up Feeding Positions",
+        "subtitle": "Balance pressure, support development",
+        "intro": "Where baby's head rests during feeding matters. Switching positions helps prevent flat spots.",
+        "tip1": "Try different holds: cradle, football, side-lying",
+        "tip2": "Switch arms each feeding—bottle-feeders too",
+        "tip3": "If there's already a flat spot, keep that side facing up during feeds",
+        "tip4": "Notice if baby always turns one way—this could signal torticollis",
+        "tip5": "Variety reduces one-sided pressure and helps both eyes develop evenly"
+      },
+      "environment": {
+        "title": "Set Up the Room",
+        "subtitle": "Let curiosity do the work",
+        "intro": "Babies naturally turn toward interesting things. Use this to encourage looking both ways.",
+        "tip1": "Put toys and mobiles on the rounder side to draw baby's gaze that direction",
+        "tip2": "Position the crib so baby faces the room when turning toward the rounder side",
+        "tip3": "Every few days, switch which end of the crib baby's head is at",
+        "tip4": "Cut back on time in car seats, bouncers, and carriers—they press on the back of the head",
+        "tip5": "Hold baby often: upright on your shoulder or tummy-down on your arm gives their head a rest"
+      },
+      "mattress": {
+        "title": "Choosing a Mattress",
+        "subtitle": "Firm and safe",
+        "intro": "The right mattress matters for both safety and head shape.",
+        "tip1": "It needs to be firm and flat—no dent when baby lies down",
+        "tip2": "No memory foam, pillow-tops, or soft pads—these raise suffocation risk",
+        "tip3": "Make sure it fits snugly in the crib with no gaps (two fingers max at the edge)",
+        "tip4": "Use only a fitted sheet—nothing else in the crib",
+        "tip5": "Check it regularly and replace if it's sagging or worn"
+      },
+      "brainDevelopment": {
+        "title": "Does Flat Head Affect Brain Development?",
+        "subtitle": "What the research actually says",
+        "intro": "This is probably the #1 question parents ask. The good news: in most cases, there's nothing to worry about.",
+        "point1": "Mild to moderate positional flat head (plagiocephaly, brachycephaly) does NOT affect brain development or intelligence",
+        "point2": "These are cosmetic changes—they don't reduce brain volume or impair neurological function",
+        "point3": "Studies show no causal link between positional flat head and cognitive problems",
+        "warning": "Important: Pathological conditions like craniosynostosis (premature suture closure) CAN affect brain development and need prompt medical attention. If flat head comes with developmental delays, see a doctor right away.",
+        "conclusion": "Bottom line: mild flat spots are a cosmetic concern, not a brain development issue. But always rule out underlying conditions."
+      },
+      "pillowMyth": {
+        "title": "Can Shaping Pillows Fix Flat Head?",
+        "subtitle": "The truth about baby pillows",
+        "intro": "You'll see lots of \"head-shaping\" pillows marketed to worried parents. Here's the reality: newborns don't need pillows at all.",
+        "reason1title": "Why no pillow?",
+        "reason1": "A newborn's spine is straight—when lying flat, their back and head are naturally aligned. A pillow bends the neck, pushing the chin toward the chest, which can restrict breathing and increase suffocation risk.",
+        "reason2title": "Do shaping pillows work?",
+        "reason2": "There's no scientific evidence that shaping pillows improve head shape. They actually restrict natural movement and create safety hazards.",
+        "reason3title": "When can babies use pillows?",
+        "reason3": "The AAP recommends waiting until at least 12 months—18 months is even better.",
+        "warning": "Any pillow marketed to \"fix\" or \"prevent\" flat head in infants poses a safety risk. Don't use them."
+      }
+    },
+    "consult": {
+      "title": "When to See a Doctor",
+      "subtitle": "Combine what you observe with measurement results to decide if you need professional help",
+      "normalSigns": {
+        "title": "Keep Monitoring",
+        "action": "Continue daily care",
+        "sign1": "Mild unevenness that's improving with care",
+        "sign2": "Birth molding that rounds out within days",
+        "sign3": "Baby hitting milestones and moving well",
+        "measurement": "Measurement reference: CVAI < 7% (mild)"
+      },
+      "warningSigns": {
+        "title": "Worth a Check-up",
+        "action": "Schedule a pediatrician visit",
+        "sign1": "No improvement after 2-3 months of consistent care",
+        "sign2": "Ears or face noticeably uneven",
+        "sign3": "Baby always turns the same way (could be torticollis)",
+        "measurement": "Measurement reference: CVAI 7-12% (moderate) with no improvement"
+      },
+      "urgentSigns": {
+        "title": "See Someone Soon",
+        "action": "Get a specialist appointment",
+        "sign1": "Soft spot is bulging or sunken",
+        "sign2": "You can feel a raised ridge on the skull (possible craniosynostosis)",
+        "sign3": "Head growing too fast or not at all",
+        "measurement": "Measurement reference: CVAI > 12% (severe)"
+      },
+      "ctaTitle": "Curious about your baby's head shape?",
+      "ctaText": "Not sure if everything looks normal? Try our quick AI check.",
+      "ctaButton": "Check Now",
+      "disclaimer": "This is general information, not medical advice. Talk to your pediatrician about any concerns."
+    },
+    "improvement": {
+      "title": "How Long Until Head Shape Improves?",
+      "subtitle": "Setting realistic expectations",
+      "intro": "Head shape improvement takes time and consistency. Knowing what to expect helps you stay the course.",
+      "mild": {
+        "title": "Mild Asymmetry",
+        "time": "2-4 months",
+        "desc": "With repositioning and tummy time, you'll usually see noticeable improvement"
+      },
+      "moderate": {
+        "title": "Moderate Asymmetry",
+        "time": "4-8 months",
+        "desc": "Requires consistent effort and regular monitoring"
+      },
+      "severe": {
+        "title": "Severe Asymmetry",
+        "time": "May need professional help",
+        "desc": "If conservative measures don't work, your doctor may recommend helmet therapy"
+      },
+      "factors": "What affects improvement speed: baby's age (younger = faster improvement), severity of the issue, and how consistently you follow through with care routines.",
+      "helmetTitle": "About Helmet Therapy",
+      "helmetIntro": "Helmet therapy is effective for moderate to severe cases, but it's not needed for everyone.",
+      "helmetPoint1": "Best timing: Start at 4-6 months, finish before 12 months",
+      "helmetPoint2": "When it's recommended: Conservative care hasn't helped after 2-3 months, or doctor assessment indicates it's needed",
+      "helmetPoint3": "What it involves: Usually 2-4 months of wear, about 23 hours per day",
+      "helmetNote": "Helmet therapy requires professional evaluation—don't buy one on your own."
+    },
+    "skull": {
+      "title": "How Baby's Skull Works",
+      "subtitle": "Why head shape can change—and when you have the best chance to help",
+      "imageAlt": "Infant skull diagram",
+      "funFact": "At birth, a baby's brain is just 25% of adult size—by age 2, it's 75%! That's why the skull stays soft and flexible.",
+      "structure": {
+        "title": "Built to Flex",
+        "desc": "A baby's skull isn't one solid bone—it's several plates connected by flexible tissue called sutures. This lets the skull expand as the brain grows rapidly."
+      },
+      "fontanelles": {
+        "title": "The Soft Spots",
+        "desc": "The soft spots (fontanelles) are where the skull plates meet. The one at the back closes around 2 months; the larger one on top closes between 12-18 months. Doctors use them to check on baby's health.",
+        "posterior": "Back: ~2 months",
+        "anterior": "Top: 12-18 months"
+      },
+      "growth": {
+        "title": "Rapid Brain Growth",
+        "desc": "Baby's brain grows fastest in the first year, pushing the skull to expand quickly. The skull needs to stay flexible to keep up."
+      },
+      "plasticity": {
+        "title": "Shape Can Change",
+        "desc": "Because the skull is still soft, outside pressure (like sleeping position) can affect its shape. The flip side: you can also use positioning to improve it."
+      },
+      "recovery": {
+        "title": "After Birth",
+        "desc": "Baby's head often looks a bit squished right after delivery—that's from passing through the birth canal. It usually rounds out in 3-5 days."
+      }
+    },
+    "headTypes": {
+      "title": "Head Shape Guide",
+      "subtitle": "Learn to recognize different head shapes so you can track your baby's progress",
+      "viewDiagram": "View diagram",
+      "characteristics": "What to Look For",
+      "views": {
+        "top": "From Above",
+        "front": "From Front",
+        "profile": "From Side"
+      },
+      "ages": {
+        "0to3": "0-3 mo",
+        "6": "6 mo",
+        "9": "9 mo"
+      },
+      "labels": {
+        "description": "What It Looks Like",
+        "causes": "Why It Happens",
+        "correction": "What You Can Do"
+      },
+      "severity": {
+        "normal": "Normal",
+        "mild": "Keep an Eye On",
+        "warning": "Talk to Your Doctor"
+      },
+      "normal": {
+        "name": "Normal Head Shape",
+        "desc": "Looking from above, a normal head is an even oval—balanced front-to-back and side-to-side. Most babies have heads in the normal range.",
+        "feature": "Symmetrical oval, balanced all around",
+        "char1": "Even oval shape when viewed from above",
+        "char2": "Ears line up on both sides",
+        "char3": "Forehead and back of head are evenly rounded"
+      },
+      "plagiocephaly": {
+        "name": "Flat Head (One Side)",
+        "desc": "One side of the back of the head is flatter, giving a parallelogram shape from above. The ear on the flat side often shifts forward. This is the most common positional head shape concern.",
+        "feature": "Flattening on one side, parallelogram shape",
+        "char1": "One side of the back is flatter than the other",
+        "char2": "Ear on the flat side may be pushed forward",
+        "char3": "Head looks asymmetric from above"
+      },
+      "brachycephaly": {
+        "name": "Flat Head (Back)",
+        "desc": "The entire back of the head is flat, making the head look wide and short. Common when babies spend lots of time on their backs. Tummy time and repositioning help.",
+        "feature": "Flat back, wide appearance",
+        "char1": "Back of head is uniformly flat",
+        "char2": "Head looks wider than it is long",
+        "char3": "Profile view shows flat back"
+      },
+      "dolichocephaly": {
+        "name": "Long Head Shape",
+        "desc": "The head is longer front-to-back with narrower sides, but skull sutures are normal. Often seen in preemies or babies who sleep on their sides. Repositioning can help.",
+        "feature": "Long and narrow, sutures normal",
+        "char1": "Head is longer than it is wide",
+        "char2": "Skull sutures are open and normal",
+        "char3": "Common in preemies or side-sleepers"
+      },
+      "scaphocephaly": {
+        "name": "Boat-Shaped Head",
+        "desc": "A medical condition where the sagittal suture (top of head) closes too early, creating a long narrow head with a bony ridge. This needs surgical treatment and won't improve with positioning alone.",
+        "feature": "Long narrow shape due to early suture closure",
+        "char1": "Bony ridge running along top of head",
+        "char2": "Sagittal suture has closed prematurely",
+        "char3": "Requires evaluation by a neurosurgeon"
+      },
+      "craniosynostosis": {
+        "title": "⚠️ Craniosynostosis",
+        "desc": "A rare condition where one or more skull sutures close too early, causing abnormal head growth. Unlike positional flat head, this needs medical evaluation and may require surgery.",
+        "sign1": "Hard ridge along a suture line",
+        "sign2": "Soft spot closes too early",
+        "sign3": "Head growth doesn't follow normal pattern"
+      }
+    }
+  },
+  "research": {
+    "title": "Research Collaboration",
+    "subtitle": "Infant head shape assessment is still a relatively niche field. Many parents lack scientific understanding and accessible tools. We hope to lower barriers through open-source technology, while collaborating with medical professionals to bring more attention and research to this area.",
+    "vision": "We believe that combining technology with medical expertise can help more families. We look forward to working together to advance the field of infant head shape assessment.",
+    "offer": {
+      "title": "What We Offer",
+      "openSource": {
+        "title": "Open Source Algorithms",
+        "desc": "Complete code for head segmentation and CI/CVAI calculation"
+      },
+      "technology": {
+        "title": "AI Expertise",
+        "desc": "Deep learning, computer vision—from research to deployment"
+      },
+      "userReach": {
+        "title": "User Reach",
+        "desc": "Help translate research into real-world family applications"
+      }
+    },
+    "seek": {
+      "title": "What We're Looking For",
+      "validation": {
+        "title": "Clinical Validation",
+        "desc": "Medical verification and feedback on algorithm accuracy"
+      },
+      "advisor": {
+        "title": "Expert Advisors",
+        "desc": "Professional guidance in pediatrics and craniofacial surgery"
+      },
+      "academic": {
+        "title": "Academic Collaboration",
+        "desc": "Joint research and paper publication"
+      },
+      "data": {
+        "title": "Data Collaboration",
+        "desc": "Co-building and sharing annotated datasets"
+      }
+    },
+    "forms": {
+      "title": "Ways to Collaborate",
+      "github": "Open Source",
+      "academic": "Academic Research",
+      "clinical": "Clinical Trials",
+      "consulting": "Advisory"
+    },
+    "contact": {
+      "title": "Let's Connect",
+      "desc": "Whether it's academic collaboration, clinical validation, or just a technical discussion—we'd love to hear from you",
+      "email": "Send Email",
+      "github": "View GitHub"
+    },
+    "disclaimer": "We respect academic standards. All collaborations will be based on mutual understanding and clear communication."
+  },
+  "privacy": {
+    "title": "Privacy & Security",
+    "intro": "We understand the sensitivity of baby photos and health data. Protecting your and your baby's privacy is a core principle of our product design.",
+    "principles": {
+      "noTraining": {
+        "title": "Not Used for AI Training",
+        "desc": "Your uploaded photos and data will not be used to train any machine learning models"
+      },
+      "noCommercial": {
+        "title": "No Commercial Use",
+        "desc": "Your data will not be sold, rented, or used for advertising or other commercial purposes"
+      },
+      "encryption": {
+        "title": "Encrypted Transmission",
+        "desc": "All data transfers use HTTPS encryption to ensure security in transit"
+      },
+      "userControl": {
+        "title": "Delete Anytime",
+        "desc": "You can delete your account and all associated data at any time"
+      }
+    },
+    "sections": {
+      "dataCollection": {
+        "title": "What Data We Collect",
+        "content": "To provide head shape analysis, we collect the baby head photos you upload. If you create an account, we also collect your email address. We do not collect personal information unrelated to the service."
+      },
+      "dataUsage": {
+        "title": "How Data Is Used",
+        "content": "Your uploaded photos are used only for the current analysis session. After analysis, you can choose to save or delete the results. We do not use your data to train AI models, nor do we share your personal data with any third parties."
+      },
+      "dataSecurity": {
+        "title": "Security Measures",
+        "content": "We use industry-standard security measures to protect your data, including HTTPS encrypted transmission, server-side encrypted storage, and strict access controls. Our team regularly reviews security measures to ensure data safety."
+      },
+      "userRights": {
+        "title": "Your Rights",
+        "content": "You have the right to access, correct, or delete your personal data. You can delete your account at any time within the app, and all associated data will be permanently removed. For assistance, please contact us via the email below."
+      },
+      "children": {
+        "title": "Children's Privacy",
+        "content": "Our service is designed for parents to assess infant head shape development. We take extra care with infant data protection and implement additional security measures to safeguard this sensitive information."
+      },
+      "updates": {
+        "title": "Policy Updates",
+        "content": "If we make significant changes to our privacy policy, we will notify you through in-app notifications or email. Continued use of our service indicates your acceptance of the updated policy."
+      }
+    },
+    "contact": {
+      "title": "Contact Us",
+      "desc": "If you have any questions about our privacy policy, please contact us:"
+    },
+    "lastUpdated": "Last updated"
+  }
+}

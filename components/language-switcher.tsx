@@ -7,13 +7,14 @@ import {
   DropdownMenu,
   DropdownItem,
 } from '@heroui/dropdown'
-import { useTransition } from 'react'
+import { useTransition, useState, useEffect } from 'react'
+import { useParams } from 'next/navigation'
 
-import { useLocale } from '@/contexts/LocaleContext'
-import { locales, localeNames, type Locale } from '@/lib/i18n'
+import { useRouter, usePathname } from '@/i18n/routing'
+import { locales, localeNames, type Locale } from '@/i18n/config'
 
 interface LanguageSwitcherProps {
-  currentLocale: Locale
+  currentLocale: string
   languageLabel: string
 }
 
@@ -21,38 +22,62 @@ export function LanguageSwitcher({
   currentLocale,
   languageLabel,
 }: LanguageSwitcherProps) {
+  const [mounted, setMounted] = useState(false)
   const [isPending, startTransition] = useTransition()
-  const { setLocale } = useLocale()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+  const router = useRouter()
+  const pathname = usePathname()
+  const params = useParams()
 
   const handleLanguageChange = (key: string) => {
     const newLocale = key as Locale
 
-    startTransition(async () => {
-      // Update client-side state immediately and sync with server
-      await setLocale(newLocale)
+    startTransition(() => {
+      router.replace(
+        // @ts-expect-error - pathname is typed correctly by next-intl
+        { pathname, params },
+        { locale: newLocale }
+      )
     })
+  }
+
+  // Avoid hydration mismatch by rendering placeholder until mounted
+  if (!mounted) {
+    return (
+      <Button
+        className='text-xs sm:text-sm font-medium min-w-[40px] h-9 sm:h-10 px-2.5 sm:px-3 touch-manipulation'
+        size='sm'
+        variant='ghost'
+      >
+        {localeNames[currentLocale as Locale]}
+      </Button>
+    )
   }
 
   return (
     <Dropdown>
       <DropdownTrigger>
         <Button
-          className='text-sm font-medium'
+          className='text-xs sm:text-sm font-medium min-w-[40px] h-9 sm:h-10 px-2.5 sm:px-3 touch-manipulation'
           isLoading={isPending}
           size='sm'
           variant='ghost'
         >
-          {localeNames[currentLocale]}
+          {localeNames[currentLocale as Locale]}
         </Button>
       </DropdownTrigger>
       <DropdownMenu
         aria-label={languageLabel}
+        className='min-w-[100px]'
         onAction={key => handleLanguageChange(key as string)}
       >
         {locales.map(lang => (
           <DropdownItem
             key={lang}
-            className={currentLocale === lang ? 'bg-primary/10' : ''}
+            className={`min-h-[44px] text-sm ${currentLocale === lang ? 'bg-primary/10' : ''}`}
           >
             {localeNames[lang]}
           </DropdownItem>

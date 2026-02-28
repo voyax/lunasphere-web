@@ -754,20 +754,20 @@ export class HeadShapeModel {
           measurements.diagonal1.end.x - measurements.diagonal1.start.x,
           2
         ) +
-          Math.pow(
-            measurements.diagonal1.end.y - measurements.diagonal1.start.y,
-            2
-          )
+        Math.pow(
+          measurements.diagonal1.end.y - measurements.diagonal1.start.y,
+          2
+        )
       )
       const diagonal2Length = Math.sqrt(
         Math.pow(
           measurements.diagonal2.end.x - measurements.diagonal2.start.x,
           2
         ) +
-          Math.pow(
-            measurements.diagonal2.end.y - measurements.diagonal2.start.y,
-            2
-          )
+        Math.pow(
+          measurements.diagonal2.end.y - measurements.diagonal2.start.y,
+          2
+        )
       )
       const cvai =
         Math.abs(diagonal1Length - diagonal2Length) /

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<!--
+  Melo 产品线 Badge 设计方案对比
+  
+  用途：可视化对比 Melo 品牌下不同产品线的 Badge 差异化方案
+  最终选定：微信绿 (#07C160) + 尺子角标 (📏)
+  创建时间：2026-02-27
+  
+  打开方式：直接在浏览器中打开此文件即可预览
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Melo 产品线 Badge 方案对比</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0f0f13;
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding: 40px 20px 60px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #FFCC00, #FF9F43);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 48px;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    color: #ccc;
+    margin: 56px 0 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .section-title::before,
+  .section-title::after {
+    content: '';
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #444);
+  }
+  .section-title::after {
+    background: linear-gradient(90deg, #444, transparent);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: #1a1a22;
+    border-radius: 20px;
+    padding: 32px;
+    border: 1px solid #2a2a35;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent, #FFCC00), var(--accent2, #FF9F43));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .card:hover {
+    border-color: #3a3a48;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+  .card:hover::before { opacity: 1; }
+  
+  .card.recommended {
+    border-color: #FFCC0040;
+    background: linear-gradient(135deg, #1a1a22, #1f1a14);
+  }
+  .card.recommended::before { opacity: 1; }
+
+  .badge-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #2a2a35;
+    color: #aaa;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+  .badge-label.gold {
+    background: linear-gradient(135deg, #FFCC0020, #FF9F4320);
+    color: #FFCC00;
+    border: 1px solid #FFCC0030;
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 180px;
+    margin: 16px 0;
+    position: relative;
+  }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .card-desc {
+    font-size: 13px;
+    color: #777;
+    line-height: 1.6;
+  }
+
+  .pros-cons {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+  .tag.pro { background: #0d3b2e; color: #4ade80; }
+  .tag.con { background: #3b1a0d; color: #f97316; }
+
+  /* Size comparison */
+  .size-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    padding: 32px;
+  }
+  .size-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .size-label {
+    font-size: 11px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .size-note {
+    font-size: 11px;
+    color: #555;
+  }
+
+  /* Recommendation */
+  .recommendation {
+    max-width: 800px;
+    margin: 48px auto 0;
+    background: linear-gradient(135deg, #1f1a14, #1a1a22);
+    border: 1px solid #FFCC0030;
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+  }
+  .recommendation h3 {
+    font-size: 18px;
+    color: #FFCC00;
+    margin-bottom: 12px;
+  }
+  .recommendation p {
+    font-size: 14px;
+    color: #999;
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .scenario-table {
+    width: 100%;
+    max-width: 700px;
+    margin: 24px auto 0;
+    border-collapse: collapse;
+  }
+  .scenario-table th {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 12px;
+    border-bottom: 1px solid #2a2a35;
+    text-align: left;
+  }
+  .scenario-table td {
+    font-size: 13px;
+    padding: 10px 12px;
+    border-bottom: 1px solid #1f1f28;
+    color: #bbb;
+  }
+  .scenario-table tr:hover td {
+    background: #1f1f28;
+  }
+</style>
+</head>
+<body>
+
+<h1>🐡 Melo 产品线 Logo Badge 方案</h1>
+<p class="subtitle">为「小月颅」头型评估产品设计品牌区分方案 · 使用原版 Logo</p>
+
+<!-- ==================== 原版 Logo ==================== -->
+<div class="section-title">当前通用 Logo</div>
+<div style="display:flex;justify-content:center;margin-bottom:16px;">
+  <div class="card" style="max-width:240px;text-align:center;padding:24px;">
+    <div style="font-size:13px;color:#888;margin-bottom:12px;">Melo 通用（原版）</div>
+    <svg width="120" height="100" viewBox="6.1 12.0 51.9 40.1" xmlns="http://www.w3.org/2000/svg">
+      <g data-name="Puffer Fish" id="base">
+        <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="#FFD200"/>
+        <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#766D78"/>
+        <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+        <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="#FBBF0D"/>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<!-- ==================== 方案展示 ==================== -->
+<div class="section-title">方案对比</div>
+
+<div class="grid">
+
+  <!-- 方案A: 月牙角标 -->
+  <div class="card recommended" style="--accent: #FFCC00; --accent2: #7C5CFC;">
+    <span class="badge-label gold">⭐ 推荐方案 A</span>
+    <div class="logo-container">
+      <svg width="160" height="140" viewBox="0 6 62 52" xmlns="http://www.w3.org/2000/svg">
+        <g data-name="Puffer Fish">
+          <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="#FFD200"/>
+          <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#766D78"/>
+          <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+          <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="#FBBF0D"/>
+        </g>
+        <!-- 月牙 Badge -->
+        <g transform="translate(46, 42)">
+          <circle r="8" fill="#7C5CFC" stroke="#0f0f13" stroke-width="1.5"/>
+          <path d="M -1.5 -5 A 4.2 4.2 0 1 0 -1.5 5 A 3.3 3.3 0 1 1 -1.5 -5" fill="#fff" opacity="0.95"/>
+          <circle cx="3" cy="-2.5" r="0.7" fill="#fff" opacity="0.5"/>
+          <circle cx="4" cy="0.8" r="0.45" fill="#fff" opacity="0.35"/>
+        </g>
+      </svg>
+    </div>
+    <div class="card-title">月牙角标 🌙</div>
+    <div class="card-desc">在鱼 logo 右下角叠加紫色圆底 + 白色月牙图标，呼应「月颅」的月亮意象。</div>
+    <div class="pros-cons">
+      <span class="tag pro">✓ 语义明确</span>
+      <span class="tag pro">✓ 品牌统一</span>
+      <span class="tag pro">✓ 辨识度高</span>
+      <span class="tag con">△ 小尺寸需简化</span>
+    </div>
+  </div>
+
+  <!-- 方案B: 头型轮廓角标 -->
+  <div class="card" style="--accent: #4ade80; --accent2: #22d3ee;">
+    <span class="badge-label">方案 B</span>
+    <div class="logo-container">
+      <svg width="160" height="140" viewBox="0 6 62 52" xmlns="http://www.w3.org/2000/svg">
+        <g data-name="Puffer Fish">
+          <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="#FFD200"/>
+          <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#766D78"/>
+          <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+          <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="#FBBF0D"/>
+        </g>
+        <!-- 头型轮廓 Badge -->
+        <g transform="translate(46, 42)">
+          <circle r="8" fill="#0d8060" stroke="#0f0f13" stroke-width="1.5"/>
+          <ellipse cx="0" cy="0" rx="4" ry="5" fill="none" stroke="#fff" stroke-width="1" opacity="0.9"/>
+          <line x1="0" y1="-4" x2="0" y2="4" stroke="#ff6b6b" stroke-width="0.7" opacity="0.7"/>
+          <line x1="-3.2" y1="0" x2="3.2" y2="0" stroke="#ffd93d" stroke-width="0.7" opacity="0.7"/>
+        </g>
+      </svg>
+    </div>
+    <div class="card-title">头型轮廓角标 📐</div>
+    <div class="card-desc">角标内显示简化的头型俯视轮廓 + 测量十字线，直观传达产品功能。</div>
+    <div class="pros-cons">
+      <span class="tag pro">✓ 功能直观</span>
+      <span class="tag pro">✓ 专业感强</span>
+      <span class="tag con">△ 语义偏窄</span>
+      <span class="tag con">△ 复杂度高</span>
+    </div>
+  </div>
+
+  <!-- 方案C: 渐变色 + 文字 -->
+  <div class="card" style="--accent: #a78bfa; --accent2: #818cf8;">
+    <span class="badge-label">方案 C</span>
+    <div class="logo-container">
+      <svg width="160" height="140" viewBox="0 6 62 52" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gradC" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFD200"/>
+            <stop offset="100%" stop-color="#7C5CFC"/>
+          </linearGradient>
+          <linearGradient id="gradCfin" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FBBF0D"/>
+            <stop offset="100%" stop-color="#6C4CE0"/>
+          </linearGradient>
+        </defs>
+        <g data-name="Puffer Fish">
+          <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="url(#gradC)"/>
+          <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#6B6080"/>
+          <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#E8E4F0"/>
+          <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="url(#gradCfin)"/>
+        </g>
+        <text x="32" y="56" text-anchor="middle" font-family="Inter, sans-serif" font-size="5" fill="#a78bfa" font-weight="600" letter-spacing="0.8">LUNA</text>
+      </svg>
+    </div>
+    <div class="card-title">渐变色 + 文字后缀 🎨</div>
+    <div class="card-desc">鱼身改为黄→紫渐变，底部加 "LUNA" 文字，不用角标纯色彩区分。</div>
+    <div class="pros-cons">
+      <span class="tag pro">✓ 极简优雅</span>
+      <span class="tag pro">✓ 缩放友好</span>
+      <span class="tag con">△ 产品多时难扩展</span>
+    </div>
+  </div>
+
+  <!-- 方案D: 混合 -->
+  <div class="card recommended" style="--accent: #FFCC00; --accent2: #a78bfa;">
+    <span class="badge-label gold">⭐ 推荐方案 D</span>
+    <div class="logo-container">
+      <svg width="160" height="140" viewBox="0 6 62 52" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gradD" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFD200"/>
+            <stop offset="65%" stop-color="#FFD200"/>
+            <stop offset="100%" stop-color="#c4a0ff"/>
+          </linearGradient>
+        </defs>
+        <g data-name="Puffer Fish">
+          <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="url(#gradD)"/>
+          <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#766D78"/>
+          <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+          <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="#FBBF0D"/>
+        </g>
+        <!-- 月牙 Badge -->
+        <g transform="translate(46, 42)">
+          <circle r="8" fill="#7C5CFC" stroke="#0f0f13" stroke-width="1.5"/>
+          <path d="M -1.5 -5 A 4.2 4.2 0 1 0 -1.5 5 A 3.3 3.3 0 1 1 -1.5 -5" fill="#fff" opacity="0.95"/>
+          <circle cx="3" cy="-2.5" r="0.7" fill="#fff" opacity="0.5"/>
+          <circle cx="4" cy="0.8" r="0.45" fill="#fff" opacity="0.35"/>
+        </g>
+      </svg>
+    </div>
+    <div class="card-title">混合方案：微渐变 + 月牙角标 🌙🎨</div>
+    <div class="card-desc">鱼身嘴部微微渐变到淡紫暗示品类，同时右下角月牙角标强化识别。弹性最佳。</div>
+    <div class="pros-cons">
+      <span class="tag pro">✓ 双重识别</span>
+      <span class="tag pro">✓ 场景适应强</span>
+      <span class="tag pro">✓ 品牌延展性好</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 尺寸适配 ==================== -->
+<div class="section-title">多尺寸适配预览（推荐方案 D）</div>
+
+<div class="card" style="max-width: 900px; margin: 0 auto;">
+  <div class="size-row">
+    <!-- 16px Favicon -->
+    <div class="size-item">
+      <svg width="16" height="16" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <rect width="64" height="64" rx="12" fill="#7C5CFC"/>
+        <g transform="translate(4, 6) scale(0.95)">
+          <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="#FFD200"/>
+          <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+        </g>
+      </svg>
+      <span class="size-label">Favicon 16px</span>
+      <span class="size-note">仅靠底色区分</span>
+    </div>
+
+    <!-- 32px -->
+    <div class="size-item">
+      <svg width="32" height="32" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <rect width="64" height="64" rx="12" fill="#1a1a22"/>
+        <g transform="translate(2, 5) scale(1)">
+          <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="#FFD200"/>
+          <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#766D78"/>
+          <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+          <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="#FBBF0D"/>
+        </g>
+        <g transform="translate(48, 46)">
+          <circle r="10" fill="#7C5CFC" stroke="#1a1a22" stroke-width="2"/>
+          <path d="M -1.5 -5.5 A 4.5 4.5 0 1 0 -1.5 5.5 A 3.5 3.5 0 1 1 -1.5 -5.5" fill="#fff" opacity="0.9"/>
+        </g>
+      </svg>
+      <span class="size-label">32px</span>
+      <span class="size-note">角标可见</span>
+    </div>
+
+    <!-- 64px -->
+    <div class="size-item">
+      <svg width="64" height="56" viewBox="0 6 62 52" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gradD2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFD200"/>
+            <stop offset="65%" stop-color="#FFD200"/>
+            <stop offset="100%" stop-color="#c4a0ff"/>
+          </linearGradient>
+        </defs>
+        <g data-name="Puffer Fish">
+          <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="url(#gradD2)"/>
+          <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#766D78"/>
+          <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+          <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="#FBBF0D"/>
+        </g>
+        <g transform="translate(46, 42)">
+          <circle r="8" fill="#7C5CFC" stroke="white" stroke-width="1"/>
+          <path d="M -1.5 -5 A 4.2 4.2 0 1 0 -1.5 5 A 3.3 3.3 0 1 1 -1.5 -5" fill="#fff" opacity="0.95"/>
+          <circle cx="3" cy="-2.5" r="0.7" fill="#fff" opacity="0.5"/>
+        </g>
+      </svg>
+      <span class="size-label">App 图标 64px</span>
+      <span class="size-note">完整展示</span>
+    </div>
+
+    <!-- 128px -->
+    <div class="size-item">
+      <svg width="140" height="120" viewBox="0 6 62 52" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gradD3" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFD200"/>
+            <stop offset="65%" stop-color="#FFD200"/>
+            <stop offset="100%" stop-color="#c4a0ff"/>
+          </linearGradient>
+          <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#FFCC00" flood-opacity="0.2"/>
+          </filter>
+        </defs>
+        <g data-name="Puffer Fish" filter="url(#glow)">
+          <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="url(#gradD3)"/>
+          <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#766D78"/>
+          <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+          <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="#FBBF0D"/>
+        </g>
+        <g transform="translate(46, 42)">
+          <circle r="8" fill="#7C5CFC" stroke="white" stroke-width="1"/>
+          <path d="M -1.5 -5 A 4.2 4.2 0 1 0 -1.5 5 A 3.3 3.3 0 1 1 -1.5 -5" fill="#fff" opacity="0.95"/>
+          <circle cx="3" cy="-2.5" r="0.7" fill="#fff" opacity="0.5"/>
+          <circle cx="4" cy="0.8" r="0.45" fill="#fff" opacity="0.35"/>
+        </g>
+      </svg>
+      <span class="size-label">大图标 128px</span>
+      <span class="size-note">高清完整</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 小月颅配色对比 ==================== -->
+<div class="section-title">小月颅 Badge 配色方案</div>
+
+<div class="grid" style="grid-template-columns: repeat(4, 1fr); max-width:1000px; margin: 0 auto;">
+  <!-- 配色A: 微信绿 (最终选定) -->
+  <div class="card recommended" style="padding: 20px; text-align: center; --accent: #07C160; --accent2: #2DD272; border-color: #07C16040;">
+    <span class="badge-label" style="font-size:10px;padding:2px 8px;margin-bottom:8px;background:#07C16015;color:#2DD272;border:1px solid #07C16030;">⭐ 配色 A</span>
+    <svg width="90" height="78" viewBox="0 6 62 52" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="#FFD200"/>
+        <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#766D78"/>
+        <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+        <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="#FBBF0D"/>
+      </g>
+      <g transform="translate(46, 42)">
+        <circle r="8" fill="#07C160" stroke="white" stroke-width="1"/>
+        <g transform="rotate(-45)">
+          <rect x="-5.5" y="-2.5" width="11" height="5" rx="1" fill="#fff"/>
+          <line x1="-3.5" y1="-2.5" x2="-3.5" y2="0" stroke="#07C160" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="-1" y1="-2.5" x2="-1" y2="0.8" stroke="#07C160" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="1.5" y1="-2.5" x2="1.5" y2="0" stroke="#07C160" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="4" y1="-2.5" x2="4" y2="0.8" stroke="#07C160" stroke-width="0.9" stroke-linecap="round"/>
+        </g>
+      </g>
+    </svg>
+    <div style="font-size:14px;font-weight:600;color:#2DD272;margin-top:6px;">微信绿</div>
+    <div style="font-size:11px;color:#555;margin-top:2px;">#07C160</div>
+    <div style="font-size:10px;color:#666;margin-top:6px;line-height:1.5;">亲切、友好、安全<br>国民级认知度</div>
+  </div>
+
+  <!-- 配色B: 温暖珊瑚 Coral -->
+  <div class="card" style="padding: 20px; text-align: center; --accent: #F97066; --accent2: #fca5a1;">
+    <span class="badge-label" style="font-size:10px;padding:2px 8px;margin-bottom:8px;">配色 B</span>
+    <svg width="90" height="78" viewBox="0 6 62 52" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="#FFD200"/>
+        <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#766D78"/>
+        <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+        <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="#FBBF0D"/>
+      </g>
+      <g transform="translate(46, 42)">
+        <circle r="8" fill="#F97066" stroke="white" stroke-width="1"/>
+        <g transform="rotate(-45)">
+          <rect x="-5.5" y="-2.5" width="11" height="5" rx="1" fill="#fff"/>
+          <line x1="-3.5" y1="-2.5" x2="-3.5" y2="0" stroke="#F97066" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="-1" y1="-2.5" x2="-1" y2="0.8" stroke="#F97066" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="1.5" y1="-2.5" x2="1.5" y2="0" stroke="#F97066" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="4" y1="-2.5" x2="4" y2="0.8" stroke="#F97066" stroke-width="0.9" stroke-linecap="round"/>
+        </g>
+      </g>
+    </svg>
+    <div style="font-size:14px;font-weight:600;color:#fca5a1;margin-top:6px;">温暖珊瑚</div>
+    <div style="font-size:11px;color:#555;margin-top:2px;">#F97066</div>
+    <div style="font-size:10px;color:#666;margin-top:6px;line-height:1.5;">温暖、关怀<br>母婴场景亲和</div>
+  </div>
+
+  <!-- 配色C: 品牌橙 -->
+  <div class="card" style="padding: 20px; text-align: center; --accent: #FF9F43; --accent2: #fbbf24;">
+    <span class="badge-label" style="font-size:10px;padding:2px 8px;margin-bottom:8px;">配色 C</span>
+    <svg width="90" height="78" viewBox="0 6 62 52" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="#FFD200"/>
+        <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#766D78"/>
+        <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+        <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="#FBBF0D"/>
+      </g>
+      <g transform="translate(46, 42)">
+        <circle r="8" fill="#FF9F43" stroke="white" stroke-width="1"/>
+        <g transform="rotate(-45)">
+          <rect x="-5.5" y="-2.5" width="11" height="5" rx="1" fill="#fff"/>
+          <line x1="-3.5" y1="-2.5" x2="-3.5" y2="0" stroke="#FF9F43" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="-1" y1="-2.5" x2="-1" y2="0.8" stroke="#FF9F43" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="1.5" y1="-2.5" x2="1.5" y2="0" stroke="#FF9F43" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="4" y1="-2.5" x2="4" y2="0.8" stroke="#FF9F43" stroke-width="0.9" stroke-linecap="round"/>
+        </g>
+      </g>
+    </svg>
+    <div style="font-size:14px;font-weight:600;color:#fbbf24;margin-top:6px;">品牌橙</div>
+    <div style="font-size:11px;color:#555;margin-top:2px;">#FF9F43</div>
+    <div style="font-size:10px;color:#666;margin-top:6px;line-height:1.5;">品牌一致<br>⚠ 与鱼色太近</div>
+  </div>
+
+  <!-- 配色D: 靛蓝 Indigo -->
+  <div class="card" style="padding: 20px; text-align: center; --accent: #4F46E5; --accent2: #818cf8;">
+    <span class="badge-label" style="font-size:10px;padding:2px 8px;margin-bottom:8px;">配色 D</span>
+    <svg width="90" height="78" viewBox="0 6 62 52" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="#FFD200"/>
+        <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#766D78"/>
+        <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+        <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="#FBBF0D"/>
+      </g>
+      <g transform="translate(46, 42)">
+        <circle r="8" fill="#4F46E5" stroke="white" stroke-width="1"/>
+        <g transform="rotate(-45)">
+          <rect x="-5.5" y="-2.5" width="11" height="5" rx="1" fill="#fff"/>
+          <line x1="-3.5" y1="-2.5" x2="-3.5" y2="0" stroke="#4F46E5" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="-1" y1="-2.5" x2="-1" y2="0.8" stroke="#4F46E5" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="1.5" y1="-2.5" x2="1.5" y2="0" stroke="#4F46E5" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="4" y1="-2.5" x2="4" y2="0.8" stroke="#4F46E5" stroke-width="0.9" stroke-linecap="round"/>
+        </g>
+      </g>
+    </svg>
+    <div style="font-size:14px;font-weight:600;color:#818cf8;margin-top:6px;">靛蓝</div>
+    <div style="font-size:11px;color:#555;margin-top:2px;">#4F46E5</div>
+    <div style="font-size:10px;color:#666;margin-top:6px;line-height:1.5;">科技感、AI 精准<br>与黄色对比鲜明</div>
+  </div>
+</div>
+
+<!-- ==================== 产品线全览（用微信绿） ==================== -->
+<div class="section-title">产品线全览（示例用微信绿）</div>
+
+<div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+  <!-- 小月颅 -->
+  <div class="card" style="padding: 24px; text-align: center;">
+    <svg width="80" height="70" viewBox="0 6 62 52" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="#FFD200"/>
+        <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#766D78"/>
+        <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+        <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="#FBBF0D"/>
+      </g>
+      <g transform="translate(46, 42)">
+        <circle r="8" fill="#07C160" stroke="white" stroke-width="1"/>
+        <g transform="rotate(-45)">
+          <rect x="-5.5" y="-2.5" width="11" height="5" rx="1" fill="#fff"/>
+          <line x1="-3.5" y1="-2.5" x2="-3.5" y2="0" stroke="#07C160" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="-1" y1="-2.5" x2="-1" y2="0.8" stroke="#07C160" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="1.5" y1="-2.5" x2="1.5" y2="0" stroke="#07C160" stroke-width="0.9" stroke-linecap="round"/>
+          <line x1="4" y1="-2.5" x2="4" y2="0.8" stroke="#07C160" stroke-width="0.9" stroke-linecap="round"/>
+        </g>
+      </g>
+    </svg>
+    <div style="font-size:14px;font-weight:600;color:#2DD272;margin-top:8px;">小月颅</div>
+    <div style="font-size:11px;color:#666;margin-top:4px;">头型评估</div>
+  </div>
+
+  <!-- 成长记录 -->
+  <div class="card" style="padding: 24px; text-align: center;">
+    <svg width="80" height="70" viewBox="0 6 62 52" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="#FFD200"/>
+        <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#766D78"/>
+        <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+        <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="#FBBF0D"/>
+      </g>
+      <g transform="translate(46, 42)">
+        <circle r="8" fill="#16a34a" stroke="white" stroke-width="1"/>
+        <line x1="0" y1="3.5" x2="0" y2="-3.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+        <polyline points="-3,-1 0,-4.5 3,-1" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </svg>
+    <div style="font-size:14px;font-weight:600;color:#4ade80;margin-top:8px;">Melo 成长</div>
+    <div style="font-size:11px;color:#666;margin-top:4px;">成长记录（示例）</div>
+  </div>
+
+  <!-- 睡眠 -->
+  <div class="card" style="padding: 24px; text-align: center;">
+    <svg width="80" height="70" viewBox="0 6 62 52" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="#FFD200"/>
+        <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#766D78"/>
+        <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+        <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="#FBBF0D"/>
+      </g>
+      <g transform="translate(46, 42)">
+        <circle r="8" fill="#0284c7" stroke="white" stroke-width="1"/>
+        <text x="0" y="3" text-anchor="middle" font-family="Inter" font-size="8" fill="#fff" font-weight="700">Z</text>
+        <text x="4" y="-2" text-anchor="middle" font-family="Inter" font-size="5" fill="#fff" font-weight="700" opacity="0.6">z</text>
+      </g>
+    </svg>
+    <div style="font-size:14px;font-weight:600;color:#38bdf8;margin-top:8px;">Melo 睡眠</div>
+    <div style="font-size:11px;color:#666;margin-top:4px;">睡眠分析（示例）</div>
+  </div>
+
+  <!-- 营养 -->
+  <div class="card" style="padding: 24px; text-align: center;">
+    <svg width="80" height="70" viewBox="0 6 62 52" xmlns="http://www.w3.org/2000/svg">
+      <g>
+        <path d="M54.25,29.31A2.37,2.37,0,0,0,53,24.74a1.62,1.62,0,0,1-1.8-.84A18.07,18.07,0,0,0,17,32.09a1,1,0,0,1-1,1l-6.35-.44a1.48,1.48,0,0,0-1.54,1.86L9.89,41.4a1.49,1.49,0,0,0,2.26.85l5-3.39a.84.84,0,0,1,1.3.4,18.05,18.05,0,0,0,5.44,7Z" fill="#FFD200"/>
+        <path d="M41.43,23.34a2,2,0,1,0,1.4-2.42A2,2,0,0,0,41.43,23.34Z" fill="#766D78"/>
+        <path d="M54.25,29.31l-12.4,3.32-6.53,1.88C30.06,36.43,24.57,40,23.94,46.25A18.07,18.07,0,0,0,53.11,30.94,1.61,1.61,0,0,1,54.25,29.31Z" fill="#F7F8FA"/>
+        <path d="M 34.268 33.564 C 34.824 35.674 36.992 36.926 39.098 36.354 C 40.338 36.024 41.718 34.214 42.628 32.804 C 43.244 31.843 42.902 30.56 41.888 30.034 C 40.398 29.264 38.298 28.384 37.058 28.724 C 34.94 29.276 33.683 31.455 34.268 33.564 Z" fill="#FBBF0D"/>
+      </g>
+      <g transform="translate(46, 42)">
+        <circle r="8" fill="#ea580c" stroke="white" stroke-width="1"/>
+        <circle cx="0" cy="1" r="4" fill="#fff" opacity="0.85"/>
+        <path d="M 0 -3 Q 3 -6 4.5 -4" fill="none" stroke="#fff" stroke-width="1" stroke-linecap="round"/>
+      </g>
+    </svg>
+    <div style="font-size:14px;font-weight:600;color:#fb923c;margin-top:8px;">Melo 营养</div>
+    <div style="font-size:11px;color:#666;margin-top:4px;">喂养追踪（示例）</div>
+  </div>
+</div>
+
+<!-- ==================== 建议总结 ==================== -->
+<div class="recommendation">
+  <h3>💡 我的建议</h3>
+  <p>
+    角标用<strong>尺子📏</strong>图标（传达测量功能），配色推荐<strong>微信绿 <code style="color:#2DD272;">#07C160</code></strong>——亲切友好、国民级认知度、与黄色鱼形成清新对比、传达安全健康感。
+  </p>
+  <table class="scenario-table" style="margin-top: 20px;">
+    <tr><th>使用场景</th><th>展示方式</th><th>区分方法</th></tr>
+    <tr><td>🔹 Favicon (16px)</td><td>产品色底 + 鱼剪影</td><td>产品专属底色</td></tr>
+    <tr><td>🔹 App Icon (48-192px)</td><td>完整鱼 + 角标</td><td>颜色 + 角标双识别</td></tr>
+    <tr><td>🔹 导航栏</td><td>鱼 + 产品名</td><td>Melo · 小月颅</td></tr>
+    <tr><td>🔹 启动页 / 营销</td><td>完整品牌展示</td><td>全要素呈现</td></tr>
+  </table>
+</div>
+
+</body>
+</html>
