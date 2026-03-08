@@ -318,7 +318,6 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
             setAnalysisResult({
               ci: prediction.ci,
               cvai: prediction.cvai,
-              headShape: prediction.headShape,
               confidence: prediction.confidence,
               mask: prediction.mask,
               originalImage: prediction.originalImage,

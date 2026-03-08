@@ -51,7 +51,6 @@ if (typeof window !== 'undefined') {
 export interface ModelPrediction {
   ci: number
   cvai: number
-  headShape: string
   confidence: number
   mask?: ImageData // Add mask output
   originalImage?: ImageData
@@ -85,20 +84,11 @@ export interface ModelConfig {
   confidenceThreshold: number // Minimum confidence threshold for detection
 }
 
-// Performance statistics
-export interface PerformanceStats {
-  preprocessTime: number
-  inferenceTime: number
-  postprocessTime: number
-  totalTime: number
-}
-
 // Model manager class
 export class HeadShapeModel {
   private session: ort.InferenceSession | null = null
   private modelPath: string = ''
   private config: ModelConfig
-  private performanceStats: PerformanceStats
 
   constructor(modelPath?: string, config?: Partial<ModelConfig>) {
     if (modelPath) {
@@ -113,13 +103,6 @@ export class HeadShapeModel {
       std: [0.229, 0.224, 0.225],
       confidenceThreshold: 0.7, // Default high confidence threshold
       ...config,
-    }
-
-    this.performanceStats = {
-      preprocessTime: 0,
-      inferenceTime: 0,
-      postprocessTime: 0,
-      totalTime: 0,
     }
   }
 
@@ -137,31 +120,24 @@ export class HeadShapeModel {
    * Load the ONNX model
    */
   async loadModel(modelPath?: string): Promise<void> {
-    try {
-      const path = modelPath || this.modelPath
+    const path = modelPath || this.modelPath
 
-      if (!path) {
-        throw new Error('Model path is required')
-      }
-
-      // Check if model is already loaded with the same path
-      if (this.session && this.modelPath === path) {
-        // Model already loaded with the same path, skip loading
-        return
-      }
-
-      // Dispose existing session if loading a different model
-      if (this.session && this.modelPath !== path) {
-        this.session = null
-      }
-
-      this.modelPath = path
-      this.session = await ort.InferenceSession.create(path)
-      // Model loaded successfully
-    } catch (error) {
-      // Model loading failed
-      throw error
+    if (!path) {
+      throw new Error('Model path is required')
     }
+
+    // Already loaded with the same path
+    if (this.session && this.modelPath === path) {
+      return
+    }
+
+    // Dispose existing session if loading a different model
+    if (this.session && this.modelPath !== path) {
+      this.session = null
+    }
+
+    this.modelPath = path
+    this.session = await ort.InferenceSession.create(path)
   }
 
   /**
@@ -173,8 +149,6 @@ export class HeadShapeModel {
     imageElement: HTMLImageElement,
     rotation: number = 0
   ): { tensor: ImageTensor; originalImageData: ImageData } {
-    const startTime = performance.now()
-
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')!
 
@@ -259,8 +233,6 @@ export class HeadShapeModel {
       }
     }
 
-    this.performanceStats.preprocessTime = performance.now() - startTime
-
     return {
       tensor: {
         data: input,
@@ -277,8 +249,6 @@ export class HeadShapeModel {
     output: ort.Tensor,
     originalImageData: ImageData
   ): ImageData {
-    const startTime = performance.now()
-
     const [height, width] = this.config.inputSize
     const outputData = output.data as Float32Array
 
@@ -290,121 +260,124 @@ export class HeadShapeModel {
     // Apply heatmap color mapping overlay on original image
     // Only show high confidence regions based on configurable threshold
     for (let i = 0; i < outputData.length; i++) {
-      const value = Math.max(0, Math.min(1, outputData[i]))
       const pixelIndex = i * 4
 
-      if (value > this.config.confidenceThreshold) {
-        // High confidence - bright green with transparency
-        resultImageData.data[pixelIndex] = Math.min(
-          255,
-          Math.floor(resultImageData.data[pixelIndex] * 0.5 + 0 * 0.5)
+      if (outputData[i] > this.config.confidenceThreshold) {
+        // High confidence - bright green overlay blended 50% with original
+        resultImageData.data[pixelIndex] = Math.floor(
+          resultImageData.data[pixelIndex] * 0.5
         )
         resultImageData.data[pixelIndex + 1] = Math.min(
           255,
-          Math.floor(resultImageData.data[pixelIndex + 1] * 0.5 + 255 * 0.5)
+          Math.floor(resultImageData.data[pixelIndex + 1] * 0.5 + 127)
         )
-        resultImageData.data[pixelIndex + 2] = Math.min(
-          255,
-          Math.floor(resultImageData.data[pixelIndex + 2] * 0.5 + 0 * 0.5)
+        resultImageData.data[pixelIndex + 2] = Math.floor(
+          resultImageData.data[pixelIndex + 2] * 0.5
         )
       }
-      // Remove medium and low confidence overlays - only keep original image
     }
-
-    this.performanceStats.postprocessTime = performance.now() - startTime
 
     return resultImageData
   }
 
   /**
-   * Find intersection points of a diagonal line with head boundary
-   * @param center - Center point (OFD midpoint)
-   * @param angle - Angle in radians from vertical axis
-   * @param headPixels - Array of head boundary pixels
-   * @param width - Image width
-   * @param height - Image height
+   * Trace a line through center in both directions, find where it exits the head mask.
+   * Uses noise tolerance (3 consecutive non-head pixels) to avoid false boundaries.
+   * Returns the last head pixel on each side (not first non-head pixel).
    */
-  private findDiagonalIntersections(
+  private findBoundaryIntersections(
     center: { x: number; y: number },
     angle: number,
     outputData: Float32Array,
     width: number,
     height: number,
-    threshold: number = 0.5
+    threshold: number
   ): { start: { x: number; y: number }; end: { x: number; y: number } } {
-    // Calculate direction vector for the diagonal line
-    // Since OFD is vertical, we rotate from vertical (0, -1) by the given angle
+    // Calculate direction vector: rotate from vertical (0, -1) by the given angle
     const dirX = Math.sin(angle)
     const dirY = -Math.cos(angle)
 
-    // Find intersection points by extending the line in both directions
     const intersections: { x: number; y: number; distance: number }[] = []
 
-    // Helper function to check if a pixel is part of the head
     const isHeadPixel = (x: number, y: number): boolean => {
       if (x < 0 || x >= width || y < 0 || y >= height) return false
-      const index = y * width + x
 
-      return outputData[index] > threshold
+      return outputData[y * width + x] > threshold
     }
 
-    // Extend line in both directions to find boundary intersections
-    for (let direction of [-1, 1]) {
-      let lastWasHead = true // Start from center which should be inside head
+    // Require multiple consecutive non-head pixels to confirm boundary,
+    // avoiding false boundaries from mask noise/gaps
+    const NOISE_TOLERANCE = 3
+
+    for (const direction of [-1, 1]) {
+      let lastHeadT = 0
+      let consecutiveNonHead = 0
 
       for (let t = 1; t < Math.max(width, height); t++) {
         const x = Math.round(center.x + direction * t * dirX)
         const y = Math.round(center.y + direction * t * dirY)
 
-        // Check if point is within image bounds
         if (x < 0 || x >= width || y < 0 || y >= height) {
+          // Hit image edge: use last known head pixel as boundary
+          if (lastHeadT > 0) {
+            const bx = Math.round(center.x + direction * lastHeadT * dirX)
+            const by = Math.round(center.y + direction * lastHeadT * dirY)
+            const distance = Math.sqrt(
+              Math.pow(bx - center.x, 2) + Math.pow(by - center.y, 2)
+            )
+
+            intersections.push({ x: bx, y: by, distance })
+          }
           break
         }
 
-        const currentIsHead = isHeadPixel(x, y)
+        if (isHeadPixel(x, y)) {
+          lastHeadT = t
+          consecutiveNonHead = 0
+        } else {
+          consecutiveNonHead++
+          if (consecutiveNonHead >= NOISE_TOLERANCE) {
+            // Boundary confirmed: use last head pixel position (not first non-head)
+            const bx = Math.round(center.x + direction * lastHeadT * dirX)
+            const by = Math.round(center.y + direction * lastHeadT * dirY)
+            const distance = Math.sqrt(
+              Math.pow(bx - center.x, 2) + Math.pow(by - center.y, 2)
+            )
 
-        // Detect boundary crossing (from head to non-head)
-        if (lastWasHead && !currentIsHead) {
-          const distance = Math.sqrt(
-            Math.pow(x - center.x, 2) + Math.pow(y - center.y, 2)
-          )
-
-          intersections.push({ x, y, distance })
-          break
+            intersections.push({ x: bx, y: by, distance })
+            break
+          }
         }
-
-        lastWasHead = currentIsHead
       }
     }
 
-    // If we found intersections, return the two farthest points
     if (intersections.length >= 2) {
-      intersections.sort((a, b) => b.distance - a.distance)
-
       return {
         start: intersections[0],
         end: intersections[1],
       }
     }
 
-    // Fallback: return points along the diagonal direction
-    const fallbackDistance = Math.min(width, height) / 4
+    if (intersections.length === 1) {
+      // Mirror the single intersection through center
+      const p = intersections[0]
 
+      return {
+        start: p,
+        end: {
+          x: Math.round(2 * center.x - p.x),
+          y: Math.round(2 * center.y - p.y),
+        },
+      }
+    }
+
+    // No intersections found: return center point (zero-length line)
     return {
-      start: {
-        x: Math.round(center.x - fallbackDistance * dirX),
-        y: Math.round(center.y - fallbackDistance * dirY),
-      },
-      end: {
-        x: Math.round(center.x + fallbackDistance * dirX),
-        y: Math.round(center.y + fallbackDistance * dirY),
-      },
+      start: { x: center.x, y: center.y },
+      end: { x: center.x, y: center.y },
     }
   }
 
-  /**
-   * Calculate head measurements from mask output
-   */
   /**
    * Calculate head measurements from mask output
    */
@@ -425,27 +398,44 @@ export class HeadShapeModel {
     const [height, width] = this.config.inputSize
     const outputData = output.data as Float32Array
 
-    // Find head bounding box
-    const boundingBox = this.findHeadBoundingBox(outputData, width, height)
+    // Find centroid of head mask
+    const centroid = this.findCentroid(outputData, width, height)
 
-    if (!boundingBox) {
+    if (!centroid) {
       return null
     }
 
-    // Head bounding box calculated
+    // Find the major axis (longest diameter = OFD direction), cached to avoid redundant ray-trace
+    const majorAxis = this.findMajorAxis(
+      outputData,
+      width,
+      height,
+      centroid
+    )
+    const ofdAngle = majorAxis.angle
+    const bpdAngle = ofdAngle + Math.PI / 2 // BPD perpendicular to OFD
 
-    // Calculate BPD (Biparietal Diameter) - maximum horizontal width
-    const bpdMeasurement = this.calculateBPD(outputData, width, boundingBox)
+    // OFD from cached major axis result
+    const topPoint = majorAxis.start.y <= majorAxis.end.y ? majorAxis.start : majorAxis.end
+    const bottomPoint = majorAxis.start.y <= majorAxis.end.y ? majorAxis.end : majorAxis.start
+    const ofdMeasurement = { height: majorAxis.length, topPoint, bottomPoint }
 
-    // Calculate OFD (Occipitofrontal Diameter) - maximum vertical height
-    const ofdMeasurement = this.calculateOFD(outputData, width, boundingBox)
+    // Calculate BPD perpendicular to OFD
+    const bpdMeasurement = this.calculateBPD(
+      outputData,
+      width,
+      height,
+      centroid,
+      bpdAngle
+    )
 
-    // Calculate diagonal measurements
+    // Calculate diagonal measurements at ±30° from OFD axis
     const diagonalMeasurements = this.calculateDiagonalMeasurements(
       outputData,
       width,
       height,
-      ofdMeasurement
+      centroid,
+      ofdAngle
     )
 
     return {
@@ -465,123 +455,129 @@ export class HeadShapeModel {
   }
 
   /**
-   * Find the bounding box of head pixels
+   * Find centroid of head mask pixels
    */
-  private findHeadBoundingBox(
+  private findCentroid(
     outputData: Float32Array,
     width: number,
     height: number
-  ): { minX: number; maxX: number; minY: number; maxY: number } | null {
-    let minX = width
-    let maxX = -1
-    let minY = height
-    let maxY = -1
-    let hasHeadPixels = false
+  ): { x: number; y: number } | null {
+    let sumX = 0
+    let sumY = 0
+    let count = 0
 
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
-        const index = y * width + x
-
-        if (outputData[index] > this.config.confidenceThreshold) {
-          hasHeadPixels = true
-          minX = Math.min(minX, x)
-          maxX = Math.max(maxX, x)
-          minY = Math.min(minY, y)
-          maxY = Math.max(maxY, y)
+        if (outputData[y * width + x] > this.config.confidenceThreshold) {
+          sumX += x
+          sumY += y
+          count++
         }
       }
     }
 
-    return hasHeadPixels ? { minX, maxX, minY, maxY } : null
+    if (count === 0) return null
+
+    return {
+      x: Math.round(sumX / count),
+      y: Math.round(sumY / count),
+    }
   }
 
   /**
-   * Calculate BPD (Biparietal Diameter) by finding maximum horizontal width
+   * Find the major axis angle (OFD direction) by scanning near-vertical angles through centroid.
+   * Assumes user has roughly aligned the head upright, so only scans ±15° around vertical.
+   * Returns the best angle and its cached boundary points to avoid redundant ray-tracing.
+   */
+  private findMajorAxis(
+    outputData: Float32Array,
+    width: number,
+    height: number,
+    centroid: { x: number; y: number }
+  ): {
+    angle: number
+    start: { x: number; y: number }
+    end: { x: number; y: number }
+    length: number
+  } {
+    let maxLength = 0
+    let bestAngle = 0
+    let bestStart = { x: 0, y: 0 }
+    let bestEnd = { x: 0, y: 0 }
+
+    for (let deg = -15; deg <= 15; deg++) {
+      const angle = (deg * Math.PI) / 180
+      const { start, end } = this.findBoundaryIntersections(
+        centroid,
+        angle,
+        outputData,
+        width,
+        height,
+        this.config.confidenceThreshold
+      )
+
+      const length = Math.sqrt(
+        Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2)
+      )
+
+      if (length > maxLength) {
+        maxLength = length
+        bestAngle = angle
+        bestStart = start
+        bestEnd = end
+      }
+    }
+
+    return { angle: bestAngle, start: bestStart, end: bestEnd, length: maxLength }
+  }
+
+  /**
+   * Calculate BPD (Biparietal Diameter) - line perpendicular to OFD through centroid
    */
   private calculateBPD(
     outputData: Float32Array,
     width: number,
-    boundingBox: { minX: number; maxX: number; minY: number; maxY: number }
+    height: number,
+    centroid: { x: number; y: number },
+    angle: number
   ): {
     width: number
     leftPoint: { x: number; y: number }
     rightPoint: { x: number; y: number }
   } {
-    const { minX, maxX, minY, maxY } = boundingBox
-    let maxHorizontalWidth = 0
-    let bpdLeftPoint = { x: minX, y: Math.floor((minY + maxY) / 2) }
-    let bpdRightPoint = { x: maxX, y: Math.floor((minY + maxY) / 2) }
+    const { start, end } = this.findBoundaryIntersections(
+      centroid,
+      angle,
+      outputData,
+      width,
+      height,
+      this.config.confidenceThreshold
+    )
 
-    for (let y = minY; y <= maxY; y++) {
-      const rowBounds = this.findRowBounds(outputData, width, y, minX, maxX)
-
-      if (rowBounds) {
-        const horizontalWidth = rowBounds.rightMost - rowBounds.leftMost
-
-        if (horizontalWidth > maxHorizontalWidth) {
-          maxHorizontalWidth = horizontalWidth
-          bpdLeftPoint = { x: rowBounds.leftMost, y }
-          bpdRightPoint = { x: rowBounds.rightMost, y }
-        }
-      }
-    }
+    // Assign left/right by x-coordinate
+    const leftPoint = start.x <= end.x ? start : end
+    const rightPoint = start.x <= end.x ? end : start
+    const bpdWidth = Math.sqrt(
+      Math.pow(rightPoint.x - leftPoint.x, 2) +
+        Math.pow(rightPoint.y - leftPoint.y, 2)
+    )
 
     return {
-      width: maxHorizontalWidth,
-      leftPoint: bpdLeftPoint,
-      rightPoint: bpdRightPoint,
+      width: bpdWidth,
+      leftPoint,
+      rightPoint,
     }
   }
 
   /**
-   * Calculate OFD (Occipitofrontal Diameter) by finding maximum vertical height
-   */
-  private calculateOFD(
-    outputData: Float32Array,
-    width: number,
-    boundingBox: { minX: number; maxX: number; minY: number; maxY: number }
-  ): {
-    height: number
-    topPoint: { x: number; y: number }
-    bottomPoint: { x: number; y: number }
-  } {
-    const { minX, maxX, minY, maxY } = boundingBox
-    let maxVerticalHeight = 0
-    let ofdTopPoint = { x: Math.floor((minX + maxX) / 2), y: minY }
-    let ofdBottomPoint = { x: Math.floor((minX + maxX) / 2), y: maxY }
-
-    for (let x = minX; x <= maxX; x++) {
-      const colBounds = this.findColumnBounds(outputData, width, x, minY, maxY)
-
-      if (colBounds) {
-        const verticalHeight = colBounds.bottomMost - colBounds.topMost
-
-        if (verticalHeight > maxVerticalHeight) {
-          maxVerticalHeight = verticalHeight
-          ofdTopPoint = { x, y: colBounds.topMost }
-          ofdBottomPoint = { x, y: colBounds.bottomMost }
-        }
-      }
-    }
-
-    return {
-      height: maxVerticalHeight,
-      topPoint: ofdTopPoint,
-      bottomPoint: ofdBottomPoint,
-    }
-  }
-
-  /**
-   * Calculate diagonal measurements based on OFD midpoint and 30° angles
+   * Calculate diagonal measurements through centroid at ±30° from OFD axis
    */
   private calculateDiagonalMeasurements(
     outputData: Float32Array,
     width: number,
     height: number,
-    ofdMeasurement: {
-      topPoint: { x: number; y: number }
-      bottomPoint: { x: number; y: number }
-    }
+    centroid: { x: number; y: number },
+    ofdAngle: number
   ): {
     diagonal1: {
       start: { x: number; y: number }
@@ -592,17 +588,12 @@ export class HeadShapeModel {
       end: { x: number; y: number }
     }
   } {
-    const ofdMidpoint = {
-      x: (ofdMeasurement.topPoint.x + ofdMeasurement.bottomPoint.x) / 2,
-      y: (ofdMeasurement.topPoint.y + ofdMeasurement.bottomPoint.y) / 2,
-    }
+    // 30° angles from OFD axis
+    const angle1 = ofdAngle + Math.PI / 6 // 30° clockwise from OFD
+    const angle2 = ofdAngle - Math.PI / 6 // 30° counter-clockwise from OFD
 
-    // 30° angles from vertical axis
-    const angle1 = Math.PI / 6 // 30° clockwise
-    const angle2 = -Math.PI / 6 // 30° counter-clockwise
-
-    const diagonal1Points = this.findDiagonalIntersections(
-      ofdMidpoint,
+    const diagonal1Points = this.findBoundaryIntersections(
+      centroid,
       angle1,
       outputData,
       width,
@@ -610,8 +601,8 @@ export class HeadShapeModel {
       this.config.confidenceThreshold
     )
 
-    const diagonal2Points = this.findDiagonalIntersections(
-      ofdMidpoint,
+    const diagonal2Points = this.findBoundaryIntersections(
+      centroid,
       angle2,
       outputData,
       width,
@@ -623,78 +614,6 @@ export class HeadShapeModel {
       diagonal1: diagonal1Points,
       diagonal2: diagonal2Points,
     }
-  }
-
-  /**
-   * Find leftmost and rightmost head pixels in a row
-   */
-  private findRowBounds(
-    outputData: Float32Array,
-    width: number,
-    y: number,
-    minX: number,
-    maxX: number
-  ): { leftMost: number; rightMost: number } | null {
-    let leftMost = -1
-    let rightMost = -1
-
-    // Find leftmost pixel
-    for (let x = minX; x <= maxX; x++) {
-      const index = y * width + x
-
-      if (outputData[index] > this.config.confidenceThreshold) {
-        leftMost = x
-        break
-      }
-    }
-
-    // Find rightmost pixel
-    for (let x = maxX; x >= minX; x--) {
-      const index = y * width + x
-
-      if (outputData[index] > this.config.confidenceThreshold) {
-        rightMost = x
-        break
-      }
-    }
-
-    return leftMost !== -1 && rightMost !== -1 ? { leftMost, rightMost } : null
-  }
-
-  /**
-   * Find topmost and bottommost head pixels in a column
-   */
-  private findColumnBounds(
-    outputData: Float32Array,
-    width: number,
-    x: number,
-    minY: number,
-    maxY: number
-  ): { topMost: number; bottomMost: number } | null {
-    let topMost = -1
-    let bottomMost = -1
-
-    // Find topmost pixel
-    for (let y = minY; y <= maxY; y++) {
-      const index = y * width + x
-
-      if (outputData[index] > this.config.confidenceThreshold) {
-        topMost = y
-        break
-      }
-    }
-
-    // Find bottommost pixel
-    for (let y = maxY; y >= minY; y--) {
-      const index = y * width + x
-
-      if (outputData[index] > this.config.confidenceThreshold) {
-        bottomMost = y
-        break
-      }
-    }
-
-    return topMost !== -1 && bottomMost !== -1 ? { topMost, bottomMost } : null
   }
 
   /**
@@ -710,103 +629,83 @@ export class HeadShapeModel {
       throw new Error('Model not loaded. Call loadModel() first.')
     }
 
-    try {
-      const totalStartTime = performance.now()
+    // Preprocess image with rotation
+    const { tensor, originalImageData } = this.preprocessImage(
+      imageElement,
+      rotation
+    )
 
-      // Preprocess image with rotation
-      const { tensor, originalImageData } = this.preprocessImage(
-        imageElement,
-        rotation
+    // Create input tensor
+    const inputTensor = new ort.Tensor('float32', tensor.data, tensor.dims)
+
+    // Run inference
+    const feeds = { [this.session.inputNames[0]]: inputTensor }
+    const results = await this.session.run(feeds)
+
+    // Get output tensor
+    const output = results[this.session.outputNames[0]]
+
+    // Generate mask visualization
+    const maskImageData = this.postprocessOutput(output, originalImageData)
+
+    // Calculate head measurements
+    const measurements = this.calculateMeasurements(output)
+
+    // Check if head was detected
+    if (!measurements) {
+      throw new Error('detection.errors.noHeadDetected')
+    }
+
+    // Calculate CI (Cephalic Index) = BPD / OFD
+    const ci = measurements.ofd > 0 ? measurements.bpd / measurements.ofd : 0
+
+    // Calculate CVAI (Cranial Vault Asymmetry Index)
+    const diagonal1Length = Math.sqrt(
+      Math.pow(
+        measurements.diagonal1.end.x - measurements.diagonal1.start.x,
+        2
+      ) +
+      Math.pow(
+        measurements.diagonal1.end.y - measurements.diagonal1.start.y,
+        2
       )
-
-      // Create input tensor
-      const inputTensor = new ort.Tensor('float32', tensor.data, tensor.dims)
-
-      // Run inference
-      const inferenceStartTime = performance.now()
-      const feeds = { [this.session.inputNames[0]]: inputTensor }
-      const results = await this.session.run(feeds)
-
-      this.performanceStats.inferenceTime =
-        performance.now() - inferenceStartTime
-
-      // Get output tensor
-      const output = results[this.session.outputNames[0]]
-
-      // Generate mask visualization
-      const maskImageData = this.postprocessOutput(output, originalImageData)
-
-      // Calculate head measurements
-      const measurements = this.calculateMeasurements(output)
-
-      // Check if head was detected
-      if (!measurements) {
-        throw new Error('detection.errors.noHeadDetected')
-      }
-
-      // Calculate CI (Cephalic Index) = BPD / OFD * 100
-      const ci = measurements.bpd / measurements.ofd
-
-      // Calculate CVAI (Cranial Vault Asymmetry Index)
-      // CVAI is typically calculated from diagonal measurements
-      const diagonal1Length = Math.sqrt(
-        Math.pow(
-          measurements.diagonal1.end.x - measurements.diagonal1.start.x,
-          2
-        ) +
-        Math.pow(
-          measurements.diagonal1.end.y - measurements.diagonal1.start.y,
-          2
-        )
+    )
+    const diagonal2Length = Math.sqrt(
+      Math.pow(
+        measurements.diagonal2.end.x - measurements.diagonal2.start.x,
+        2
+      ) +
+      Math.pow(
+        measurements.diagonal2.end.y - measurements.diagonal2.start.y,
+        2
       )
-      const diagonal2Length = Math.sqrt(
-        Math.pow(
-          measurements.diagonal2.end.x - measurements.diagonal2.start.x,
-          2
-        ) +
-        Math.pow(
-          measurements.diagonal2.end.y - measurements.diagonal2.start.y,
-          2
-        )
-      )
-      const cvai =
-        Math.abs(diagonal1Length - diagonal2Length) /
-        Math.max(diagonal1Length, diagonal2Length)
+    )
+    const maxDiagonal = Math.max(diagonal1Length, diagonal2Length)
+    const cvai =
+      maxDiagonal > 0
+        ? Math.abs(diagonal1Length - diagonal2Length) / maxDiagonal
+        : 0
 
-      this.performanceStats.totalTime = performance.now() - totalStartTime
+    // Calculate confidence based on mask quality
+    const outputData = output.data as Float32Array
+    let maskPixels = 0
 
-      // Calculate confidence based on mask quality
-      const outputData = output.data as Float32Array
-      const maskPixels = outputData.filter(val => val > 0.5).length
-      const totalPixels = outputData.length
-      const confidence = Math.min(
-        0.95,
-        Math.max(0.5, (maskPixels / totalPixels) * 2)
-      )
+    for (let i = 0; i < outputData.length; i++) {
+      if (outputData[i] > 0.5) maskPixels++
+    }
+    const totalPixels = outputData.length
+    const confidence = Math.min(
+      0.95,
+      Math.max(0.5, (maskPixels / totalPixels) * 2)
+    )
 
-      // Determine head shape based on CI value (medical standards)
-      let headShape = 'detection.classification.normal'
-
-      if (ci < 0.75) {
-        headShape = 'detection.classification.brachycephaly'
-      } else if (ci > 0.85) {
-        headShape = 'detection.classification.dolichocephaly'
-      } else if (cvai > 0.1) {
-        headShape = 'detection.classification.plagiocephaly'
-      }
-
-      return {
-        ci,
-        cvai,
-        headShape,
-        confidence,
-        mask: maskImageData,
-        originalImage: originalImageData,
-        measurements,
-      }
-    } catch (error) {
-      // Inference failed
-      throw error
+    return {
+      ci,
+      cvai,
+      confidence,
+      mask: maskImageData,
+      originalImage: originalImageData,
+      measurements,
     }
   }
 
