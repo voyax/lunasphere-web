@@ -29,7 +29,6 @@ export interface ImageUploadData {
 export interface AnalysisResult {
   ci?: number
   cvai?: number
-  headShape?: string
   confidence?: number
   mask?: ImageData
   originalImage?: ImageData
