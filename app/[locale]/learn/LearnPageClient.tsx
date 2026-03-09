@@ -419,13 +419,15 @@ function ArticleCard({
                 <div
                     role='button'
                     tabIndex={0}
+                    aria-label={article.title}
+                    aria-expanded={isExpanded}
                     className="flex justify-between items-start gap-4 cursor-pointer"
                     onClick={onToggle}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault()
-                        onToggle()
-                      }
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault()
+                            onToggle()
+                        }
                     }}
                 >
                     <div className="flex-1 min-w-0">

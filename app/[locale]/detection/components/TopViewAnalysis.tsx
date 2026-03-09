@@ -474,7 +474,9 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                     {/* Central interaction area */}
                     <div
                       role='button'
-                      tabIndex={0}
+                      tabIndex={isModelReady ? 0 : -1}
+                      aria-label={t('detection.topView.upload.clickOrDrag')}
+                      aria-disabled={!isModelReady}
                       onClick={() =>
                         isModelReady && fileInputRef.current?.click()
                       }
