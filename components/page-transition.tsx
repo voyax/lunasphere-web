@@ -23,8 +23,8 @@ const pageVariants = {
     y: 0,
     transition: {
       duration: 0.3,
-      ease: [0.25, 0.1, 0.25, 1], // iOS-like easing
-      when: 'beforeChildren',
+      ease: [0.25, 0.1, 0.25, 1] as const, // iOS-like easing
+      when: 'beforeChildren' as const,
     },
   },
   exit: {
@@ -32,7 +32,7 @@ const pageVariants = {
     y: -4,
     transition: {
       duration: 0.2,
-      ease: [0.25, 0.1, 0.25, 1],
+      ease: [0.25, 0.1, 0.25, 1] as const,
     },
   },
 }
@@ -50,7 +50,7 @@ const slideVariants = {
     x: 0,
     transition: {
       duration: 0.35,
-      ease: [0.25, 0.1, 0.25, 1],
+      ease: [0.25, 0.1, 0.25, 1] as const,
     },
   },
   exit: {
@@ -58,7 +58,7 @@ const slideVariants = {
     x: -20,
     transition: {
       duration: 0.25,
-      ease: [0.25, 0.1, 0.25, 1],
+      ease: [0.25, 0.1, 0.25, 1] as const,
     },
   },
 }
@@ -155,7 +155,7 @@ export const staggerItem = {
     y: 0,
     transition: {
       duration: 0.3,
-      ease: [0.25, 0.1, 0.25, 1],
+      ease: [0.25, 0.1, 0.25, 1] as const,
     },
   },
 }

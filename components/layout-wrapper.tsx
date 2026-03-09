@@ -15,11 +15,11 @@ interface LayoutWrapperProps {
  */
 const fadeInVariants = {
   hidden: { opacity: 0 },
-  visible: { 
+  visible: {
     opacity: 1,
     transition: {
       duration: 0.2,
-      ease: 'easeOut',
+      ease: 'easeOut' as const,
     },
   },
 }
