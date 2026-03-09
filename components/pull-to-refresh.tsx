@@ -76,7 +76,7 @@ export function PullToRefresh({
       pullDistance.set(resistedPull)
       
       // Haptic feedback when reaching threshold
-      if (resistedPull >= threshold && pullDistance.getPrevious() < threshold) {
+      if (resistedPull >= threshold && (pullDistance.getPrevious() ?? 0) < threshold) {
         triggerHaptic('medium')
       }
     }
