@@ -169,7 +169,7 @@ export function DevelopmentTimeline() {
                                             {t('tipsLabel')}
                                         </h4>
                                         <p className="text-gray-800 dark:text-gray-200 font-medium leading-relaxed italic text-lg">
-                                            "{t(stage.tipsKey)}"
+                                            &ldquo;{t(stage.tipsKey)}&rdquo;
                                         </p>
                                     </div>
                                 </div>

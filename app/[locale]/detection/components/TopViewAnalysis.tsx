@@ -473,9 +473,17 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
 
                     {/* Central interaction area */}
                     <div
+                      role='button'
+                      tabIndex={0}
                       onClick={() =>
                         isModelReady && fileInputRef.current?.click()
                       }
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault()
+                          isModelReady && fileInputRef.current?.click()
+                        }
+                      }}
                       className='absolute inset-0 z-20 flex flex-col items-center justify-center cursor-pointer'
                     >
                       <div
