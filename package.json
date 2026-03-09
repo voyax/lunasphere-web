@@ -39,8 +39,7 @@
     "format:check": "prettier --check .",
     "test": "echo \"No tests specified, skipping...\" && exit 0",
     "clean": "rm -rf .next out",
-    "analyze": "ANALYZE=true npm run build",
-    "postinstall": "npm run type-check"
+    "analyze": "ANALYZE=true npm run build"
   },
   "dependencies": {
     "@heroui/button": "2.2.22",
