@@ -226,7 +226,7 @@ function ProTip({ theme, title, content, icon: Icon }: { theme: ThemeColor, titl
                 <div className="space-y-1">
                     <span className={clsx("block text-xs font-bold uppercase tracking-widest", colors.title)}>{title}</span>
                     <p className="text-gray-700 dark:text-gray-300 font-serif italic leading-relaxed">
-                        "{content}"
+                        &ldquo;{content}&rdquo;
                     </p>
                 </div>
             </div>
