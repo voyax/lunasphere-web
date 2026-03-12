@@ -88,13 +88,11 @@ export async function ClassificationSection() {
                         src={shape.imageSrc}
                       />
                       {shape.sensitiveImage && (
-                        <div className='absolute inset-0 bg-white/30 dark:bg-gray-900/30 backdrop-blur-xl'>
-                          <div className='absolute inset-3 rounded-md border-2 border-dashed border-stone-200/60 dark:border-gray-600/40 flex flex-col items-center justify-center gap-1.5'>
-                            <div className='w-9 h-9 rounded-full bg-rose-50 dark:bg-rose-950/30 border border-rose-100 dark:border-rose-900/50 flex items-center justify-center'>
-                              <EyeOff className='w-4 h-4 text-rose-300 dark:text-rose-400' />
-                            </div>
-                            <span className='text-[11px] text-stone-400 dark:text-stone-500'>{t('learn.headTypes.sensitiveImage.warning')}</span>
+                        <div className='absolute inset-0 bg-gradient-to-br from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-750 flex flex-col items-center justify-center gap-2'>
+                          <div className='w-9 h-9 rounded-full bg-white dark:bg-gray-700 shadow-sm flex items-center justify-center'>
+                            <EyeOff className='w-4 h-4 text-amber-400' />
                           </div>
+                          <span className='text-[11px] text-stone-400 dark:text-stone-500'>{t('learn.headTypes.sensitiveImage.warning')}</span>
                         </div>
                       )}
                     </div>
