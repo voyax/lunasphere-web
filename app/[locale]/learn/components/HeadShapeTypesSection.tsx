@@ -217,11 +217,14 @@ function HeadShapeCard({
                                     src={imagesList[selectedImgIndex]}
                                     alt={tClass(`${type.translationKey}.name`)}
                                     fill
-                                    className={`object-contain drop-shadow-xl transition-[filter,opacity] duration-500 ${isSensitiveHidden ? 'blur-2xl scale-110' : ''} ${isSensitiveHidden && !imgReady ? 'opacity-0' : 'opacity-100'}`}
+                                    className={`object-contain drop-shadow-xl transition-[filter] duration-500 ${isSensitiveHidden ? 'blur-2xl scale-110' : ''}`}
                                     sizes="(max-width: 768px) 100vw, 50vw"
                                     priority={isActive}
-                                    onLoad={() => { if (isSensitiveHidden) setImgReady(true) }}
+                                    onLoad={() => setImgReady(true)}
                                 />
+                                {isSensitiveHidden && (
+                                    <div className={`absolute inset-0 z-10 bg-gray-50 dark:bg-gray-800/50 transition-opacity duration-300 ${imgReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`} />
+                                )}
                                 {type.sensitiveImages && !revealed && (
                                     <button
                                         onClick={() => setRevealed(true)}
@@ -259,7 +262,7 @@ function HeadShapeCard({
                                             : 'border-white dark:border-gray-700 opacity-70 hover:opacity-100 hover:scale-105'}
                                     `}
                                 >
-                                    <Image src={img} alt="View" width={56} height={56} className={`w-full h-full object-contain p-1 ${isSensitiveHidden ? 'blur-sm' : ''} ${isSensitiveHidden && !imgReady ? 'opacity-0' : 'opacity-100'}`} />
+                                    <Image src={img} alt="View" width={56} height={56} className={`w-full h-full object-contain p-1 ${isSensitiveHidden ? 'blur-sm' : ''}`} />
                                 </button>
                             ))}
                         </div>

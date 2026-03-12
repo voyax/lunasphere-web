@@ -181,7 +181,6 @@ function HeadTypeSelector({
     isSelected: boolean
     onSelect: () => void
 }) {
-    const [thumbReady, setThumbReady] = useState(false)
     return (
         <button
             onClick={onSelect}
@@ -201,8 +200,7 @@ function HeadTypeSelector({
                     src={type.images[0].src}
                     alt={t(`${type.translationKey}.name`)}
                     fill
-                    className={`object-contain bg-stone-50 dark:bg-gray-900 p-1 transition-opacity duration-300 ${type.sensitiveImages ? 'blur-md scale-110' : ''} ${type.sensitiveImages && !thumbReady ? 'opacity-0' : 'opacity-100'}`}
-                    onLoad={() => { if (type.sensitiveImages) setThumbReady(true) }}
+                    className={`object-contain bg-stone-50 dark:bg-gray-900 p-1 ${type.sensitiveImages ? 'blur-md scale-110' : ''}`}
                 />
             </div>
             <span className={`text-[13px] ${isSelected ? 'text-stone-800 dark:text-stone-200' : 'text-stone-400 dark:text-stone-500'}`}>
@@ -238,9 +236,12 @@ function HeadTypeDetail({ type, t }: { type: HeadType; t: any }) {
                             src={type.images[activeImageIndex].src}
                             alt={t(`${type.translationKey}.name`)}
                             fill
-                            className={`object-contain p-3 transition-[filter,opacity] duration-500 ${isSensitiveHidden ? 'blur-2xl scale-110' : ''} ${isSensitiveHidden && !imgReady ? 'opacity-0' : 'opacity-100'}`}
-                            onLoad={() => { if (isSensitiveHidden) setImgReady(true) }}
+                            className={`object-contain p-3 transition-[filter] duration-500 ${isSensitiveHidden ? 'blur-2xl scale-110' : ''}`}
+                            onLoad={() => setImgReady(true)}
                         />
+                        {isSensitiveHidden && (
+                            <div className={`absolute inset-0 z-[5] bg-white dark:bg-gray-800 transition-opacity duration-300 ${imgReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`} />
+                        )}
                         {type.sensitiveImages && !revealed && (
                             <button
                                 onClick={() => setRevealed(true)}
