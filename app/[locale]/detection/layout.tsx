@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     keywords: [
       '头型检测',
       'AI头型分析',
-      '头颅指数',
+      '头型指数',
       '不对称指数',
       '婴儿头型测量',
       'CI指数',

@@ -263,7 +263,7 @@ function HeadShapeCard({
                             {/* Medical Warning Badge if needed */}
                             {type.category === 'pathological' && (
                                 <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-rose-100 text-rose-700 flex items-center gap-1">
-                                    <AlertTriangle className="w-3 h-3" /> Medical Attention
+                                    <AlertTriangle className="w-3 h-3" /> {tClass('category.medicalAttention')}
                                 </span>
                             )}
                         </div>

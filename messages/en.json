@@ -135,7 +135,8 @@
     "category": {
       "normal": "Normal",
       "positional": "Positional",
-      "pathological": "Pathological"
+      "pathological": "Pathological",
+      "medicalAttention": "Medical Attention"
     },
     "normal": {
       "name": "Normal Head Shape",
