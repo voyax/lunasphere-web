@@ -216,8 +216,10 @@ function HeadTypeDetail({ type, t }: { type: HeadType; t: any }) {
     const tSensitive = useTranslations('learn.headTypes.sensitiveImage')
     const [activeImageIndex, setActiveImageIndex] = useState(0)
     const [revealed, setRevealed] = useState(false)
-    const [imgReady, setImgReady] = useState(false)
+    const [readySrc, setReadySrc] = useState<string | null>(null)
     const isSensitiveHidden = !!type.sensitiveImages && !revealed
+    const currentSrc = type.images[activeImageIndex].src
+    const imgReady = readySrc === currentSrc
 
     const severityColors: Record<string, string> = {
         normal: 'text-emerald-600 dark:text-emerald-400',
@@ -237,7 +239,7 @@ function HeadTypeDetail({ type, t }: { type: HeadType; t: any }) {
                             alt={t(`${type.translationKey}.name`)}
                             fill
                             className={`object-contain p-3 transition-[filter] duration-500 ${isSensitiveHidden ? 'blur-2xl scale-110' : ''}`}
-                            onLoad={() => setImgReady(true)}
+                            onLoad={() => setReadySrc(currentSrc)}
                         />
                         {isSensitiveHidden && (
                             <div className={`absolute inset-0 z-[5] bg-white dark:bg-gray-800 transition-opacity duration-300 ${imgReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`} />
@@ -405,7 +407,7 @@ function HeadShapeGallery() {
                 ))}
             </div>
 
-            <HeadTypeDetail type={selectedType} t={t} />
+            <HeadTypeDetail key={selectedType.id} type={selectedType} t={t} />
         </section>
     )
 }

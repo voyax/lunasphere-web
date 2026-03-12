@@ -180,8 +180,10 @@ function HeadShapeCard({
 
     const [selectedImgIndex, setSelectedImgIndex] = useState(0)
     const [revealed, setRevealed] = useState(false)
-    const [imgReady, setImgReady] = useState(false)
+    const [readySrc, setReadySrc] = useState<string | null>(null)
     const isSensitiveHidden = !!type.sensitiveImages && !revealed
+    const currentSrc = imagesList[selectedImgIndex]
+    const imgReady = readySrc === currentSrc
 
     return (
         <div
@@ -220,7 +222,7 @@ function HeadShapeCard({
                                     className={`object-contain drop-shadow-xl transition-[filter] duration-500 ${isSensitiveHidden ? 'blur-2xl scale-110' : ''}`}
                                     sizes="(max-width: 768px) 100vw, 50vw"
                                     priority={isActive}
-                                    onLoad={() => setImgReady(true)}
+                                    onLoad={() => setReadySrc(currentSrc)}
                                 />
                                 {isSensitiveHidden && (
                                     <div className={`absolute inset-0 z-10 bg-gray-50 dark:bg-gray-800/50 transition-opacity duration-300 ${imgReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`} />
