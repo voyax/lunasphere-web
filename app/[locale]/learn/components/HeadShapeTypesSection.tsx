@@ -220,22 +220,20 @@ function HeadShapeCard({
                                     priority={isActive}
                                 />
                                 {type.sensitiveImages && (
-                                    <button
-                                        onClick={() => setRevealed(true)}
-                                        className={`absolute inset-0 z-20 bg-gradient-to-br from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-750 flex flex-col items-center justify-center gap-4 transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
+                                    <div
+                                        className={`absolute inset-0 z-20 bg-stone-100 dark:bg-gray-800 flex items-center justify-center transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
                                     >
-                                        <div className="w-14 h-14 rounded-full bg-white dark:bg-gray-700 shadow-sm flex items-center justify-center">
-                                            <EyeOff className="w-7 h-7 text-stone-400 dark:text-stone-500" />
-                                        </div>
-                                        <div className="text-center">
-                                            <p className="text-sm font-medium text-stone-500 dark:text-stone-400">
-                                                {t('sensitiveImage.clickToReveal')}
-                                            </p>
-                                            <p className="text-xs text-stone-400 dark:text-stone-500 mt-1">
-                                                {t('sensitiveImage.warning')}
-                                            </p>
-                                        </div>
-                                    </button>
+                                        <button
+                                            onClick={() => setRevealed(true)}
+                                            className="flex flex-col items-center gap-4 px-8 py-6 rounded-2xl bg-white dark:bg-gray-700 shadow-sm border border-stone-200/60 dark:border-gray-600 cursor-pointer hover:shadow-md transition-shadow"
+                                        >
+                                            <EyeOff className="w-8 h-8 text-stone-400 dark:text-stone-500" />
+                                            <div className="text-center">
+                                                <p className="text-[15px] font-medium text-stone-700 dark:text-stone-200">{t('sensitiveImage.warning')}</p>
+                                                <p className="text-[13px] text-stone-400 dark:text-stone-500 mt-1.5">{t('sensitiveImage.clickToReveal')}</p>
+                                            </div>
+                                        </button>
+                                    </div>
                                 )}
                                 <div className="absolute bottom-4 bg-black/50 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-medium">
                                     {labels[selectedImgIndex]}
@@ -260,8 +258,8 @@ function HeadShapeCard({
                                 >
                                     <Image src={img} alt="View" width={56} height={56} className="w-full h-full object-contain p-1" />
                                     {type.sensitiveImages && !revealed && (
-                                        <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-750 flex items-center justify-center rounded-xl">
-                                            <EyeOff className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500" />
+                                        <div className="absolute inset-0 bg-stone-100 dark:bg-gray-800 flex items-center justify-center rounded-xl">
+                                            <EyeOff className="w-4 h-4 text-stone-300 dark:text-stone-600" />
                                         </div>
                                     )}
                                 </button>

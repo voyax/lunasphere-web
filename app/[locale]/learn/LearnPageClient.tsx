@@ -203,8 +203,8 @@ function HeadTypeSelector({
                     className="object-contain bg-stone-50 dark:bg-gray-900 p-1"
                 />
                 {type.sensitiveImages && (
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-750 flex items-center justify-center">
-                        <EyeOff className="w-4 h-4 text-stone-400 dark:text-stone-500" />
+                    <div className="absolute inset-0 bg-stone-100 dark:bg-gray-800 flex items-center justify-center">
+                        <EyeOff className="w-5 h-5 text-stone-300 dark:text-stone-600" />
                     </div>
                 )}
             </div>
@@ -242,17 +242,20 @@ function HeadTypeDetail({ type, t }: { type: HeadType; t: any }) {
                             className="object-contain p-3"
                         />
                         {type.sensitiveImages && (
-                            <button
-                                onClick={() => setRevealed(true)}
-                                className={`absolute inset-0 z-10 bg-gradient-to-br from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-750 flex flex-col items-center justify-center gap-3 transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
+                            <div
+                                className={`absolute inset-0 z-10 bg-stone-100 dark:bg-gray-800 flex items-center justify-center transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
                             >
-                                <div className="w-10 h-10 rounded-full bg-white dark:bg-gray-700 shadow-sm flex items-center justify-center">
-                                    <EyeOff className="w-5 h-5 text-stone-400 dark:text-stone-500" />
-                                </div>
-                                <p className="text-[13px] text-stone-500 dark:text-stone-400">
-                                    {tSensitive('clickToReveal')}
-                                </p>
-                            </button>
+                                <button
+                                    onClick={() => setRevealed(true)}
+                                    className="flex flex-col items-center gap-3 px-6 py-5 rounded-2xl bg-white dark:bg-gray-700 shadow-sm border border-stone-200/60 dark:border-gray-600 cursor-pointer hover:shadow-md transition-shadow"
+                                >
+                                    <EyeOff className="w-6 h-6 text-stone-400 dark:text-stone-500" />
+                                    <div className="text-center">
+                                        <p className="text-[13px] font-medium text-stone-700 dark:text-stone-200">{tSensitive('warning')}</p>
+                                        <p className="text-[12px] text-stone-400 dark:text-stone-500 mt-1">{tSensitive('clickToReveal')}</p>
+                                    </div>
+                                </button>
+                            </div>
                         )}
                     </div>
                     {type.images.length > 1 && (
