@@ -222,7 +222,7 @@ function HeadShapeCard({
                                 {type.sensitiveImages && (
                                     <button
                                         onClick={() => setRevealed(true)}
-                                        className={`absolute inset-0 z-20 flex flex-col items-center justify-center gap-4 bg-gradient-to-b from-rose-50 to-gray-100 dark:from-rose-950/30 dark:to-gray-800 transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
+                                        className={`absolute inset-0 z-20 flex flex-col items-center justify-center gap-4 bg-white/40 dark:bg-gray-900/40 backdrop-blur-2xl transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
                                     >
                                         <div className="w-14 h-14 rounded-full bg-white/80 dark:bg-gray-700/80 flex items-center justify-center shadow-sm">
                                             <EyeOff className="w-7 h-7 text-rose-400 dark:text-rose-300" />
@@ -258,7 +258,7 @@ function HeadShapeCard({
                                 >
                                     <Image src={img} alt="View" width={56} height={56} className="w-full h-full object-contain p-1" />
                                     {type.sensitiveImages && !revealed && (
-                                        <div className="absolute inset-0 bg-gradient-to-b from-rose-50 to-gray-100 dark:from-rose-950/40 dark:to-gray-700 flex items-center justify-center rounded-xl">
+                                        <div className="absolute inset-0 bg-white/40 dark:bg-gray-900/40 backdrop-blur-lg flex items-center justify-center rounded-xl">
                                             <EyeOff className="w-3.5 h-3.5 text-rose-300" />
                                         </div>
                                     )}

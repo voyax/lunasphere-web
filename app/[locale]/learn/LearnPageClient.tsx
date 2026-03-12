@@ -203,7 +203,7 @@ function HeadTypeSelector({
                     className="object-contain bg-stone-50 dark:bg-gray-900 p-1"
                 />
                 {type.sensitiveImages && (
-                    <div className="absolute inset-0 bg-gradient-to-b from-rose-50 to-stone-100 dark:from-rose-950/40 dark:to-gray-800 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-white/40 dark:bg-gray-900/40 backdrop-blur-xl flex items-center justify-center">
                         <EyeOff className="w-4 h-4 text-rose-300 dark:text-rose-400" />
                     </div>
                 )}
@@ -244,10 +244,10 @@ function HeadTypeDetail({ type, t }: { type: HeadType; t: any }) {
                         {type.sensitiveImages && (
                             <button
                                 onClick={() => setRevealed(true)}
-                                className={`absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-gradient-to-b from-rose-50 to-stone-100 dark:from-rose-950/30 dark:to-gray-800 transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
+                                className={`absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-white/40 dark:bg-gray-900/40 backdrop-blur-2xl transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
                             >
-                                <div className="w-12 h-12 rounded-full bg-white/80 dark:bg-gray-700/80 flex items-center justify-center shadow-sm">
-                                    <EyeOff className="w-6 h-6 text-rose-400 dark:text-rose-300" />
+                                <div className="w-10 h-10 rounded-full bg-white/80 dark:bg-gray-700/80 flex items-center justify-center shadow-sm">
+                                    <EyeOff className="w-5 h-5 text-rose-400 dark:text-rose-300" />
                                 </div>
                                 <span className="text-[13px] font-medium text-stone-600 dark:text-stone-300">
                                     {tSensitive('clickToReveal')}
