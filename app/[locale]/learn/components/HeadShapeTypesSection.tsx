@@ -225,7 +225,7 @@ function HeadShapeCard({
                                         className={`absolute inset-0 z-20 bg-gradient-to-br from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-750 flex flex-col items-center justify-center gap-4 transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
                                     >
                                         <div className="w-14 h-14 rounded-full bg-white dark:bg-gray-700 shadow-sm flex items-center justify-center">
-                                            <EyeOff className="w-7 h-7 text-amber-400" />
+                                            <EyeOff className="w-7 h-7 text-stone-400 dark:text-stone-500" />
                                         </div>
                                         <div className="text-center">
                                             <p className="text-sm font-medium text-stone-500 dark:text-stone-400">
@@ -261,7 +261,7 @@ function HeadShapeCard({
                                     <Image src={img} alt="View" width={56} height={56} className="w-full h-full object-contain p-1" />
                                     {type.sensitiveImages && !revealed && (
                                         <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-750 flex items-center justify-center rounded-xl">
-                                            <EyeOff className="w-3.5 h-3.5 text-amber-300" />
+                                            <EyeOff className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500" />
                                         </div>
                                     )}
                                 </button>

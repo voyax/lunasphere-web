@@ -204,7 +204,7 @@ function HeadTypeSelector({
                 />
                 {type.sensitiveImages && (
                     <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-750 flex items-center justify-center">
-                        <EyeOff className="w-4 h-4 text-amber-300" />
+                        <EyeOff className="w-4 h-4 text-stone-400 dark:text-stone-500" />
                     </div>
                 )}
             </div>
@@ -247,7 +247,7 @@ function HeadTypeDetail({ type, t }: { type: HeadType; t: any }) {
                                 className={`absolute inset-0 z-10 bg-gradient-to-br from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-750 flex flex-col items-center justify-center gap-3 transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
                             >
                                 <div className="w-10 h-10 rounded-full bg-white dark:bg-gray-700 shadow-sm flex items-center justify-center">
-                                    <EyeOff className="w-5 h-5 text-amber-400" />
+                                    <EyeOff className="w-5 h-5 text-stone-400 dark:text-stone-500" />
                                 </div>
                                 <p className="text-[13px] text-stone-500 dark:text-stone-400">
                                     {tSensitive('clickToReveal')}
