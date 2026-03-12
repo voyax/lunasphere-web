@@ -200,13 +200,8 @@ function HeadTypeSelector({
                     src={type.images[0].src}
                     alt={t(`${type.translationKey}.name`)}
                     fill
-                    className="object-contain bg-stone-50 dark:bg-gray-900 p-1"
+                    className={`object-contain bg-stone-50 dark:bg-gray-900 p-1 ${type.sensitiveImages ? 'blur-md scale-110' : ''}`}
                 />
-                {type.sensitiveImages && (
-                    <div className="absolute inset-0 bg-stone-100 dark:bg-gray-800 flex items-center justify-center">
-                        <EyeOff className="w-5 h-5 text-stone-300 dark:text-stone-600" />
-                    </div>
-                )}
             </div>
             <span className={`text-[13px] ${isSelected ? 'text-stone-800 dark:text-stone-200' : 'text-stone-400 dark:text-stone-500'}`}>
                 {t(`${type.translationKey}.name`)}
@@ -239,23 +234,23 @@ function HeadTypeDetail({ type, t }: { type: HeadType; t: any }) {
                             src={type.images[activeImageIndex].src}
                             alt={t(`${type.translationKey}.name`)}
                             fill
-                            className="object-contain p-3"
+                            className={`object-contain p-3 transition-[filter] duration-500 ${type.sensitiveImages && !revealed ? 'blur-2xl scale-110' : ''}`}
                         />
-                        {type.sensitiveImages && (
-                            <div
-                                className={`absolute inset-0 z-10 bg-stone-100 dark:bg-gray-800 flex items-center justify-center transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+                        {type.sensitiveImages && !revealed && (
+                            <button
+                                onClick={() => setRevealed(true)}
+                                className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 cursor-pointer"
                             >
-                                <button
-                                    onClick={() => setRevealed(true)}
-                                    className="flex flex-col items-center gap-3 px-6 py-5 rounded-2xl bg-white dark:bg-gray-700 shadow-sm border border-stone-200/60 dark:border-gray-600 cursor-pointer hover:shadow-md transition-shadow"
-                                >
-                                    <EyeOff className="w-6 h-6 text-stone-400 dark:text-stone-500" />
-                                    <div className="text-center">
-                                        <p className="text-[13px] font-medium text-stone-700 dark:text-stone-200">{tSensitive('warning')}</p>
-                                        <p className="text-[12px] text-stone-400 dark:text-stone-500 mt-1">{tSensitive('clickToReveal')}</p>
-                                    </div>
-                                </button>
-                            </div>
+                                <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl px-4 py-3 flex flex-col items-center gap-1.5 shadow-md">
+                                    <EyeOff className="w-5 h-5 text-stone-400" />
+                                    <span className="text-[13px] font-medium text-stone-600 dark:text-stone-300">
+                                        {tSensitive('clickToReveal')}
+                                    </span>
+                                    <span className="text-[11px] text-stone-400">
+                                        {tSensitive('warning')}
+                                    </span>
+                                </div>
+                            </button>
                         )}
                     </div>
                     {type.images.length > 1 && (

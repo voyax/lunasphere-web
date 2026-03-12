@@ -215,25 +215,25 @@ function HeadShapeCard({
                                     src={imagesList[selectedImgIndex]}
                                     alt={tClass(`${type.translationKey}.name`)}
                                     fill
-                                    className="object-contain drop-shadow-xl"
+                                    className={`object-contain drop-shadow-xl transition-[filter] duration-500 ${type.sensitiveImages && !revealed ? 'blur-2xl scale-110' : ''}`}
                                     sizes="(max-width: 768px) 100vw, 50vw"
                                     priority={isActive}
                                 />
-                                {type.sensitiveImages && (
-                                    <div
-                                        className={`absolute inset-0 z-20 bg-stone-100 dark:bg-gray-800 flex items-center justify-center transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+                                {type.sensitiveImages && !revealed && (
+                                    <button
+                                        onClick={() => setRevealed(true)}
+                                        className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 cursor-pointer group/reveal"
                                     >
-                                        <button
-                                            onClick={() => setRevealed(true)}
-                                            className="flex flex-col items-center gap-4 px-8 py-6 rounded-2xl bg-white dark:bg-gray-700 shadow-sm border border-stone-200/60 dark:border-gray-600 cursor-pointer hover:shadow-md transition-shadow"
-                                        >
-                                            <EyeOff className="w-8 h-8 text-stone-400 dark:text-stone-500" />
-                                            <div className="text-center">
-                                                <p className="text-[15px] font-medium text-stone-700 dark:text-stone-200">{t('sensitiveImage.warning')}</p>
-                                                <p className="text-[13px] text-stone-400 dark:text-stone-500 mt-1.5">{t('sensitiveImage.clickToReveal')}</p>
-                                            </div>
-                                        </button>
-                                    </div>
+                                        <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl px-6 py-4 flex flex-col items-center gap-2 shadow-lg transition-transform duration-200 group-hover/reveal:scale-105">
+                                            <EyeOff className="w-6 h-6 text-gray-500 dark:text-gray-400" />
+                                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                                {t('sensitiveImage.clickToReveal')}
+                                            </span>
+                                            <span className="text-xs text-gray-400 dark:text-gray-500">
+                                                {t('sensitiveImage.warning')}
+                                            </span>
+                                        </div>
+                                    </button>
                                 )}
                                 <div className="absolute bottom-4 bg-black/50 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-medium">
                                     {labels[selectedImgIndex]}
@@ -256,12 +256,7 @@ function HeadShapeCard({
                                             : 'border-white dark:border-gray-700 opacity-70 hover:opacity-100 hover:scale-105'}
                                     `}
                                 >
-                                    <Image src={img} alt="View" width={56} height={56} className="w-full h-full object-contain p-1" />
-                                    {type.sensitiveImages && !revealed && (
-                                        <div className="absolute inset-0 bg-stone-100 dark:bg-gray-800 flex items-center justify-center rounded-xl">
-                                            <EyeOff className="w-4 h-4 text-stone-300 dark:text-stone-600" />
-                                        </div>
-                                    )}
+                                    <Image src={img} alt="View" width={56} height={56} className={`w-full h-full object-contain p-1 ${type.sensitiveImages && !revealed ? 'blur-sm' : ''}`} />
                                 </button>
                             ))}
                         </div>

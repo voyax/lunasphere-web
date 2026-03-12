@@ -1,6 +1,5 @@
 import { Card, CardBody, CardHeader } from '@heroui/card'
 import Image from 'next/image'
-import { EyeOff } from 'lucide-react'
 
 import { getTranslations } from 'next-intl/server'
 import { SectionAnimations } from '@/components/animations/section-animations'
@@ -83,16 +82,10 @@ export async function ClassificationSection() {
                       <Image
                         fill
                         alt={t(`classification.${shape.type}.image_alt`)}
-                        className='object-contain'
+                        className={`object-contain ${shape.sensitiveImage ? 'blur-xl scale-110' : ''}`}
                         sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw'
                         src={shape.imageSrc}
                       />
-                      {shape.sensitiveImage && (
-                        <div className='absolute inset-0 bg-stone-100 dark:bg-gray-800 flex flex-col items-center justify-center gap-2'>
-                          <EyeOff className='w-6 h-6 text-stone-300 dark:text-stone-600' />
-                          <span className='text-[11px] text-stone-400 dark:text-stone-500'>{t('learn.headTypes.sensitiveImage.warning')}</span>
-                        </div>
-                      )}
                     </div>
 
                     {/* Severity and category labels */}
