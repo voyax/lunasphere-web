@@ -200,7 +200,7 @@ function HeadTypeSelector({
                     src={type.images[0].src}
                     alt={t(`${type.translationKey}.name`)}
                     fill
-                    className={`object-contain bg-stone-50 dark:bg-gray-900 p-1 ${type.sensitiveImages ? 'blur-md scale-110' : ''}`}
+                    className={`object-contain bg-stone-50 dark:bg-gray-900 p-1 ${type.sensitiveImages ? 'opacity-0' : ''}`}
                 />
             </div>
             <span className={`text-[13px] ${isSelected ? 'text-stone-800 dark:text-stone-200' : 'text-stone-400 dark:text-stone-500'}`}>
@@ -234,22 +234,20 @@ function HeadTypeDetail({ type, t }: { type: HeadType; t: any }) {
                             src={type.images[activeImageIndex].src}
                             alt={t(`${type.translationKey}.name`)}
                             fill
-                            className={`object-contain p-3 transition-[filter] duration-500 ${type.sensitiveImages && !revealed ? 'blur-2xl scale-110' : ''}`}
+                            className="object-contain p-3"
                         />
-                        {type.sensitiveImages && !revealed && (
+                        {type.sensitiveImages && (
                             <button
                                 onClick={() => setRevealed(true)}
-                                className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 cursor-pointer"
+                                className={`absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 bg-stone-100 dark:bg-gray-800 transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
                             >
-                                <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl px-4 py-3 flex flex-col items-center gap-1.5 shadow-md">
-                                    <EyeOff className="w-5 h-5 text-stone-400" />
-                                    <span className="text-[13px] font-medium text-stone-600 dark:text-stone-300">
-                                        {tSensitive('clickToReveal')}
-                                    </span>
-                                    <span className="text-[11px] text-stone-400">
-                                        {tSensitive('warning')}
-                                    </span>
-                                </div>
+                                <EyeOff className="w-5 h-5 text-stone-400" />
+                                <span className="text-[13px] font-medium text-stone-600 dark:text-stone-300">
+                                    {tSensitive('clickToReveal')}
+                                </span>
+                                <span className="text-[11px] text-stone-400">
+                                    {tSensitive('warning')}
+                                </span>
                             </button>
                         )}
                     </div>

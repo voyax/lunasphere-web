@@ -82,7 +82,7 @@ export async function ClassificationSection() {
                       <Image
                         fill
                         alt={t(`classification.${shape.type}.image_alt`)}
-                        className={`object-contain ${shape.sensitiveImage ? 'blur-xl scale-110' : ''}`}
+                        className={`object-contain ${shape.sensitiveImage ? 'opacity-0' : ''}`}
                         sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw'
                         src={shape.imageSrc}
                       />

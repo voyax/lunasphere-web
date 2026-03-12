@@ -215,24 +215,22 @@ function HeadShapeCard({
                                     src={imagesList[selectedImgIndex]}
                                     alt={tClass(`${type.translationKey}.name`)}
                                     fill
-                                    className={`object-contain drop-shadow-xl transition-[filter] duration-500 ${type.sensitiveImages && !revealed ? 'blur-2xl scale-110' : ''}`}
+                                    className="object-contain drop-shadow-xl"
                                     sizes="(max-width: 768px) 100vw, 50vw"
                                     priority={isActive}
                                 />
-                                {type.sensitiveImages && !revealed && (
+                                {type.sensitiveImages && (
                                     <button
                                         onClick={() => setRevealed(true)}
-                                        className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 cursor-pointer group/reveal"
+                                        className={`absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-gray-50 dark:bg-gray-800 transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
                                     >
-                                        <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl px-6 py-4 flex flex-col items-center gap-2 shadow-lg transition-transform duration-200 group-hover/reveal:scale-105">
-                                            <EyeOff className="w-6 h-6 text-gray-500 dark:text-gray-400" />
-                                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                                {t('sensitiveImage.clickToReveal')}
-                                            </span>
-                                            <span className="text-xs text-gray-400 dark:text-gray-500">
-                                                {t('sensitiveImage.warning')}
-                                            </span>
-                                        </div>
+                                        <EyeOff className="w-6 h-6 text-gray-500 dark:text-gray-400" />
+                                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                            {t('sensitiveImage.clickToReveal')}
+                                        </span>
+                                        <span className="text-xs text-gray-400 dark:text-gray-500">
+                                            {t('sensitiveImage.warning')}
+                                        </span>
                                     </button>
                                 )}
                                 <div className="absolute bottom-4 bg-black/50 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-medium">
@@ -256,7 +254,7 @@ function HeadShapeCard({
                                             : 'border-white dark:border-gray-700 opacity-70 hover:opacity-100 hover:scale-105'}
                                     `}
                                 >
-                                    <Image src={img} alt="View" width={56} height={56} className={`w-full h-full object-contain p-1 ${type.sensitiveImages && !revealed ? 'blur-sm' : ''}`} />
+                                    <Image src={img} alt="View" width={56} height={56} className={`w-full h-full object-contain p-1 transition-opacity duration-500 ${type.sensitiveImages && !revealed ? 'opacity-0' : ''}`} />
                                 </button>
                             ))}
                         </div>
