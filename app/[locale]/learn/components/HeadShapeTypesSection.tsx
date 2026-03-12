@@ -180,6 +180,8 @@ function HeadShapeCard({
 
     const [selectedImgIndex, setSelectedImgIndex] = useState(0)
     const [revealed, setRevealed] = useState(false)
+    const [imgReady, setImgReady] = useState(false)
+    const isSensitiveHidden = !!type.sensitiveImages && !revealed
 
     return (
         <div
@@ -215,9 +217,10 @@ function HeadShapeCard({
                                     src={imagesList[selectedImgIndex]}
                                     alt={tClass(`${type.translationKey}.name`)}
                                     fill
-                                    className={`object-contain drop-shadow-xl transition-[filter] duration-500 ${type.sensitiveImages && !revealed ? 'blur-2xl scale-110' : ''}`}
+                                    className={`object-contain drop-shadow-xl transition-[filter,opacity] duration-500 ${isSensitiveHidden ? 'blur-2xl scale-110' : ''} ${isSensitiveHidden && !imgReady ? 'opacity-0' : 'opacity-100'}`}
                                     sizes="(max-width: 768px) 100vw, 50vw"
                                     priority={isActive}
+                                    onLoad={() => { if (isSensitiveHidden) setImgReady(true) }}
                                 />
                                 {type.sensitiveImages && !revealed && (
                                     <button
@@ -256,7 +259,7 @@ function HeadShapeCard({
                                             : 'border-white dark:border-gray-700 opacity-70 hover:opacity-100 hover:scale-105'}
                                     `}
                                 >
-                                    <Image src={img} alt="View" width={56} height={56} className={`w-full h-full object-contain p-1 ${type.sensitiveImages && !revealed ? 'blur-sm' : ''}`} />
+                                    <Image src={img} alt="View" width={56} height={56} className={`w-full h-full object-contain p-1 ${isSensitiveHidden ? 'blur-sm' : ''} ${isSensitiveHidden && !imgReady ? 'opacity-0' : 'opacity-100'}`} />
                                 </button>
                             ))}
                         </div>

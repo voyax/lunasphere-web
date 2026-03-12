@@ -181,6 +181,7 @@ function HeadTypeSelector({
     isSelected: boolean
     onSelect: () => void
 }) {
+    const [thumbReady, setThumbReady] = useState(false)
     return (
         <button
             onClick={onSelect}
@@ -200,7 +201,8 @@ function HeadTypeSelector({
                     src={type.images[0].src}
                     alt={t(`${type.translationKey}.name`)}
                     fill
-                    className={`object-contain bg-stone-50 dark:bg-gray-900 p-1 ${type.sensitiveImages ? 'blur-md scale-110' : ''}`}
+                    className={`object-contain bg-stone-50 dark:bg-gray-900 p-1 transition-opacity duration-300 ${type.sensitiveImages ? 'blur-md scale-110' : ''} ${type.sensitiveImages && !thumbReady ? 'opacity-0' : 'opacity-100'}`}
+                    onLoad={() => { if (type.sensitiveImages) setThumbReady(true) }}
                 />
             </div>
             <span className={`text-[13px] ${isSelected ? 'text-stone-800 dark:text-stone-200' : 'text-stone-400 dark:text-stone-500'}`}>
@@ -216,6 +218,8 @@ function HeadTypeDetail({ type, t }: { type: HeadType; t: any }) {
     const tSensitive = useTranslations('learn.headTypes.sensitiveImage')
     const [activeImageIndex, setActiveImageIndex] = useState(0)
     const [revealed, setRevealed] = useState(false)
+    const [imgReady, setImgReady] = useState(false)
+    const isSensitiveHidden = !!type.sensitiveImages && !revealed
 
     const severityColors: Record<string, string> = {
         normal: 'text-emerald-600 dark:text-emerald-400',
@@ -234,7 +238,8 @@ function HeadTypeDetail({ type, t }: { type: HeadType; t: any }) {
                             src={type.images[activeImageIndex].src}
                             alt={t(`${type.translationKey}.name`)}
                             fill
-                            className={`object-contain p-3 transition-[filter] duration-500 ${type.sensitiveImages && !revealed ? 'blur-2xl scale-110' : ''}`}
+                            className={`object-contain p-3 transition-[filter,opacity] duration-500 ${isSensitiveHidden ? 'blur-2xl scale-110' : ''} ${isSensitiveHidden && !imgReady ? 'opacity-0' : 'opacity-100'}`}
+                            onLoad={() => { if (isSensitiveHidden) setImgReady(true) }}
                         />
                         {type.sensitiveImages && !revealed && (
                             <button
