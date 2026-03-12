@@ -222,17 +222,21 @@ function HeadShapeCard({
                                 {type.sensitiveImages && (
                                     <button
                                         onClick={() => setRevealed(true)}
-                                        className={`absolute inset-0 z-20 flex flex-col items-center justify-center gap-4 bg-white/40 dark:bg-gray-900/40 backdrop-blur-2xl transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
+                                        className={`absolute inset-0 z-20 bg-white/30 dark:bg-gray-900/30 backdrop-blur-2xl transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
                                     >
-                                        <div className="w-14 h-14 rounded-full bg-white/80 dark:bg-gray-700/80 flex items-center justify-center shadow-sm">
-                                            <EyeOff className="w-7 h-7 text-rose-400 dark:text-rose-300" />
+                                        <div className="absolute inset-6 rounded-2xl border-2 border-dashed border-gray-200/80 dark:border-gray-600/50 flex flex-col items-center justify-center gap-3">
+                                            <div className="w-14 h-14 rounded-full bg-rose-50 dark:bg-rose-950/30 border border-rose-100 dark:border-rose-900/50 flex items-center justify-center">
+                                                <EyeOff className="w-6 h-6 text-rose-400 dark:text-rose-300" />
+                                            </div>
+                                            <div className="text-center">
+                                                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                                    {t('sensitiveImage.clickToReveal')}
+                                                </p>
+                                                <p className="text-xs text-gray-400/80 dark:text-gray-500 mt-1">
+                                                    {t('sensitiveImage.warning')}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                            {t('sensitiveImage.clickToReveal')}
-                                        </span>
-                                        <span className="text-xs text-gray-400 dark:text-gray-500">
-                                            {t('sensitiveImage.warning')}
-                                        </span>
                                     </button>
                                 )}
                                 <div className="absolute bottom-4 bg-black/50 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-medium">
@@ -258,8 +262,10 @@ function HeadShapeCard({
                                 >
                                     <Image src={img} alt="View" width={56} height={56} className="w-full h-full object-contain p-1" />
                                     {type.sensitiveImages && !revealed && (
-                                        <div className="absolute inset-0 bg-white/40 dark:bg-gray-900/40 backdrop-blur-lg flex items-center justify-center rounded-xl">
-                                            <EyeOff className="w-3.5 h-3.5 text-rose-300" />
+                                        <div className="absolute inset-0 bg-white/30 dark:bg-gray-900/30 backdrop-blur-lg flex items-center justify-center rounded-xl">
+                                            <div className="w-7 h-7 rounded-full bg-rose-50 dark:bg-rose-950/40 flex items-center justify-center">
+                                                <EyeOff className="w-3.5 h-3.5 text-rose-300" />
+                                            </div>
                                         </div>
                                     )}
                                 </button>

@@ -203,8 +203,10 @@ function HeadTypeSelector({
                     className="object-contain bg-stone-50 dark:bg-gray-900 p-1"
                 />
                 {type.sensitiveImages && (
-                    <div className="absolute inset-0 bg-white/40 dark:bg-gray-900/40 backdrop-blur-xl flex items-center justify-center">
-                        <EyeOff className="w-4 h-4 text-rose-300 dark:text-rose-400" />
+                    <div className="absolute inset-0 bg-white/30 dark:bg-gray-900/30 backdrop-blur-xl flex items-center justify-center">
+                        <div className="w-7 h-7 rounded-full bg-rose-50 dark:bg-rose-950/40 flex items-center justify-center">
+                            <EyeOff className="w-3.5 h-3.5 text-rose-300 dark:text-rose-400" />
+                        </div>
                     </div>
                 )}
             </div>
@@ -244,17 +246,21 @@ function HeadTypeDetail({ type, t }: { type: HeadType; t: any }) {
                         {type.sensitiveImages && (
                             <button
                                 onClick={() => setRevealed(true)}
-                                className={`absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-white/40 dark:bg-gray-900/40 backdrop-blur-2xl transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
+                                className={`absolute inset-0 z-10 bg-white/30 dark:bg-gray-900/30 backdrop-blur-2xl transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
                             >
-                                <div className="w-10 h-10 rounded-full bg-white/80 dark:bg-gray-700/80 flex items-center justify-center shadow-sm">
-                                    <EyeOff className="w-5 h-5 text-rose-400 dark:text-rose-300" />
+                                <div className="absolute inset-3 rounded-lg border-2 border-dashed border-stone-200/80 dark:border-gray-600/50 flex flex-col items-center justify-center gap-2.5">
+                                    <div className="w-11 h-11 rounded-full bg-rose-50 dark:bg-rose-950/30 border border-rose-100 dark:border-rose-900/50 flex items-center justify-center">
+                                        <EyeOff className="w-5 h-5 text-rose-400 dark:text-rose-300" />
+                                    </div>
+                                    <div className="text-center">
+                                        <p className="text-[13px] font-medium text-stone-500 dark:text-stone-400">
+                                            {tSensitive('clickToReveal')}
+                                        </p>
+                                        <p className="text-[11px] text-stone-400/80 dark:text-stone-500 mt-0.5">
+                                            {tSensitive('warning')}
+                                        </p>
+                                    </div>
                                 </div>
-                                <span className="text-[13px] font-medium text-stone-600 dark:text-stone-300">
-                                    {tSensitive('clickToReveal')}
-                                </span>
-                                <span className="text-[11px] text-stone-400">
-                                    {tSensitive('warning')}
-                                </span>
                             </button>
                         )}
                     </div>
