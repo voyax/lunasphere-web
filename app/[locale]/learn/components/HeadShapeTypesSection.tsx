@@ -44,7 +44,7 @@ export function HeadShapeTypesSection() {
                 alt1: '/images/head-examples/normal_head_shape_6months.webp',
                 alt2: '/images/head-examples/normal_head_shape_9months.webp',
             },
-            imageLabels: ['0-3月', '6月', '9月'],
+            imageLabels: [t('ages.0to3'), t('ages.6'), t('ages.9')],
         },
         // ... (keep other types same)
         {
