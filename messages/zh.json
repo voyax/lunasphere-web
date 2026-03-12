@@ -924,6 +924,15 @@
         "6": "6月",
         "9": "9月"
       },
+      "sensitiveImage": {
+        "clickToReveal": "点击查看医学影像",
+        "warning": "图片可能引起不适"
+      },
+      "views3D": {
+        "1": "3D 视图 1",
+        "2": "3D 视图 2",
+        "3": "3D 视图 3"
+      },
       "labels": {
         "description": "特征描述",
         "causes": "形成原因",
