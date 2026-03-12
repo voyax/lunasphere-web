@@ -82,10 +82,15 @@ export async function ClassificationSection() {
                       <Image
                         fill
                         alt={t(`classification.${shape.type}.image_alt`)}
-                        className={`object-contain ${shape.sensitiveImage ? 'opacity-0' : ''}`}
+                        className='object-contain'
                         sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw'
                         src={shape.imageSrc}
                       />
+                      {shape.sensitiveImage && (
+                        <div className='absolute inset-0 bg-gradient-to-b from-rose-50 to-stone-100 dark:from-rose-950/30 dark:to-gray-700 flex items-center justify-center'>
+                          <span className='text-xs text-rose-400 dark:text-rose-300'>{t('learn.headTypes.sensitiveImage.warning')}</span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Severity and category labels */}

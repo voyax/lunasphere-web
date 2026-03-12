@@ -222,9 +222,11 @@ function HeadShapeCard({
                                 {type.sensitiveImages && (
                                     <button
                                         onClick={() => setRevealed(true)}
-                                        className={`absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-gray-50 dark:bg-gray-800 transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
+                                        className={`absolute inset-0 z-20 flex flex-col items-center justify-center gap-4 bg-gradient-to-b from-rose-50 to-gray-100 dark:from-rose-950/30 dark:to-gray-800 transition-opacity duration-500 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100 cursor-pointer'}`}
                                     >
-                                        <EyeOff className="w-6 h-6 text-gray-500 dark:text-gray-400" />
+                                        <div className="w-14 h-14 rounded-full bg-white/80 dark:bg-gray-700/80 flex items-center justify-center shadow-sm">
+                                            <EyeOff className="w-7 h-7 text-rose-400 dark:text-rose-300" />
+                                        </div>
                                         <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                                             {t('sensitiveImage.clickToReveal')}
                                         </span>
@@ -254,7 +256,12 @@ function HeadShapeCard({
                                             : 'border-white dark:border-gray-700 opacity-70 hover:opacity-100 hover:scale-105'}
                                     `}
                                 >
-                                    <Image src={img} alt="View" width={56} height={56} className={`w-full h-full object-contain p-1 transition-opacity duration-500 ${type.sensitiveImages && !revealed ? 'opacity-0' : ''}`} />
+                                    <Image src={img} alt="View" width={56} height={56} className="w-full h-full object-contain p-1" />
+                                    {type.sensitiveImages && !revealed && (
+                                        <div className="absolute inset-0 bg-gradient-to-b from-rose-50 to-gray-100 dark:from-rose-950/40 dark:to-gray-700 flex items-center justify-center rounded-xl">
+                                            <EyeOff className="w-3.5 h-3.5 text-rose-300" />
+                                        </div>
+                                    )}
                                 </button>
                             ))}
                         </div>
