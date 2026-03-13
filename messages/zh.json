@@ -17,7 +17,7 @@
     },
     "detection": {
       "title": "头型检测",
-      "description": "使用AI技术分析婴儿头型，提供科学的头型指数和不对称指数测量"
+      "description": "使用AI技术分析婴儿头型，提供科学的 CI（头型指数）和 CVAI（不对称指数）测量"
     },
     "faq": {
       "title": "常见问题",
@@ -368,7 +368,7 @@
       "exampleImageAlt": "正确拍摄示例图片",
       "originalImageAlt": "原始上传图片",
       "analysisResult": "分析结果",
-      "analysisDescription": "基于识别的头型轮廓，计算头型指数和不对称指数",
+      "analysisDescription": "基于识别的头型轮廓，计算 CI（头型指数）和 CVAI（不对称指数）",
       "buttons": {
         "analyzing": "分析中...",
         "startAnalysis": "开始分析",
