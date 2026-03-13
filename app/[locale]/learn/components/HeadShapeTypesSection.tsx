@@ -9,7 +9,8 @@ import {
     Stethoscope,
     Baby,
     AlertTriangle,
-    Info
+    Info,
+    EyeOff
 } from 'lucide-react'
 
 // ... Keep interfaces ...
@@ -25,6 +26,7 @@ interface HeadShapeType {
         alt2?: string
     }
     imageLabels?: string[]
+    sensitiveImages?: boolean
 }
 
 export function HeadShapeTypesSection() {
@@ -44,7 +46,7 @@ export function HeadShapeTypesSection() {
                 alt1: '/images/head-examples/normal_head_shape_6months.webp',
                 alt2: '/images/head-examples/normal_head_shape_9months.webp',
             },
-            imageLabels: ['0-3月', '6月', '9月'],
+            imageLabels: [t('ages.0to3'), t('ages.6'), t('ages.9')],
         },
         // ... (keep other types same)
         {
@@ -90,10 +92,12 @@ export function HeadShapeTypesSection() {
             category: 'pathological',
             color: 'rose',
             images: {
-                main: '/images/head-examples/scaphocephaly_top_view.png',
-                alt1: '/images/head-examples/scaphocephaly_front_view.png',
-                alt2: '/images/head-examples/scaphocephaly_profile_view.png',
+                main: '/images/head-examples/scaphocephaly_3D_1.png',
+                alt1: '/images/head-examples/scaphocephaly_3D_2.png',
+                alt2: '/images/head-examples/scaphocephaly_3D_3.png',
             },
+            imageLabels: [t('views3D.1'), t('views3D.2'), t('views3D.3')],
+            sensitiveImages: true,
         },
     ]
 
@@ -175,15 +179,11 @@ function HeadShapeCard({
     const labels = type.imageLabels || defaultLabels
 
     const [selectedImgIndex, setSelectedImgIndex] = useState(0)
-
-    // Using display:none for inactive tabs instead of unmounting to keep state, 
-    // or unmount if we prefer reset.
-    // To allow smooth crossfade, we need absolute positioning. But absolute positioning kills the "natural height".
-    // 
-    // Solution: Let only the active card drive the height (relative), others absolute.
-    // This is tricky. 
-    // Simplified Solution: Just use display: grid, grid-area: 1/1 for all.
-    // The active one is relative/z-10, inactive are opacity-0/z-0.
+    const [revealed, setRevealed] = useState(false)
+    const [readySrc, setReadySrc] = useState<string | null>(null)
+    const isSensitiveHidden = !!type.sensitiveImages && !revealed
+    const currentSrc = imagesList[selectedImgIndex]
+    const imgReady = readySrc === currentSrc
 
     return (
         <div
@@ -219,10 +219,30 @@ function HeadShapeCard({
                                     src={imagesList[selectedImgIndex]}
                                     alt={tClass(`${type.translationKey}.name`)}
                                     fill
-                                    className="object-contain drop-shadow-xl"
+                                    className={`object-contain drop-shadow-xl transition-[filter] duration-500 ${isSensitiveHidden ? 'blur-2xl scale-110' : ''}`}
                                     sizes="(max-width: 768px) 100vw, 50vw"
                                     priority={isActive}
+                                    onLoad={() => setReadySrc(currentSrc)}
                                 />
+                                {isSensitiveHidden && (
+                                    <div className={`absolute inset-0 z-10 bg-gray-50 dark:bg-gray-800/50 transition-opacity duration-300 ${imgReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`} />
+                                )}
+                                {type.sensitiveImages && !revealed && (
+                                    <button
+                                        onClick={() => setRevealed(true)}
+                                        className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 cursor-pointer group/reveal"
+                                    >
+                                        <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl px-6 py-4 flex flex-col items-center gap-2 shadow-lg transition-transform duration-200 group-hover/reveal:scale-105">
+                                            <EyeOff className="w-6 h-6 text-gray-500 dark:text-gray-400" />
+                                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                                {t('sensitiveImage.clickToReveal')}
+                                            </span>
+                                            <span className="text-xs text-gray-400 dark:text-gray-500">
+                                                {t('sensitiveImage.warning')}
+                                            </span>
+                                        </div>
+                                    </button>
+                                )}
                                 <div className="absolute bottom-4 bg-black/50 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-medium">
                                     {labels[selectedImgIndex]}
                                 </div>
@@ -244,7 +264,7 @@ function HeadShapeCard({
                                             : 'border-white dark:border-gray-700 opacity-70 hover:opacity-100 hover:scale-105'}
                                     `}
                                 >
-                                    <Image src={img} alt="View" width={56} height={56} className="w-full h-full object-contain p-1" />
+                                    <Image src={img} alt="View" width={56} height={56} className={`w-full h-full object-contain p-1 ${isSensitiveHidden ? 'blur-sm' : ''}`} />
                                 </button>
                             ))}
                         </div>
@@ -263,7 +283,7 @@ function HeadShapeCard({
                             {/* Medical Warning Badge if needed */}
                             {type.category === 'pathological' && (
                                 <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-rose-100 text-rose-700 flex items-center gap-1">
-                                    <AlertTriangle className="w-3 h-3" /> Medical Attention
+                                    <AlertTriangle className="w-3 h-3" /> {tClass('category.medicalAttention')}
                                 </span>
                             )}
                         </div>

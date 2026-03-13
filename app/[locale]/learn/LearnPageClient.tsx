@@ -10,7 +10,8 @@ import {
     XCircle,
     AlertTriangle,
     Clock,
-    ArrowRight
+    ArrowRight,
+    EyeOff
 } from 'lucide-react'
 
 // ============================================
@@ -166,6 +167,7 @@ interface HeadType {
     translationKey: string
     severity: 'normal' | 'common' | 'moderate' | 'rare'
     images: HeadTypeImage[]
+    sensitiveImages?: boolean
 }
 
 function HeadTypeSelector({
@@ -198,7 +200,7 @@ function HeadTypeSelector({
                     src={type.images[0].src}
                     alt={t(`${type.translationKey}.name`)}
                     fill
-                    className="object-contain bg-stone-50 dark:bg-gray-900 p-1"
+                    className={`object-contain bg-stone-50 dark:bg-gray-900 p-1 ${type.sensitiveImages ? 'blur-md scale-110' : ''}`}
                 />
             </div>
             <span className={`text-[13px] ${isSelected ? 'text-stone-800 dark:text-stone-200' : 'text-stone-400 dark:text-stone-500'}`}>
@@ -211,7 +213,13 @@ function HeadTypeSelector({
 function HeadTypeDetail({ type, t }: { type: HeadType; t: any }) {
     const tClass = useTranslations('classification')
     const tLabels = useTranslations('learn.headTypes.labels')
+    const tSensitive = useTranslations('learn.headTypes.sensitiveImage')
     const [activeImageIndex, setActiveImageIndex] = useState(0)
+    const [revealed, setRevealed] = useState(false)
+    const [readySrc, setReadySrc] = useState<string | null>(null)
+    const isSensitiveHidden = !!type.sensitiveImages && !revealed
+    const currentSrc = type.images[activeImageIndex].src
+    const imgReady = readySrc === currentSrc
 
     const severityColors: Record<string, string> = {
         normal: 'text-emerald-600 dark:text-emerald-400',
@@ -230,8 +238,28 @@ function HeadTypeDetail({ type, t }: { type: HeadType; t: any }) {
                             src={type.images[activeImageIndex].src}
                             alt={t(`${type.translationKey}.name`)}
                             fill
-                            className="object-contain p-3"
+                            className={`object-contain p-3 transition-[filter] duration-500 ${isSensitiveHidden ? 'blur-2xl scale-110' : ''}`}
+                            onLoad={() => setReadySrc(currentSrc)}
                         />
+                        {isSensitiveHidden && (
+                            <div className={`absolute inset-0 z-[5] bg-white dark:bg-gray-800 transition-opacity duration-300 ${imgReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`} />
+                        )}
+                        {type.sensitiveImages && !revealed && (
+                            <button
+                                onClick={() => setRevealed(true)}
+                                className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 cursor-pointer"
+                            >
+                                <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl px-4 py-3 flex flex-col items-center gap-1.5 shadow-md">
+                                    <EyeOff className="w-5 h-5 text-stone-400" />
+                                    <span className="text-[13px] font-medium text-stone-600 dark:text-stone-300">
+                                        {tSensitive('clickToReveal')}
+                                    </span>
+                                    <span className="text-[11px] text-stone-400">
+                                        {tSensitive('warning')}
+                                    </span>
+                                </div>
+                            </button>
+                        )}
                     </div>
                     {type.images.length > 1 && (
                         <div className="flex justify-center gap-2 mt-4">
@@ -297,6 +325,7 @@ function HeadShapeGallery() {
     const t = useTranslations('learn.headTypes')
     const tViews = useTranslations('learn.headTypes.views')
     const tAges = useTranslations('learn.headTypes.ages')
+    const t3D = useTranslations('learn.headTypes.views3D')
     const [selectedId, setSelectedId] = useState<string>('normal')
 
     const headTypes: HeadType[] = [
@@ -344,10 +373,11 @@ function HeadShapeGallery() {
             id: 'scaphocephaly',
             translationKey: 'scaphocephaly',
             severity: 'rare',
+            sensitiveImages: true,
             images: [
-                { src: '/images/head-examples/scaphocephaly_top_view.png', label: tViews('top') },
-                { src: '/images/head-examples/scaphocephaly_front_view.png', label: tViews('front') },
-                { src: '/images/head-examples/scaphocephaly_profile_view.png', label: tViews('profile') },
+                { src: '/images/head-examples/scaphocephaly_3D_1.png', label: t3D('1') },
+                { src: '/images/head-examples/scaphocephaly_3D_2.png', label: t3D('2') },
+                { src: '/images/head-examples/scaphocephaly_3D_3.png', label: t3D('3') },
             ],
         },
     ]
@@ -377,7 +407,7 @@ function HeadShapeGallery() {
                 ))}
             </div>
 
-            <HeadTypeDetail type={selectedType} t={t} />
+            <HeadTypeDetail key={selectedType.id} type={selectedType} t={t} />
         </section>
     )
 }

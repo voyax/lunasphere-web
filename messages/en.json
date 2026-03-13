@@ -135,7 +135,8 @@
     "category": {
       "normal": "Normal",
       "positional": "Positional",
-      "pathological": "Pathological"
+      "pathological": "Pathological",
+      "medicalAttention": "Medical Attention"
     },
     "normal": {
       "name": "Normal Head Shape",
@@ -922,6 +923,15 @@
         "0to3": "0-3 mo",
         "6": "6 mo",
         "9": "9 mo"
+      },
+      "sensitiveImage": {
+        "clickToReveal": "Tap to view medical image",
+        "warning": "Image may be sensitive"
+      },
+      "views3D": {
+        "1": "3D View 1",
+        "2": "3D View 2",
+        "3": "3D View 3"
       },
       "labels": {
         "description": "What It Looks Like",

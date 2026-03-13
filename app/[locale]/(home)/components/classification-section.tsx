@@ -46,7 +46,8 @@ export async function ClassificationSection() {
       severity: 'rare',
       category: 'pathological',
       // Image configuration - provide image URL here
-      imageSrc: '/images/head-examples/scaphocephaly_top_view.jpg',
+      imageSrc: '/images/head-examples/scaphocephaly_3D_1.png',
+      sensitiveImage: true,
     },
   ]
 
@@ -81,7 +82,7 @@ export async function ClassificationSection() {
                       <Image
                         fill
                         alt={t(`classification.${shape.type}.image_alt`)}
-                        className='object-contain'
+                        className={`object-contain ${shape.sensitiveImage ? 'blur-xl scale-110' : ''}`}
                         sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw'
                         src={shape.imageSrc}
                       />
