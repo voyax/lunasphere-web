@@ -405,20 +405,15 @@ export class HeadShapeModel {
       return null
     }
 
-    // Find the major axis (longest diameter = OFD direction), cached to avoid redundant ray-trace
-    const majorAxis = this.findMajorAxis(
-      outputData,
-      width,
-      height,
-      centroid
-    )
-    const ofdAngle = majorAxis.angle
+    const ofdAngle = 0 // Fixed vertical — user is expected to align head upright
     const bpdAngle = ofdAngle + Math.PI / 2 // BPD perpendicular to OFD
 
-    // OFD from cached major axis result
-    const topPoint = majorAxis.start.y <= majorAxis.end.y ? majorAxis.start : majorAxis.end
-    const bottomPoint = majorAxis.start.y <= majorAxis.end.y ? majorAxis.end : majorAxis.start
-    const ofdMeasurement = { height: majorAxis.length, topPoint, bottomPoint }
+    // OFD: vertical line through centroid
+    const ofdResult = this.findBoundaryIntersections(centroid, ofdAngle, outputData, width, height, this.config.confidenceThreshold)
+    const topPoint = ofdResult.start.y <= ofdResult.end.y ? ofdResult.start : ofdResult.end
+    const bottomPoint = ofdResult.start.y <= ofdResult.end.y ? ofdResult.end : ofdResult.start
+    const ofdLength = Math.sqrt(Math.pow(bottomPoint.x - topPoint.x, 2) + Math.pow(bottomPoint.y - topPoint.y, 2))
+    const ofdMeasurement = { height: ofdLength, topPoint, bottomPoint }
 
     // Calculate BPD perpendicular to OFD
     const bpdMeasurement = this.calculateBPD(
@@ -482,53 +477,6 @@ export class HeadShapeModel {
       x: Math.round(sumX / count),
       y: Math.round(sumY / count),
     }
-  }
-
-  /**
-   * Find the major axis angle (OFD direction) by scanning near-vertical angles through centroid.
-   * Assumes user has roughly aligned the head upright, so only scans ±15° around vertical.
-   * Returns the best angle and its cached boundary points to avoid redundant ray-tracing.
-   */
-  private findMajorAxis(
-    outputData: Float32Array,
-    width: number,
-    height: number,
-    centroid: { x: number; y: number }
-  ): {
-    angle: number
-    start: { x: number; y: number }
-    end: { x: number; y: number }
-    length: number
-  } {
-    let maxLength = 0
-    let bestAngle = 0
-    let bestStart = { x: 0, y: 0 }
-    let bestEnd = { x: 0, y: 0 }
-
-    for (let deg = -15; deg <= 15; deg++) {
-      const angle = (deg * Math.PI) / 180
-      const { start, end } = this.findBoundaryIntersections(
-        centroid,
-        angle,
-        outputData,
-        width,
-        height,
-        this.config.confidenceThreshold
-      )
-
-      const length = Math.sqrt(
-        Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2)
-      )
-
-      if (length > maxLength) {
-        maxLength = length
-        bestAngle = angle
-        bestStart = start
-        bestEnd = end
-      }
-    }
-
-    return { angle: bestAngle, start: bestStart, end: bestEnd, length: maxLength }
   }
 
   /**
