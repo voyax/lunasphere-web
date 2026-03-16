@@ -86,10 +86,10 @@ export default function PrivacyPage() {
             {t('contact.desc')}
           </p>
           <a
-            href="mailto:privacy@lunasphere.app"
+            href="mailto:domi@melolib.com"
             className="text-orange-600 dark:text-orange-400 hover:underline"
           >
-            privacy@lunasphere.app
+            domi@melolib.com
           </a>
         </section>
 

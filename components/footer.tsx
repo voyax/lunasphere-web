@@ -46,7 +46,7 @@ export const Footer = () => {
 
           {/* Copyright */}
           <p className='text-[10px] text-gray-300 dark:text-gray-600 font-medium text-center'>
-            © {currentYear} LUNASPHERE STUDIO • {tFooter('copyright')}
+            © {currentYear} Melo • {tFooter('copyright')}
           </p>
         </div>
       </div>

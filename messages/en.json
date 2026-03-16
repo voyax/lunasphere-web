@@ -1,6 +1,6 @@
 {
   "site": {
-    "title": "LunaSphere",
+    "title": "Domi",
     "description": "Scientific understanding and rational care for infant head shape development"
   },
   "footer": {
@@ -21,7 +21,7 @@
     },
     "faq": {
       "title": "FAQ",
-      "description": "Common questions about using LunaSphere, our free baby head shape assessment tool"
+      "description": "Common questions about using Domi, our free baby head shape assessment tool"
     },
     "profileMatch": {
       "title": "Profile Match",
@@ -37,7 +37,7 @@
     },
     "privacy": {
       "title": "Privacy & Security",
-      "description": "Learn how LunaSphere protects your and your baby's privacy and data security"
+      "description": "Learn how Domi protects your and your baby's privacy and data security"
     }
   },
   "nav": {
@@ -595,19 +595,19 @@
   },
   "faq": {
     "title": "FAQ",
-    "subtitle": "Common questions about using LunaSphere",
+    "subtitle": "Common questions about using Domi",
     "category": {
-      "about": "About LunaSphere",
+      "about": "About Domi",
       "howTo": "How to Detect",
       "results": "Results & Advice"
     },
     "about": {
-      "question": "What is LunaSphere?",
-      "answer": "LunaSphere is a free tool for checking your baby's head shape at home.\n\nThe Cephalic Index (CI) and Cranial Vault Asymmetry Index (CVAI) are standard clinical measurements used worldwide to assess infant head shape—CI for flatness/elongation, CVAI for left-right symmetry. We want to bring this expertise to every family—just snap a photo at home, and feel confident knowing how your little one is developing."
+      "question": "What is Domi?",
+      "answer": "Domi is a free tool for checking your baby's head shape at home.\n\nThe Cephalic Index (CI) and Cranial Vault Asymmetry Index (CVAI) are standard clinical measurements used worldwide to assess infant head shape—CI for flatness/elongation, CVAI for left-right symmetry. We want to bring this expertise to every family—just snap a photo at home, and feel confident knowing how your little one is developing."
     },
     "notMedical": {
       "question": "Is this a medical diagnosis?",
-      "answer": "LunaSphere is a home screening tool that helps you understand your baby's head shape—but it's not a substitute for a doctor's diagnosis.\n\n• Hospital assessment: Professional equipment, doctor diagnosis, official reports\n• LunaSphere: Free, convenient, great for tracking changes over time\n\nWe're here to help ease unnecessary worry, and give you confidence when it's time to seek professional advice."
+      "answer": "Domi is a home screening tool that helps you understand your baby's head shape—but it's not a substitute for a doctor's diagnosis.\n\n• Hospital assessment: Professional equipment, doctor diagnosis, official reports\n• Domi: Free, convenient, great for tracking changes over time\n\nWe're here to help ease unnecessary worry, and give you confidence when it's time to seek professional advice."
     },
     "privacy": {
       "question": "Are my photos uploaded?",
@@ -635,7 +635,7 @@
     },
     "deviceSupport": {
       "question": "What devices work?",
-      "answer": "LunaSphere is a web app—phones, tablets, and computers all work with any modern browser.\n\nWe recommend using your phone for the easiest photo-taking experience. No download needed."
+      "answer": "Domi is a web app—phones, tablets, and computers all work with any modern browser.\n\nWe recommend using your phone for the easiest photo-taking experience. No download needed."
     },
     "searchPlaceholder": "Search questions...",
     "allQuestions": "All Questions",
@@ -651,7 +651,7 @@
     "goToLearn": "Visit Parent Academy",
     "contactUs": "Still have questions?",
     "contactUsDesc": "Send us an email",
-    "disclaimer": "LunaSphere provides information for reference only and is not a substitute for professional medical advice. If you have health concerns, please consult a doctor."
+    "disclaimer": "Domi provides information for reference only and is not a substitute for professional medical advice. If you have health concerns, please consult a doctor."
   },
   "learn": {
     "hero": {

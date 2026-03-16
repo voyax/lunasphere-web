@@ -1,5 +1,5 @@
 {
-  "name": "lunasphere-web",
+  "name": "domi-web",
   "version": "1.2.2",
   "description": "A deep learning-based tool for assessing infant head shape. Our model extracts cranial contours from photos to compute CI & CVAI indices, aiding early screening.",
   "keywords": [
@@ -24,7 +24,7 @@
   },
   "license": "GPL-3.0",
   "author": {
-    "name": "LunaSphere Project Contributors",
+    "name": "Domi Project Contributors",
     "email": "hi@melolib.com"
   },
   "private": false,

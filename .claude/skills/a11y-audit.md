@@ -109,7 +109,7 @@ const shouldReduceMotion = useReducedMotion();
 
 ### Medical App Specifics
 
-For LunaSphere:
+For Domi:
 - [ ] Measurement results announced to screen readers
 - [ ] Medical terms have explanations (title or aria-describedby)
 - [ ] Critical data has sufficient contrast

@@ -1,7 +1,7 @@
-# LunaSphere Web - Claude Code 配置
+# Domi Web - Claude Code 配置
 
 ## 项目概述
-LunaSphere 是一个基于深度学习的婴儿头型评估 Web 应用，使用 Next.js 16 + React 19 + TypeScript + Tailwind CSS + HeroUI。
+Domi 是一个基于深度学习的婴儿头型评估 Web 应用，使用 Next.js 16 + React 19 + TypeScript + Tailwind CSS + HeroUI。
 
 ## 自动应用 Skills 规则
 

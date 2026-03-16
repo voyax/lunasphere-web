@@ -202,7 +202,7 @@ export default function FAQPage() {
 
             {/* 反馈入口 */}
             <a
-              href="mailto:feedback@lunasphere.app"
+              href="mailto:domi@melolib.com"
               className="group flex items-center gap-4 p-5 bg-white dark:bg-gray-800/80 rounded-xl border border-stone-100 dark:border-gray-700/50 hover:border-stone-200 dark:hover:border-gray-600 transition-all"
             >
               <div className="w-10 h-10 rounded-lg bg-stone-100 dark:bg-gray-700 flex items-center justify-center shrink-0">

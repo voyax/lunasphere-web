@@ -1,6 +1,6 @@
 # Skill: component-gen
 
-Generate React components with HeroUI and Tailwind CSS for LunaSphere.
+Generate React components with HeroUI and Tailwind CSS for Domi.
 
 ## Usage
 
