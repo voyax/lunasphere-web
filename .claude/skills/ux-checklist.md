@@ -139,7 +139,7 @@ Types:
 - [ ] Next steps or actions
 - [ ] Share/save options if applicable
 
-### LunaSphere Specific
+### Domi Specific
 
 #### Measurement Flow
 - [ ] Clear camera positioning guidance

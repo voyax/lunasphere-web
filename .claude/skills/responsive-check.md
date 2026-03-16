@@ -10,7 +10,7 @@ Check and improve responsive design across breakpoints.
 
 ### Tailwind Breakpoints
 
-Standard breakpoints used in LunaSphere:
+Standard breakpoints used in Domi:
 - `sm`: 640px (large phones)
 - `md`: 768px (tablets)
 - `lg`: 1024px (small laptops)

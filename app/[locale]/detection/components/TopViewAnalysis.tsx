@@ -695,7 +695,7 @@ const TopViewAnalysis = memo(function TopViewAnalysis({
                 )}
 
               <p className='text-center text-[9px] font-bold text-gray-300 dark:text-gray-600 uppercase tracking-[0.4em]'>
-                Powered by LunaSphere AI Studio
+                Powered by Domi AI Studio
               </p>
             </div>
           ) : (

@@ -21,7 +21,7 @@ print_error() {
 }
 
 # Configuration
-IMAGE_NAME="voyax/lunasphere-web"
+IMAGE_NAME="voyax/domi-web"
 VERSION="${1:-dev}"
 TAG="${VERSION}"
 FULL_IMAGE_NAME="${IMAGE_NAME}:${TAG}"

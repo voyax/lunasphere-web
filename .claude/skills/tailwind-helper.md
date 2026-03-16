@@ -50,7 +50,7 @@ Scan for:
 4. Missing responsive variants
 5. Missing dark mode variants
 
-### Common Patterns for LunaSphere
+### Common Patterns for Domi
 
 **Cards:**
 ```

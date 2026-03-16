@@ -51,12 +51,12 @@ export function Navbar() {
             <div className='group-hover:scale-110 transition-transform duration-300 relative flex items-center justify-center' style={{ width: '32px', height: '32px' }}>
               <img 
                 src="/logo_color.svg" 
-                alt="LunaSphere Logo" 
-                className="w-full h-full object-contain block dark:hidden origin-center" 
+                alt="Domi Logo"
+                className="w-full h-full object-contain block dark:hidden origin-center"
               />
               <img
                 src="/logo_black.svg"
-                alt="LunaSphere Logo"
+                alt="Domi Logo"
                 className="w-full h-full object-contain hidden dark:block origin-center"
               />
             </div>

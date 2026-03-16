@@ -1,6 +1,6 @@
 # Skill: i18n-helper
 
-Manage internationalization with next-intl for LunaSphere.
+Manage internationalization with next-intl for Domi.
 
 ## Usage
 

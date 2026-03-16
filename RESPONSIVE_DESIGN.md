@@ -1,6 +1,6 @@
 # Responsive Design Standards
 
-This document outlines the standard screen breakpoints and responsive design strategies for the Lunasphere web application, ensuring a premium and adaptive user experience across all devices.
+This document outlines the standard screen breakpoints and responsive design strategies for the Domi web application, ensuring a premium and adaptive user experience across all devices.
 
 ## 🎯 Breakpoints & Device Targets
 

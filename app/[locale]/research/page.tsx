@@ -88,7 +88,7 @@ export default function ResearchPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <a
-              href="mailto:research@lunasphere.app"
+              href="mailto:domi@melolib.com"
               className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-gray-900 dark:bg-gray-50 text-white dark:text-gray-900 rounded-full text-sm font-medium hover:bg-gray-800 dark:hover:bg-white transition-colors"
             >
               <Mail className="w-4 h-4" />

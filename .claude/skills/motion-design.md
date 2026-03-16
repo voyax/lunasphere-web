@@ -1,6 +1,6 @@
 # Skill: motion-design
 
-Create and optimize Framer Motion animations for LunaSphere.
+Create and optimize Framer Motion animations for Domi.
 
 ## Usage
 
@@ -14,7 +14,7 @@ Commands:
 
 ## Instructions
 
-### Animation Presets for LunaSphere
+### Animation Presets for Domi
 
 ```tsx
 // Fade In
