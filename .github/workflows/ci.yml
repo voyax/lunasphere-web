@@ -136,12 +136,15 @@ jobs:
     - name: Wait for application
       run: npx wait-on http://localhost:3000
     
+    - name: Sync Chrome and ChromeDriver
+      run: npx browser-driver-manager install chrome
+
     - name: Run accessibility tests
       run: |
         npx @axe-core/cli http://localhost:3000 \
           --save accessibility-report.json \
           --tags wcag2a,wcag2aa \
-          --disable color-contrast,meta-viewport,list,link-name   
+          --disable color-contrast,meta-viewport,list,link-name
     - name: Upload accessibility report
       uses: actions/upload-artifact@v4
       if: always()
