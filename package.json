@@ -1,6 +1,6 @@
 {
   "name": "domi-web",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "A deep learning-based tool for assessing infant head shape. Our model extracts cranial contours from photos to compute CI & CVAI indices, aiding early screening.",
   "keywords": [
     "infant",
